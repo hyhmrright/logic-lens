@@ -58,7 +58,7 @@ logic-lens/
 6. `README.md` → version badge
 
 ### Iron Law
-Never add a Remedy to a finding before Premises, Trace, and Divergence are written. This is the core discipline of the project. Do not weaken it.
+Never add a Remedy to a finding before Premises, Trace, and Divergence are written. This is the core discipline of the project. Do not weaken it. If a finding violates this order, rewrite the entire finding from Premises before outputting anything further — do not patch in the missing sections afterward.
 
 ## Companion Docs by AI Tool
 
