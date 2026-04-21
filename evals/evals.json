@@ -1,0 +1,54 @@
+{
+  "skill_name": "logic-lens",
+  "evals": [
+    {
+      "id": 1,
+      "name": "python-shadow-override-builtin",
+      "mode": "logic-review",
+      "prompt": "Review this Python code for logic errors:\n\n```python\n# utils/formatter.py\ndef format(value, spec):\n    \"\"\"Project-specific format wrapper.\"\"\"\n    return f'{value:{spec}} (formatted)'\n\ndef render_year(date_obj):\n    year = date_obj.year\n    return format(year, '04d')\n```\n\nThis is called from other modules like: `from utils.formatter import render_year`",
+      "expected_output": "Should identify L1 (Shadow Override): render_year calls the module-level format() defined in the same file, not Python's builtin format(). The module's format() returns a string with ' (formatted)' appended, so render_year returns '2024 (formatted)' instead of '2024'. Any caller expecting a plain 4-digit string will receive unexpected output. Premises must state that format resolves to utils/formatter.py:format, not builtins.format."
+    },
+    {
+      "id": 2,
+      "name": "js-null-callee-contract",
+      "mode": "logic-review",
+      "prompt": "Review this JavaScript for logic errors:\n\n```javascript\nasync function getUsername(userId) {\n  const user = await db.users.findOne({ id: userId });\n  return user.name.trim();\n}\n\nasync function displayWelcome(userId) {\n  const name = await getUsername(userId);\n  return `Welcome, ${name}!`;\n}\n```",
+      "expected_output": "Should identify L6 (Callee Contract Mismatch) or L3 (Boundary Blindspot): db.users.findOne() can return null when no user matches the given userId. getUsername() calls user.name.trim() without checking if user is null, which will throw TypeError: Cannot read properties of null. The caller displayWelcome() also does not handle the resulting rejected Promise. Premises must state what findOne() can return."
+    },
+    {
+      "id": 3,
+      "name": "python-mutation-during-iteration",
+      "mode": "logic-review",
+      "prompt": "Review this Python function:\n\n```python\ndef remove_inactive(users):\n    for user in users:\n        if not user.is_active:\n            users.remove(user)\n    return users\n```",
+      "expected_output": "Should identify L4 (State Mutation Hazard): The function iterates over 'users' while simultaneously removing elements from it. Python's list iterator does not re-index when elements are removed, causing the iterator to skip elements immediately following a removed element. If two consecutive inactive users exist, only the first will be removed. The trace should show that after removing users[i], the iterator advances to what is now users[i+1] but was users[i+2] before removal."
+    },
+    {
+      "id": 4,
+      "name": "go-nil-interface-vs-nil-pointer",
+      "mode": "logic-review",
+      "prompt": "Review this Go code:\n\n```go\ntype Logger interface {\n    Log(msg string)\n}\n\nfunc NewFileLogger(path string) Logger {\n    if path == \"\" {\n        var l *FileLogger = nil\n        return l  // returns nil *FileLogger wrapped in Logger interface\n    }\n    return &FileLogger{path: path}\n}\n\nfunc Process(path string) {\n    logger := NewFileLogger(path)\n    if logger != nil {\n        logger.Log(\"starting\")\n    }\n}\n```",
+      "expected_output": "Should identify L2 (Type Contract Breach) or L1: When path is empty, NewFileLogger returns a nil *FileLogger wrapped in a Logger interface. In Go, an interface value is non-nil as long as it has a type set, even if the underlying pointer is nil. So logger != nil evaluates to true, and logger.Log() is called on a nil pointer, causing a runtime panic. The trace must show that the returned interface value has type=*FileLogger and value=nil, making the interface itself non-nil."
+    },
+    {
+      "id": 5,
+      "name": "logic-explain-closure-capture",
+      "mode": "logic-explain",
+      "prompt": "Explain what this JavaScript actually does when the buttons are clicked:\n\n```javascript\nconst buttons = document.querySelectorAll('button');\nfor (var i = 0; i < buttons.length; i++) {\n  buttons[i].addEventListener('click', function() {\n    console.log('Button', i, 'clicked');\n  });\n}\n```\n\nAssume there are 3 buttons.",
+      "expected_output": "Should explain the var hoisting / closure capture bug: var i is function-scoped (not block-scoped), so all three event handlers close over the same variable i. By the time any button is clicked (after the loop completes), i equals 3 (the loop termination value). All three buttons log 'Button 3 clicked' rather than 'Button 0 clicked', 'Button 1 clicked', 'Button 2 clicked'. The trace must follow the actual closure semantics, stating that each handler captures a reference to i, not its value at loop time."
+    },
+    {
+      "id": 6,
+      "name": "logic-diff-semantic-equivalence",
+      "mode": "logic-diff",
+      "prompt": "Are these two Python implementations semantically equivalent?\n\nVersion A:\n```python\ndef get_last(items):\n    return items[-1] if items else None\n```\n\nVersion B:\n```python\ndef get_last(items):\n    try:\n        return items[-1]\n    except IndexError:\n        return None\n```",
+      "expected_output": "Should find them conditionally equivalent: Both return the last element for non-empty lists and None for empty lists. However, they diverge for non-list iterables: Version A's boolean check works for any sequence with __len__, while Version B's try/except works for any sequence with __getitem__ including generators. Also, Version B will catch IndexError from items[-1] on custom objects that raise IndexError for reasons other than being empty, potentially masking a real error. Verdict: Conditionally Equivalent — equivalent for list inputs; may diverge for custom sequence types."
+    },
+    {
+      "id": 7,
+      "name": "logic-locate-off-by-one",
+      "mode": "logic-locate",
+      "prompt": "This test is failing. Find the bug:\n\nFailing test:\n```python\ndef test_pagination():\n    items = list(range(10))  # [0, 1, 2, ..., 9]\n    page = paginate(items, page=2, page_size=3)\n    assert page == [3, 4, 5]  # Expected: items 3,4,5 (0-indexed page 2)\n```\n\nImplementation:\n```python\ndef paginate(items, page, page_size):\n    start = page * page_size\n    end = start + page_size\n    return items[start:end]\n```\n\nActual output: page == [6, 7, 8]",
+      "expected_output": "Should locate the fault: The test expects 0-indexed page 2 to return items[3:6] = [3,4,5], but the implementation treats page as 0-indexed differently. With page=2, page_size=3: start = 2*3 = 6, end = 6+3 = 9, so items[6:9] = [6,7,8]. The bug is an off-by-one in the test's expectation of what 'page 2' means, OR a semantic mismatch: the implementation is 0-indexed (page 0 = items 0-2, page 1 = items 3-5, page 2 = items 6-8) but the test assumes page 2 starts at offset 3. L3 (Boundary Blindspot) or L6 (Callee Contract Mismatch). The test expects page 2 = second page of data (1-based), implementation treats page as 0-based index."
+    }
+  ]
+}

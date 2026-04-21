@@ -1,0 +1,10 @@
+{
+  "name": "logic-lens",
+  "version": "1.0.0",
+  "description": "Logic-first code review using semi-formal execution tracing. Surfaces behavioral bugs, semantic errors, and runtime failures that linters miss.",
+  "author": {
+    "name": "Logic-Lens Contributors"
+  },
+  "keywords": ["code-review", "logic", "debugging", "bug-detection", "static-analysis", "semantic"],
+  "license": "MIT"
+}

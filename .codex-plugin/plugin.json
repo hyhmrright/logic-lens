@@ -1,0 +1,6 @@
+{
+  "name": "logic-lens",
+  "version": "1.0.0",
+  "description": "Logic-first code review using semi-formal execution tracing.",
+  "skills": "./skills/"
+}

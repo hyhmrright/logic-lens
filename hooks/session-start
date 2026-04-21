@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# Logic-Lens session-start hook (Claude Code only)
+# Installs short-form commands to ~/.claude/commands/ on every session start.
+
+PLUGIN_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+COMMANDS_DIR="$HOME/.claude/commands"
+
+mkdir -p "$COMMANDS_DIR"
+
+for skill in logic-review logic-explain logic-diff logic-locate logic-health; do
+  src="$PLUGIN_DIR/commands/${skill}.md"
+  dst="$COMMANDS_DIR/${skill}.md"
+  if [ -f "$src" ]; then
+    cp "$src" "$dst"
+  fi
+done
+
+# Print a brief context note (< 150 words) into the session
+cat <<'EOF'
+Logic-Lens is active. Five skills available:
+- /logic-review   — logic bug review via semi-formal execution tracing
+- /logic-explain  — step-by-step execution path explanation
+- /logic-diff     — semantic equivalence check between two code versions
+- /logic-locate   — fault localization from a failing test or error
+- /logic-health   — aggregate logic health dashboard for a codebase
+EOF

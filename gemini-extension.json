@@ -1,0 +1,21 @@
+{
+  "name": "logic-lens",
+  "version": "1.0.0",
+  "description": "Logic-first code review using semi-formal execution tracing.",
+  "contribution": {
+    "skills": [
+      {"id": "logic-review", "path": "skills/logic-review"},
+      {"id": "logic-explain", "path": "skills/logic-explain"},
+      {"id": "logic-diff", "path": "skills/logic-diff"},
+      {"id": "logic-locate", "path": "skills/logic-locate"},
+      {"id": "logic-health", "path": "skills/logic-health"}
+    ],
+    "commands": [
+      {"id": "logic-review", "path": "commands/logic-review.md"},
+      {"id": "logic-explain", "path": "commands/logic-explain.md"},
+      {"id": "logic-diff", "path": "commands/logic-diff.md"},
+      {"id": "logic-locate", "path": "commands/logic-locate.md"},
+      {"id": "logic-health", "path": "commands/logic-health.md"}
+    ]
+  }
+}

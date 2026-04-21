@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /Users/hyh/code/logic-lens/hooks/session-start"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "logic-lens",
+  "version": "1.0.0",
+  "displayName": "Logic-Lens",
+  "shortDescription": "Semi-formal code logic review that finds bugs linters miss",
+  "longDescription": "Logic-Lens applies semi-formal execution tracing (based on arXiv:2603.01896) to surface behavioral bugs, type contract breaches, boundary blindspots, and interprocedural semantic mismatches — the logic errors that cause test failures after syntax-clean code ships. Works with any language, any codebase.",
+  "categories": ["code-review", "debugging", "quality"],
+  "skills": [
+    "logic-review",
+    "logic-explain",
+    "logic-diff",
+    "logic-locate",
+    "logic-health"
+  ]
+}
