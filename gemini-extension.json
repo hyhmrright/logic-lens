@@ -1,7 +1,16 @@
 {
   "name": "logic-lens",
   "version": "0.1.0",
-  "description": "Logic-first code review using semi-formal execution tracing.",
+  "description": "Logic-first code review using semi-formal execution tracing. Surfaces behavioral bugs, type contract breaches, boundary blindspots, and interprocedural semantic mismatches — the logic errors that cause production incidents in syntax-clean code.",
+  "author": "hyhmrright",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hyhmrright/logic-lens.git"
+  },
+  "engines": {
+    "gemini": ">=0.30.0"
+  },
   "contribution": {
     "skills": [
       {"id": "logic-review", "path": "skills/logic-review"},
@@ -11,11 +20,31 @@
       {"id": "logic-health", "path": "skills/logic-health"}
     ],
     "commands": [
-      {"id": "logic-review", "path": "commands/logic-review.md"},
-      {"id": "logic-explain", "path": "commands/logic-explain.md"},
-      {"id": "logic-diff", "path": "commands/logic-diff.md"},
-      {"id": "logic-locate", "path": "commands/logic-locate.md"},
-      {"id": "logic-health", "path": "commands/logic-health.md"}
+      {
+        "id": "logic-review",
+        "description": "Logic bug review via execution tracing — find behavioral bugs linters miss",
+        "path": "commands/logic-review.md"
+      },
+      {
+        "id": "logic-explain",
+        "description": "Execution explanation — trace what code actually does, step by step",
+        "path": "commands/logic-explain.md"
+      },
+      {
+        "id": "logic-diff",
+        "description": "Semantic diff — verify two code versions are behaviorally equivalent",
+        "path": "commands/logic-diff.md"
+      },
+      {
+        "id": "logic-locate",
+        "description": "Fault localization — find the root cause of a failing test or crash",
+        "path": "commands/logic-locate.md"
+      },
+      {
+        "id": "logic-health",
+        "description": "Logic health dashboard — aggregate logic review across a codebase",
+        "path": "commands/logic-health.md"
+      }
     ]
   }
 }
