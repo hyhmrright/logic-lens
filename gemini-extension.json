@@ -1,6 +1,6 @@
 {
   "name": "logic-lens",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Logic-first code review using semi-formal execution tracing. Surfaces behavioral bugs, type contract breaches, boundary blindspots, and interprocedural semantic mismatches — the logic errors that cause production incidents in syntax-clean code.",
   "author": "hyhmrright",
   "license": "MIT",
