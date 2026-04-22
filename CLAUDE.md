@@ -33,7 +33,7 @@ logic-lens/
 - `description` must include a "Do NOT trigger for:" clause.
 - `description` should be explicit about trigger phrases — err on the side of triggering.
 - Process section: 5–7 numbered items; each item cites a step in the guide file.
-- Setup section: explicit `Read` instructions for each shared file and the guide.
+- Setup section: two fixed parts — (1) read shared files (`common.md`, `logic-risks.md` if the skill produces L-code findings, `semiformal-guide.md`); (2) read the skill's own `*-guide.md`. Do not reorder or omit unless there is a documented reason (e.g., `logic-explain` omits `logic-risks.md` because it produces no L-code findings).
 
 ### Guide Files
 - Numbered steps (Step 1, Step 2, ...).
@@ -58,7 +58,7 @@ logic-lens/
 6. `README.md` → version badge
 
 ### Iron Law
-Never add a Remedy to a finding before Premises, Trace, and Divergence are written. This is the core discipline of the project. Do not weaken it. If a finding violates this order, rewrite the entire finding from Premises before outputting anything further — do not patch in the missing sections afterward.
+See `skills/_shared/common.md` — Iron Law section. That is the canonical definition; do not duplicate or paraphrase it here.
 
 ## Companion Docs by AI Tool
 
@@ -70,12 +70,59 @@ Never add a Remedy to a finding before Premises, Trace, and Divergence are writt
 
 ## Development Commands
 
-> **Note:** `scripts/` is not yet committed — all three commands below will fail until it is created.
+`scripts/` has not been committed yet; the commands below are defined in `package.json` but will fail until that directory is created.
 
 ```bash
 npm run validate   # Validate repo structure and metadata consistency
 npm run evals      # Run eval suite against recorded expected outputs (offline)
 npm run evals:live # Run eval suite with a live model call (costs tokens)
+```
+
+**Until `scripts/` is ready, use these manual checks:**
+
+```bash
+# Verify SKILL.md frontmatter exists in all five skills (expect 5 file names)
+grep -l "^name:" skills/*/SKILL.md
+
+# Verify all guide files are present
+ls skills/*/logic-*-guide.md
+
+# Verify version is consistent across all metadata files
+grep '"version"' package.json .claude-plugin/plugin.json .claude-plugin/marketplace.json .codex-plugin/plugin.json gemini-extension.json
+```
+
+## First Clone Setup
+
+After cloning to a new machine, do these three steps in order:
+
+**1. Fix the hardcoded path in `hooks/hooks.json`** (the `command` field points to the original clone location):
+
+Edit `hooks/hooks.json` and replace the path in the `command` field with the absolute path to your clone:
+```json
+"command": "bash /your/absolute/path/to/logic-lens/hooks/session-start"
+```
+
+If your repo path has no spaces, you can do this automatically from the repo root:
+```bash
+# macOS:
+sed -i '' "s|bash .*/hooks/session-start|bash $(pwd)/hooks/session-start|" hooks/hooks.json
+# Linux:
+sed -i "s|bash .*/hooks/session-start|bash $(pwd)/hooks/session-start|" hooks/hooks.json
+```
+Note: if your repo path contains spaces, use manual editing instead.
+
+**2. Run the session-start hook once manually** to install command wrappers:
+
+```bash
+# Run from the repo root:
+bash hooks/session-start
+```
+
+**3. Verify commands are installed:**
+
+```bash
+ls ~/.claude/commands/logic-*.md
+# Expected: logic-diff.md  logic-explain.md  logic-health.md  logic-locate.md  logic-review.md
 ```
 
 ## Commands in This Repo
@@ -89,5 +136,5 @@ The session-start hook copies these from `commands/` to `~/.claude/commands/` au
 3. Add a command wrapper to `commands/logic-newskill.md`.
 4. Register in `gemini-extension.json` contribution.skills and contribution.commands.
 5. No change needed in `.codex-plugin/plugin.json` — it points at `skills/` directory and auto-discovers subfolders.
-6. Add the skill name to the `for skill in ...` loop in `hooks/session-start` (line ~10).
+6. Add the skill name to the `for skill in ...` loop in `hooks/session-start` (search for `for skill in` to find the line).
 7. Add 3–5 eval cases to `evals/evals.json`.

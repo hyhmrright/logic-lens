@@ -1,5 +1,5 @@
 ---
-description: Run a Logic-Lens step-by-step execution path explanation
+description: Trace execution step by step — use when code behavior is surprising or confusing
 allowed-tools: Skill
 ---
 

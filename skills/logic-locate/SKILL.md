@@ -26,9 +26,12 @@ description: >
 # Logic-Lens — Fault Locate
 
 ## Setup
+**Shared context (reads common.md for Iron Law and Report Template; Logic Score is replaced by Fault Confidence in this skill):**
 1. Read `../_shared/common.md` for the Iron Law and Report Template.
 2. Read `../_shared/logic-risks.md` for L1–L6 risk codes; the fault will map to one of these.
 3. Read `../_shared/semiformal-guide.md` for semi-formal tracing and interprocedural reasoning.
+
+**Skill-specific:**
 4. Read `logic-locate-guide.md` in this directory for the fault localization process.
 
 ## Process
@@ -37,8 +40,8 @@ description: >
 
 1. Understand the failure: what is the observed behavior, and what is the expected behavior? (Step 1 of the guide)
 2. Identify the entry point closest to the failure: the test, the error site, or the reported symptom (Step 2)
-3. Trace backward from the failure point, building premises at each step (Steps 3–4)
-4. Follow interprocedural chains: when a callee's behavior is implicated, trace into it (Step 4b)
+3. Trace backward from the failure point, building premises at each step (Step 3)
+4. Trace forward to confirm the hypothesis, then follow interprocedural chains if a callee is implicated (Steps 4a–4b)
 5. Identify the root divergence: the earliest point in the trace where the premise breaks (Step 5)
 6. Classify the fault by L-code and output a focused report (Step 6)
 

@@ -1,5 +1,5 @@
 ---
-description: Run a Logic-Lens aggregate logic health dashboard for a codebase
+description: Sweep a whole codebase or directory for logic correctness — use before a release or to identify risk hotspots
 allowed-tools: Skill
 ---
 

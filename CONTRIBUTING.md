@@ -13,9 +13,7 @@ to construct explicit execution traces rather than relying on intuition.
    teams, and codebases. Contributions must not embed assumptions about any particular
    language ecosystem, framework, or development workflow.
 
-2. **The Iron Law is inviolable.** Every finding output by Logic-Lens must follow
-   Premises → Trace → Divergence → Remedy. Changes that weaken this requirement will not
-   be accepted.
+2. **The Iron Law is inviolable** (canonical definition in `skills/_shared/common.md`). Changes that weaken this requirement will not be accepted.
 
 3. **Grounded in the paper.** New risk codes, methodology changes, or guide additions
    should be traceable to either the semi-formal reasoning paper (arXiv:2603.01896) or

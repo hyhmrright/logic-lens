@@ -1,5 +1,5 @@
 ---
-description: Run a Logic-Lens fault localization from a failing test or error
+description: Locate the root cause of a confirmed failure — use when you have a stack trace, failing test, or wrong output
 allowed-tools: Skill
 ---
 

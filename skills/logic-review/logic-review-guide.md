@@ -82,9 +82,9 @@ If the trace does not conclusively confirm a divergence, do not promote to Criti
 
 ## Step 6: Apply Iron Law
 
-Before writing any Remedy:
-- Verify that Premises, Trace, and Divergence are all present for the finding.
-- The Remedy must address the specific divergence, not the general "class of problem."
+Apply the Iron Law from `common.md`: Premises, Trace, and Divergence must all be complete before a Remedy is written.
+
+The Remedy must address the specific divergence, not the general "class of problem":
 
 Bad Remedy: "Add more input validation."
 Good Remedy: "On line 42, replace `format(self.data.year, '04d')` with `builtins.format(self.data.year, '04d')` to avoid dispatching to the module-level `format()` that expects a datetime object."

@@ -17,7 +17,7 @@ For large codebases, be explicit about what is and is not covered. "This health 
 For each module in the priority list, apply the Logic Review process from `logic-review-guide.md`, but at a higher level of abstraction:
 
 - Focus on public functions and their entry-point logic.
-- Trace the most likely execution paths; skip internal helpers unless a trace leads into them.
+- Trace the most likely execution paths; skip internal helpers unless a trace leads into them. "Internal helper" means not reachable from outside the module: Python `_`-prefixed names, Java/Kotlin `private`, Go unexported (lowercase) identifiers, and any function absent from the module's public API documentation. When a language has no visibility modifier, treat any function not documented in public-facing docs as internal.
 - Apply the L1–L6 checklist at the module level: are there patterns that suggest systemic risk?
 - Spend more time on modules with complex control flow, many callee dependencies, or recent changes.
 

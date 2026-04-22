@@ -1,5 +1,5 @@
 ---
-description: Run a Logic-Lens logic review via semi-formal execution tracing
+description: Review code for logic bugs — use when you suspect something is wrong but have no failing test yet
 allowed-tools: Skill
 ---
 

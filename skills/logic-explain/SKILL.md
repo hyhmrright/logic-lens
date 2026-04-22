@@ -26,8 +26,11 @@ description: >
 # Logic-Lens — Execution Explain
 
 ## Setup
+**Shared context (omits `logic-risks.md` — this skill produces no L-code findings):**
 1. Read `../_shared/common.md` for the Iron Law and Report Template.
 2. Read `../_shared/semiformal-guide.md` for the full semi-formal tracing methodology.
+
+**Skill-specific:**
 3. Read `logic-explain-guide.md` in this directory for the explanation process.
 
 ## Process

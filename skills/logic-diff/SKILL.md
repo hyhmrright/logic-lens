@@ -24,9 +24,12 @@ description: >
 # Logic-Lens — Semantic Diff
 
 ## Setup
+**Shared context (standard for all skills that produce findings):**
 1. Read `../_shared/common.md` for the Iron Law and Report Template.
 2. Read `../_shared/logic-risks.md` for risk codes relevant to semantic divergences.
 3. Read `../_shared/semiformal-guide.md` for semi-formal tracing methodology.
+
+**Skill-specific:**
 4. Read `logic-diff-guide.md` in this directory for the comparison process.
 
 ## Process
@@ -42,7 +45,7 @@ description: >
 
 **Mode line in report:** `Semantic Diff`
 
-**Verdict options:**
-- ✅ Semantically Equivalent — no behavioral divergence found under traced scenarios
-- ⚠️ Conditionally Equivalent — equivalent for common cases; diverges under [specific condition]
-- ❌ Semantically Divergent — confirmed behavioral difference at [location]
+**Verdict options** (full definitions and classification guidance in Step 6 of the guide):
+- ✅ Semantically Equivalent
+- ⚠️ Conditionally Equivalent
+- ❌ Semantically Divergent

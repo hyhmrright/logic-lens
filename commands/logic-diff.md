@@ -1,5 +1,5 @@
 ---
-description: Run a Logic-Lens semantic equivalence check between two code versions
+description: Check two code versions for semantic equivalence — use after a refactor or rewrite
 allowed-tools: Skill
 ---
 

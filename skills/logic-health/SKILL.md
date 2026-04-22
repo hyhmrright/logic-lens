@@ -25,9 +25,12 @@ description: >
 # Logic-Lens — Logic Health
 
 ## Setup
+**Shared context (standard for all skills that produce findings):**
 1. Read `../_shared/common.md` for the Iron Law, Report Template, and Logic Score.
 2. Read `../_shared/logic-risks.md` for all L1–L6 risk definitions.
 3. Read `../_shared/semiformal-guide.md` for semi-formal tracing methodology.
+
+**Skill-specific:**
 4. Read `logic-health-guide.md` in this directory for the aggregation process.
 
 ## Process

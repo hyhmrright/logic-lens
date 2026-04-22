@@ -27,9 +27,12 @@ description: >
 # Logic-Lens — Logic Review
 
 ## Setup
+**Shared context (standard for all skills that produce findings):**
 1. Read `../_shared/common.md` for the Iron Law, Report Template, and Logic Score.
 2. Read `../_shared/logic-risks.md` for L1–L6 risk definitions and detection patterns.
 3. Read `../_shared/semiformal-guide.md` for semi-formal reasoning methodology and language-specific notes.
+
+**Skill-specific:**
 4. Read `logic-review-guide.md` in this directory for the step-by-step review process.
 
 ## Process

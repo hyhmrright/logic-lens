@@ -12,7 +12,7 @@ State these explicitly at the start of the explanation:
 
 ## Step 2: Build Premises
 
-This is identical to Step 2 of the Logic Review guide. Do it explicitly — even for an explanation, premises prevent the trace from making unsubstantiated claims.
+Follow Step 2 of `logic-review-guide.md` exactly. Do it explicitly — even for an explanation, premises prevent the trace from making unsubstantiated claims.
 
 Key emphasis for explanations:
 - Resolve every non-obvious name. If the user is asking how something works, they probably don't know which `format` or which `sort` is being called.

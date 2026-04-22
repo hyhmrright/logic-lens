@@ -17,30 +17,7 @@ Reasoning without evidence is guessing. Semi-formal tracing is the evidence.
 
 ## Semi-Formal Reasoning
 
-Adapted from *Agentic Code Reasoning* (Ugare & Chandra, 2026, arXiv:2603.01896).
-
-Standard code review lets the analyst make unsubstantiated claims ("this looks fine", "this should work"). Semi-formal reasoning acts as a **certificate**: every conclusion must be grounded in an explicit trace through the actual code, following function definitions interprocedurally rather than guessing their behavior.
-
-### The Three-Step Discipline
-
-**Step 1 — Premises**
-State every assumption the code makes, explicitly:
-- *Name resolution*: which definition does this identifier actually bind to? Check imports, local definitions, class attributes, and scope chain before assuming it refers to a builtin or an obvious target.
-- *Type contracts*: what types does this function expect, and what types does the call site actually pass?
-- *State preconditions*: what must be true before this block executes (initialized, non-null, within bounds)?
-- *Control flow*: which branch, iteration count, or code path will actually execute for the relevant inputs?
-
-**Step 2 — Trace**
-Follow the actual execution path, step by step. Do not summarize — trace:
-- Resolve each identifier to its actual definition (do not assume builtin behavior without verifying)
-- Cross function boundaries: follow calls to their definitions, including inherited or monkey-patched ones
-- Track every state mutation, implicit conversion, and side effect
-- For conditional code, trace the path that leads to the bug or edge case
-
-**Step 3 — Divergence**
-Identify exactly where premise ≠ trace:
-- Name the specific line or expression
-- State the consequence: exception raised, wrong value returned, data corrupted, required operation skipped, infinite loop
+This framework uses three-step semi-formal execution tracing: **Premises → Trace → Divergence**. See `skills/_shared/semiformal-guide.md` for the full methodology, premises construction checklist, trace format, language-specific notes, and interprocedural reasoning guidance.
 
 ---
 

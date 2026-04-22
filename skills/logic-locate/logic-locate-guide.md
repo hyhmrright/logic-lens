@@ -30,7 +30,7 @@ Working from the failure site (the exception, the wrong value, the missed side e
 
 This is the inverse of forward tracing. You know the symptom; you are finding the cause.
 
-## Step 4: Trace Forward to Confirm
+## Step 4a: Trace Forward to Confirm
 
 Once you have a hypothesis about the root cause, trace forward from it:
 - Starting from the suspected fault location, does the execution reach the failure site?

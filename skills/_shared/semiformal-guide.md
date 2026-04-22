@@ -10,7 +10,7 @@ for practical code review, explanation, and fault localization.
 
 Unstructured reasoning ("this function looks fine") permits the analyst to skip
 cases, make unsubstantiated assumptions, and reach confident wrong answers. The
-paper's core finding: models using unstructured chain-of-thought achieve 78%
+paper's core finding: models using unstructured chain-of-thought achieve 76–78%
 accuracy on code semantics tasks; semi-formal tracing achieves 87–93%, with the
 largest gains on subtle interprocedural bugs that require following function calls
 rather than guessing their behavior.
