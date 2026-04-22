@@ -1,6 +1,6 @@
 {
   "name": "logic-lens",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "Logic-first code review using semi-formal execution tracing. Surfaces behavioral bugs, type contract breaches, boundary blindspots, and interprocedural semantic mismatches — the logic errors that cause production incidents in syntax-clean code.",
   "author": "hyhmrright",
   "license": "MIT",
@@ -17,7 +17,8 @@
       {"id": "logic-explain", "path": "skills/logic-explain"},
       {"id": "logic-diff", "path": "skills/logic-diff"},
       {"id": "logic-locate", "path": "skills/logic-locate"},
-      {"id": "logic-health", "path": "skills/logic-health"}
+      {"id": "logic-health", "path": "skills/logic-health"},
+      {"id": "logic-fix-all", "path": "skills/logic-fix-all"}
     ],
     "commands": [
       {
@@ -44,6 +45,11 @@
         "id": "logic-health",
         "description": "Logic health dashboard — aggregate logic review across a codebase",
         "path": "commands/logic-health.md"
+      },
+      {
+        "id": "logic-fix-all",
+        "description": "Autonomous audit-and-fix pipeline — finds and fixes every logic issue without user involvement",
+        "path": "commands/logic-fix-all.md"
       }
     ]
   }

@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-0.1.3-blue.svg" alt="Version">
+  <img src="https://img.shields.io/badge/version-0.2.0-blue.svg" alt="Version">
   <img src="https://img.shields.io/badge/license-MIT-green.svg" alt="MIT License">
   <img src="https://img.shields.io/badge/Claude_Code-Plugin-blueviolet.svg" alt="Claude Code Plugin">
   <img src="https://img.shields.io/badge/Codex_CLI-Skill-orange.svg" alt="Codex CLI Skill">
@@ -98,9 +98,9 @@ Logic-Lens produces:
 
 ---
 
-## Five Skills
+## Six Skills
 
-Logic-Lens ships five skills: **logic-review** (find behavioral bugs via execution tracing), **logic-explain** (trace what code actually does step by step), **logic-diff** (verify two versions are behaviorally equivalent), **logic-locate** (find the root cause of a failing test or crash), and **logic-health** (aggregate logic health dashboard across a codebase). See [Usage](#usage) for per-skill commands and [Slash Commands](#slash-commands) for platform-specific syntax.
+Logic-Lens ships six skills: **logic-review** (find behavioral bugs via execution tracing), **logic-explain** (trace what code actually does step by step), **logic-diff** (verify two versions are behaviorally equivalent), **logic-locate** (find the root cause of a failing test or crash), **logic-health** (aggregate logic health dashboard across a codebase), and **logic-fix-all** (autonomous audit-and-fix pipeline — scans the target, applies fixes for every finding, verifies each fix, no user involvement required). See [Usage](#usage) for per-skill commands and [Slash Commands](#slash-commands) for platform-specific syntax.
 
 ---
 
@@ -205,6 +205,7 @@ cp -r /tmp/logic-lens/skills/* ~/.codex/skills/logic-lens/
 | `/logic-lens:logic-diff` | `/logic-diff` | Semantic equivalence check between two versions |
 | `/logic-lens:logic-locate` | `/logic-locate` | Root cause localization for failing tests or crashes |
 | `/logic-lens:logic-health` | `/logic-health` | Aggregate logic health dashboard for a codebase |
+| `/logic-lens:logic-fix-all` | `/logic-fix-all` | Autonomous audit-and-fix pipeline — finds and fixes every logic issue |
 
 > Short-form commands are auto-installed on first session start by the session-start hook.
 
@@ -216,6 +217,7 @@ cp -r /tmp/logic-lens/skills/* ~/.codex/skills/logic-lens/
 | `/logic-diff` | Semantic equivalence check between two versions |
 | `/logic-locate` | Root cause localization for failing tests or crashes |
 | `/logic-health` | Aggregate logic health dashboard for a codebase |
+| `/logic-fix-all` | Autonomous audit-and-fix pipeline — finds and fixes every logic issue |
 
 ### Codex CLI
 | Command | Action |
@@ -225,6 +227,7 @@ cp -r /tmp/logic-lens/skills/* ~/.codex/skills/logic-lens/
 | `$logic-diff` | Semantic equivalence check between two versions |
 | `$logic-locate` | Root cause localization for failing tests or crashes |
 | `$logic-health` | Aggregate logic health dashboard for a codebase |
+| `$logic-fix-all` | Autonomous audit-and-fix pipeline — finds and fixes every logic issue |
 
 ---
 
@@ -279,6 +282,16 @@ $logic-health                       # Codex CLI
 ```
 
 Runs abbreviated logic reviews across a codebase and produces a weighted Logic Health Score (0–100) broken down by risk dimension. Use before a release, during an audit, or when onboarding onto an unfamiliar codebase.
+
+### Autonomous Audit-and-Fix
+
+```
+/logic-fix-all                      # Claude Code (short form) / Gemini CLI
+/logic-lens:logic-fix-all           # Claude Code (full form)
+$logic-fix-all                      # Codex CLI
+```
+
+Point it at a directory or file. Logic-Lens sweeps the entire scope, collects all findings at every severity level (L1–L6), applies fixes in priority order, verifies each fix with a semantic diff, and re-confirms the codebase is clean — all without requiring you to read or review any code. The final output is a Fix Log table listing every change made and its verification status.
 
 ---
 

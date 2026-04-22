@@ -7,7 +7,7 @@ COMMANDS_DIR="$HOME/.claude/commands"
 
 mkdir -p "$COMMANDS_DIR"
 
-for skill in logic-review logic-explain logic-diff logic-locate logic-health; do
+for skill in logic-review logic-explain logic-diff logic-locate logic-health logic-fix-all; do
   src="$PLUGIN_DIR/commands/${skill}.md"
   dst="$COMMANDS_DIR/${skill}.md"
   if [ -f "$src" ]; then
@@ -17,10 +17,11 @@ done
 
 # Print a brief context note (< 150 words) into the session
 cat <<'EOF'
-Logic-Lens is active. Five skills available:
+Logic-Lens is active. Six skills available:
 - /logic-review   — logic bug review via semi-formal execution tracing
 - /logic-explain  — step-by-step execution path explanation
 - /logic-diff     — semantic equivalence check between two code versions
 - /logic-locate   — fault localization from a failing test or error
 - /logic-health   — aggregate logic health dashboard for a codebase
+- /logic-fix-all  — autonomous audit-and-fix pipeline (finds and fixes everything)
 EOF

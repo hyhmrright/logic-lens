@@ -232,6 +232,83 @@
           "check": "Output notes that delete_user returns True unconditionally, without checking whether the DELETE affected any rows"
         }
       ]
+    },
+    {
+      "id": 9,
+      "name": "fix-all-applies-fixes-and-reports-fix-log",
+      "mode": "logic-fix-all",
+      "prompt": "Fix all logic issues in this code:\n\n```python\n# auth/session.py\ndef get_session(session_id, store):\n    session = store.get(session_id)\n    return session['user_id']\n\ndef extend_session(session_id, store, ttl):\n    session = store.get(session_id)\n    session['expires'] = ttl\n    store.set(session_id, session)\n    return True\n```",
+      "expected_output": "Should apply fixes (not just report findings) and output a Fix Log table. get_session calls session['user_id'] without checking if store.get() returned None — L6/L3 bug, fix should add a guard before key access. extend_session mutates session['expires'] without checking if session is None — same root cause at a different call site; fix should add the same guard. Fix Log must list both fixes with file, lines, fix applied, and verification status. Logic Score (after) must be higher than Logic Score (before). The output must NOT be a plain logic-review report — it must include a Fix Log table and before/after scores.",
+      "assertions": [
+        {
+          "id": "has-fix-log",
+          "description": "Output includes a Fix Log section or table listing changes made",
+          "check": "Output contains 'Fix Log' as a heading or table label"
+        },
+        {
+          "id": "has-before-after-scores",
+          "description": "Output shows Logic Score before and after fixes",
+          "check": "Output contains both 'before' and 'after' Logic Score values (or equivalent labels like 'Logic Score (before)' and 'Logic Score (after)')"
+        },
+        {
+          "id": "fixes-null-deref-in-get-session",
+          "description": "A fix was applied to get_session to guard against None return from store.get()",
+          "check": "Output's Fix Log or code change shows a null/None guard added to get_session before accessing session['user_id']"
+        },
+        {
+          "id": "score-improved",
+          "description": "Logic Score after fixes is higher than before",
+          "check": "The after score is numerically higher than the before score"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "name": "fix-all-deduplicates-shared-root-cause",
+      "mode": "logic-fix-all",
+      "prompt": "Fix all logic issues in this module:\n\n```javascript\n// utils/config.js\nfunction getPort(config) {\n  return config.server.port;\n}\n\nfunction getHost(config) {\n  return config.server.host;\n}\n\nfunction getTimeout(config) {\n  return config.server.timeout || 5000;\n}\n```\n\nThis module is called from app startup with: `const port = getPort(loadConfig());`",
+      "expected_output": "Should identify that all three functions access config.server without checking if config or config.server is null/undefined — this is one root cause (L6/L3 boundary blindspot on the config parameter contract) manifesting at three call sites. The Fix Log should record one root-cause fix (add null guard for config.server at the shared access point, or add parameter validation) rather than three identical fixes. Logic Score (after) should be higher. getTimeout's fallback for timeout is correct behavior and should NOT be flagged as a bug.",
+      "assertions": [
+        {
+          "id": "has-fix-log",
+          "description": "Output includes a Fix Log table listing applied changes",
+          "check": "Output contains 'Fix Log' as a heading or table label"
+        },
+        {
+          "id": "identifies-shared-root-cause",
+          "description": "Output treats the null/undefined config.server access as one root cause affecting multiple call sites, not three independent bugs",
+          "check": "Output either mentions a single root-cause fix covering multiple functions, or references 'call sites' in the Fix Log"
+        },
+        {
+          "id": "does-not-flag-timeout-fallback",
+          "description": "The || 5000 fallback in getTimeout is not flagged as a logic bug",
+          "check": "Output does not list getTimeout's timeout fallback as a finding or fix"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "name": "fix-all-verifies-with-diff-and-marks-status",
+      "mode": "logic-fix-all",
+      "prompt": "Autonomously fix all logic issues in this Go function:\n\n```go\n// store/cache.go\nfunc (c *Cache) GetOrFetch(key string, fetch func() (string, error)) string {\n    if val, ok := c.data[key]; ok {\n        return val\n    }\n    val, err := fetch()\n    if err != nil {\n        return \"\"\n    }\n    c.data[key] = val\n    return val\n}\n```",
+      "expected_output": "Should identify: (1) the function silently returns empty string on fetch error — caller cannot distinguish 'not found' vs 'fetch failed', this is L5/L6 (silent failure / callee contract mismatch); the fix should return an error or use a sentinel. (2) concurrent map access on c.data is unsafe if GetOrFetch can be called from multiple goroutines — L4 (state mutation hazard). Fix Log must show both fixes with verification status (verified or unverified). For the concurrency fix, the status may be 'unverified' if static trace cannot confirm single-threaded use. Output must include a Fix Log table and before/after Logic Scores — not a plain review report.",
+      "assertions": [
+        {
+          "id": "has-fix-log",
+          "description": "Output includes a Fix Log table",
+          "check": "Output contains 'Fix Log' as a heading or table label"
+        },
+        {
+          "id": "identifies-silent-error",
+          "description": "Output identifies that returning empty string on error is a silent failure",
+          "check": "Output flags the empty string return on error as a logic issue (L5, L6, or equivalent) and applies a fix"
+        },
+        {
+          "id": "fix-log-has-verification-status",
+          "description": "Fix Log entries include a verification status column",
+          "check": "Fix Log table contains a column or field for verification status (verified, unverified, or equivalent)"
+        }
+      ]
     }
   ]
 }
