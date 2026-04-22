@@ -1,3 +1,6 @@
-Run a Logic-Lens fault localization — find the root cause of a failing test or bug report.
+---
+description: Run a Logic-Lens fault localization from a failing test or error
+allowed-tools: Skill
+---
 
-Invoke the `logic-locate` skill from the logic-lens plugin.
+Use the Skill tool to invoke `logic-lens:logic-locate`, then follow its instructions exactly. $ARGUMENTS

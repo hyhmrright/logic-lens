@@ -1,3 +1,6 @@
-Run a Logic-Lens execution explanation — trace what the code actually does step by step.
+---
+description: Run a Logic-Lens step-by-step execution path explanation
+allowed-tools: Skill
+---
 
-Invoke the `logic-explain` skill from the logic-lens plugin.
+Use the Skill tool to invoke `logic-lens:logic-explain`, then follow its instructions exactly. $ARGUMENTS

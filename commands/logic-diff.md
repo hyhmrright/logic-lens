@@ -1,3 +1,6 @@
-Run a Logic-Lens semantic diff — determine if two code versions are behaviorally equivalent.
+---
+description: Run a Logic-Lens semantic equivalence check between two code versions
+allowed-tools: Skill
+---
 
-Invoke the `logic-diff` skill from the logic-lens plugin.
+Use the Skill tool to invoke `logic-lens:logic-diff`, then follow its instructions exactly. $ARGUMENTS

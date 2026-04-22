@@ -1,3 +1,6 @@
-Run a Logic-Lens logic review on the specified code, file, or diff.
+---
+description: Run a Logic-Lens logic review via semi-formal execution tracing
+allowed-tools: Skill
+---
 
-Invoke the `logic-review` skill from the logic-lens plugin.
+Use the Skill tool to invoke `logic-lens:logic-review`, then follow its instructions exactly. $ARGUMENTS

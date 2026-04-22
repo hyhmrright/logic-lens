@@ -1,3 +1,6 @@
-Run a Logic-Lens logic health dashboard — aggregate logic review across all modules.
+---
+description: Run a Logic-Lens aggregate logic health dashboard for a codebase
+allowed-tools: Skill
+---
 
-Invoke the `logic-health` skill from the logic-lens plugin.
+Use the Skill tool to invoke `logic-lens:logic-health`, then follow its instructions exactly. $ARGUMENTS
