@@ -1,5 +1,11 @@
 # Logic-Lens — Shared Framework
 
+## Language
+
+Always respond in the same language the user used. If the user wrote in Chinese, respond in Chinese. If in English, respond in English. Apply this rule to all output: findings, summaries, remedies, and inline comments.
+
+---
+
 ## Iron Law
 
 NEVER suggest remedies before completing an execution trace.
