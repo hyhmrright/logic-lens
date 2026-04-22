@@ -3,24 +3,22 @@ name: logic-diff
 description: >
   Semantic equivalence analysis that determines whether two code versions,
   patches, or implementations produce identical behavior — using semi-formal
-  execution tracing rather than textual diff. Trigger this skill whenever a
-  user has two versions of code and wants to know if they behave the same
-  way. Strong trigger phrases: "did I break anything in this refactor",
-  "is this semantically equivalent", "are these two implementations
-  equivalent", "does my rewrite produce the same output", "verify this
-  migration is a drop-in replacement", "check my refactor", "same behavior
-  after the change?", "compare these two versions for correctness", "did
-  this change alter any behavior". Also trigger when the user migrates
-  between libraries or languages and wants to confirm identical behavior
-  ("I switched from lodash to native JS — same results?"), or when they
-  want to confirm a bug fix doesn't change behavior for non-buggy inputs.
-  Do NOT trigger for: reviewing a single version for bugs without a
-  comparison version (use logic-review), explaining what one piece of code
-  does (use logic-explain), locating the root cause of a failing test (use
-  logic-locate), questions about which version is better-designed or faster
-  (those are quality/performance questions, not equivalence), or API
-  backward-compatibility analysis (which is about interface contracts, not
-  semantic equivalence of implementations).
+  execution tracing rather than textual diff. Use this skill proactively
+  whenever a refactor, rewrite, or migration is shared: users almost always
+  want implicit confirmation that nothing broke, even if they only ask "does
+  this look right?" or share a PR without an explicit equivalence question.
+  Strong trigger phrases: "did I break anything in this refactor", "is this
+  semantically equivalent", "are these two implementations equivalent", "does
+  my rewrite produce the same output", "verify this migration is a drop-in
+  replacement", "check my refactor", "same behavior after the change?",
+  "compare these two versions for correctness", "did this change alter any
+  behavior". Also trigger when the user migrates between libraries or
+  languages ("I switched from lodash to native JS — same results?"), or when
+  they want to confirm a bug fix doesn't regress non-buggy inputs. Do NOT
+  trigger for: reviewing a single version for bugs (use logic-review),
+  explaining what one piece of code does (use logic-explain), locating a
+  failing test root cause (use logic-locate), or questions about which
+  version is better-designed or faster.
 ---
 
 # Logic-Lens — Semantic Diff

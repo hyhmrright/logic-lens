@@ -3,24 +3,24 @@ name: logic-locate
 description: >
   Fault localization that uses semi-formal execution tracing to pinpoint the
   specific code location responsible for a bug, test failure, crash, or
-  wrong output — given a concrete failure to work from. Trigger this skill
-  whenever a user has a specific, observable failure and wants to find where
-  it comes from. Strong trigger phrases: "find the bug", "this test is
-  failing", "track down this crash", "locate the error", "why is this test
-  failing", "find the root cause", "help me debug this", "where is this
-  coming from", "the error is somewhere in X — find it", or when the user
-  provides a stack trace or failing assertion and asks what caused it. Also
-  trigger when a user describes a specific observable symptom with enough
-  detail to trace — e.g. "expected 70, got 100", "KeyError at line 89",
-  "NoneType has no attribute X at services/foo.py:67", "cart empties when
-  second tab opens". The key signal: there is a specific known failure
-  (failing test, error message, wrong value, crash) — not just a suspicion
-  that code might be wrong. Do NOT trigger for: general code review without
-  a specific failure (use logic-review — the user says "check for bugs"
-  but has no concrete failure yet), explaining what code does (use
-  logic-explain), comparing two versions (use logic-diff), broad multi-module
-  audits (use logic-health), vague questions like "what's wrong with my
-  code in general", security or performance analysis, or refactoring requests.
+  wrong output — given a concrete failure to work from. Use this skill
+  proactively whenever a stack trace, failing assertion, error message, or
+  specific wrong output value is shared alongside code — that combination is
+  almost always a fault localization request. Strong trigger phrases: "find
+  the bug", "this test is failing", "track down this crash", "locate the
+  error", "why is this test failing", "find the root cause", "help me debug
+  this", "where is this coming from", "the error is somewhere in X — find
+  it". Also trigger when the user gives a specific observable symptom with
+  enough detail to trace — e.g. "expected 70, got 100", "KeyError at line
+  89", "NoneType has no attribute X at services/foo.py:67", "cart empties
+  when second tab opens". The key signal is a CONFIRMED failure (failing
+  test, error message, wrong value, crash) — not a vague suspicion. This
+  is what distinguishes logic-locate from logic-review: logic-locate starts
+  from evidence; logic-review starts from suspicion. Do NOT trigger for:
+  general review without a concrete failure (use logic-review), explaining
+  what code does (use logic-explain), comparing two versions (use logic-diff),
+  broad codebase audits (use logic-health), or vague questions like "what's
+  wrong with my code?"
 ---
 
 # Logic-Lens — Fault Locate

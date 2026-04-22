@@ -6,49 +6,232 @@
       "name": "python-shadow-override-builtin",
       "mode": "logic-review",
       "prompt": "Review this Python code for logic errors:\n\n```python\n# utils/formatter.py\ndef format(value, spec):\n    \"\"\"Project-specific format wrapper.\"\"\"\n    return f'{value:{spec}} (formatted)'\n\ndef render_year(date_obj):\n    year = date_obj.year\n    return format(year, '04d')\n```\n\nThis is called from other modules like: `from utils.formatter import render_year`",
-      "expected_output": "Should identify L1 (Shadow Override): render_year calls the module-level format() defined in the same file, not Python's builtin format(). The module's format() returns a string with ' (formatted)' appended, so render_year returns '2024 (formatted)' instead of '2024'. Any caller expecting a plain 4-digit string will receive unexpected output. Premises must state that format resolves to utils/formatter.py:format, not builtins.format."
+      "expected_output": "Should identify L1 (Shadow Override): render_year calls the module-level format() defined in the same file, not Python's builtin format(). The module's format() returns a string with ' (formatted)' appended, so render_year returns '2024 (formatted)' instead of '2024'. Any caller expecting a plain 4-digit string will receive unexpected output. Premises must state that format resolves to utils/formatter.py:format, not builtins.format.",
+      "assertions": [
+        {
+          "id": "identifies-L1",
+          "description": "Output identifies L1 (Shadow Override) risk code",
+          "check": "Output contains the text 'L1'"
+        },
+        {
+          "id": "names-module-format",
+          "description": "Output explicitly states that format() in render_year resolves to the module-level definition in utils/formatter.py, not the Python builtin",
+          "check": "Output states that format() resolves to the module-level function, not the builtin, with reference to utils/formatter.py or the local definition"
+        },
+        {
+          "id": "states-suffix-consequence",
+          "description": "Output states that the return value will include the ' (formatted)' suffix appended by the module-level format()",
+          "check": "Output mentions the ' (formatted)' suffix or describes that the return value is not a plain 4-digit string"
+        },
+        {
+          "id": "has-premises-trace-divergence",
+          "description": "Finding has all three required sections: Premises, Trace, and Divergence",
+          "check": "Output contains the words 'Premises', 'Trace', and 'Divergence' as section labels in the finding"
+        }
+      ]
     },
     {
       "id": 2,
       "name": "js-null-callee-contract",
       "mode": "logic-review",
       "prompt": "Review this JavaScript for logic errors:\n\n```javascript\nasync function getUsername(userId) {\n  const user = await db.users.findOne({ id: userId });\n  return user.name.trim();\n}\n\nasync function displayWelcome(userId) {\n  const name = await getUsername(userId);\n  return `Welcome, ${name}!`;\n}\n```",
-      "expected_output": "Should identify L6 (Callee Contract Mismatch) or L3 (Boundary Blindspot): db.users.findOne() can return null when no user matches the given userId. getUsername() calls user.name.trim() without checking if user is null, which will throw TypeError: Cannot read properties of null. The caller displayWelcome() also does not handle the resulting rejected Promise. Premises must state what findOne() can return."
+      "expected_output": "Should identify L6 (Callee Contract Mismatch) or L3 (Boundary Blindspot): db.users.findOne() can return null when no user matches the given userId. getUsername() calls user.name.trim() without checking if user is null, which will throw TypeError: Cannot read properties of null. The caller displayWelcome() also does not handle the resulting rejected Promise. Premises must state what findOne() can return.",
+      "assertions": [
+        {
+          "id": "identifies-L6-or-L3",
+          "description": "Output identifies L6 or L3 risk code",
+          "check": "Output contains 'L6' or 'L3'"
+        },
+        {
+          "id": "identifies-null-risk",
+          "description": "Output explicitly states that findOne() can return null when no user is found",
+          "check": "Output states that db.users.findOne() can return null (or undefined) when the user is not found"
+        },
+        {
+          "id": "identifies-TypeError",
+          "description": "Output identifies TypeError or property access on null as the observable consequence",
+          "check": "Output mentions TypeError, or describes that accessing .name or .trim() on a null value will throw a runtime error"
+        },
+        {
+          "id": "has-premises-trace-divergence",
+          "description": "Finding has Premises, Trace, and Divergence sections",
+          "check": "Output contains the words 'Premises', 'Trace', and 'Divergence' as section labels in the finding"
+        }
+      ]
     },
     {
       "id": 3,
       "name": "python-mutation-during-iteration",
       "mode": "logic-review",
       "prompt": "Review this Python function:\n\n```python\ndef remove_inactive(users):\n    for user in users:\n        if not user.is_active:\n            users.remove(user)\n    return users\n```",
-      "expected_output": "Should identify L4 (State Mutation Hazard): The function iterates over 'users' while simultaneously removing elements from it. Python's list iterator does not re-index when elements are removed, causing the iterator to skip elements immediately following a removed element. If two consecutive inactive users exist, only the first will be removed. The trace should show that after removing users[i], the iterator advances to what is now users[i+1] but was users[i+2] before removal."
+      "expected_output": "Should identify L4 (State Mutation Hazard): The function iterates over 'users' while simultaneously removing elements from it. Python's list iterator does not re-index when elements are removed, causing the iterator to skip elements immediately following a removed element. If two consecutive inactive users exist, only the first will be removed. The trace should show that after removing users[i], the iterator advances to what is now users[i+1] but was users[i+2] before removal.",
+      "assertions": [
+        {
+          "id": "identifies-L4",
+          "description": "Output identifies L4 (State Mutation Hazard)",
+          "check": "Output contains 'L4'"
+        },
+        {
+          "id": "identifies-skip-elements",
+          "description": "Output explains that consecutive inactive users can be skipped due to iterator advancement after removal",
+          "check": "Output mentions that elements can be skipped, or that consecutive inactive users may not all be removed"
+        },
+        {
+          "id": "identifies-iteration-mutation",
+          "description": "Output identifies modification of the list during iteration as the root cause",
+          "check": "Output describes the list being modified (removed from) while being iterated over as the root cause of the bug"
+        },
+        {
+          "id": "has-premises-trace-divergence",
+          "description": "Finding has Premises, Trace, and Divergence sections",
+          "check": "Output contains the words 'Premises', 'Trace', and 'Divergence' as section labels in the finding"
+        }
+      ]
     },
     {
       "id": 4,
       "name": "go-nil-interface-vs-nil-pointer",
       "mode": "logic-review",
       "prompt": "Review this Go code:\n\n```go\ntype Logger interface {\n    Log(msg string)\n}\n\nfunc NewFileLogger(path string) Logger {\n    if path == \"\" {\n        var l *FileLogger = nil\n        return l  // returns nil *FileLogger wrapped in Logger interface\n    }\n    return &FileLogger{path: path}\n}\n\nfunc Process(path string) {\n    logger := NewFileLogger(path)\n    if logger != nil {\n        logger.Log(\"starting\")\n    }\n}\n```",
-      "expected_output": "Should identify L2 (Type Contract Breach) or L1: When path is empty, NewFileLogger returns a nil *FileLogger wrapped in a Logger interface. In Go, an interface value is non-nil as long as it has a type set, even if the underlying pointer is nil. So logger != nil evaluates to true, and logger.Log() is called on a nil pointer, causing a runtime panic. The trace must show that the returned interface value has type=*FileLogger and value=nil, making the interface itself non-nil."
+      "expected_output": "Should identify L2 (Type Contract Breach) or L1: When path is empty, NewFileLogger returns a nil *FileLogger wrapped in a Logger interface. In Go, an interface value is non-nil as long as it has a type set, even if the underlying pointer is nil. So logger != nil evaluates to true, and logger.Log() is called on a nil pointer, causing a runtime panic. The trace must show that the returned interface value has type=*FileLogger and value=nil, making the interface itself non-nil.",
+      "assertions": [
+        {
+          "id": "identifies-L2-or-L1",
+          "description": "Output identifies L2 or L1 risk code",
+          "check": "Output contains 'L2' or 'L1'"
+        },
+        {
+          "id": "explains-interface-non-nil",
+          "description": "Output explains that a nil *FileLogger wrapped in a Logger interface is non-nil at the interface level",
+          "check": "Output explains that the interface value is non-nil even though the underlying pointer is nil, or equivalently that logger != nil evaluates to true despite the nil pointer"
+        },
+        {
+          "id": "identifies-panic",
+          "description": "Output identifies runtime panic as the observable consequence",
+          "check": "Output mentions a runtime panic, or that logger.Log() is called on a nil pointer causing a crash"
+        },
+        {
+          "id": "has-premises-trace-divergence",
+          "description": "Finding has Premises, Trace, and Divergence sections",
+          "check": "Output contains the words 'Premises', 'Trace', and 'Divergence' as section labels in the finding"
+        }
+      ]
     },
     {
       "id": 5,
       "name": "logic-explain-closure-capture",
       "mode": "logic-explain",
       "prompt": "Explain what this JavaScript actually does when the buttons are clicked:\n\n```javascript\nconst buttons = document.querySelectorAll('button');\nfor (var i = 0; i < buttons.length; i++) {\n  buttons[i].addEventListener('click', function() {\n    console.log('Button', i, 'clicked');\n  });\n}\n```\n\nAssume there are 3 buttons.",
-      "expected_output": "Should explain the var hoisting / closure capture bug: var i is function-scoped (not block-scoped), so all three event handlers close over the same variable i. By the time any button is clicked (after the loop completes), i equals 3 (the loop termination value). All three buttons log 'Button 3 clicked' rather than 'Button 0 clicked', 'Button 1 clicked', 'Button 2 clicked'. The trace must follow the actual closure semantics, stating that each handler captures a reference to i, not its value at loop time."
+      "expected_output": "Should explain the var hoisting / closure capture bug: var i is function-scoped (not block-scoped), so all three event handlers close over the same variable i. By the time any button is clicked (after the loop completes), i equals 3 (the loop termination value). All three buttons log 'Button 3 clicked' rather than 'Button 0 clicked', 'Button 1 clicked', 'Button 2 clicked'. The trace must follow the actual closure semantics, stating that each handler captures a reference to i, not its value at loop time.",
+      "assertions": [
+        {
+          "id": "explains-var-scoping",
+          "description": "Output explains that var is function-scoped, not block-scoped, and is hoisted out of the loop",
+          "check": "Output explains that 'var i' is function-scoped (not block-scoped), or mentions hoisting, or explains that all handlers share the same variable i"
+        },
+        {
+          "id": "explains-closure-reference",
+          "description": "Output explains that each event handler captures a reference to i (not its value at the time of handler creation)",
+          "check": "Output explains that the handlers capture a reference to i, not a snapshot of its value, or equivalently that the handlers see i's value at click time, not at registration time"
+        },
+        {
+          "id": "states-final-value-3",
+          "description": "Output states that all three buttons will print i=3 (the loop termination value) when clicked",
+          "check": "Output states that all buttons print 'Button 3 clicked', or that i equals 3 when any button is clicked after the loop completes"
+        },
+        {
+          "id": "no-score-line",
+          "description": "Execution Explain mode does not include a Logic Score line",
+          "check": "Output does not contain the text 'Logic Score'"
+        }
+      ]
     },
     {
       "id": 6,
       "name": "logic-diff-semantic-equivalence",
       "mode": "logic-diff",
       "prompt": "Are these two Python implementations semantically equivalent?\n\nVersion A:\n```python\ndef get_last(items):\n    return items[-1] if items else None\n```\n\nVersion B:\n```python\ndef get_last(items):\n    try:\n        return items[-1]\n    except IndexError:\n        return None\n```",
-      "expected_output": "Should find them conditionally equivalent: Both return the last element for non-empty lists and None for empty lists. However, they diverge for non-list iterables: Version A's boolean check works for any sequence with __len__, while Version B's try/except works for any sequence with __getitem__ including generators. Also, Version B will catch IndexError from items[-1] on custom objects that raise IndexError for reasons other than being empty, potentially masking a real error. Verdict: Conditionally Equivalent — equivalent for list inputs; may diverge for custom sequence types."
+      "expected_output": "Should find them conditionally equivalent: Both return the last element for non-empty lists and None for empty lists. However, they diverge for non-list iterables: Version A's boolean check works for any sequence with __len__, while Version B's try/except works for any sequence with __getitem__ including generators. Also, Version B will catch IndexError from items[-1] on custom objects that raise IndexError for reasons other than being empty, potentially masking a real error. Verdict: Conditionally Equivalent — equivalent for list inputs; may diverge for custom sequence types.",
+      "assertions": [
+        {
+          "id": "gives-verdict",
+          "description": "Output gives one of the three standard verdict options",
+          "check": "Output contains one of: 'Semantically Equivalent', 'Conditionally Equivalent', or 'Semantically Divergent'"
+        },
+        {
+          "id": "identifies-conditional-equivalence",
+          "description": "Output identifies that the two versions are conditionally equivalent (not fully equivalent for all input types)",
+          "check": "Output concludes Conditionally Equivalent, or explains that the versions are equivalent for standard list inputs but may diverge for custom types or non-list sequences"
+        },
+        {
+          "id": "explains-divergence-scenario",
+          "description": "Output identifies at least one concrete scenario where the two versions diverge",
+          "check": "Output describes a specific divergence: custom sequence types, generators, or custom objects that raise IndexError for reasons other than being empty"
+        },
+        {
+          "id": "has-premises-both-versions",
+          "description": "Output builds premises for both Version A and Version B independently",
+          "check": "Output contains analysis of both Version A and Version B (not just one of them)"
+        }
+      ]
     },
     {
       "id": 7,
       "name": "logic-locate-off-by-one",
       "mode": "logic-locate",
       "prompt": "This test is failing. Find the bug:\n\nFailing test:\n```python\ndef test_pagination():\n    items = list(range(10))  # [0, 1, 2, ..., 9]\n    page = paginate(items, page=2, page_size=3)\n    assert page == [3, 4, 5]  # Expected: items 3,4,5 (0-indexed page 2)\n```\n\nImplementation:\n```python\ndef paginate(items, page, page_size):\n    start = page * page_size\n    end = start + page_size\n    return items[start:end]\n```\n\nActual output: page == [6, 7, 8]",
-      "expected_output": "Should locate the fault: The test expects 0-indexed page 2 to return items[3:6] = [3,4,5], but the implementation treats page as 0-indexed differently. With page=2, page_size=3: start = 2*3 = 6, end = 6+3 = 9, so items[6:9] = [6,7,8]. The bug is an off-by-one in the test's expectation of what 'page 2' means, OR a semantic mismatch: the implementation is 0-indexed (page 0 = items 0-2, page 1 = items 3-5, page 2 = items 6-8) but the test assumes page 2 starts at offset 3. L3 (Boundary Blindspot) or L6 (Callee Contract Mismatch). The test expects page 2 = second page of data (1-based), implementation treats page as 0-based index."
+      "expected_output": "Should locate the fault: The test expects 0-indexed page 2 to return items[3:6] = [3,4,5], but the implementation treats page as 0-indexed differently. With page=2, page_size=3: start = 2*3 = 6, end = 6+3 = 9, so items[6:9] = [6,7,8]. The bug is an off-by-one in the test's expectation of what 'page 2' means, OR a semantic mismatch: the implementation is 0-indexed (page 0 = items 0-2, page 1 = items 3-5, page 2 = items 6-8) but the test assumes page 2 starts at offset 3. L3 (Boundary Blindspot) or L6 (Callee Contract Mismatch). The test expects page 2 = second page of data (1-based), implementation treats page as 0-based index.",
+      "assertions": [
+        {
+          "id": "traces-start-calculation",
+          "description": "Output traces the start offset calculation: start = page * page_size = 2 * 3 = 6",
+          "check": "Output computes or mentions that start = 6 (or equivalently 2*3=6) for page=2, page_size=3"
+        },
+        {
+          "id": "identifies-indexing-mismatch",
+          "description": "Output identifies 0-based vs 1-based (or equivalent) indexing semantic mismatch as the root cause",
+          "check": "Output explains that the test and implementation disagree on what 'page 2' means — the test expects the second page (1-based offset), the implementation treats it as a 0-based index"
+        },
+        {
+          "id": "identifies-L3-or-L6",
+          "description": "Output identifies L3 or L6 risk code",
+          "check": "Output contains 'L3' or 'L6'"
+        },
+        {
+          "id": "has-fault-confidence",
+          "description": "Output uses Fault Confidence instead of Logic Score (as required by logic-locate mode)",
+          "check": "Output contains 'Fault Confidence' or 'Confidence:' where a Logic Score would normally appear"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "name": "logic-health-sql-injection-module",
+      "mode": "logic-health",
+      "prompt": "Give me a logic health overview of this API module:\n\n```python\n# api/users.py\nfrom db import get_db\n\ndef get_user(user_id):\n    db = get_db()\n    user = db.query(f\"SELECT * FROM users WHERE id = {user_id}\")\n    return user\n\ndef create_user(name, email):\n    db = get_db()\n    result = db.execute(f\"INSERT INTO users (name, email) VALUES ('{name}', '{email}')\")\n    return result.lastrowid\n\ndef delete_user(user_id):\n    db = get_db()\n    db.execute(f\"DELETE FROM users WHERE id = {user_id}\")\n    return True\n```",
+      "expected_output": "Should produce a module health report with Logic Score well below 100. Should identify: (1) user-controlled input directly interpolated into SQL strings in all three functions — frame as L3 (no input validation at boundary) or L6 (callee contract violated by passing unsanitized input); (2) get_user does not check if the query result is None/empty before returning; (3) delete_user returns True unconditionally regardless of whether any row was deleted. Module Breakdown table should show api/users.py. Should NOT frame SQL injection primarily as a security issue — frame it as a logic contract issue.",
+      "assertions": [
+        {
+          "id": "has-module-breakdown",
+          "description": "Output includes a Module Breakdown section or table with per-module scores",
+          "check": "Output contains a 'Module Breakdown' heading, or a table showing per-module logic scores"
+        },
+        {
+          "id": "identifies-sql-interpolation",
+          "description": "Output identifies f-string SQL interpolation as a logic risk in the functions",
+          "check": "Output identifies that user-controlled input is directly interpolated into SQL strings (via f-strings or format strings), and frames it as a logic/contract issue"
+        },
+        {
+          "id": "score-below-100",
+          "description": "Logic Score is below 100 (multiple confirmed findings exist)",
+          "check": "Output reports a Logic Score below 100 — not '100/100' or 'Logic Score: 100'"
+        },
+        {
+          "id": "identifies-unconditional-true",
+          "description": "Output identifies that delete_user returns True unconditionally regardless of whether any row was deleted",
+          "check": "Output notes that delete_user returns True unconditionally, without checking whether the DELETE affected any rows"
+        }
+      ]
     }
   ]
 }

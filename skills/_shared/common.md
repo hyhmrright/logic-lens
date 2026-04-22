@@ -96,6 +96,28 @@ If the trace does not clearly confirm a divergence, downgrade to Suggestion and 
 
 ---
 
+## When No Bugs Are Found
+
+If the trace confirms no divergences, report Logic Score: 100 and state:
+"No confirmed logic bugs found. All traced paths behave as specified."
+
+Do not invent speculative findings to fill the Findings section. An empty Findings section with a high score is a valid, valuable result. If there are minor style or robustness suggestions, place them under 🟢 Suggestion with L-codes and a full Premises → Trace → Divergence → Remedy entry — never as prose observations outside the finding format.
+
+---
+
+## Scope Management
+
+If the code under review exceeds ~150 lines or 5 non-trivial functions, do not attempt a superficial scan of everything. A deep trace of 3 functions is more valuable than shallow pattern-matching across 30.
+
+Prioritize in this order:
+1. Functions the user explicitly flagged as suspicious or recently broken — user-provided signals carry the highest information density.
+2. Functions that touch external state, APIs, or user-controlled inputs.
+3. Functions changed in the most recent commit (`git log --oneline -5 --name-only` if available).
+
+State the covered scope at the top of the report. If you cannot cover everything, say so and explain the prioritization.
+
+---
+
 ## Project Configuration (`.logic-lens.yaml`)
 
 Optional file at project root. Logic-Lens reads it if present.

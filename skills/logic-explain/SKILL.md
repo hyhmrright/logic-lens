@@ -2,24 +2,25 @@
 name: logic-explain
 description: >
   Execution path explanation that traces through code step by step to reveal
-  what the code actually does — not what it appears to do. Trigger this
-  skill whenever a user wants to understand runtime behavior, trace a specific
-  execution scenario, or learn why code produces unexpected output. Strong
-  trigger phrases: "walk me through this", "trace this for me", "what
-  actually happens when I call X", "follow the execution", "explain what
-  this does step by step", "why does this print/return X instead of Y",
-  "I don't understand what this code does", "trace through X with input Y",
-  "what happens internally when", "explain the execution path". Also trigger
-  when a user shares code and asks why it behaves a certain way, even if
-  they don't use the word "trace" — e.g. "why does this print [3,3,3]
+  what the code actually does — not what it appears to do. Use this skill
+  proactively whenever a user seems confused about why code behaves the way
+  it does, or pastes code while asking "why does this happen?" even without
+  using the word "trace" or "explain". Strong trigger phrases: "walk me
+  through this", "trace this for me", "what actually happens when I call X",
+  "follow the execution", "explain what this does step by step", "why does
+  this print/return X instead of Y", "I don't understand what this code
+  does", "trace through X with input Y", "what happens internally when",
+  "explain the execution path". Also trigger when a user shares code and
+  asks why it behaves a certain way — e.g. "why does this print [3,3,3]
   instead of [0,1,2]", "what does yield from actually do here", "how does
-  this async code execute". Do NOT trigger for: finding bugs in code without
-  a specific behavioral question (use logic-review), checking if two code
-  versions are equivalent (use logic-diff), locating the root cause of a
-  failing test (use logic-locate), broad multi-module audits (use
-  logic-health), general concept explanations not tied to specific code
-  ("explain closures in general"), architecture or design questions, or
-  performance/security analysis.
+  this async code actually execute". Key disambiguation: logic-explain
+  answers "what does this code do and why?" for a specific input or scenario;
+  logic-review looks for bugs without a specific scenario in mind;
+  logic-locate starts from a known failure and traces backward. Do NOT
+  trigger for: finding bugs without a behavioral question (use logic-review),
+  comparing two versions (use logic-diff), locating a failing test root cause
+  (use logic-locate), broad codebase audits (use logic-health), or general
+  concept explanations not tied to specific code.
 ---
 
 # Logic-Lens — Execution Explain
