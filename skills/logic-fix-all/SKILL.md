@@ -1,22 +1,26 @@
 ---
 name: logic-fix-all
 description: >
-  Fully autonomous logic audit-and-fix pipeline — scans the target scope,
-  finds every logic bug at every severity level, fixes each one without
-  requiring user involvement, verifies each fix with semantic diff, then
-  re-confirms the codebase is clean. Use this when the user wants all logic
-  issues resolved hands-free: "fix everything", "clean up all logic issues",
-  "I don't want to look at the code", "just fix it all", "run a full fix",
-  "audit and fix", "fix all bugs automatically". Also trigger when the user
-  expresses frustration with recurring bugs and wants a one-shot resolution.
-  Do NOT trigger for: analysis-only requests ("what are the issues?", "show me
-  the bugs" — use logic-health or logic-review instead), single-function
-  explanations (use logic-explain), comparing two versions (use logic-diff),
-  locating one specific failure (use logic-locate), single-file or
-  single-function fixes where the user has already named the specific target
-  (use logic-review then direct Edit instead — the full 8-step pipeline is
-  disproportionate for a named, scoped fix). The key signal is that the
-  user wants FIXES applied without specifying where, not just findings reported.
+  Fully autonomous repository-wide logic audit-and-fix pipeline. Scans
+  the ENTIRE repo (source code, runtime config, constraint files,
+  behavioral docs — not just recent commits or staged changes), finds
+  every logic bug at every severity using semi-formal execution tracing,
+  applies fixes, iterates until clean. Starts with a mandatory pre-flight
+  consent prompt because it is token-intensive; after consent, runs
+  hands-free. Use this when the user wants all logic issues resolved
+  across a codebase without naming specific files: "fix everything",
+  "clean up all logic issues", "run a full fix", "audit and fix the whole
+  repo", "fix all bugs automatically", or expresses frustration with
+  recurring bugs and wants a one-shot resolution. Do NOT trigger for:
+  analysis-only requests ("what are the issues?", "show me the bugs" —
+  use logic-health or logic-review); single-function explanations (use
+  logic-explain); comparing two versions (use logic-diff); locating one
+  specific failure (use logic-locate); single-file or single-function
+  fixes where the user has already named the specific target (use
+  logic-review then direct Edit — the full pipeline is disproportionate
+  for a named, scoped fix); syntax/style/linting concerns (use a linter
+  — this skill reviews logic only). Key signal: the user wants FIXES
+  applied across a codebase without specifying where.
 ---
 
 # Logic-Lens — Logic Fix All
@@ -32,37 +36,75 @@ description: >
 
 ## Process
 
-**Scope detection:** If the user has not specified a target, default to the repository root. Check for `.logic-lens.yaml` — ignore patterns and custom risk codes are read in Step 1 of the guide.
+**Scope:** Always the entire repository. If the user names a subpath, honor it, but default is the repo root. `.logic-lens.yaml` is read in Phase 1 for `ignore:` patterns, `custom_risks`, `severity:` overrides, and `fix_all.max_iterations`.
 
-1. Enumerate and classify files by risk tier using the logic-health prioritization criteria (Step 1)
-2. Run a full semi-formal review pass per file and collect all findings (Step 2)
-3. If concrete failures exist, run logic-locate and merge findings into the collected set (Step 3)
-4. Assemble the fix queue, sort by severity, and write a remedy for each finding applying the Iron Law (Step 4)
-5. Apply fixes in queue order (Step 5)
-6. Verify each fix with logic-diff — confirm the divergence is removed and correct paths are unchanged (Step 6)
-7. Re-run logic-review on modified files to confirm clean; output the Fix Report (Steps 7–8)
+1. **Mandatory Consent + Scope Enumeration** — the pipeline's *only* mandatory user interaction: display scope/method/cost/iteration notice and wait for explicit user consent before any scanning or editing. On consent, enumerate every runtime-affecting file (source / config / constraint / doc), auto-exclude `.git` and project-specific build artifacts, classify by risk tier (Phases 0–1)
+2. **Health Pass** — apply `logic-health` methodology to map per-module Logic Scores and systemic L-code patterns (Phase 2)
+3. **Deep Review** — apply `logic-review` methodology per file to collect full Premises → Trace → Divergence findings (Phase 3)
+4. **Conditional Clarification** — apply `logic-locate` when concrete failures exist; apply `logic-explain` when a finding's path is unclear (call depth > 3, cross-module, async) (Phases 4–5)
+5. **Fix Queue + Remedy** — sort by severity, write a Minimal/Targeted/Justified remedy per finding, route cross-file contradictions to the correct edit target (code vs constraint vs config) (Phase 6)
+6. **Apply + Verify** — apply each fix, then apply `logic-diff` methodology to verify: expect "Conditionally Equivalent" with the condition matching the original failing scenario. Revert on regression, retry up to 3× (Phase 7)
+7. **Iterate + Report** — re-run health + review on modified files and their consumers. Critical findings loop without cap; Warning/Suggestion rounds capped by `fix_all.max_iterations` with a user escalation prompt at the cap. Output the Fix Report with per-role findings, skill invocation counts, iteration history (Phases 8–9)
 
 **Mode line in report:** `Logic Fix All`
 
 **Fix Report additions** (append after the standard Findings section from `common.md`):
 
 ```
+## Scope
+
+| Role       | Files scanned | Tier H/M/L | Truncated? |
+|------------|---------------|------------|------------|
+| source     | 42            | 12/20/10   | no         |
+| config     | 7             | 2/5/0      | no         |
+| constraint | 3             | 1/2/0      | no         |
+| doc        | 5             | 0/3/2      | no         |
+
+## Skill Invocations
+
+logic-health: N · logic-review: N · logic-locate: N · logic-explain: N · logic-diff: N
+
+## Iteration History
+
+| Round | Severity class | New findings | Action |
+|-------|----------------|--------------|--------|
+| 1 | mixed | 12 | fixed, iterated |
+| 2 | warning/suggestion | 3 | fixed, iterated |
+| 3 | suggestion | 1 | cap reached, user: continue |
+| 4 | — | 0 | clean |
+
 ## Fix Log
 
-| # | File | Lines | Finding | Risk | Fix Applied | Status |
-|---|------|-------|---------|------|-------------|--------|
-| 1 | auth/token.py | 42–55 | Null deref on missing claim | L1 | Added guard before claim access | verified |
-| 2 | api/router.ts | 108 | Off-by-one on page index | L2 | Changed `<` to `<=` | verified |
-| 3 | db/query.py | 201 | External state, complex trace | L3 | Added null check | unverified |
+(Role is derivable from File path — see Scope table above for the role breakdown. "Status" is one of: verified / unverified / reverted-regression.)
+
+| # | File | Lines | Finding | Risk | Severity | Fix Applied | Status |
+|---|------|-------|---------|------|----------|-------------|--------|
+| 1 | auth/token.py | 42–55 | Null deref on missing claim | L1 | Critical | Added guard before claim access | verified |
+| 2 | api/router.ts | 108 | Off-by-one on page index | L2 | Warning | Changed `<` to `<=` | verified |
+| 3 | config/app.yaml | 12 | `timeout_ms: "30s"` (string, code expects int) | L2 | Critical | Changed value to `30000` | verified |
+| 4 | CLAUDE.md | 88 | Doc claims API returns `User \| null`, code returns `User \| undefined` | L6 | Warning | Updated consumer code to handle both | verified |
+| 5 | db/query.py | 201 | External state, complex trace | L3 | Warning | Added null check | unverified |
+
+## Resolved by Clarification
+
+[Findings that Phase 5's logic-explain pass revealed as false positives
+after step-by-step tracing. Empty if none. Visibility matters — shows
+the pipeline self-corrected rather than silently dropping findings.]
 
 ## Unresolved Findings
 
-[List any findings that could not be fixed, with reason. Empty if all resolved.]
+[Findings that could not be fixed, with reason. Include:
+- "conflicting constraints" (Phase 7d: 3 retries exhausted)
+- "user stopped iteration at round N" (Phase 8d: user declined to continue)
+- "hard iteration ceiling reached" (Phase 8e: 3 user-continue's in a row)
+- "ambiguous spec" (Phase 6d doc-vs-doc conflict)
+- "unclear whether spec or consumer is wrong" (Phase 6d code-vs-config tie when both sides look plausible)
+Empty if all resolved.]
 
 ## Summary
 
-[2–3 sentences: overall improvement, most impactful fix, any items requiring
-follow-up runtime testing.]
+[2–3 sentences: overall improvement, most impactful fix, any items
+requiring follow-up runtime testing or human judgment.]
 ```
 
 **Report header fields** (replace the standard header fields from `common.md`):

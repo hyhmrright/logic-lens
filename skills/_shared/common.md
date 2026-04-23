@@ -120,4 +120,11 @@ custom_risks: []
 #     name: "Protocol Version Mismatch"
 #     description: "Messages encoded with one protocol version are decoded with another"
 #     severity: critical
+
+# Fix-all-specific config (only logic-fix-all reads this section;
+# other skills ignore it).
+fix_all:
+  max_iterations: 3   # non-Critical iteration cap (Critical findings
+                      # always loop until resolved; only
+                      # Warning/Suggestion rounds count toward this cap)
 ```
