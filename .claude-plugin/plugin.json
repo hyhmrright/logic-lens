@@ -1,6 +1,6 @@
 {
   "name": "logic-lens",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Logic-first code review using semi-formal execution tracing. Surfaces behavioral bugs, semantic errors, and runtime failures that linters miss.",
   "author": {
     "name": "Logic-Lens Contributors"
