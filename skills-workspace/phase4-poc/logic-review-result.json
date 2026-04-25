@@ -1,0 +1,7 @@
+{
+  "starting_trigger_accuracy": "4/8",
+  "best_trigger_accuracy": "4/8",
+  "best_description": "Find logic bugs in a single file or function via semi-formal execution tracing (Premises → Trace → Divergence → Remedy). Trigger when a user shares code and suspects something is wrong without naming a concrete failure — phrases like \"review this\", \"does this look right\", \"check this function\", \"audit this code\", \"tests pass but prod fails\". SCOPE HARD RULE: one file or one function only. For a directory or whole module use logic-health; for a confirmed failure (stack trace, failing test, specific wrong value) use logic-locate; for two versions use logic-diff; for repo-wide autonomous fixing use logic-fix-all. Do NOT trigger for: style/formatting, security scanning, performance, test generation, architecture or design questions.",
+  "iterations_run": 2,
+  "notes": "best_description matches original_description (no improvement). final_description (iteration 2 proposal) was scored lower than iteration 1 baseline, so iteration 1 description was retained as best."
+}

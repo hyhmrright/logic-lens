@@ -1,0 +1,644 @@
+Split: 12 train, 8 test (holdout=0.4)
+
+============================================================
+Iteration 1/2
+Description: Find logic bugs in a single file or function via semi-formal execution tracing (Premises → Trace → Divergence → Remedy). Trigger when a user shares code and suspects something is wrong without naming a concrete failure — phrases like "review this", "does this look right", "check this function", "audit this code", "tests pass but prod fails". SCOPE HARD RULE: one file or one function only. For a directory or whole module use logic-health; for a confirmed failure (stack trace, failing test, specific wrong value) use logic-locate; for two versions use logic-diff; for repo-wide autonomous fixing use logic-fix-all. Do NOT trigger for: style/formatting, security scanning, performance, test generation, architecture or design questions.
+============================================================
+Train: 18/36 correct, precision=100% recall=0% accuracy=50% (132.1s)
+  [FAIL] rate=0/3 expected=True: The PR diff is 80 lines in reports/generator.py — does the w
+  [FAIL] rate=0/3 expected=True: quick logic check on CalculateTax — we use decimal.Decimal b
+  [FAIL] rate=0/3 expected=True: 我有一段代码感觉有 bug 但测试都过了。review 一下这个 get_user_permissions 函数：def
+  [FAIL] rate=0/3 expected=True: audit this function please, it's been biting us intermittent
+  [FAIL] rate=0/3 expected=True: 下面这个 Python 函数看起来有点不对劲，帮我看看：def normalize_email(e): return e
+  [FAIL] rate=0/3 expected=True: Review this TypeScript hook before I merge — something feels
+  [PASS] rate=0/3 expected=False: is parseUserInput vulnerable to ReDoS? I need a security rev
+  [PASS] rate=0/3 expected=False: fix all the logic bugs in my repo automatically, I'll review
+  [PASS] rate=0/3 expected=False: do a full health audit of our backend/ directory before rele
+  [PASS] rate=0/3 expected=False: can you reformat this Python module to match Black + isort s
+  [PASS] rate=0/3 expected=False: stack trace: TypeError at /api/users.py:89 in get_profile. h
+  [PASS] rate=0/3 expected=False: what's a good architecture pattern for a plugin system like 
+Test : 12/24 correct, precision=100% recall=0% accuracy=50% (0.0s)
+  [FAIL] rate=0/3 expected=True: tests pass but prod returns weird timestamps after this comm
+  [FAIL] rate=0/3 expected=True: I'm paranoid this auth middleware has a race condition. 30 l
+  [FAIL] rate=0/3 expected=True: my colleague wrote this 40-line refund-amount function but o
+  [FAIL] rate=0/3 expected=True: 这段 Go 代码有潜在 bug 吗？func processBatch(items []Item) error { ..
+  [PASS] rate=0/3 expected=False: write pytest tests for the Cart class covering add / remove 
+  [PASS] rate=0/3 expected=False: I refactored parseDate from regex to Intl-based — are these 
+  [PASS] rate=0/3 expected=False: walk me through what happens when I call saveOrder(order) st
+  [PASS] rate=0/3 expected=False: this SQL takes 5 seconds on a 200k row table — optimize it
+
+Improving description...
+Proposed (22.5s): Use when the user shares a function or file and wants a logic/correctness check — even without a named error. Key signals: inline code + vague suspicion ("feels off", "looks right?", "worried about", "intermittently failing", "tests pass but something's wrong"), or explicit requests like "logic check", "review this function", "audit this code". Also triggers for: correctness doubts about edge cases (rounding, nulls, boundary conditions), pre-merge review of a specific function, or "I think there's a bug but can't pin it down".
+
+SCOPE: one file or one function only.
+- Confirmed failure with stack trace/failing test → use logic-locate
+- Directory or whole module → use logic-health
+- Two code versions → use logic-diff
+- Repo-wide auto-fix → use logic-fix-all
+- Style, security, performance, architecture → do NOT trigger
+
+============================================================
+Iteration 2/2
+Description: Use when the user shares a function or file and wants a logic/correctness check — even without a named error. Key signals: inline code + vague suspicion ("feels off", "looks right?", "worried about", "intermittently failing", "tests pass but something's wrong"), or explicit requests like "logic check", "review this function", "audit this code". Also triggers for: correctness doubts about edge cases (rounding, nulls, boundary conditions), pre-merge review of a specific function, or "I think there's a bug but can't pin it down".
+
+SCOPE: one file or one function only.
+- Confirmed failure with stack trace/failing test → use logic-locate
+- Directory or whole module → use logic-health
+- Two code versions → use logic-diff
+- Repo-wide auto-fix → use logic-fix-all
+- Style, security, performance, architecture → do NOT trigger
+============================================================
+Train: 18/36 correct, precision=100% recall=0% accuracy=50% (135.1s)
+  [FAIL] rate=0/3 expected=True: The PR diff is 80 lines in reports/generator.py — does the w
+  [FAIL] rate=0/3 expected=True: quick logic check on CalculateTax — we use decimal.Decimal b
+  [FAIL] rate=0/3 expected=True: 我有一段代码感觉有 bug 但测试都过了。review 一下这个 get_user_permissions 函数：def
+  [FAIL] rate=0/3 expected=True: audit this function please, it's been biting us intermittent
+  [PASS] rate=0/3 expected=False: is parseUserInput vulnerable to ReDoS? I need a security rev
+  [FAIL] rate=0/3 expected=True: Review this TypeScript hook before I merge — something feels
+  [FAIL] rate=0/3 expected=True: 下面这个 Python 函数看起来有点不对劲，帮我看看：def normalize_email(e): return e
+  [PASS] rate=0/3 expected=False: fix all the logic bugs in my repo automatically, I'll review
+  [PASS] rate=0/3 expected=False: do a full health audit of our backend/ directory before rele
+  [PASS] rate=0/3 expected=False: can you reformat this Python module to match Black + isort s
+  [PASS] rate=0/3 expected=False: stack trace: TypeError at /api/users.py:89 in get_profile. h
+  [PASS] rate=0/3 expected=False: what's a good architecture pattern for a plugin system like 
+Test : 12/24 correct, precision=100% recall=0% accuracy=50% (0.0s)
+  [FAIL] rate=0/3 expected=True: my colleague wrote this 40-line refund-amount function but o
+  [FAIL] rate=0/3 expected=True: I'm paranoid this auth middleware has a race condition. 30 l
+  [FAIL] rate=0/3 expected=True: tests pass but prod returns weird timestamps after this comm
+  [FAIL] rate=0/3 expected=True: 这段 Go 代码有潜在 bug 吗？func processBatch(items []Item) error { ..
+  [PASS] rate=0/3 expected=False: write pytest tests for the Cart class covering add / remove 
+  [PASS] rate=0/3 expected=False: I refactored parseDate from regex to Intl-based — are these 
+  [PASS] rate=0/3 expected=False: this SQL takes 5 seconds on a 200k row table — optimize it
+  [PASS] rate=0/3 expected=False: walk me through what happens when I call saveOrder(order) st
+
+Max iterations reached (2).
+
+Exit reason: max_iterations (2)
+Best score: 4/8 (iteration 1)
+
+Report: /var/folders/kb/clk179sd5qq5htsth48gfk5c0000gn/T/skill_description_report_logic-review_20260425_113200.html
+{
+  "exit_reason": "max_iterations (2)",
+  "original_description": "Find logic bugs in a single file or function via semi-formal execution tracing (Premises \u2192 Trace \u2192 Divergence \u2192 Remedy). Trigger when a user shares code and suspects something is wrong without naming a concrete failure \u2014 phrases like \"review this\", \"does this look right\", \"check this function\", \"audit this code\", \"tests pass but prod fails\". SCOPE HARD RULE: one file or one function only. For a directory or whole module use logic-health; for a confirmed failure (stack trace, failing test, specific wrong value) use logic-locate; for two versions use logic-diff; for repo-wide autonomous fixing use logic-fix-all. Do NOT trigger for: style/formatting, security scanning, performance, test generation, architecture or design questions.",
+  "best_description": "Find logic bugs in a single file or function via semi-formal execution tracing (Premises \u2192 Trace \u2192 Divergence \u2192 Remedy). Trigger when a user shares code and suspects something is wrong without naming a concrete failure \u2014 phrases like \"review this\", \"does this look right\", \"check this function\", \"audit this code\", \"tests pass but prod fails\". SCOPE HARD RULE: one file or one function only. For a directory or whole module use logic-health; for a confirmed failure (stack trace, failing test, specific wrong value) use logic-locate; for two versions use logic-diff; for repo-wide autonomous fixing use logic-fix-all. Do NOT trigger for: style/formatting, security scanning, performance, test generation, architecture or design questions.",
+  "best_score": "4/8",
+  "best_train_score": "6/12",
+  "best_test_score": "4/8",
+  "final_description": "Use when the user shares a function or file and wants a logic/correctness check \u2014 even without a named error. Key signals: inline code + vague suspicion (\"feels off\", \"looks right?\", \"worried about\", \"intermittently failing\", \"tests pass but something's wrong\"), or explicit requests like \"logic check\", \"review this function\", \"audit this code\". Also triggers for: correctness doubts about edge cases (rounding, nulls, boundary conditions), pre-merge review of a specific function, or \"I think there's a bug but can't pin it down\".\n\nSCOPE: one file or one function only.\n- Confirmed failure with stack trace/failing test \u2192 use logic-locate\n- Directory or whole module \u2192 use logic-health\n- Two code versions \u2192 use logic-diff\n- Repo-wide auto-fix \u2192 use logic-fix-all\n- Style, security, performance, architecture \u2192 do NOT trigger",
+  "iterations_run": 2,
+  "holdout": 0.4,
+  "train_size": 12,
+  "test_size": 8,
+  "history": [
+    {
+      "iteration": 1,
+      "description": "Find logic bugs in a single file or function via semi-formal execution tracing (Premises \u2192 Trace \u2192 Divergence \u2192 Remedy). Trigger when a user shares code and suspects something is wrong without naming a concrete failure \u2014 phrases like \"review this\", \"does this look right\", \"check this function\", \"audit this code\", \"tests pass but prod fails\". SCOPE HARD RULE: one file or one function only. For a directory or whole module use logic-health; for a confirmed failure (stack trace, failing test, specific wrong value) use logic-locate; for two versions use logic-diff; for repo-wide autonomous fixing use logic-fix-all. Do NOT trigger for: style/formatting, security scanning, performance, test generation, architecture or design questions.",
+      "train_passed": 6,
+      "train_failed": 6,
+      "train_total": 12,
+      "train_results": [
+        {
+          "query": "The PR diff is 80 lines in reports/generator.py \u2014 does the week-boundary calculation look correct to you? We use ISO weeks but the old code assumed Sunday-start",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "quick logic check on CalculateTax \u2014 we use decimal.Decimal but the legacy multiplier is float, I'm worried about rounding in the last penny",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u6211\u6709\u4e00\u6bb5\u4ee3\u7801\u611f\u89c9\u6709 bug \u4f46\u6d4b\u8bd5\u90fd\u8fc7\u4e86\u3002review \u4e00\u4e0b\u8fd9\u4e2a get_user_permissions \u51fd\u6570\uff1adef get_user_permissions(user_id): ...",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "audit this function please, it's been biting us intermittently: def acquire_lock(resource, timeout=30): ... (20 lines Python, uses redis)",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u4e0b\u9762\u8fd9\u4e2a Python \u51fd\u6570\u770b\u8d77\u6765\u6709\u70b9\u4e0d\u5bf9\u52b2\uff0c\u5e2e\u6211\u770b\u770b\uff1adef normalize_email(e): return e.strip().lower() if e else None \u2014\u2014 \u6211\u5728\u62c5\u5fc3\u5b83\u5904\u7406\u7a7a\u5b57\u7b26\u4e32\u7684\u65b9\u5f0f",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "Review this TypeScript hook before I merge \u2014 something feels off in the dependency array but I can't pinpoint it. useEffect(() => { fetch(userId); }, [])",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "is parseUserInput vulnerable to ReDoS? I need a security review on the regex",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "fix all the logic bugs in my repo automatically, I'll review the diff",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "do a full health audit of our backend/ directory before release \u2014 give me risk hotspots",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "can you reformat this Python module to match Black + isort style?",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "stack trace: TypeError at /api/users.py:89 in get_profile. here's the code, find the cause",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "what's a good architecture pattern for a plugin system like this? layered or hex?",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ],
+      "test_passed": 4,
+      "test_failed": 4,
+      "test_total": 8,
+      "test_results": [
+        {
+          "query": "tests pass but prod returns weird timestamps after this commit \u2014 I suspect the parseTimestamp step. Here's the 20-line function",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "I'm paranoid this auth middleware has a race condition. 30 lines, Express, uses req.session \u2014 can you review?",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "my colleague wrote this 40-line refund-amount function but our fixture tests keep passing and I'm not convinced. Can you check the math? \u2014 [snippet attached]",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u8fd9\u6bb5 Go \u4ee3\u7801\u6709\u6f5c\u5728 bug \u5417\uff1ffunc processBatch(items []Item) error { ... } \u2014 \u62c5\u5fc3 nil check \u548c early return \u7684\u7ec4\u5408",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "write pytest tests for the Cart class covering add / remove / total",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "I refactored parseDate from regex to Intl-based \u2014 are these two equivalent?",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "walk me through what happens when I call saveOrder(order) step by step \u2014 I want to understand the flow",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "this SQL takes 5 seconds on a 200k row table \u2014 optimize it",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ],
+      "passed": 6,
+      "failed": 6,
+      "total": 12,
+      "results": [
+        {
+          "query": "The PR diff is 80 lines in reports/generator.py \u2014 does the week-boundary calculation look correct to you? We use ISO weeks but the old code assumed Sunday-start",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "quick logic check on CalculateTax \u2014 we use decimal.Decimal but the legacy multiplier is float, I'm worried about rounding in the last penny",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u6211\u6709\u4e00\u6bb5\u4ee3\u7801\u611f\u89c9\u6709 bug \u4f46\u6d4b\u8bd5\u90fd\u8fc7\u4e86\u3002review \u4e00\u4e0b\u8fd9\u4e2a get_user_permissions \u51fd\u6570\uff1adef get_user_permissions(user_id): ...",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "audit this function please, it's been biting us intermittently: def acquire_lock(resource, timeout=30): ... (20 lines Python, uses redis)",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u4e0b\u9762\u8fd9\u4e2a Python \u51fd\u6570\u770b\u8d77\u6765\u6709\u70b9\u4e0d\u5bf9\u52b2\uff0c\u5e2e\u6211\u770b\u770b\uff1adef normalize_email(e): return e.strip().lower() if e else None \u2014\u2014 \u6211\u5728\u62c5\u5fc3\u5b83\u5904\u7406\u7a7a\u5b57\u7b26\u4e32\u7684\u65b9\u5f0f",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "Review this TypeScript hook before I merge \u2014 something feels off in the dependency array but I can't pinpoint it. useEffect(() => { fetch(userId); }, [])",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "is parseUserInput vulnerable to ReDoS? I need a security review on the regex",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "fix all the logic bugs in my repo automatically, I'll review the diff",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "do a full health audit of our backend/ directory before release \u2014 give me risk hotspots",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "can you reformat this Python module to match Black + isort style?",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "stack trace: TypeError at /api/users.py:89 in get_profile. here's the code, find the cause",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "what's a good architecture pattern for a plugin system like this? layered or hex?",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "iteration": 2,
+      "description": "Use when the user shares a function or file and wants a logic/correctness check \u2014 even without a named error. Key signals: inline code + vague suspicion (\"feels off\", \"looks right?\", \"worried about\", \"intermittently failing\", \"tests pass but something's wrong\"), or explicit requests like \"logic check\", \"review this function\", \"audit this code\". Also triggers for: correctness doubts about edge cases (rounding, nulls, boundary conditions), pre-merge review of a specific function, or \"I think there's a bug but can't pin it down\".\n\nSCOPE: one file or one function only.\n- Confirmed failure with stack trace/failing test \u2192 use logic-locate\n- Directory or whole module \u2192 use logic-health\n- Two code versions \u2192 use logic-diff\n- Repo-wide auto-fix \u2192 use logic-fix-all\n- Style, security, performance, architecture \u2192 do NOT trigger",
+      "train_passed": 6,
+      "train_failed": 6,
+      "train_total": 12,
+      "train_results": [
+        {
+          "query": "The PR diff is 80 lines in reports/generator.py \u2014 does the week-boundary calculation look correct to you? We use ISO weeks but the old code assumed Sunday-start",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "quick logic check on CalculateTax \u2014 we use decimal.Decimal but the legacy multiplier is float, I'm worried about rounding in the last penny",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u6211\u6709\u4e00\u6bb5\u4ee3\u7801\u611f\u89c9\u6709 bug \u4f46\u6d4b\u8bd5\u90fd\u8fc7\u4e86\u3002review \u4e00\u4e0b\u8fd9\u4e2a get_user_permissions \u51fd\u6570\uff1adef get_user_permissions(user_id): ...",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "audit this function please, it's been biting us intermittently: def acquire_lock(resource, timeout=30): ... (20 lines Python, uses redis)",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "is parseUserInput vulnerable to ReDoS? I need a security review on the regex",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "Review this TypeScript hook before I merge \u2014 something feels off in the dependency array but I can't pinpoint it. useEffect(() => { fetch(userId); }, [])",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u4e0b\u9762\u8fd9\u4e2a Python \u51fd\u6570\u770b\u8d77\u6765\u6709\u70b9\u4e0d\u5bf9\u52b2\uff0c\u5e2e\u6211\u770b\u770b\uff1adef normalize_email(e): return e.strip().lower() if e else None \u2014\u2014 \u6211\u5728\u62c5\u5fc3\u5b83\u5904\u7406\u7a7a\u5b57\u7b26\u4e32\u7684\u65b9\u5f0f",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "fix all the logic bugs in my repo automatically, I'll review the diff",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "do a full health audit of our backend/ directory before release \u2014 give me risk hotspots",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "can you reformat this Python module to match Black + isort style?",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "stack trace: TypeError at /api/users.py:89 in get_profile. here's the code, find the cause",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "what's a good architecture pattern for a plugin system like this? layered or hex?",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ],
+      "test_passed": 4,
+      "test_failed": 4,
+      "test_total": 8,
+      "test_results": [
+        {
+          "query": "my colleague wrote this 40-line refund-amount function but our fixture tests keep passing and I'm not convinced. Can you check the math? \u2014 [snippet attached]",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "I'm paranoid this auth middleware has a race condition. 30 lines, Express, uses req.session \u2014 can you review?",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "tests pass but prod returns weird timestamps after this commit \u2014 I suspect the parseTimestamp step. Here's the 20-line function",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u8fd9\u6bb5 Go \u4ee3\u7801\u6709\u6f5c\u5728 bug \u5417\uff1ffunc processBatch(items []Item) error { ... } \u2014 \u62c5\u5fc3 nil check \u548c early return \u7684\u7ec4\u5408",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "write pytest tests for the Cart class covering add / remove / total",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "I refactored parseDate from regex to Intl-based \u2014 are these two equivalent?",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "this SQL takes 5 seconds on a 200k row table \u2014 optimize it",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "walk me through what happens when I call saveOrder(order) step by step \u2014 I want to understand the flow",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ],
+      "passed": 6,
+      "failed": 6,
+      "total": 12,
+      "results": [
+        {
+          "query": "The PR diff is 80 lines in reports/generator.py \u2014 does the week-boundary calculation look correct to you? We use ISO weeks but the old code assumed Sunday-start",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "quick logic check on CalculateTax \u2014 we use decimal.Decimal but the legacy multiplier is float, I'm worried about rounding in the last penny",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u6211\u6709\u4e00\u6bb5\u4ee3\u7801\u611f\u89c9\u6709 bug \u4f46\u6d4b\u8bd5\u90fd\u8fc7\u4e86\u3002review \u4e00\u4e0b\u8fd9\u4e2a get_user_permissions \u51fd\u6570\uff1adef get_user_permissions(user_id): ...",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "audit this function please, it's been biting us intermittently: def acquire_lock(resource, timeout=30): ... (20 lines Python, uses redis)",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "is parseUserInput vulnerable to ReDoS? I need a security review on the regex",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "Review this TypeScript hook before I merge \u2014 something feels off in the dependency array but I can't pinpoint it. useEffect(() => { fetch(userId); }, [])",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u4e0b\u9762\u8fd9\u4e2a Python \u51fd\u6570\u770b\u8d77\u6765\u6709\u70b9\u4e0d\u5bf9\u52b2\uff0c\u5e2e\u6211\u770b\u770b\uff1adef normalize_email(e): return e.strip().lower() if e else None \u2014\u2014 \u6211\u5728\u62c5\u5fc3\u5b83\u5904\u7406\u7a7a\u5b57\u7b26\u4e32\u7684\u65b9\u5f0f",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "fix all the logic bugs in my repo automatically, I'll review the diff",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "do a full health audit of our backend/ directory before release \u2014 give me risk hotspots",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "can you reformat this Python module to match Black + isort style?",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "stack trace: TypeError at /api/users.py:89 in get_profile. here's the code, find the cause",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "what's a good architecture pattern for a plugin system like this? layered or hex?",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ]
+    }
+  ]
+}
