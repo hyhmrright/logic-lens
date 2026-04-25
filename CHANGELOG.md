@@ -28,10 +28,20 @@ Versions follow [SemVer](https://semver.org/).
 - **触发过度热切** → 移除全部 6 处 "Use this skill proactively whenever..." 模式，改为基于 SCOPE 的硬规则触发。
 - **中文输入收到英文 Report** → 通过 § 1 语言硬约束 + § 4 中英 header 对照表 + 各 SKILL.md Step 0 路由三层强制落地。
 
-### Known Limitations
+### Also in v0.4.0 (delivered across commits `bfb1788` / `49da8ee` / `1f91319`)
 
-- 本版本主评测 baseline 仅完成 6/18 个 case 的初步验证（外部资源限额所致），完整 36-run 对比与 trigger eval 优化推迟到 v0.4.1 / v0.5.0。
-- `logic-locate-guide.md` 的 Step 4a/4b 与 `logic-fix-all-guide.md` 647 行未拆分尚为后续 hygiene 工作。
+- **`_shared/report-template.md`** — single-source Report Template file. Full English + Chinese layouts + 5 rendering rules. All six skills render by referencing this file (common.md §4 now points here instead of inlining).
+- **`_shared/semiformal-checklist.md`** — single-source Premises Construction Checklist. Four sections (Name Resolution / Type Contracts / State Preconditions / Control Flow Assumptions) with anti-cheat notes. review/explain/diff guides now reference this rather than re-list.
+- **Guide Step numbering unified** — `logic-locate-guide.md` normalized from 1/2/3/4a/4b/5/6 to a flat 1..7. All six guides use the same numbering scheme.
+- **`logic-fix-all-guide.md` split** — 647-line guide decomposed into a 68-line navigation file + three phase-detail files (`guide-phases-0-2-consent-scope-health.md` / `guide-phases-3-5-review-locate-clarify.md` / `guide-phases-6-9-fix-iterate-report.md`). Readers load only the phase they need.
+- **120-case trigger eval set** — `evals/v2/trigger-evals-<skill>.json` × 6 (20 per skill, 10 positive + 10 near-miss negative). Surface for `skill-creator` description-optimization via `run_loop.py`.
+- **`scripts/`** infrastructure — `validate-repo.sh` (offline 22-check sanity) + `run-trigger-evals.sh` (wrapper around `skill-creator/scripts/run_loop.py`) + README. `package.json` scripts updated to point at them.
+
+### Known Limitations (deferred to v0.4.1 / v0.5.0)
+
+- **Iteration-2 36-run benchmark** against `evals/v2/evals-v2.json` was not completed (external LLM-call resource limit during this session). The 6-case partial iteration-1 baseline remains in `skills-workspace/iteration-1/` as evidence but is not a sufficient release-gate.
+- **`run-trigger-evals.sh` was not executed** against the 6 trigger-eval sets — the 6 SKILL.md descriptions in v0.4.0 are the author's hand-tuned draft, not a data-optimized version. Same external-resource cause.
+- **`pr-review-toolkit:code-reviewer` agent** was not run on the full v0.4.0 diff — recommend running manually before merging to main.
 
 ## [0.3.0] — 2026-04
 
