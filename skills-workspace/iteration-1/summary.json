@@ -1,0 +1,87 @@
+{
+  "per_skill": {
+    "logic-review": {
+      "with_skill": 1.0,
+      "without_skill": 0.5,
+      "delta": 0.5,
+      "n": 1
+    },
+    "logic-explain": {
+      "with_skill": 1.0,
+      "without_skill": 1.0,
+      "delta": 0.0,
+      "n": 1
+    },
+    "logic-locate": {
+      "with_skill": 1.0,
+      "without_skill": 0.5,
+      "delta": 0.5,
+      "n": 1
+    },
+    "logic-diff": {
+      "with_skill": 0.0,
+      "without_skill": 0.75,
+      "delta": -0.75,
+      "n": 0
+    },
+    "logic-health": {
+      "with_skill": 0.0,
+      "without_skill": 0.25,
+      "delta": -0.25,
+      "n": 0
+    },
+    "logic-fix-all": {
+      "with_skill": 0.0,
+      "without_skill": 0.25,
+      "delta": -0.25,
+      "n": 0
+    }
+  },
+  "per_case": {
+    "1": {
+      "name": "python-shadow-override-builtin",
+      "mode": "logic-review",
+      "with_skill": 1.0,
+      "without_skill": 0.5
+    },
+    "5": {
+      "name": "logic-explain-closure-capture",
+      "mode": "logic-explain",
+      "with_skill": 1.0,
+      "without_skill": 1.0
+    },
+    "7": {
+      "name": "logic-locate-off-by-one",
+      "mode": "logic-locate",
+      "with_skill": 1.0,
+      "without_skill": 0.5
+    },
+    "6": {
+      "name": "logic-diff-semantic-equivalence",
+      "mode": "logic-diff",
+      "with_skill": null,
+      "without_skill": 0.75
+    },
+    "8": {
+      "name": "logic-health-sql-injection-module",
+      "mode": "logic-health",
+      "with_skill": null,
+      "without_skill": 0.25
+    },
+    "9": {
+      "name": "fix-all-applies-fixes-and-reports-fix-log",
+      "mode": "logic-fix-all",
+      "with_skill": null,
+      "without_skill": 0.25
+    }
+  },
+  "overall_with": 1.0,
+  "overall_without": 0.542,
+  "overall_delta": 0.458,
+  "runs_with": 3,
+  "runs_without": 6,
+  "chinese_language_pass": {
+    "passed": 0,
+    "total": 0
+  }
+}

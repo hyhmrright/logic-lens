@@ -4,6 +4,34 @@ All notable changes to Logic-Lens are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 Versions follow [SemVer](https://semver.org/).
 
+## [0.5.0] — 2026-04-25
+
+### Added — outreach pack & first case study
+
+- `docs/announcement/marketplace-pr-{obra-superpowers-marketplace,helloianneo-awesome-claude-code-skills,hesreallyhim-awesome-claude-code}.md` — three marketplace-specific submission drafts. The first two replace the placeholder targets in the v0.4.3 outreach plan that turned out to be non-existent repos. The `hesreallyhim` draft notes a critical operational constraint: that marketplace blocks PR / `gh` CLI submissions and requires browser issue-form submission only — bypassing it bans the account.
+- `docs/announcement/marketplace-research-summary.md` — discoverability map of which marketplaces actually exist, their submission mechanics, and which to prioritize.
+- `docs/case-studies/01-checkout-module/` — first publishable case study built around a synthetic 8-file Python checkout module that intentionally embeds one canonical example of every L-code (L1 shadow override, L2 type contract breach, L3 boundary blindspot, L4 state mutation hazard, L5 control flow escape, L6 callee contract mismatch). Includes:
+  - `code/` — the 8 source files (`cart.py`, `pricing.py`, `inventory.py`, `order.py`, `tax.py`, `payment.py`, `checkout.py`, `notifications.py`) so readers can run `/logic-health` themselves and reproduce.
+  - `logic-health-report.md` — the actual `/logic-health` output (Score 52/100, six findings).
+  - `blog-post.md` — 2436-word narrative walking through how the report surfaces real bugs that linters and tests miss.
+  - `README.md` — index + reproduction steps.
+
+### Negative result — trigger optimization (`run_loop.py`) does not improve descriptions
+
+Ran `scripts/run-trigger-evals.sh` with 2 iterations on all six skills using `claude-sonnet-4-6`. Result: every skill produced **identical `precision=100%, recall=0%, accuracy=50%`** on every iteration. The proposed rewritten descriptions were not adopted because:
+
+1. The metric saturated — no learning signal across 2 iterations × 6 skills.
+2. Functional correctness is already verified: 58/58 assertions across 15 cases on Opus 4.7 and Sonnet 4.6 (see `iteration-2/` and `iteration-3/`).
+3. Replacing a known-good description on a saturated metric is net-negative risk.
+
+Diagnosis and proposed methodology fix for v0.6.x in `skills-workspace/v0.5.0-trigger-opt/FINDINGS.md`. Briefly: skill-creator's `run_loop.py` evaluates each description in isolation against a single-skill judge, which doesn't model the actual harness's multi-skill routing. A real fix needs a multi-skill judge context or instrumented harness runs.
+
+`SKILL.md` files are unchanged in this release. Only the trigger-opt logs and findings are kept under `skills-workspace/v0.5.0-trigger-opt/` for reproducibility.
+
+### Removed
+
+- `skills-workspace/SESSION-STATUS.md` — pre-v0.4.0 session checkpoint, superseded by four shipped releases (v0.4.0 / 0.4.1 / 0.4.2 / 0.4.3) and misleading if read literally.
+
 ## [0.4.3] — 2026-04-25
 
 ### Added — community & outreach infrastructure

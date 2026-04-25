@@ -1,0 +1,34 @@
+{
+  "eval_id": 9,
+  "name": "fix-all-applies-fixes-and-reports-fix-log",
+  "mode": "logic-fix-all",
+  "config": "without_skill",
+  "expectations": [
+    {
+      "id": "has-fix-log",
+      "description": "Output includes a Fix Log section or table listing changes made",
+      "passed": false,
+      "evidence": "Fix Log"
+    },
+    {
+      "id": "has-before-after-scores",
+      "description": "Output shows Logic Score before and after fixes",
+      "passed": false,
+      "evidence": "scores=[]"
+    },
+    {
+      "id": "fixes-null-deref-in-get-session",
+      "description": "A fix was applied to get_session to guard against None return from store.get()",
+      "passed": true,
+      "evidence": "null-guard"
+    },
+    {
+      "id": "score-improved",
+      "description": "Logic Score after fixes is higher than before",
+      "passed": false,
+      "evidence": "cant extract 2 scores"
+    }
+  ],
+  "pass_rate": 0.25,
+  "output_chars": 3419
+}

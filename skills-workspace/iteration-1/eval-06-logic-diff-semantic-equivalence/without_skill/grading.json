@@ -1,0 +1,34 @@
+{
+  "eval_id": 6,
+  "name": "logic-diff-semantic-equivalence",
+  "mode": "logic-diff",
+  "config": "without_skill",
+  "expectations": [
+    {
+      "id": "gives-verdict",
+      "description": "Output gives one of the three standard verdict options",
+      "passed": false,
+      "evidence": "verdict"
+    },
+    {
+      "id": "identifies-conditional-equivalence",
+      "description": "Output identifies that the two versions are conditionally equivalent (not fully equivalent for all input types)",
+      "passed": true,
+      "evidence": "cond-equiv"
+    },
+    {
+      "id": "explains-divergence-scenario",
+      "description": "Output identifies at least one concrete scenario where the two versions diverge",
+      "passed": true,
+      "evidence": "divergence scenario"
+    },
+    {
+      "id": "has-premises-both-versions",
+      "description": "Output builds premises for both Version A and Version B independently",
+      "passed": true,
+      "evidence": "A=True B=True"
+    }
+  ],
+  "pass_rate": 0.75,
+  "output_chars": 4339
+}

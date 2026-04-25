@@ -1,0 +1,34 @@
+{
+  "eval_id": 5,
+  "name": "logic-explain-closure-capture",
+  "mode": "logic-explain",
+  "config": "without_skill",
+  "expectations": [
+    {
+      "id": "explains-var-scoping",
+      "description": "Output explains that var is function-scoped, not block-scoped, and is hoisted out of the loop",
+      "passed": true,
+      "evidence": "scoping"
+    },
+    {
+      "id": "explains-closure-reference",
+      "description": "Output explains that each event handler captures a reference to i (not its value at the time of handler creation)",
+      "passed": true,
+      "evidence": "closure ref"
+    },
+    {
+      "id": "states-final-value-3",
+      "description": "Output states that all three buttons will print i=3 (the loop termination value) when clicked",
+      "passed": true,
+      "evidence": "final-val=3"
+    },
+    {
+      "id": "no-score-line",
+      "description": "Execution Explain mode does not include a Logic Score line",
+      "passed": true,
+      "evidence": "score line absent"
+    }
+  ],
+  "pass_rate": 1.0,
+  "output_chars": 3732
+}

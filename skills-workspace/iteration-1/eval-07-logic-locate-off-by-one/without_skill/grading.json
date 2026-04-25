@@ -1,0 +1,34 @@
+{
+  "eval_id": 7,
+  "name": "logic-locate-off-by-one",
+  "mode": "logic-locate",
+  "config": "without_skill",
+  "expectations": [
+    {
+      "id": "traces-start-calculation",
+      "description": "Output traces the start offset calculation: start = page * page_size = 2 * 3 = 6",
+      "passed": true,
+      "evidence": "start=6"
+    },
+    {
+      "id": "identifies-indexing-mismatch",
+      "description": "Output identifies 0-based vs 1-based (or equivalent) indexing semantic mismatch as the root cause",
+      "passed": true,
+      "evidence": "indexing mismatch"
+    },
+    {
+      "id": "identifies-L3-or-L6",
+      "description": "Output identifies L3 or L6 risk code",
+      "passed": false,
+      "evidence": "L3/L6"
+    },
+    {
+      "id": "has-fault-confidence",
+      "description": "Output uses Fault Confidence instead of Logic Score (as required by logic-locate mode)",
+      "passed": false,
+      "evidence": "fault-conf"
+    }
+  ],
+  "pass_rate": 0.5,
+  "output_chars": 3271
+}
