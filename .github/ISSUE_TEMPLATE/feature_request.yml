@@ -1,0 +1,50 @@
+name: Feature request
+description: Propose a new skill, a new L-code, or an improvement to an existing skill
+title: "[feature] "
+labels: ["enhancement"]
+body:
+  - type: dropdown
+    id: type
+    attributes:
+      label: What kind of change
+      options:
+        - New skill
+        - New L-code (logic risk type)
+        - Improvement to an existing skill
+        - Improvement to shared framework
+        - New evaluation case
+        - Tooling / scripts
+        - Documentation
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem / motivation
+      description: What gap does this fill? What bugs or scenarios are currently under-served?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      description: How should it work? What are the inputs, outputs, and boundary conditions? Include a minimal example if possible.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: What other approaches did you consider? Why reject them?
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: Willing to contribute?
+      options:
+        - label: I can submit a PR for this
+        - label: I can help review the PR
+        - label: I can help write eval cases

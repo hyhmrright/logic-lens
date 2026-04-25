@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Questions / Discussions
+    url: https://github.com/hyhmrright/logic-lens/discussions
+    about: Ask how to use Logic-Lens, share recipes, or discuss semi-formal reasoning.
+  - name: 🔒 Security report
+    url: https://github.com/hyhmrright/logic-lens/security/advisories/new
+    about: Report a security vulnerability privately.

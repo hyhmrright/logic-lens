@@ -4,6 +4,26 @@ All notable changes to Logic-Lens are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 Versions follow [SemVer](https://semver.org/).
 
+## [0.4.3] — 2026-04-25
+
+### Added — community & outreach infrastructure
+
+- `SECURITY.md`, `CODE_OF_CONDUCT.md` (Contributor Covenant 2.1).
+- `.github/ISSUE_TEMPLATE/{bug_report.yml,feature_request.yml,config.yml}` + `.github/PULL_REQUEST_TEMPLATE.md` + `.github/FUNDING.yml`.
+- `docs/MARKETING-ROADMAP.md` — 4-layer outreach plan with success criteria.
+- `docs/announcement/{hn-show-hn,reddit-claudeai,twitter-thread,marketplace-submission}.md` — ready-to-paste drafts for each channel.
+- README upgraded with a second row of status badges (release tag, last-commit, issues, PRs, verification 58/58, forks).
+
+### Repository state (done via `gh api`, not commit-level changes)
+
+- `main` branch protected: allow_force_pushes=false, allow_deletions=false, require PR, require conversation resolution.
+- Discussions enabled; wiki disabled; projects disabled; issues enabled.
+- 15 repo topics set for SEO: `claude-code`, `claude-plugin`, `code-review`, `logic-analysis`, `static-analysis`, `ai-tools`, `debugging`, `semantic-analysis`, `anthropic`, `llm-tools`, `developer-tools`, `bug-detection`, `semi-formal-verification`, `opus`, `sonnet`.
+
+### Phase 4 POC (diagnosis only, no code change)
+
+Ran `scripts/run-trigger-evals.sh review` on sonnet-4-6 with 2 iterations end-to-end. Starting score 4/8, best score 4/8. Diagnosis: **recall=0% on positive cases** — the hand-tuned SCOPE HARD RULE descriptions from v0.4.0 block genuine review requests with vague suspicion phrasing or inline code blocks. Artifacts in `skills-workspace/phase4-poc/` for v0.5.0 to address via a full 6-skill run_loop pass.
+
 ## [0.4.2] — 2026-04-25
 
 ### Changed

@@ -1,0 +1,69 @@
+name: Bug report
+description: Logic-Lens gave an incorrect result, crashed, or behaved unexpectedly
+title: "[bug] "
+labels: ["bug", "needs-triage"]
+body:
+  - type: dropdown
+    id: skill
+    attributes:
+      label: Which skill
+      options:
+        - logic-review
+        - logic-explain
+        - logic-diff
+        - logic-locate
+        - logic-health
+        - logic-fix-all
+        - shared framework (common.md, templates)
+        - scripts / CI
+        - other
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Logic-Lens version
+      placeholder: "e.g. 0.4.2 (see package.json)"
+    validations:
+      required: true
+
+  - type: input
+    id: host
+    attributes:
+      label: Host environment
+      description: Claude Code CLI / Codex / Gemini CLI / other — include version
+      placeholder: "e.g. Claude Code 1.x.x"
+    validations:
+      required: true
+
+  - type: textarea
+    id: input
+    attributes:
+      label: Input (user prompt + code snippet)
+      description: Paste the exact prompt and code that triggered the issue.
+      render: markdown
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What should Logic-Lens have produced?
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: What did Logic-Lens actually produce? Paste the full report if possible.
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Additional context
+      description: OS, model used (opus / sonnet / haiku), `.logic-lens.yaml` config if relevant

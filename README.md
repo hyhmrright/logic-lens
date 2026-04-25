@@ -19,12 +19,20 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-0.4.2-blue.svg" alt="Version">
+  <img src="https://img.shields.io/badge/version-0.4.3-blue.svg" alt="Version">
   <img src="https://img.shields.io/badge/license-MIT-green.svg" alt="MIT License">
   <img src="https://img.shields.io/badge/Claude_Code-Plugin-blueviolet.svg" alt="Claude Code Plugin">
   <img src="https://img.shields.io/badge/Codex_CLI-Skill-orange.svg" alt="Codex CLI Skill">
   <img src="https://img.shields.io/badge/Gemini_CLI-Extension-4285F4.svg" alt="Gemini CLI Extension">
-  <img src="https://img.shields.io/github/stars/hyhmrright/logic-lens?style=social" alt="GitHub Stars">
+  <img src="https://img.shields.io/badge/verification-58%2F58%20assertions-brightgreen.svg" alt="Verified 58/58">
+</p>
+<p align="center">
+  <a href="https://github.com/hyhmrright/logic-lens/stargazers"><img src="https://img.shields.io/github/stars/hyhmrright/logic-lens?style=social" alt="GitHub Stars"></a>
+  <a href="https://github.com/hyhmrright/logic-lens/network/members"><img src="https://img.shields.io/github/forks/hyhmrright/logic-lens?style=social" alt="GitHub Forks"></a>
+  <a href="https://github.com/hyhmrright/logic-lens/issues"><img src="https://img.shields.io/github/issues/hyhmrright/logic-lens" alt="Issues"></a>
+  <a href="https://github.com/hyhmrright/logic-lens/pulls"><img src="https://img.shields.io/github/issues-pr/hyhmrright/logic-lens" alt="Pull Requests"></a>
+  <a href="https://github.com/hyhmrright/logic-lens/releases/latest"><img src="https://img.shields.io/github/v/release/hyhmrright/logic-lens" alt="Latest Release"></a>
+  <a href="https://github.com/hyhmrright/logic-lens/commits/main"><img src="https://img.shields.io/github/last-commit/hyhmrright/logic-lens" alt="Last commit"></a>
 </p>
 
 ---
