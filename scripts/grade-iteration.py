@@ -165,6 +165,39 @@ def grade_case(case_id: int, output_path: Path) -> dict:
             ("has Fix Log", lambda t: re.search(r'Fix Log|修复记录', t) is not None),
             ("has before and after score", lambda t: re.search(r'before|改前|修复前|之前', t, re.I) is not None and re.search(r'after|改后|修复后|之后', t, re.I) is not None),
         ]
+    elif case_id == 10:
+        rules += [
+            ("has Fix Log", lambda t: re.search(r'Fix Log|修复记录', t) is not None),
+            ("identifies shared root cause across call sites", lambda t: re.search(r'shared root|call sites|root[- ]cause|同一根因|多个调用点|共享.*根因|root.*fix|one fix', t, re.I) is not None),
+            ("acknowledges || 5000 fallback is correct (not a bug)", lambda t: re.search(r'not a bug|correct.*(?:default|fallback|pattern|intentional)|intentional.*(?:default|fallback)|有意.*默认|正确.*默认|不是.*bug', t, re.I | re.S) is not None),
+        ]
+    elif case_id == 101:
+        rules += [
+            ("contains L6", lambda t: "L6" in t),
+            ("traces cross-file into gateway", lambda t: re.search(r'gateway\.py|gateway\.charge|payments/|跨文件', t) is not None),
+            ("identifies amount=0 returns None", lambda t: re.search(r'amount\s*=\s*0|amount == 0|amount is 0|amount equals 0|金额为 0', t, re.I) is not None),
+        ]
+    elif case_id == 103:
+        rules += [
+            ("explains microtask / promise order", lambda t: re.search(r'microtask|event loop|promise.*queue|await', t, re.I) is not None),
+            ("no Logic Score line (explain mode)", lambda t: not re.search(r'Logic Score|逻辑评分', t)),
+        ]
+    elif case_id == 105:
+        rules += [
+            ("identifies nil-interface-vs-nil-pointer trap", lambda t: re.search(r'interface.*non-nil|non-nil.*interface|nil pointer wrapped|interface value is non-nil|即使.*nil|接口值.*非 nil|interface != nil', t, re.I) is not None),
+            ("contains verdict", lambda t: re.search(r'Semantically Equivalent|Conditionally Equivalent|Semantically Divergent|语义等价|条件等价|语义分歧', t) is not None),
+        ]
+    elif case_id == 107:
+        rules += [
+            ("contains L4", lambda t: "L4" in t),
+            ("identifies race / non-atomic increment", lambda t: re.search(r'race|non-atomic|原子|数据竞争|并发|GIL|lock', t, re.I) is not None),
+            ("has Fault Confidence", lambda t: re.search(r'Fault Confidence|故障置信度', t) is not None),
+        ]
+    elif case_id == 109:
+        rules += [
+            ("identifies systemic L6 pattern", lambda t: (re.search(r'systemic|Systemic Patterns|系统性', t, re.I) is not None) and ("L6" in t)),
+            ("has Module Breakdown", lambda t: re.search(r'Module Breakdown|模块分布', t) is not None),
+        ]
 
     expectations = check(text, rules)
     passed = sum(1 for e in expectations if e["passed"])

@@ -1,0 +1,29 @@
+{
+  "eval_id": 10,
+  "name": "fix-all-deduplicates-shared-root-cause",
+  "mode": "logic-fix-all",
+  "is_zh": false,
+  "char_count": 8384,
+  "chinese_chars": 0,
+  "expectations": [
+    {
+      "text": "has Premises + Trace + Divergence labels (EN or ZH)",
+      "passed": true
+    },
+    {
+      "text": "has Fix Log",
+      "passed": true
+    },
+    {
+      "text": "identifies shared root cause across call sites",
+      "passed": true
+    },
+    {
+      "text": "acknowledges || 5000 fallback is correct (not a bug)",
+      "passed": true
+    }
+  ],
+  "passed": 4,
+  "total": 4,
+  "pass_rate": 1.0
+}
