@@ -1,0 +1,33 @@
+{
+  "eval_id": 108,
+  "name": "zh-multi-module-health",
+  "mode": "logic-health",
+  "is_zh": true,
+  "char_count": 6753,
+  "chinese_chars": 1821,
+  "expectations": [
+    {
+      "text": "output is chinese (>=50 CJK chars, no English section headers)",
+      "passed": true
+    },
+    {
+      "text": "has Premises + Trace + Divergence labels (EN or ZH)",
+      "passed": true
+    },
+    {
+      "text": "has Module Breakdown",
+      "passed": true
+    },
+    {
+      "text": "Logic Score below 100",
+      "passed": true
+    },
+    {
+      "text": "identifies at least 3 findings",
+      "passed": true
+    }
+  ],
+  "passed": 5,
+  "total": 5,
+  "pass_rate": 1.0
+}

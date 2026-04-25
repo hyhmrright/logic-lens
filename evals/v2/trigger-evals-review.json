@@ -1,0 +1,22 @@
+[
+  {"query": "下面这个 Python 函数看起来有点不对劲，帮我看看：def normalize_email(e): return e.strip().lower() if e else None —— 我在担心它处理空字符串的方式", "should_trigger": true},
+  {"query": "Review this TypeScript hook before I merge — something feels off in the dependency array but I can't pinpoint it. useEffect(() => { fetch(userId); }, [])", "should_trigger": true},
+  {"query": "my colleague wrote this 40-line refund-amount function but our fixture tests keep passing and I'm not convinced. Can you check the math? — [snippet attached]", "should_trigger": true},
+  {"query": "I'm paranoid this auth middleware has a race condition. 30 lines, Express, uses req.session — can you review?", "should_trigger": true},
+  {"query": "我有一段代码感觉有 bug 但测试都过了。review 一下这个 get_user_permissions 函数：def get_user_permissions(user_id): ...", "should_trigger": true},
+  {"query": "The PR diff is 80 lines in reports/generator.py — does the week-boundary calculation look correct to you? We use ISO weeks but the old code assumed Sunday-start", "should_trigger": true},
+  {"query": "audit this function please, it's been biting us intermittently: def acquire_lock(resource, timeout=30): ... (20 lines Python, uses redis)", "should_trigger": true},
+  {"query": "tests pass but prod returns weird timestamps after this commit — I suspect the parseTimestamp step. Here's the 20-line function", "should_trigger": true},
+  {"query": "这段 Go 代码有潜在 bug 吗？func processBatch(items []Item) error { ... } — 担心 nil check 和 early return 的组合", "should_trigger": true},
+  {"query": "quick logic check on CalculateTax — we use decimal.Decimal but the legacy multiplier is float, I'm worried about rounding in the last penny", "should_trigger": true},
+  {"query": "can you reformat this Python module to match Black + isort style?", "should_trigger": false},
+  {"query": "is parseUserInput vulnerable to ReDoS? I need a security review on the regex", "should_trigger": false},
+  {"query": "this SQL takes 5 seconds on a 200k row table — optimize it", "should_trigger": false},
+  {"query": "write pytest tests for the Cart class covering add / remove / total", "should_trigger": false},
+  {"query": "walk me through what happens when I call saveOrder(order) step by step — I want to understand the flow", "should_trigger": false},
+  {"query": "I refactored parseDate from regex to Intl-based — are these two equivalent?", "should_trigger": false},
+  {"query": "stack trace: TypeError at /api/users.py:89 in get_profile. here's the code, find the cause", "should_trigger": false},
+  {"query": "do a full health audit of our backend/ directory before release — give me risk hotspots", "should_trigger": false},
+  {"query": "fix all the logic bugs in my repo automatically, I'll review the diff", "should_trigger": false},
+  {"query": "what's a good architecture pattern for a plugin system like this? layered or hex?", "should_trigger": false}
+]

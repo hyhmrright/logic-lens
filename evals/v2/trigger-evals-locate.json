@@ -1,0 +1,22 @@
+[
+  {"query": "TypeError: Cannot read properties of null (reading 'id') at /src/users.ts:89. here's the full component and the get_profile function — find the cause", "should_trigger": true},
+  {"query": "test_pagination is failing: expected [3,4,5] but got [6,7,8]. here's the paginate(items, page, page_size) implementation — locate the bug", "should_trigger": true},
+  {"query": "my function returns 100 but I expect 70 when input is [10, 20, 30, 10]. where's the bug in this aggregate_discount code?", "should_trigger": true},
+  {"query": "生产环境报错 KeyError: 'config' at app/loader.py:42，帮我定位根因。代码和 traceback 附上", "should_trigger": true},
+  {"query": "crash: ZeroDivisionError at metrics.py:115 when computing average over an empty window. trace it back and find the cause", "should_trigger": true},
+  {"query": "the React modal randomly doesn't close on ESC — maybe 1 in 5 times. here's the component, the useEffect and the key handler — help me find why", "should_trigger": true},
+  {"query": "intermittent failure in test_checkout_flow — about 1 in 10 CI runs. here's the test, the service, and the mock setup", "should_trigger": true},
+  {"query": "stack trace: AttributeError: 'NoneType' object has no attribute 'name' at services/user.py:67 in format_welcome. code below", "should_trigger": true},
+  {"query": "customers report cart empties when opening a second tab. Vuex store + Cart component + localStorage sync code attached — find the race", "should_trigger": true},
+  {"query": "CI fails: assert result == 42 but result is 41. function under test is increment_counter() — locate the off-by-one", "should_trigger": true},
+  {"query": "review this function for potential bugs — I have no concrete failure yet but something feels wrong", "should_trigger": false},
+  {"query": "walk me through what this code does step by step for an empty list input", "should_trigger": false},
+  {"query": "are these two implementations equivalent? I refactored it yesterday", "should_trigger": false},
+  {"query": "give me a logic health overview of the whole backend/ directory", "should_trigger": false},
+  {"query": "autonomously fix every bug you find in the repo", "should_trigger": false},
+  {"query": "how do I set up pytest with coverage reports for my project?", "should_trigger": false},
+  {"query": "reformat my error messages to be consistent", "should_trigger": false},
+  {"query": "this SQL is slow — 8 seconds on 1M rows. optimize it", "should_trigger": false},
+  {"query": "write a regex that matches international phone numbers", "should_trigger": false},
+  {"query": "what does 'segmentation fault' mean in general? I'm learning C", "should_trigger": false}
+]

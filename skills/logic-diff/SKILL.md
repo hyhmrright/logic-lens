@@ -1,51 +1,46 @@
 ---
 name: logic-diff
 description: >
-  Semantic equivalence analysis that determines whether two code versions,
-  patches, or implementations produce identical behavior — using semi-formal
-  execution tracing rather than textual diff. Use this skill proactively
-  whenever a refactor, rewrite, or migration is shared: users almost always
-  want implicit confirmation that nothing broke, even if they only ask "does
-  this look right?" or share a PR without an explicit equivalence question.
-  Strong trigger phrases: "did I break anything in this refactor", "is this
-  semantically equivalent", "are these two implementations equivalent", "does
-  my rewrite produce the same output", "verify this migration is a drop-in
-  replacement", "check my refactor", "same behavior after the change?",
-  "compare these two versions for correctness", "did this change alter any
-  behavior". Also trigger when the user migrates between libraries or
-  languages ("I switched from lodash to native JS — same results?"), or when
-  they want to confirm a bug fix doesn't regress non-buggy inputs. Do NOT
-  trigger for: reviewing a single version for bugs (use logic-review),
-  explaining what one piece of code does (use logic-explain), locating a
-  failing test root cause (use logic-locate), or questions about which
-  version is better-designed or faster.
+  Compare two code versions for semantic equivalence via semi-formal tracing
+  of both versions side-by-side. Trigger when the user shares a refactor,
+  rewrite, migration, or A/B implementation and wants to confirm behavior
+  is unchanged — "did I break anything", "is this equivalent", "check my
+  refactor", "same behavior after the change?", "does my rewrite produce
+  the same output", "switched from X to Y — same results?".
+  SCOPE HARD RULE: requires two code versions (A and B). A single version
+  for bug-finding uses logic-review; one version + a failing test uses
+  logic-locate; explaining what one piece of code does uses logic-explain;
+  codebase audit uses logic-health.
+  Do NOT trigger for: single-version review, performance comparison,
+  design-quality comparison, or "which is better-written" questions.
 ---
 
 # Logic-Lens — Semantic Diff
 
 ## Setup
-**Shared context (standard for all skills that produce findings):**
-1. Read `../_shared/common.md` for the Iron Law and Report Template.
-2. Read `../_shared/logic-risks.md` for risk codes relevant to semantic divergences.
-3. Read `../_shared/semiformal-guide.md` for semi-formal tracing methodology.
 
-**Skill-specific:**
-4. Read `logic-diff-guide.md` in this directory for the comparison process.
+Read in this order:
+1. `../_shared/common.md` — language rule, Iron Law, Report Template, Verdict header (see §5), Remedy discipline.
+2. `../_shared/logic-risks.md` — L1–L6 definitions (used to classify divergences).
+3. `../_shared/semiformal-guide.md` — tracing methodology and Premises Construction Checklist.
+4. `logic-diff-guide.md` — comparison process.
 
 ## Process
 
-**Scope:** The user must provide two code versions (A and B). Ask if not provided. Clarify which test cases or scenarios to compare across (or derive from the code if obvious).
+**Step 0. Language + scope routing.** Detect language per `common.md` §1. Confirm two versions are provided. If only one version, switch to logic-review.
 
-1. Identify the scope: what is the shared specification both versions are supposed to implement? (Step 1 of the guide)
-2. Build premises for Version A and Version B independently (Step 2)
-3. Trace both versions for each relevant scenario: common case, boundary cases, error cases (Steps 3–4)
-4. Identify semantic divergences: points where A and B produce different behavior for the same input (Step 5)
-5. Classify each divergence: is it a bug in one version, or an intentional behavioral change? (Step 6)
-6. Output using Report Template with equivalence verdict (Step 7)
+**Step 1. Identify the shared specification** (guide Step 1) — what inputs should both versions handle; what outputs/side effects are expected.
 
-**Mode line in report:** `Semantic Diff`
+**Step 2. Build independent premises for each version** (guide Step 2) — apply the Premises Construction Checklist to Version A and Version B separately.
 
-**Verdict options** (full definitions and classification guidance in Step 6 of the guide):
-- ✅ Semantically Equivalent
-- ⚠️ Conditionally Equivalent
-- ❌ Semantically Divergent
+**Step 3. Trace both versions for the common case** (guide Step 3) — parallel trace, same input, note the first divergence if any.
+
+**Step 4. Trace boundary cases** (guide Step 4) — empty/null/zero, max/min, error inputs, first/last of collections.
+
+**Step 5. Identify and classify semantic divergences** (guide Step 5) — each divergence is a finding with Premises → Trace → Divergence → Remedy and an L-code.
+
+**Step 6. Equivalence verdict** (guide Step 6) — one of: `✅ Semantically Equivalent`, `⚠️ Conditionally Equivalent` (state the condition precisely), `❌ Semantically Divergent`.
+
+**Step 7. Output** (guide Step 7) — Report Template with the Verdict header per `common.md` §5; localize headers if the user wrote in Chinese.
+
+**Mode line in report:** `Semantic Diff` (Chinese: `语义对比`).

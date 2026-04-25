@@ -1,0 +1,29 @@
+{
+  "eval_id": 104,
+  "name": "zh-sql-rewrite-null-comparison",
+  "mode": "logic-diff",
+  "is_zh": true,
+  "char_count": 2708,
+  "chinese_chars": 858,
+  "expectations": [
+    {
+      "text": "output is chinese (>=50 CJK chars, no English section headers)",
+      "passed": true
+    },
+    {
+      "text": "has Premises + Trace + Divergence labels (EN or ZH)",
+      "passed": true
+    },
+    {
+      "text": "contains verdict",
+      "passed": true
+    },
+    {
+      "text": "identifies = NULL issue",
+      "passed": true
+    }
+  ],
+  "passed": 4,
+  "total": 4,
+  "pass_rate": 1.0
+}
