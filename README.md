@@ -435,3 +435,7 @@ The semi-formal reasoning methodology, risk taxonomy, and accuracy benchmarks re
 <p align="center">
   <strong>⭐ If Logic-Lens helped you catch a bug before it shipped, give it a star!</strong>
 </p>
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=hyhmrright/logic-lens&type=Date)](https://star-history.com/#hyhmrright/logic-lens&Date)
