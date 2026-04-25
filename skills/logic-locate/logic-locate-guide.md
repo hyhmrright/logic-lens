@@ -30,7 +30,7 @@ Working from the failure site (the exception, the wrong value, the missed side e
 
 This is the inverse of forward tracing. You know the symptom; you are finding the cause.
 
-## Step 4a: Trace Forward to Confirm
+## Step 4: Trace Forward to Confirm
 
 Once you have a hypothesis about the root cause, trace forward from it:
 - Starting from the suspected fault location, does the execution reach the failure site?
@@ -38,7 +38,7 @@ Once you have a hypothesis about the root cause, trace forward from it:
 
 If yes, the hypothesis is confirmed. If not, revise — the actual fault may be earlier or in a different branch.
 
-## Step 4b: Interprocedural Tracing
+## Step 5: Interprocedural Tracing
 
 If the backward trace implicates a callee's behavior, trace into it:
 - Does the callee return `None` under the conditions observed?
@@ -47,7 +47,7 @@ If the backward trace implicates a callee's behavior, trace into it:
 
 The fault is often not in the function the user is looking at — it is in a callee that doesn't behave as the caller assumed (L6), or in a name that resolves differently than expected (L1).
 
-## Step 5: Identify the Root Divergence
+## Step 6: Identify the Root Divergence
 
 State the root fault precisely:
 - The specific line or expression where the divergence originates (not the crash site — the cause of the crash)
@@ -57,7 +57,7 @@ State the root fault precisely:
 
 This is the Primary Fault. There may also be Contributing Factors — conditions that enabled the fault to occur (e.g., a missing precondition check that would have caught the bad value earlier).
 
-## Step 6: Classify and Output
+## Step 7: Classify and Output
 
 1. Assign the L-code that best describes the root fault (L1–L6).
 2. Assess Fault Confidence:

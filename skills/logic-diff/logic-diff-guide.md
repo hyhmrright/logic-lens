@@ -12,7 +12,7 @@ If the user hasn't stated the specification, derive it from: test cases that bot
 
 ## Step 2: Build Independent Premises for Each Version
 
-For Version A and Version B separately, apply the full Premises checklist from `semiformal-guide.md`:
+For Version A and Version B separately, apply the full **Premises Construction Checklist** at `../_shared/semiformal-checklist.md`:
 
 - Name resolution: same identifier, same resolution in both versions?
 - Type contracts: do both versions make the same type assumptions at call sites?

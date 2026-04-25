@@ -12,7 +12,7 @@ State these explicitly at the start of the explanation:
 
 ## Step 2: Build Premises
 
-Follow Step 2 of `logic-review-guide.md` exactly. Do it explicitly — even for an explanation, premises prevent the trace from making unsubstantiated claims.
+Apply the **Premises Construction Checklist** at `../_shared/semiformal-checklist.md` — Name Resolution, Type Contracts, State Preconditions, Control Flow Assumptions. Do it explicitly even for an explanation: premises prevent the trace from making unsubstantiated claims.
 
 Key emphasis for explanations:
 - Resolve every non-obvious name. If the user is asking how something works, they probably don't know which `format` or which `sort` is being called.

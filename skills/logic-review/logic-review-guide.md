@@ -13,26 +13,9 @@ This sentence becomes the reference point for divergence: anything the trace rev
 
 ## Step 2: Build Premises
 
-For each function or block under review, explicitly state:
+For each function or block under review, run through every applicable item in the **Premises Construction Checklist** at `../_shared/semiformal-checklist.md` — Name Resolution, Type Contracts, State Preconditions, Control Flow Assumptions. That file is the single source; do not re-list its items here.
 
-**2a. Name resolution**
-List every non-trivial identifier (function calls, class references, imported names) and resolve it to its actual definition:
-- Check `import` statements at the top of the file.
-- Check if any local variable or parameter shadows an outer-scope name.
-- For method calls, confirm the runtime type of the receiver and which class's method is dispatched.
-
-**2b. Type contracts**
-For each function parameter and return value:
-- What type is expected? (from annotations, documentation, or usage)
-- What type is actually passed at the call site? Trace from the declaration of the argument.
-
-**2c. State preconditions**
-- What must be true before this code runs? (non-null references, initialized fields, acquired locks, database connection open)
-- Is each precondition guaranteed? By whom?
-
-**2d. Control flow assumptions**
-- For each conditional: what values cause which branch?
-- For each loop: what terminates it, and can it run zero times or indefinitely?
+Write the premises down explicitly before starting the trace. A premise you were not willing to state is a premise the trace cannot validate or contradict, so any "finding" resting on it is speculation.
 
 ## Step 3: Trace the Normal Execution Path
 
