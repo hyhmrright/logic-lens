@@ -104,8 +104,6 @@ Logic-Lens produces:
 
 *(+ 2 more findings)*
 
-![Logic-Lens demo](docs/demo.gif)
-
 ---
 
 ## Quickstart (60 seconds)
