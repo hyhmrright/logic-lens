@@ -1,0 +1,106 @@
+{
+  "iteration_dir": "skills-workspace/iteration-2",
+  "cases_graded": 9,
+  "overall_pass_rate": 1.0,
+  "per_mode": {
+    "logic-review": {
+      "n": 1,
+      "avg_pass_rate": 1.0
+    },
+    "logic-explain": {
+      "n": 1,
+      "avg_pass_rate": 1.0
+    },
+    "logic-diff": {
+      "n": 2,
+      "avg_pass_rate": 1.0
+    },
+    "logic-locate": {
+      "n": 1,
+      "avg_pass_rate": 1.0
+    },
+    "logic-health": {
+      "n": 2,
+      "avg_pass_rate": 1.0
+    },
+    "logic-fix-all": {
+      "n": 2,
+      "avg_pass_rate": 1.0
+    }
+  },
+  "chinese_language_pass": "6/6",
+  "per_case": [
+    {
+      "id": 100,
+      "name": "zh-python-mutation-during-iteration",
+      "mode": "logic-review",
+      "pass_rate": 1.0,
+      "passed": 5,
+      "total": 5
+    },
+    {
+      "id": 102,
+      "name": "zh-python-generator-lazy",
+      "mode": "logic-explain",
+      "pass_rate": 1.0,
+      "passed": 3,
+      "total": 3
+    },
+    {
+      "id": 104,
+      "name": "zh-sql-rewrite-null-comparison",
+      "mode": "logic-diff",
+      "pass_rate": 1.0,
+      "passed": 4,
+      "total": 4
+    },
+    {
+      "id": 106,
+      "name": "zh-save-blank-undefined-access",
+      "mode": "logic-locate",
+      "pass_rate": 1.0,
+      "passed": 4,
+      "total": 4
+    },
+    {
+      "id": 108,
+      "name": "zh-multi-module-health",
+      "mode": "logic-health",
+      "pass_rate": 1.0,
+      "passed": 5,
+      "total": 5
+    },
+    {
+      "id": 110,
+      "name": "zh-fix-all-session-module",
+      "mode": "logic-fix-all",
+      "pass_rate": 1.0,
+      "passed": 4,
+      "total": 4
+    },
+    {
+      "id": 6,
+      "name": "logic-diff-semantic-equivalence",
+      "mode": "logic-diff",
+      "pass_rate": 1.0,
+      "passed": 4,
+      "total": 4
+    },
+    {
+      "id": 8,
+      "name": "logic-health-sql-injection-module",
+      "mode": "logic-health",
+      "pass_rate": 1.0,
+      "passed": 5,
+      "total": 5
+    },
+    {
+      "id": 9,
+      "name": "fix-all-applies-fixes-and-reports-fix-log",
+      "mode": "logic-fix-all",
+      "pass_rate": 1.0,
+      "passed": 4,
+      "total": 4
+    }
+  ]
+}

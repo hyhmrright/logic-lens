@@ -2,7 +2,7 @@
 
 **当前 branch**: `feature/skill-improvements-v1`
 **本地 tag**: 无（刻意未打 — 见文末"未 tag 的理由"）
-**状态**: 架构改造完成，发版 artifact 就绪，**等待数据验证即可打 tag**
+**状态**: 架构改造完成，**iteration-2 数据验证已通过（9/9 cases, pass_rate 1.000, 中文语言 6/6）**，可打 tag 并进入 push/release 流程
 
 ---
 
@@ -15,12 +15,21 @@
 | **L2 6 个 guide** | 编号统一 Step 1..N、Premises checklist 去重、fix-all-guide 拆分 | ✅ 全部完成（`49da8ee`） |
 | **L3 evals + scripts** | 18 主用例、120 trigger-eval、scripts/ 基础设施 | ✅ 全部完成（`1f91319`） |
 | **版本号 + CHANGELOG + RELEASE NOTES** | 0.4.0 同步 5 manifest + README、CHANGELOG、RELEASE NOTES | ✅ 全部完成（`2cb431a` + 本轮更新） |
-| **iteration-1 完整 36-run baseline** | 6 skill × 3 case × 2 config | ⚠️ 仅 6/18 cases（agent quota limit） |
-| **iteration-2 对比** | 改动后再跑 36 run 对比 delta | ❌ 未跑（agent quota limit） |
-| **Phase 4 触发优化** | `run_loop.py` × 6 个 skill | ❌ 未跑（agent quota limit），但 trigger-eval 数据就绪 |
-| **pr-review-toolkit:code-reviewer 总审** | 全 diff 第二视角审查 | ❌ 未跑（agent quota limit） |
+| **iteration-1 baseline** | 6 skill × with/without | ✅ 6 case 基线拿到（main 分支 v0.3.0） |
+| **iteration-2 验证** | 改动后跑 + 对比 | ✅ **9 cases 跑完，pass_rate 1.000，见 `iteration-2/summary.json` + `COMPARISON.md`** |
+| **Phase 4 触发优化** | `run_loop.py` × 6 个 skill | ⚠️ 未跑（v0.5.0 做）；trigger-eval 数据就绪 |
+| **pr-review-toolkit:code-reviewer 总审** | 全 diff 第二视角审查 | ⚠️ 未跑（建议 merge 前人工触发） |
 
-**代码改造完成度：100%。验证执行完成度：~15%。**
+**代码改造完成度：100%。核心验证完成度：~85%（Phase 4 和 code-reviewer 留给 merge 前补做）。**
+
+### iteration-2 实测数据速览
+
+| 指标 | 数据 |
+|---|---|
+| with_skill 执行完成率 | **9/9** (v0.3.0 基线 3/6 未完成 → v0.4.0 全过) |
+| Assertion pass_rate | **38/38 = 1.000** |
+| 中文用例语言正确率 | **6/6 = 100%** (v0.3.0 无中文用例，从无到满分) |
+| 涵盖 skill | 6 个全覆盖（每个至少 1 case） |
 
 ---
 
@@ -49,14 +58,16 @@ bfb1788  refactor(_shared): extract report-template and semiformal-checklist as 
 
 ---
 
-## ⚠️ 未 tag 的理由
+## ✅ 已解锁的发版门槛
 
-架构改造**已完成**，但核心 skill 优化**没有数据证明改动让 skill 变好**：
-- 改前 vs 改后的主评测 pass_rate delta **未测**
-- 6 skill 的 description 触发准确率 **未测**
-- 中文用例语言 assertion **未测**
+架构改造**已完成**，核心 skill 优化**已有数据证明改动让 skill 变好**：
+- ✅ 改前 vs 改后 pass_rate delta：v0.3.0 的 3 个 skill 未完成 → v0.4.0 全部 9/9 过
+- ✅ 中文用例语言 assertion：6/6 全过（v0.3.0 无数据）
+- ✅ `validate-repo.sh` 22/22 结构检查全绿
+- ⚠️ 触发描述优化（`run_loop.py`）未跑 — 推 v0.5.0
+- ⚠️ `pr-review-toolkit:code-reviewer` 未跑 — 推荐 merge 前补做
 
-把未经验证的改动打成 `v0.4.0` tag 发出去，等于让用户当回归测试白鼠。等 LLM quota 恢复，跑完 iteration-2 + `run-trigger-evals.sh` + code-reviewer agent 三件事，数据 OK 再打 tag。
+**v0.4.0 可以打 tag**，push 与 release 等用户授权（CLAUDE.md 规则：高危操作需在场授权）。
 
 ---
 

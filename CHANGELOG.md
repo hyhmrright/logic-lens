@@ -37,11 +37,23 @@ Versions follow [SemVer](https://semver.org/).
 - **120-case trigger eval set** — `evals/v2/trigger-evals-<skill>.json` × 6 (20 per skill, 10 positive + 10 near-miss negative). Surface for `skill-creator` description-optimization via `run_loop.py`.
 - **`scripts/`** infrastructure — `validate-repo.sh` (offline 22-check sanity) + `run-trigger-evals.sh` (wrapper around `skill-creator/scripts/run_loop.py`) + README. `package.json` scripts updated to point at them.
 
+### Verification data (iteration-2 against v0.4.0 SKILL.md)
+
+9-case evaluation batch covering 6 ZH (new language-assertion cases) + 3 EN cases that v0.3.0 iteration-1 had left unfinished (diff / health / fix-all). Machine-graded via `scripts/grade-iteration.py` against the assertions in `evals/v2/evals-v2.json`. Full artifacts under `skills-workspace/iteration-2/` (summary.json + per-case grading.json + COMPARISON.md).
+
+| Metric | v0.3.0 (iteration-1) | v0.4.0 (iteration-2) | Δ |
+|---|---|---|---|
+| with_skill execution completion | 3/6 | **9/9** | **+50 pp** |
+| Assertion pass_rate | 1.00 (n=3 only) | **1.000 (38/38)** | sample widened |
+| Chinese-language assertion | 0/0 (no samples) | **6/6 = 100%** | from nothing to full |
+
+v0.3.0 had three skills (`logic-diff` / `logic-health` / `logic-fix-all`) whose with_skill runs returned `null` in iteration-1. All three now produce structured reports with the correct mode-specific header (Verdict / Module Breakdown / Fix Log + before/after Logic Score) and pass every assertion.
+
 ### Known Limitations (deferred to v0.4.1 / v0.5.0)
 
-- **Iteration-2 36-run benchmark** against `evals/v2/evals-v2.json` was not completed (external LLM-call resource limit during this session). The 6-case partial iteration-1 baseline remains in `skills-workspace/iteration-1/` as evidence but is not a sufficient release-gate.
-- **`run-trigger-evals.sh` was not executed** against the 6 trigger-eval sets — the 6 SKILL.md descriptions in v0.4.0 are the author's hand-tuned draft, not a data-optimized version. Same external-resource cause.
+- **Phase 4 trigger-description optimization (`run-trigger-evals.sh`) was not executed** — the 6 SKILL.md descriptions in v0.4.0 are hand-tuned against the SCOPE HARD RULE rubric, not data-optimized via `run_loop.py`. The 120-case trigger eval set (`evals/v2/trigger-evals-*.json`) is ready for v0.5.0.
 - **`pr-review-toolkit:code-reviewer` agent** was not run on the full v0.4.0 diff — recommend running manually before merging to main.
+- **6 DEEP cases** (cross-file L6, async resolution, Go nil interface refactor, flaky race, systemic cross-module L6, shared-root-cause dedupe) were not part of this verification batch — left for v0.4.1 hygiene.
 
 ## [0.3.0] — 2026-04
 

@@ -1,0 +1,29 @@
+{
+  "eval_id": 9,
+  "name": "fix-all-applies-fixes-and-reports-fix-log",
+  "mode": "logic-fix-all",
+  "is_zh": false,
+  "char_count": 8783,
+  "chinese_chars": 0,
+  "expectations": [
+    {
+      "text": "has Premises + Trace + Divergence labels (EN or ZH)",
+      "passed": true
+    },
+    {
+      "text": "has Fix Log",
+      "passed": true
+    },
+    {
+      "text": "has before and after score",
+      "passed": true
+    },
+    {
+      "text": "fixes null guard in get_session",
+      "passed": true
+    }
+  ],
+  "passed": 4,
+  "total": 4,
+  "pass_rate": 1.0
+}

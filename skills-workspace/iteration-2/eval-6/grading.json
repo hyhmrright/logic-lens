@@ -1,0 +1,29 @@
+{
+  "eval_id": 6,
+  "name": "logic-diff-semantic-equivalence",
+  "mode": "logic-diff",
+  "is_zh": false,
+  "char_count": 7405,
+  "chinese_chars": 0,
+  "expectations": [
+    {
+      "text": "has Premises + Trace + Divergence labels (EN or ZH)",
+      "passed": true
+    },
+    {
+      "text": "contains verdict",
+      "passed": true
+    },
+    {
+      "text": "conditionally equivalent identified",
+      "passed": true
+    },
+    {
+      "text": "describes divergence scenario",
+      "passed": true
+    }
+  ],
+  "passed": 4,
+  "total": 4,
+  "pass_rate": 1.0
+}

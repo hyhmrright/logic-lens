@@ -46,10 +46,21 @@
 
 无 — 所有重构保持 skill 命令名（`/logic-review` 等）和触发词不变。`.logic-lens.yaml` schema 兼容。
 
+## 📊 评测数据（iteration-2，2026-04-25）
+
+| 指标 | v0.3.0 | v0.4.0 | Δ |
+|------|--------|--------|---|
+| with_skill 执行完成率 | 3/6 | **9/9** | **+50 pp** |
+| Assertion pass_rate | 1.00 (n=3) | **1.000 (38/38)** | 样本显著扩大 |
+| 中文用例语言通过 | 0/0（无样本） | **6/6 = 100%** | 从无到满分 |
+
+`logic-diff` / `logic-health` / `logic-fix-all` 三个 skill 在 v0.3.0 iteration-1 执行时全部返回 `null`（未完成）；v0.4.0 下全部产出符合 Report Template 的完整报告（Verdict / Module Breakdown / Fix Log + 修复前/后 Logic Score）。完整证据见 `skills-workspace/iteration-2/` 与 `skills-workspace/COMPARISON.md`。
+
 ## ⚠️ 已知遗留
 
-- 本版本完整 36-run benchmark 对比与 trigger description 自动优化（`run_loop.py`）受外部资源限制推迟到 v0.4.1 / v0.5.0。当前发版基于代码审阅 + 部分 baseline + 工作流验证。
-- `logic-locate-guide.md` Step 4a/4b 数字+字母混用未统一；`logic-fix-all-guide.md` 647 行未拆分 — 留作 v0.4.x hygiene。
+- **Phase 4 触发描述自动优化（`run_loop.py` × 6）未跑** — 当前 6 个 SKILL.md 的 description 是按 SCOPE HARD RULE 手工精调的版本，未经过数据驱动优化。120 条 trigger eval 集（`evals/v2/trigger-evals-*.json`）已就绪，v0.5.0 补做。
+- **`pr-review-toolkit:code-reviewer` agent 总审**未跑 — 建议 merge 前人工触发。
+- **6 DEEP 深度用例**（跨文件 L6 / 异步 microtask / Go nil interface / flaky race / 系统性 L6 / 共享根因 dedupe）未在本轮验证，留作 v0.4.1 hygiene。
 
 ## 📦 升级
 

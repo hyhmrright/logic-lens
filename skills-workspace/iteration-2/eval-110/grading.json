@@ -1,0 +1,29 @@
+{
+  "eval_id": 110,
+  "name": "zh-fix-all-session-module",
+  "mode": "logic-fix-all",
+  "is_zh": true,
+  "char_count": 8510,
+  "chinese_chars": 1902,
+  "expectations": [
+    {
+      "text": "output is chinese (>=50 CJK chars, no English section headers)",
+      "passed": true
+    },
+    {
+      "text": "has Premises + Trace + Divergence labels (EN or ZH)",
+      "passed": true
+    },
+    {
+      "text": "has Fix Log",
+      "passed": true
+    },
+    {
+      "text": "has before and after score",
+      "passed": true
+    }
+  ],
+  "passed": 4,
+  "total": 4,
+  "pass_rate": 1.0
+}

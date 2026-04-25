@@ -1,0 +1,33 @@
+{
+  "eval_id": 8,
+  "name": "logic-health-sql-injection-module",
+  "mode": "logic-health",
+  "is_zh": false,
+  "char_count": 13423,
+  "chinese_chars": 0,
+  "expectations": [
+    {
+      "text": "has Premises + Trace + Divergence labels (EN or ZH)",
+      "passed": true
+    },
+    {
+      "text": "has Module Breakdown",
+      "passed": true
+    },
+    {
+      "text": "identifies SQL f-string interpolation",
+      "passed": true
+    },
+    {
+      "text": "Logic Score below 100",
+      "passed": true
+    },
+    {
+      "text": "identifies unconditional True in delete_user",
+      "passed": true
+    }
+  ],
+  "passed": 5,
+  "total": 5,
+  "pass_rate": 1.0
+}

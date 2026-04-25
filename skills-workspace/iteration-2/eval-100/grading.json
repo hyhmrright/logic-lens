@@ -1,0 +1,33 @@
+{
+  "eval_id": 100,
+  "name": "zh-python-mutation-during-iteration",
+  "mode": "logic-review",
+  "is_zh": true,
+  "char_count": 2549,
+  "chinese_chars": 901,
+  "expectations": [
+    {
+      "text": "output is chinese (>=50 CJK chars, no English section headers)",
+      "passed": true
+    },
+    {
+      "text": "has Premises + Trace + Divergence labels (EN or ZH)",
+      "passed": true
+    },
+    {
+      "text": "contains L4",
+      "passed": true
+    },
+    {
+      "text": "mentions skip/consecutive elements",
+      "passed": true
+    },
+    {
+      "text": "identifies mutation during iteration",
+      "passed": true
+    }
+  ],
+  "passed": 5,
+  "total": 5,
+  "pass_rate": 1.0
+}

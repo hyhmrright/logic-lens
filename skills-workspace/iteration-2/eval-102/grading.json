@@ -1,0 +1,25 @@
+{
+  "eval_id": 102,
+  "name": "zh-python-generator-lazy",
+  "mode": "logic-explain",
+  "is_zh": true,
+  "char_count": 3830,
+  "chinese_chars": 1317,
+  "expectations": [
+    {
+      "text": "output is chinese (>=50 CJK chars, no English section headers)",
+      "passed": true
+    },
+    {
+      "text": "explains lazy evaluation / generator semantics",
+      "passed": true
+    },
+    {
+      "text": "no Logic Score line",
+      "passed": true
+    }
+  ],
+  "passed": 3,
+  "total": 3,
+  "pass_rate": 1.0
+}
