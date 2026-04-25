@@ -1,0 +1,527 @@
+{
+  "skill_name": "logic-lens",
+  "evals": [
+    {
+      "id": 1,
+      "name": "python-shadow-override-builtin",
+      "mode": "logic-review",
+      "prompt": "Review this Python code for logic errors:\n\n```python\n# utils/formatter.py\ndef format(value, spec):\n    \"\"\"Project-specific format wrapper.\"\"\"\n    return f'{value:{spec}} (formatted)'\n\ndef render_year(date_obj):\n    year = date_obj.year\n    return format(year, '04d')\n```\n\nThis is called from other modules like: `from utils.formatter import render_year`",
+      "expected_output": "Should identify L1 (Shadow Override): render_year calls the module-level format() defined in the same file, not Python's builtin format(). The module's format() returns a string with ' (formatted)' appended, so render_year returns '2024 (formatted)' instead of '2024'. Any caller expecting a plain 4-digit string will receive unexpected output. Premises must state that format resolves to utils/formatter.py:format, not builtins.format.",
+      "assertions": [
+        {
+          "id": "identifies-L1",
+          "description": "Output identifies L1 (Shadow Override) risk code",
+          "check": "Output contains the text 'L1'"
+        },
+        {
+          "id": "names-module-format",
+          "description": "Output explicitly states that format() in render_year resolves to the module-level definition in utils/formatter.py, not the Python builtin",
+          "check": "Output states that format() resolves to the module-level function, not the builtin, with reference to utils/formatter.py or the local definition"
+        },
+        {
+          "id": "states-suffix-consequence",
+          "description": "Output states that the return value will include the ' (formatted)' suffix appended by the module-level format()",
+          "check": "Output mentions the ' (formatted)' suffix or describes that the return value is not a plain 4-digit string"
+        },
+        {
+          "id": "has-premises-trace-divergence",
+          "description": "Finding has all three required sections: Premises, Trace, and Divergence",
+          "check": "Output contains the words 'Premises', 'Trace', and 'Divergence' as section labels in the finding"
+        }
+      ]
+    },
+    {
+      "id": 100,
+      "name": "zh-python-mutation-during-iteration",
+      "mode": "logic-review",
+      "prompt": "下面这段代码为什么没把所有失效用户都删掉？请帮我审查逻辑问题：\n\n```python\n# 从列表中删除所有 is_active=False 的用户\ndef remove_inactive(users):\n    # 遍历用户列表\n    for user in users:\n        # 如果用户已失效就从原列表中移除\n        if not user.is_active:\n            users.remove(user)\n    return users\n```\n\n实际运行发现，当两个失效用户连续出现时，第二个没被删掉。请分析根因。",
+      "expected_output": "应识别 L4（状态变更风险 / State Mutation Hazard）：函数在遍历 users 的同时从同一列表中移除元素。Python 的列表迭代器不会在删除元素后重新索引，导致紧跟在被删元素之后的元素被跳过。若存在两个连续的失效用户，只会删除第一个。Trace 应展示删除 users[i] 之后迭代器前进到现在的 users[i+1]（原来是 users[i+2]）。输出必须是中文为主。",
+      "assertions": [
+        {
+          "id": "language-chinese-output",
+          "description": "Output body is primarily Chinese; no full-line English section headers like '# Findings', '## Summary', '# Premises'; code blocks, L-codes (L1-L6), and English technical terms are allowed",
+          "check": "Output contains at least 50 Chinese characters and does not contain standalone English section headers such as '# Findings', '## Summary', '# Premises', '# Trace', '# Divergence' on their own line (in-line English technical terms, L-codes, and code blocks are fine)"
+        },
+        {
+          "id": "identifies-L4",
+          "description": "Output identifies L4 (State Mutation Hazard)",
+          "check": "Output contains 'L4'"
+        },
+        {
+          "id": "identifies-skip-elements",
+          "description": "Output explains that consecutive inactive users can be skipped due to iterator advancement after removal",
+          "check": "Output mentions that elements can be skipped (in Chinese: 跳过 / 漏掉 / 略过 or English equivalent), or that consecutive inactive users may not all be removed"
+        },
+        {
+          "id": "identifies-iteration-mutation",
+          "description": "Output identifies modification of the list during iteration as the root cause",
+          "check": "Output describes the list being modified during iteration (Chinese: 遍历时修改 / 迭代中删除 or equivalent) as the root cause of the bug"
+        },
+        {
+          "id": "has-premises-trace-divergence",
+          "description": "Finding has Premises, Trace, and Divergence sections in either Chinese or English",
+          "check": "Output contains ('Premises' OR '前提') AND ('Trace' OR '追踪' OR '执行追踪') AND ('Divergence' OR '偏差' OR '分歧') as section labels"
+        }
+      ]
+    },
+    {
+      "id": 101,
+      "name": "deep-cross-file-callee-contract-L6",
+      "mode": "logic-review",
+      "prompt": "Review this codebase for logic errors. Two files:\n\n```python\n# orders/service.py\nfrom payments.gateway import charge\n\ndef process_order(order):\n    # assume charge always returns dict with 'transaction_id'\n    result = charge(order)\n    tx_id = result['transaction_id']\n    order.mark_paid(tx_id)\n    return order\n```\n\n```python\n# payments/gateway.py\ndef charge(order):\n    if order.amount == 0:\n        # zero-amount orders skip payment; nothing to return\n        return None\n    # ... talk to payment provider ...\n    return {'transaction_id': 'tx_' + str(order.id), 'status': 'ok'}\n```\n\nThe orders module was written assuming charge() always returns a dict. Is this correct?",
+      "expected_output": "Should identify L6 (Callee Contract Mismatch) across file boundaries: payments/gateway.py:charge can return None when order.amount == 0, but orders/service.py:process_order unconditionally subscripts result['transaction_id']. On a zero-amount order this raises TypeError: 'NoneType' object is not subscriptable. The trace must cross file boundaries: start in service.py, step into gateway.py to observe the None return on amount==0, then return to service.py and trace the subscript failure. Premises should state the observed charge() contract (returns dict OR None) vs. service.py's assumption (always dict).",
+      "assertions": [
+        {
+          "id": "identifies-L6",
+          "description": "Output identifies L6 (Callee Contract Mismatch)",
+          "check": "Output contains 'L6'"
+        },
+        {
+          "id": "mentions-amount-zero",
+          "description": "Output explicitly cites the amount == 0 branch in gateway.py as the trigger for None return",
+          "check": "Output mentions the zero-amount case or 'order.amount == 0' as the condition that causes charge() to return None"
+        },
+        {
+          "id": "traces-interprocedural",
+          "description": "Trace crosses file boundaries — references both orders/service.py and payments/gateway.py",
+          "check": "Output's trace or finding body references both 'orders/service.py' (or service.py) and 'payments/gateway.py' (or gateway.py), showing the execution crosses from caller into callee"
+        },
+        {
+          "id": "has-premises-trace-divergence",
+          "description": "Finding has Premises, Trace, and Divergence sections",
+          "check": "Output contains 'Premises', 'Trace', and 'Divergence' as section labels in the finding"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "logic-explain-closure-capture",
+      "mode": "logic-explain",
+      "prompt": "Explain what this JavaScript actually does when the buttons are clicked:\n\n```javascript\nconst buttons = document.querySelectorAll('button');\nfor (var i = 0; i < buttons.length; i++) {\n  buttons[i].addEventListener('click', function() {\n    console.log('Button', i, 'clicked');\n  });\n}\n```\n\nAssume there are 3 buttons.",
+      "expected_output": "Should explain the var hoisting / closure capture bug: var i is function-scoped (not block-scoped), so all three event handlers close over the same variable i. By the time any button is clicked (after the loop completes), i equals 3 (the loop termination value). All three buttons log 'Button 3 clicked' rather than 'Button 0 clicked', 'Button 1 clicked', 'Button 2 clicked'. The trace must follow the actual closure semantics, stating that each handler captures a reference to i, not its value at loop time.",
+      "assertions": [
+        {
+          "id": "explains-var-scoping",
+          "description": "Output explains that var is function-scoped, not block-scoped, and is hoisted out of the loop",
+          "check": "Output explains that 'var i' is function-scoped (not block-scoped), or mentions hoisting, or explains that all handlers share the same variable i"
+        },
+        {
+          "id": "explains-closure-reference",
+          "description": "Output explains that each event handler captures a reference to i (not its value at the time of handler creation)",
+          "check": "Output explains that the handlers capture a reference to i, not a snapshot of its value, or equivalently that the handlers see i's value at click time, not at registration time"
+        },
+        {
+          "id": "states-final-value-3",
+          "description": "Output states that all three buttons will print i=3 (the loop termination value) when clicked",
+          "check": "Output states that all buttons print 'Button 3 clicked', or that i equals 3 when any button is clicked after the loop completes"
+        },
+        {
+          "id": "no-score-line",
+          "description": "Execution Explain mode does not include a Logic Score line",
+          "check": "Output does not contain the text 'Logic Score'"
+        }
+      ]
+    },
+    {
+      "id": 102,
+      "name": "zh-python-generator-lazy",
+      "mode": "logic-explain",
+      "prompt": "我不太明白下面这段 Python 代码的行为。为什么 print(\"done\") 只执行了一次？请帮我追踪一下执行过程：\n\n```python\ndef nums():\n    for i in range(3):\n        yield i\n    print(\"done\")\n\ng = nums()\nprint(next(g))\nprint(next(g))\nprint(next(g))\nprint(next(g))\n```",
+      "expected_output": "应解释生成器的惰性求值与 StopIteration 机制：调用 nums() 只创建生成器对象，函数体不会立即执行。每次 next(g) 才推进到下一个 yield。前三次 next 依次产出 0、1、2。第四次 next 时，for 循环结束，执行到 print(\"done\") 打印一次，然后函数返回，触发 StopIteration 异常。所以 print(\"done\") 只执行一次，是在第四次 next 时。追踪必须逐次展示生成器状态。输出必须是中文为主。",
+      "assertions": [
+        {
+          "id": "language-chinese-output",
+          "description": "Output body is primarily Chinese; no full-line English section headers; code blocks and technical terms like 'yield' / 'StopIteration' are allowed",
+          "check": "Output contains at least 50 Chinese characters and does not contain standalone English section headers like '# Trace' or '## Explanation' on their own line"
+        },
+        {
+          "id": "explains-lazy-evaluation",
+          "description": "Output explains that calling nums() does not execute the body; execution is lazy and advanced by next()",
+          "check": "Output explains lazy evaluation: calling nums() returns a generator without running the body, and each next() advances execution to the next yield (Chinese: 惰性 / 按需 / 每次 next 才执行 or equivalent English)"
+        },
+        {
+          "id": "traces-stopiteration",
+          "description": "Output traces that the 4th next() runs the code after the loop, prints 'done' once, then raises StopIteration",
+          "check": "Output describes that on the 4th next(), after the for loop ends, print('done') runs exactly once and then StopIteration is raised"
+        },
+        {
+          "id": "no-score-line",
+          "description": "Execution Explain mode does not include a Logic Score line",
+          "check": "Output does not contain the text 'Logic Score'"
+        }
+      ]
+    },
+    {
+      "id": 103,
+      "name": "deep-async-microtask-resolution",
+      "mode": "logic-explain",
+      "prompt": "Explain why the logs print in a different order than I expected:\n\n```javascript\nasync function a() {\n  console.log('a-start');\n  await Promise.resolve();\n  console.log('a-after-await');\n}\n\nasync function b() {\n  console.log('b-start');\n  const [x, y] = await Promise.all([\n    Promise.resolve('x'),\n    Promise.resolve('y'),\n  ]);\n  console.log('b-after-await', x, y);\n}\n\nconsole.log('main-start');\na();\nb();\nconsole.log('main-end');\n```\n\nI expected: main-start, a-start, a-after-await, b-start, b-after-await x y, main-end. But the actual order is different. What is the real order and why?",
+      "expected_output": "Should explain microtask queue semantics in JS event loop. Synchronous code runs first, so: main-start → a-start (synchronous part of a up to await) → b-start (synchronous part of b up to await) → main-end. Each await suspends the async function and schedules its continuation as a microtask. After the synchronous phase, microtasks drain: a-after-await (a's continuation runs first since it was queued first) → b-after-await x y. Trace must step through each await explicitly: the await expression evaluates immediately (Promise.resolve produces a fulfilled promise), but the code after await is wrapped into a microtask. Must identify actual order: main-start, a-start, b-start, main-end, a-after-await, b-after-await x y.",
+      "assertions": [
+        {
+          "id": "explains-microtask-queue",
+          "description": "Output explains the microtask queue and that await schedules the continuation as a microtask",
+          "check": "Output mentions microtask queue (or microtasks) and explains that await suspends the async function, scheduling the code after await as a microtask that runs after the current synchronous block finishes"
+        },
+        {
+          "id": "traces-each-await",
+          "description": "Output traces the synchronous part of a() and b() separately, showing a-start and b-start happen before any after-await log",
+          "check": "Output shows that both a-start and b-start are printed before any after-await log, because the synchronous portion of each async function runs up to the await point before yielding"
+        },
+        {
+          "id": "identifies-actual-order",
+          "description": "Output states the actual print order: main-start, a-start, b-start, main-end, a-after-await, b-after-await",
+          "check": "Output lists or equivalently describes the order as: main-start, a-start, b-start, main-end, a-after-await, b-after-await x y"
+        },
+        {
+          "id": "no-score-line",
+          "description": "Execution Explain mode does not include a Logic Score line",
+          "check": "Output does not contain the text 'Logic Score'"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "logic-diff-semantic-equivalence",
+      "mode": "logic-diff",
+      "prompt": "Are these two Python implementations semantically equivalent?\n\nVersion A:\n```python\ndef get_last(items):\n    return items[-1] if items else None\n```\n\nVersion B:\n```python\ndef get_last(items):\n    try:\n        return items[-1]\n    except IndexError:\n        return None\n```",
+      "expected_output": "Should find them conditionally equivalent: Both return the last element for non-empty lists and None for empty lists. However, they diverge for non-list iterables: Version A's boolean check works for any sequence with __len__, while Version B's try/except works for any sequence with __getitem__ including generators. Also, Version B will catch IndexError from items[-1] on custom objects that raise IndexError for reasons other than being empty, potentially masking a real error. Verdict: Conditionally Equivalent — equivalent for list inputs; may diverge for custom sequence types.",
+      "assertions": [
+        {
+          "id": "gives-verdict",
+          "description": "Output gives one of the three standard verdict options",
+          "check": "Output contains one of: 'Semantically Equivalent', 'Conditionally Equivalent', or 'Semantically Divergent'"
+        },
+        {
+          "id": "identifies-conditional-equivalence",
+          "description": "Output identifies that the two versions are conditionally equivalent (not fully equivalent for all input types)",
+          "check": "Output concludes Conditionally Equivalent, or explains that the versions are equivalent for standard list inputs but may diverge for custom types or non-list sequences"
+        },
+        {
+          "id": "explains-divergence-scenario",
+          "description": "Output identifies at least one concrete scenario where the two versions diverge",
+          "check": "Output describes a specific divergence: custom sequence types, generators, or custom objects that raise IndexError for reasons other than being empty"
+        },
+        {
+          "id": "has-premises-both-versions",
+          "description": "Output builds premises for both Version A and Version B independently",
+          "check": "Output contains analysis of both Version A and Version B (not just one of them)"
+        }
+      ]
+    },
+    {
+      "id": 104,
+      "name": "zh-sql-rewrite-null-comparison",
+      "mode": "logic-diff",
+      "prompt": "下面是我重写前后的两段 SQL，想确认一下它们在语义上是否等价：\n\n版本 A：\n```sql\nSELECT id, name FROM users\nWHERE status = 'active' AND deleted_at IS NULL;\n```\n\n版本 B：\n```sql\nSELECT id, name FROM users\nWHERE status = 'active' AND deleted_at = NULL;\n```\n\n这两个查询等价吗？请分析。",
+      "expected_output": "应判定为语义不等价（Semantically Divergent）。SQL 中 NULL 的比较规则是三值逻辑：deleted_at = NULL 永远返回 UNKNOWN（既不是 TRUE 也不是 FALSE），因此版本 B 的 WHERE 子句永远不为 TRUE，查询结果恒为空集。而版本 A 使用 IS NULL 正确地筛选出未软删除的活跃用户。两者明显不等价，版本 B 是一个典型的 NULL 比较 bug。Premises 应分别说明两个版本对 deleted_at 字段 NULL 值的处理。输出必须是中文为主。",
+      "assertions": [
+        {
+          "id": "language-chinese-output",
+          "description": "Output body is primarily Chinese; no full-line English section headers; code blocks and SQL keywords are allowed",
+          "check": "Output contains at least 50 Chinese characters and does not contain standalone English section headers like '# Verdict' or '## Analysis' on their own line"
+        },
+        {
+          "id": "gives-verdict",
+          "description": "Output gives one of the three standard verdict options (Chinese or English)",
+          "check": "Output contains one of: 'Semantically Equivalent', 'Conditionally Equivalent', 'Semantically Divergent', or a Chinese equivalent such as '语义等价', '条件等价', '语义不等价' / '语义分歧'"
+        },
+        {
+          "id": "identifies-null-comparison-bug",
+          "description": "Output identifies that `= NULL` is always UNKNOWN/never TRUE in SQL three-valued logic, making version B's result set empty",
+          "check": "Output explains that deleted_at = NULL does not behave as expected — it always yields UNKNOWN (not TRUE), so version B's WHERE clause never matches any row; IS NULL is the correct form"
+        },
+        {
+          "id": "has-premises-both-versions",
+          "description": "Output builds premises for both version A and version B independently",
+          "check": "Output analyzes both 版本 A / Version A and 版本 B / Version B (not just one of them)"
+        }
+      ]
+    },
+    {
+      "id": 105,
+      "name": "deep-go-nil-interface-refactor",
+      "mode": "logic-diff",
+      "prompt": "I refactored this Go code from Version A to Version B. Are they semantically equivalent?\n\nVersion A:\n```go\ntype FileLogger struct { path string }\nfunc (f *FileLogger) Log(msg string) { /* ... */ }\n\nfunc ProcessA(path string) {\n    var logger *FileLogger\n    if path != \"\" {\n        logger = &FileLogger{path: path}\n    }\n    if logger == nil {\n        return\n    }\n    logger.Log(\"starting\")\n}\n```\n\nVersion B (refactored to return via interface):\n```go\ntype Logger interface {\n    Log(msg string)\n}\n\nfunc NewFileLogger(path string) Logger {\n    if path == \"\" {\n        var l *FileLogger = nil\n        return l\n    }\n    return &FileLogger{path: path}\n}\n\nfunc ProcessB(path string) {\n    logger := NewFileLogger(path)\n    if logger == nil {\n        return\n    }\n    logger.Log(\"starting\")\n}\n```",
+      "expected_output": "Should find them Semantically Divergent. In Version A, logger is a concrete *FileLogger; if path is empty, logger is nil pointer and the nil check returns early. In Version B, NewFileLogger returns a Logger interface. When path == '', it returns a nil *FileLogger wrapped in a non-nil Logger interface value (type=*FileLogger, value=nil). The interface value is non-nil, so `if logger == nil` evaluates to false, execution proceeds to logger.Log('starting'), and calling Log on a nil *FileLogger receiver panics. This is the classic Go nil interface trap — concrete nil vs interface-wrapping-nil are not the same. Verdict: Semantically Divergent. Premises must describe both versions' nil-check semantics.",
+      "assertions": [
+        {
+          "id": "identifies-nil-interface-trap",
+          "description": "Output identifies the Go nil-interface trap: a typed nil pointer wrapped in an interface makes the interface value non-nil",
+          "check": "Output explains that a nil *FileLogger stored in a Logger interface variable is non-nil at the interface level (interface carries type=*FileLogger, value=nil)"
+        },
+        {
+          "id": "gives-verdict-divergent",
+          "description": "Output gives verdict Semantically Divergent",
+          "check": "Output contains 'Semantically Divergent' (not 'Semantically Equivalent' and not 'Conditionally Equivalent' as the final verdict)"
+        },
+        {
+          "id": "explains-interface-non-nil",
+          "description": "Output explains that the `logger == nil` check in Version B evaluates to false when path is empty, allowing the call to proceed and panic",
+          "check": "Output states that in Version B, `if logger == nil` evaluates to false when path is empty, so Log() is called on a nil receiver and panics"
+        },
+        {
+          "id": "has-premises-both-versions",
+          "description": "Output builds premises for both Version A and Version B independently",
+          "check": "Output analyzes both Version A and Version B (not just one of them)"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "logic-locate-off-by-one",
+      "mode": "logic-locate",
+      "prompt": "This test is failing. Find the bug:\n\nFailing test:\n```python\ndef test_pagination():\n    items = list(range(10))  # [0, 1, 2, ..., 9]\n    page = paginate(items, page=2, page_size=3)\n    assert page == [3, 4, 5]  # Expected: items 3,4,5 (0-indexed page 2)\n```\n\nImplementation:\n```python\ndef paginate(items, page, page_size):\n    start = page * page_size\n    end = start + page_size\n    return items[start:end]\n```\n\nActual output: page == [6, 7, 8]",
+      "expected_output": "Should locate the fault: The test expects 0-indexed page 2 to return items[3:6] = [3,4,5], but the implementation treats page as 0-indexed differently. With page=2, page_size=3: start = 2*3 = 6, end = 6+3 = 9, so items[6:9] = [6,7,8]. The bug is an off-by-one in the test's expectation of what 'page 2' means, OR a semantic mismatch: the implementation is 0-indexed (page 0 = items 0-2, page 1 = items 3-5, page 2 = items 6-8) but the test assumes page 2 starts at offset 3. L3 (Boundary Blindspot) or L6 (Callee Contract Mismatch). The test expects page 2 = second page of data (1-based), implementation treats page as 0-based index.",
+      "assertions": [
+        {
+          "id": "traces-start-calculation",
+          "description": "Output traces the start offset calculation: start = page * page_size = 2 * 3 = 6",
+          "check": "Output computes or mentions that start = 6 (or equivalently 2*3=6) for page=2, page_size=3"
+        },
+        {
+          "id": "identifies-indexing-mismatch",
+          "description": "Output identifies 0-based vs 1-based (or equivalent) indexing semantic mismatch as the root cause",
+          "check": "Output explains that the test and implementation disagree on what 'page 2' means — the test expects the second page (1-based offset), the implementation treats it as a 0-based index"
+        },
+        {
+          "id": "identifies-L3-or-L6",
+          "description": "Output identifies L3 or L6 risk code",
+          "check": "Output contains 'L3' or 'L6'"
+        },
+        {
+          "id": "has-fault-confidence",
+          "description": "Output uses Fault Confidence instead of Logic Score (as required by logic-locate mode)",
+          "check": "Output contains 'Fault Confidence' or 'Confidence:' where a Logic Score would normally appear"
+        }
+      ]
+    },
+    {
+      "id": 106,
+      "name": "zh-save-blank-undefined-access",
+      "mode": "logic-locate",
+      "prompt": "用户反馈：点击保存表单后页面突然变空白。浏览器控制台报错：\n\n```\nTypeError: Cannot read properties of undefined (reading 'id')\n    at UserForm.vue:42\n    at handleSave (UserForm.vue:38)\n```\n\n相关代码：\n\n```vue\n<!-- UserForm.vue -->\n<script>\nexport default {\n  data() {\n    return { form: { name: '' } };  // 注意：初始 form 中没有 user 字段\n  },\n  methods: {\n    async handleSave() {                           // line 37\n      const resp = await api.saveForm(this.form);  // line 38\n      this.$router.push(`/users/${resp.user.id}`); // line 42\n    }\n  }\n}\n</script>\n```\n\n服务端说：当表单校验失败时，saveForm 返回 `{ ok: false, errors: [...] }`，不带 user 字段。请帮我定位根因。",
+      "expected_output": "应定位根因：handleSave 直接访问 resp.user.id，但当服务端表单校验失败时，resp 形如 {ok: false, errors: [...]}，此时 resp.user 为 undefined，访问 .id 就抛出报错里的 TypeError: Cannot read properties of undefined (reading 'id')。追踪应从堆栈错误位置 line 42 回溯到 line 38 的 await 调用，再到服务端契约——resp.user 是条件性存在的字段。风险代码 L6（callee contract mismatch）或 L3（boundary blindspot）。应给出 Fault Confidence 字段。输出必须是中文为主。",
+      "assertions": [
+        {
+          "id": "language-chinese-output",
+          "description": "Output body is primarily Chinese; no full-line English section headers; code blocks, file/line references, and English technical terms like TypeError are allowed",
+          "check": "Output contains at least 50 Chinese characters and does not contain standalone English section headers like '# Root Cause' or '## Analysis' on their own line"
+        },
+        {
+          "id": "identifies-undefined-access",
+          "description": "Output identifies that resp.user is undefined when the save fails, and accessing .id on undefined causes the TypeError",
+          "check": "Output explains that resp.user is undefined in the failure branch and accessing .id on undefined triggers the reported TypeError"
+        },
+        {
+          "id": "traces-from-error-to-source",
+          "description": "Output traces from UserForm.vue:42 (error line) back to line 38 (await saveForm) and to the server contract that resp.user is conditional",
+          "check": "Output references UserForm.vue:42 and line 38 (or the saveForm call) and reasons about the server's response shape to locate the fault"
+        },
+        {
+          "id": "has-fault-confidence",
+          "description": "Output uses Fault Confidence instead of Logic Score (as required by logic-locate mode)",
+          "check": "Output contains 'Fault Confidence' or 'Confidence:' or a Chinese equivalent such as '故障置信度' / '置信度'"
+        }
+      ]
+    },
+    {
+      "id": 107,
+      "name": "deep-flaky-race-condition",
+      "mode": "logic-locate",
+      "prompt": "This test fails intermittently — about 1 in 5 runs the final counter is less than 20000. Help me locate the root cause:\n\nFailing test:\n```python\nimport threading\n\ndef test_counter_sum():\n    counter = Counter()\n    def work():\n        for _ in range(10000):\n            counter.increment()\n    t1 = threading.Thread(target=work)\n    t2 = threading.Thread(target=work)\n    t1.start(); t2.start()\n    t1.join(); t2.join()\n    assert counter.value == 20000  # sometimes fails with e.g. 17342\n```\n\nImplementation:\n```python\nclass Counter:\n    def __init__(self):\n        self.value = 0\n    def increment(self):\n        self.value = self.value + 1\n```\n\nWhat's the root cause?",
+      "expected_output": "Should locate the fault as a race condition on Counter.increment: self.value = self.value + 1 is NOT atomic — it compiles to (1) load self.value, (2) add 1, (3) store result. When two threads run concurrently, their load/add/store sequences can interleave so both threads read the same value V, both compute V+1, and both store V+1, effectively losing one increment. Over 20000 combined increments this explains the shortfall. Risk code L4 (state mutation hazard) — shared mutable state without synchronization. Fault Confidence should be high. Fix: use threading.Lock around the read-modify-write, or use itertools/atomic counter. Trace must explicitly step through the non-atomic load-modify-store interleaving.",
+      "assertions": [
+        {
+          "id": "identifies-race-condition",
+          "description": "Output identifies the non-atomic read-modify-write on self.value as a race condition between the two threads",
+          "check": "Output explains that self.value = self.value + 1 is not atomic and that concurrent execution by two threads leads to lost updates / race condition"
+        },
+        {
+          "id": "identifies-L4",
+          "description": "Output identifies L4 (State Mutation Hazard) as the risk code",
+          "check": "Output contains 'L4'"
+        },
+        {
+          "id": "traces-non-atomic-increment",
+          "description": "Trace explicitly decomposes increment() into load / add / store and shows the interleaving that causes a lost update",
+          "check": "Output's trace decomposes self.value = self.value + 1 into at least two steps (load then store, or read/modify/write) and shows an interleaving in which one update is lost"
+        },
+        {
+          "id": "has-fault-confidence",
+          "description": "Output uses Fault Confidence instead of Logic Score (as required by logic-locate mode)",
+          "check": "Output contains 'Fault Confidence' or 'Confidence:' where a Logic Score would normally appear"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "name": "logic-health-sql-injection-module",
+      "mode": "logic-health",
+      "prompt": "Give me a logic health overview of this API module:\n\n```python\n# api/users.py\nfrom db import get_db\n\ndef get_user(user_id):\n    db = get_db()\n    user = db.query(f\"SELECT * FROM users WHERE id = {user_id}\")\n    return user\n\ndef create_user(name, email):\n    db = get_db()\n    result = db.execute(f\"INSERT INTO users (name, email) VALUES ('{name}', '{email}')\")\n    return result.lastrowid\n\ndef delete_user(user_id):\n    db = get_db()\n    db.execute(f\"DELETE FROM users WHERE id = {user_id}\")\n    return True\n```",
+      "expected_output": "Should produce a module health report with Logic Score well below 100. Should identify: (1) user-controlled input directly interpolated into SQL strings in all three functions — frame as L3 (no input validation at boundary) or L6 (callee contract violated by passing unsanitized input); (2) get_user does not check if the query result is None/empty before returning; (3) delete_user returns True unconditionally regardless of whether any row was deleted. Module Breakdown table should show api/users.py. Should NOT frame SQL injection primarily as a security issue — frame it as a logic contract issue.",
+      "assertions": [
+        {
+          "id": "has-module-breakdown",
+          "description": "Output includes a Module Breakdown section or table with per-module scores",
+          "check": "Output contains a 'Module Breakdown' heading, or a table showing per-module logic scores"
+        },
+        {
+          "id": "identifies-sql-interpolation",
+          "description": "Output identifies f-string SQL interpolation as a logic risk in the functions",
+          "check": "Output identifies that user-controlled input is directly interpolated into SQL strings (via f-strings or format strings), and frames it as a logic/contract issue"
+        },
+        {
+          "id": "score-below-100",
+          "description": "Logic Score is below 100 (multiple confirmed findings exist)",
+          "check": "Output reports a Logic Score below 100 — not '100/100' or 'Logic Score: 100'"
+        },
+        {
+          "id": "identifies-unconditional-true",
+          "description": "Output identifies that delete_user returns True unconditionally regardless of whether any row was deleted",
+          "check": "Output notes that delete_user returns True unconditionally, without checking whether the DELETE affected any rows"
+        }
+      ]
+    },
+    {
+      "id": 108,
+      "name": "zh-multi-module-health",
+      "mode": "logic-health",
+      "prompt": "帮我看看这几个模块的整体逻辑健康度，每个模块里都可能有一些明显的 bug：\n\n```python\n# auth.py\ndef verify_token(token, store):\n    # 如果 token 存在就返回用户 id\n    user = store.get(token)\n    return user['id']  # 没校验 store.get 可能返回 None\n\ndef is_admin(user):\n    # 判断是否为管理员\n    if user.role == 'admin' or 'superadmin':  # 布尔表达式有问题\n        return True\n    return False\n```\n\n```python\n# api.py\ndef list_items(page, size):\n    # page、size 来自 HTTP query，未校验\n    offset = page * size\n    return db.query(f\"SELECT * FROM items LIMIT {size} OFFSET {offset}\")  # SQL 注入+边界未检查\n\ndef get_item(item_id):\n    items = db.query(\"SELECT * FROM items WHERE id = ?\", [item_id])\n    return items[0]  # 未处理空结果\n```\n\n```python\n# utils.py\ndef parse_int(s, default=0):\n    try:\n        return int(s)\n    except:  # 裸 except，会吞掉 KeyboardInterrupt 等\n        return default\n\ndef merge_dicts(a, b):\n    a.update(b)  # 就地修改入参 a，调用方可能不期望\n    return a\n```\n\n请给出整体健康度评分和每个模块的问题分析。",
+      "expected_output": "应输出中文健康报告，包含 Module Breakdown（模块分解）表，列出 auth.py、api.py、utils.py 三个模块的分数。Logic Score 明显低于 100。至少应识别以下问题中的 3 个以上：auth.py 的 store.get 未判空、'or' 表达式在 Python 里是真值测试 bug（'superadmin' 恒为真）；api.py 的 SQL f-string 拼接、items[0] 未处理空结果；utils.py 的裸 except、merge_dicts 就地修改入参。输出必须是中文为主。",
+      "assertions": [
+        {
+          "id": "language-chinese-output",
+          "description": "Output body is primarily Chinese; no full-line English section headers; tables and code fragments may contain English",
+          "check": "Output contains at least 50 Chinese characters and does not contain standalone English section headers like '# Findings', '# Module Breakdown', or '## Summary' on their own line (the table label 'Module Breakdown' inside a table header is fine)"
+        },
+        {
+          "id": "has-module-breakdown",
+          "description": "Output includes a Module Breakdown section or table with per-module scores",
+          "check": "Output contains a 'Module Breakdown' heading (or Chinese equivalent like '模块分解' / '模块拆解') or a table showing per-module logic scores"
+        },
+        {
+          "id": "score-below-100",
+          "description": "Logic Score is below 100 (multiple confirmed findings exist)",
+          "check": "Output reports a Logic Score (or 逻辑分数 / 分数) below 100 — not 100 or 100/100"
+        },
+        {
+          "id": "identifies-at-least-3-findings",
+          "description": "Output identifies at least 3 distinct findings across the three modules",
+          "check": "Output lists or discusses at least 3 distinct logic issues, drawn from: auth.py None-check missing, auth.py boolean 'or' bug with 'superadmin', api.py SQL interpolation, api.py empty result items[0], utils.py bare except, utils.py merge_dicts in-place mutation"
+        }
+      ]
+    },
+    {
+      "id": 109,
+      "name": "deep-systemic-cross-module-L6",
+      "mode": "logic-health",
+      "prompt": "Give me a logic health overview of this service. Three modules:\n\n```python\n# users/repo.py\ndef find_user(db, user_id):\n    # returns user dict, or None if not found\n    return db.fetch_one(\"SELECT * FROM users WHERE id = ?\", [user_id])\n\ndef get_user_email(db, user_id):\n    user = find_user(db, user_id)\n    return user['email']\n```\n\n```python\n# orders/repo.py\ndef find_order(db, order_id):\n    return db.fetch_one(\"SELECT * FROM orders WHERE id = ?\", [order_id])\n\ndef get_order_total(db, order_id):\n    order = find_order(db, order_id)\n    return order['total']\n```\n\n```python\n# products/repo.py\ndef find_product(db, product_id):\n    return db.fetch_one(\"SELECT * FROM products WHERE id = ?\", [product_id])\n\ndef get_product_price(db, product_id):\n    product = find_product(db, product_id)\n    return product['price']\n```\n\nGive me a module-by-module report and flag any systemic patterns.",
+      "expected_output": "Should produce a health report including a Module Breakdown (users/repo.py, orders/repo.py, products/repo.py) AND a Systemic Patterns section that identifies the cross-module L6 (callee contract mismatch): every get_*_* helper calls find_* which can return None, but then immediately subscripts the result ('email', 'total', 'price') without a None check. This is the same root cause repeated across three modules — a systemic gap in handling the find_* contract. Should recommend a unified fix: either make callers None-safe, or change find_* to raise NotFound instead of returning None. Logic Score should be below 100.",
+      "assertions": [
+        {
+          "id": "identifies-systemic-L6",
+          "description": "Output identifies L6 (Callee Contract Mismatch) as a systemic pattern appearing in all three modules",
+          "check": "Output contains 'L6' and identifies the missing None check on find_* return value as a pattern appearing in all three get_* functions across users/repo.py, orders/repo.py, and products/repo.py"
+        },
+        {
+          "id": "has-systemic-patterns-section",
+          "description": "Output includes a Systemic Patterns section distinct from per-module findings",
+          "check": "Output contains a 'Systemic Patterns' heading (or equivalent like 'Cross-Module Patterns', 'Systemic Findings') separate from the per-module breakdown"
+        },
+        {
+          "id": "recommends-unified-fix",
+          "description": "Output recommends a unified fix addressing the root cause across all three modules",
+          "check": "Output recommends a single cross-cutting fix — e.g. changing find_* to raise NotFound, or adding None guards in all callers, or introducing a shared helper — rather than three independent fixes"
+        },
+        {
+          "id": "has-module-breakdown",
+          "description": "Output includes a Module Breakdown section with per-module scores for all three modules",
+          "check": "Output contains a 'Module Breakdown' heading or table listing users/repo.py, orders/repo.py, and products/repo.py (or equivalent module names)"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "name": "fix-all-applies-fixes-and-reports-fix-log",
+      "mode": "logic-fix-all",
+      "prompt": "Fix all logic issues in this code:\n\n```python\n# auth/session.py\ndef get_session(session_id, store):\n    session = store.get(session_id)\n    return session['user_id']\n\ndef extend_session(session_id, store, ttl):\n    session = store.get(session_id)\n    session['expires'] = ttl\n    store.set(session_id, session)\n    return True\n```",
+      "expected_output": "Should apply fixes (not just report findings) and output a Fix Log table. get_session calls session['user_id'] without checking if store.get() returned None — L6/L3 bug, fix should add a guard before key access. extend_session mutates session['expires'] without checking if session is None — same root cause at a different call site; fix should add the same guard. Fix Log must list both fixes with file, lines, fix applied, and verification status. Logic Score (after) must be higher than Logic Score (before). The output must NOT be a plain logic-review report — it must include a Fix Log table and before/after scores.",
+      "assertions": [
+        {
+          "id": "has-fix-log",
+          "description": "Output includes a Fix Log section or table listing changes made",
+          "check": "Output contains 'Fix Log' as a heading or table label"
+        },
+        {
+          "id": "has-before-after-scores",
+          "description": "Output shows Logic Score before and after fixes",
+          "check": "Output contains both 'before' and 'after' Logic Score values (or equivalent labels like 'Logic Score (before)' and 'Logic Score (after)')"
+        },
+        {
+          "id": "fixes-null-deref-in-get-session",
+          "description": "A fix was applied to get_session to guard against None return from store.get()",
+          "check": "Output's Fix Log or code change shows a null/None guard added to get_session before accessing session['user_id']"
+        },
+        {
+          "id": "score-improved",
+          "description": "Logic Score after fixes is higher than before",
+          "check": "The after score is numerically higher than the before score"
+        }
+      ]
+    },
+    {
+      "id": 110,
+      "name": "zh-fix-all-session-module",
+      "mode": "logic-fix-all",
+      "prompt": "请把下面这个 auth/session.py 模块里的所有逻辑问题都修掉，给我可以直接应用的修改和修复记录：\n\n```python\n# auth/session.py\nimport time\n\nSESSIONS = {}\n\ndef create_session(user_id, ttl=3600):\n    # 用时间戳生成 session_id，但只取秒级精度可能重复\n    session_id = str(int(time.time()))\n    SESSIONS[session_id] = {'user_id': user_id, 'expires': time.time() + ttl}\n    return session_id\n\ndef get_session(session_id):\n    session = SESSIONS.get(session_id)\n    # 没判空直接读取\n    if session['expires'] < time.time():\n        return None\n    return session\n\ndef invalidate_all(user_id):\n    # 在遍历 dict 的同时修改它\n    for sid, s in SESSIONS.items():\n        if s['user_id'] == user_id:\n            del SESSIONS[sid]\n    return True\n```\n\n请修掉所有逻辑问题，并给出修复前后的 Logic Score 对比以及 Fix Log 表格。",
+      "expected_output": "应应用修复（而不只是报告 finding），输出包含 Fix Log 表和修复前后 Logic Score 对比的中文报告。至少修复 2-3 个问题：(1) create_session 只用秒级时间戳做 session_id，并发下会冲突（L3/L4，建议改用 uuid 或 secrets.token_hex）；(2) get_session 没检查 SESSIONS.get 返回 None 就直接访问 session['expires']，会抛 TypeError（L6/L3，加 None 判断）；(3) invalidate_all 在 for 循环中修改 SESSIONS，抛 RuntimeError: dictionary changed size during iteration（L4，先收集待删 key 再统一删）。修复后的分数必须高于修复前。输出必须是中文为主。",
+      "assertions": [
+        {
+          "id": "language-chinese-output",
+          "description": "Output body is primarily Chinese; no full-line English section headers; table labels like 'Fix Log' inside a table are allowed",
+          "check": "Output contains at least 50 Chinese characters and does not contain standalone English section headers like '# Findings' or '## Summary' on their own line"
+        },
+        {
+          "id": "has-fix-log",
+          "description": "Output includes a Fix Log section or table listing changes made",
+          "check": "Output contains 'Fix Log' as a heading or table label (Chinese equivalent like '修复记录' / '修复日志' is also acceptable)"
+        },
+        {
+          "id": "has-before-after-scores",
+          "description": "Output shows Logic Score before and after fixes",
+          "check": "Output contains both before and after Logic Score values (e.g. 'Logic Score (before)' and 'Logic Score (after)', or Chinese '修复前' / '修复后' with numeric scores)"
+        },
+        {
+          "id": "applies-concrete-fixes",
+          "description": "Output shows concrete code-level fixes applied to at least two of the three bugs (unique session id, None guard in get_session, safe invalidate_all iteration)",
+          "check": "Output's Fix Log or code changes show concrete fixes for at least two of: (a) replacing the time.time() session_id with a unique id like uuid or secrets, (b) adding a None guard in get_session before accessing session['expires'], (c) rewriting invalidate_all to avoid modifying SESSIONS during iteration"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "name": "fix-all-deduplicates-shared-root-cause",
+      "mode": "logic-fix-all",
+      "prompt": "Fix all logic issues in this module:\n\n```javascript\n// utils/config.js\nfunction getPort(config) {\n  return config.server.port;\n}\n\nfunction getHost(config) {\n  return config.server.host;\n}\n\nfunction getTimeout(config) {\n  return config.server.timeout || 5000;\n}\n```\n\nThis module is called from app startup with: `const port = getPort(loadConfig());`",
+      "expected_output": "Should identify that all three functions access config.server without checking if config or config.server is null/undefined — this is one root cause (L6/L3 boundary blindspot on the config parameter contract) manifesting at three call sites. The Fix Log should record one root-cause fix (add null guard for config.server at the shared access point, or add parameter validation) rather than three identical fixes. Logic Score (after) should be higher. getTimeout's fallback for timeout is correct behavior and should NOT be flagged as a bug.",
+      "assertions": [
+        {
+          "id": "has-fix-log",
+          "description": "Output includes a Fix Log table listing applied changes",
+          "check": "Output contains 'Fix Log' as a heading or table label"
+        },
+        {
+          "id": "identifies-shared-root-cause",
+          "description": "Output treats the null/undefined config.server access as one root cause affecting multiple call sites, not three independent bugs",
+          "check": "Output either mentions a single root-cause fix covering multiple functions, or references 'call sites' in the Fix Log"
+        },
+        {
+          "id": "does-not-flag-timeout-fallback",
+          "description": "The || 5000 fallback in getTimeout is not flagged as a logic bug",
+          "check": "Output does not list getTimeout's timeout fallback as a finding or fix"
+        }
+      ]
+    }
+  ]
+}

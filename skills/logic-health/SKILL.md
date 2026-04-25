@@ -1,54 +1,50 @@
 ---
 name: logic-health
 description: >
-  Logic health dashboard that sweeps multiple modules or an entire codebase
-  with semi-formal tracing to produce a scored overview of logic correctness
-  — identifying risk hotspots and systemic patterns across the whole project.
-  Use this skill proactively before any release, deploy, or major code review
-  milestone: if the user mentions "shipping soon", "about to release",
-  "onboarding to this codebase", or "where should I focus testing effort",
-  this skill is almost always the right call. Strong trigger phrases: "logic
-  health check", "audit the whole codebase", "audit the entire X module",
-  "give me a logic overview before we ship", "what are the risk areas in
-  this project", "comprehensive logic audit", "sweep the whole backend",
-  "assess the logic quality of this repo", "what's the overall correctness
-  picture", "I'm onboarding and want to know the risk areas", "full logic
-  review of src/". Also trigger when the user mentions auditing multiple
-  named modules together, or wants a priority list of where to focus effort.
-  The key signal is SCOPE: the user is asking about a codebase, a directory,
-  or multiple modules — not a single function or file. Do NOT trigger for:
-  reviewing a single function, file, or specific PR (use logic-review),
-  explaining one execution path (use logic-explain), comparing two versions
-  (use logic-diff), or locating one specific failing test (use logic-locate).
+  Sweep a directory, module, or full codebase for logic correctness and
+  produce a scored health dashboard with systemic patterns. Trigger when
+  the scope is multi-file — "audit the whole codebase", "health check",
+  "audit src/", "audit auth and payments modules", "where should I focus
+  testing", "onboarding review", "logic overview before we ship".
+  SCOPE HARD RULE: multi-file or directory scope. One file or one
+  function uses logic-review; a concrete failure uses logic-locate; two
+  versions uses logic-diff; explaining a path uses logic-explain; "fix
+  everything" (no scope named) uses logic-fix-all.
+  Do NOT trigger for: single function/file, style/architecture-only
+  audits, security-only scans, performance-only audits.
 ---
 
 # Logic-Lens — Logic Health
 
 ## Setup
-**Shared context (standard for all skills that produce findings):**
-1. Read `../_shared/common.md` for the Iron Law, Report Template, and Logic Score.
-2. Read `../_shared/logic-risks.md` for all L1–L6 risk definitions.
-3. Read `../_shared/semiformal-guide.md` for semi-formal tracing methodology.
 
-**Skill-specific:**
-4. Read `logic-health-guide.md` in this directory for the aggregation process.
+Read in this order:
+1. `../_shared/common.md` — language rule, Iron Law, Report Template, Logic Score (weighted-average variant in §6), Remedy discipline.
+2. `../_shared/logic-risks.md` — L1–L6 definitions.
+3. `../_shared/semiformal-guide.md` — tracing methodology and Premises Construction Checklist.
+4. `logic-health-guide.md` — aggregation process.
 
 ## Process
 
-**Scope:** If no scope is specified, analyze the top-level modules of the repository. Apply the Scope Management prioritization from `common.md`: user-flagged modules first, then external-state surfaces, then recently changed files (`git log --since=30.days --name-only`). State the covered scope at the top of the report.
+**Step 0. Language + scope routing.** Detect language per `common.md` §1. Confirm scope is multi-file (directory / module list / repo). If scope is one file or one function, switch to logic-review.
 
-1. Enumerate the modules/files to cover and plan the sweep (Step 1 of the guide)
-2. Run a focused logic-review pass over each module, applying semi-formal tracing to the highest-risk functions (Steps 2–3)
-3. Aggregate findings across modules: count by severity and L-code (Step 4)
-4. Compute the overall Logic Score and per-module sub-scores (Step 5)
-5. Identify systemic patterns: if L1 appears in 4 modules, that is a codebase-wide naming convention problem, not 4 isolated bugs (Step 6)
-6. Output using the Health Report Template (Step 7)
+**Step 1. Enumerate modules and plan the sweep** (guide Step 1) — prioritize public API surfaces, recently changed files, and user-flagged modules. Read `.logic-lens.yaml` for `ignore:` globs.
 
-**Mode line in report:** `Logic Health`
+**Step 2. Run focused logic-review per module** (guide Step 2) — apply Premises → Trace → Divergence on public-facing functions; skip internal helpers unless a trace leads into them.
 
-**Health Report Template additions:**
+**Step 3. Record findings per module** (guide Step 3) — tag module, L-code, severity.
 
-After the standard Findings section, include:
+**Step 4. Aggregate findings** (guide Step 4) — counts by severity and by L-code; cross-reference modules.
+
+**Step 5. Compute scores** (guide Step 5) — per-module Logic Score via the standard formula; overall score is the line-weighted average (per `common.md` §6).
+
+**Step 6. Identify systemic patterns** (guide Step 6) — L-codes appearing in 3+ modules indicate codebase-wide habits; architectural enablers (heavy global state → L4; deep callee chains → L6) get explicit mention.
+
+**Step 7. Output the Health Report** (guide Step 7) — standard header; Module Breakdown table; Findings; Systemic Patterns; Recommended Priority Order (top 3–5). Localize all headers if the user wrote in Chinese.
+
+**Mode line in report:** `Logic Health` (Chinese: `逻辑体检`).
+
+**Health-specific additions** (append after the standard Summary):
 
 ```
 ## Module Breakdown
@@ -57,13 +53,14 @@ After the standard Findings section, include:
 |--------|-------|----------|---------|------------|----------|
 | auth/  | 72    | 1        | 2       | 0          | L6       |
 | api/   | 91    | 0        | 1       | 2          | L3       |
-...
 
 ## Systemic Patterns
-[Risk codes that appear in 3+ modules, indicating a codebase-wide habit rather than an isolated bug]
+[Risk codes appearing in 3+ modules — codebase-wide habit rather than isolated bugs]
 
 ## Recommended Priority Order
 1. [Most critical single finding]
 2. [Systemic pattern with widest impact]
 3. [Quick wins: suggestions that prevent future Criticals]
 ```
+
+Localize column and section headers when the user wrote in Chinese (e.g., `模块分布`, `系统性模式`, `优先级建议`).

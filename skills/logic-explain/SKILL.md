@@ -1,48 +1,45 @@
 ---
 name: logic-explain
 description: >
-  Execution path explanation that traces through code step by step to reveal
-  what the code actually does — not what it appears to do. Use this skill
-  proactively whenever a user seems confused about why code behaves the way
-  it does, or pastes code while asking "why does this happen?" even without
-  using the word "trace" or "explain". Strong trigger phrases: "walk me
-  through this", "trace this for me", "what actually happens when I call X",
-  "follow the execution", "explain what this does step by step", "why does
-  this print/return X instead of Y", "I don't understand what this code
-  does", "trace through X with input Y", "what happens internally when",
-  "explain the execution path". Also trigger when a user shares code and
-  asks why it behaves a certain way — e.g. "why does this print [3,3,3]
-  instead of [0,1,2]", "what does yield from actually do here", "how does
-  this async code actually execute". Key disambiguation: logic-explain
-  answers "what does this code do and why?" for a specific input or scenario;
-  logic-review looks for bugs without a specific scenario in mind;
-  logic-locate starts from a known failure and traces backward. Do NOT
-  trigger for: finding bugs without a behavioral question (use logic-review),
-  comparing two versions (use logic-diff), locating a failing test root cause
-  (use logic-locate), broad codebase audits (use logic-health), or general
-  concept explanations not tied to specific code.
+  Explain what a specific piece of code actually does for a given input by
+  producing a step-by-step execution trace (interprocedural, with name
+  resolution and type transitions). Trigger when the user is confused
+  about behavior or asks why code produces X instead of Y — "walk me
+  through this", "trace through X with input Y", "why does this return
+  X", "what does yield-from do here", "explain the execution path".
+  SCOPE HARD RULE: a specific function + a specific input scenario. If the
+  user wants to find bugs without a scenario in mind, use logic-review;
+  two-version comparison uses logic-diff; concrete failures use
+  logic-locate; codebase-wide audit uses logic-health.
+  Do NOT trigger for: finding bugs without a behavioral question, style
+  or design discussion, or concept explanations not tied to specific code.
 ---
 
 # Logic-Lens — Execution Explain
 
 ## Setup
-**Shared context (omits `logic-risks.md` — this skill produces no L-code findings):**
-1. Read `../_shared/common.md` for the Iron Law and Report Template.
-2. Read `../_shared/semiformal-guide.md` for the full semi-formal tracing methodology.
 
-**Skill-specific:**
-3. Read `logic-explain-guide.md` in this directory for the explanation process.
+Read in this order:
+1. `../_shared/common.md` — language rule, Report Template (Logic Score line is omitted for this mode), Remedy discipline (used only if the explanation surfaces a bug worth fixing).
+2. `../_shared/semiformal-guide.md` — full tracing methodology and Premises Construction Checklist.
+3. `logic-explain-guide.md` — explanation process.
+
+Note: `logic-risks.md` is intentionally skipped — logic-explain does not produce L-code findings; if the trace reveals a bug, stop and recommend logic-review or logic-locate instead of tagging L-codes inside an explanation.
 
 ## Process
 
-**Scope:** Ask the user which function or code path to explain, and which input scenario to trace (if none specified, use the most common/interesting case).
+**Step 0. Language + scope routing.** Detect language per `common.md` §1. Confirm a single function + a single input scenario. If the user wants bug-finding without a scenario, hand off to logic-review.
 
-1. State the entry point and the scenario being traced (Step 1 of the guide)
-2. Build premises: resolve all names, types, and preconditions before starting the trace (Step 2)
-3. Produce the step-by-step execution trace, crossing function boundaries where relevant (Step 3)
-4. Highlight any surprising or non-obvious behavior discovered during the trace (Step 4)
-5. Summarize what the code actually does vs. what a casual reader might assume (Step 5)
+**Step 1. Entry point and scenario** (guide Step 1) — name the function, the input scenario, and what the user is trying to understand.
 
-**Mode line in report:** `Execution Explain`
+**Step 2. Build premises** (guide Step 2) — resolve every non-obvious name, state the types of key variables at entry, note global/module state accessed.
 
-**Note:** Execution Explain does not compute a Logic Score — it is descriptive, not evaluative. Omit the score line from the report header.
+**Step 3. Produce step-by-step trace** (guide Step 3) — numbered, interprocedural, active voice; cross function boundaries whenever relevant.
+
+**Step 4. Highlight non-obvious behavior** (guide Step 4) — name resolutions, implicit coercions, hidden side effects; the "gotchas" the casual reader would miss.
+
+**Step 5. Summarize actual vs. assumed** (guide Step 5) — one sentence each; this is the core value for the user.
+
+**Mode line in report:** `Execution Explain` (Chinese: `执行解释`).
+
+**Note:** Execution Explain is descriptive, not evaluative. Omit the Logic Score / Fault Confidence / Verdict line from the report header.

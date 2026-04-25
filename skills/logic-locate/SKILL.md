@@ -1,50 +1,48 @@
 ---
 name: logic-locate
 description: >
-  Fault localization that uses semi-formal execution tracing to pinpoint the
-  specific code location responsible for a bug, test failure, crash, or
-  wrong output — given a concrete failure to work from. Use this skill
-  proactively whenever a stack trace, failing assertion, error message, or
-  specific wrong output value is shared alongside code — that combination is
-  almost always a fault localization request. Strong trigger phrases: "find
-  the bug", "this test is failing", "track down this crash", "locate the
-  error", "why is this test failing", "find the root cause", "help me debug
-  this", "where is this coming from", "the error is somewhere in X — find
-  it". Also trigger when the user gives a specific observable symptom with
-  enough detail to trace — e.g. "expected 70, got 100", "KeyError at line
-  89", "NoneType has no attribute X at services/foo.py:67", "cart empties
-  when second tab opens". The key signal is a CONFIRMED failure (failing
-  test, error message, wrong value, crash) — not a vague suspicion. This
-  is what distinguishes logic-locate from logic-review: logic-locate starts
-  from evidence; logic-review starts from suspicion. Do NOT trigger for:
-  general review without a concrete failure (use logic-review), explaining
-  what code does (use logic-explain), comparing two versions (use logic-diff),
-  broad codebase audits (use logic-health), or vague questions like "what's
-  wrong with my code?"
+  Locate the root cause of a CONFIRMED failure via backward-then-forward
+  semi-formal tracing. Trigger when the user provides a stack trace,
+  failing assertion, error message, or specific wrong-value observation
+  — "find the bug", "this test is failing", "track down this crash",
+  "why is this test failing", "KeyError at line 89", "expected 70, got
+  100", "NoneType has no attribute X", "cart empties when second tab opens".
+  SCOPE HARD RULE: requires a concrete failure (exception, failing test,
+  or specific wrong output). Vague suspicion without evidence uses
+  logic-review; behavior explanation uses logic-explain; refactor
+  comparison uses logic-diff; codebase audit uses logic-health.
+  Do NOT trigger for: vague "what's wrong" without a concrete symptom,
+  style questions, or performance issues.
 ---
 
 # Logic-Lens — Fault Locate
 
 ## Setup
-**Shared context (reads common.md for Iron Law and Report Template; Logic Score is replaced by Fault Confidence in this skill):**
-1. Read `../_shared/common.md` for the Iron Law and Report Template.
-2. Read `../_shared/logic-risks.md` for L1–L6 risk codes; the fault will map to one of these.
-3. Read `../_shared/semiformal-guide.md` for semi-formal tracing and interprocedural reasoning.
 
-**Skill-specific:**
-4. Read `logic-locate-guide.md` in this directory for the fault localization process.
+Read in this order:
+1. `../_shared/common.md` — language rule, Iron Law, Report Template, Fault Confidence rubric (see §5 and §7), Remedy discipline.
+2. `../_shared/logic-risks.md` — L1–L6 definitions (the root fault maps to one).
+3. `../_shared/semiformal-guide.md` — tracing methodology, Premises Construction Checklist, interprocedural reasoning.
+4. `logic-locate-guide.md` — fault-localization process.
 
 ## Process
 
-**Scope:** The user must provide: (a) a failing test or error message, and (b) access to the relevant code. Ask for what's missing.
+**Step 0. Language + scope routing.** Detect language per `common.md` §1. Confirm a concrete failure exists (stack trace, failing assertion, specific wrong value). If only a suspicion, switch to logic-review.
 
-1. Understand the failure: what is the observed behavior, and what is the expected behavior? (Step 1 of the guide)
-2. Identify the entry point closest to the failure: the test, the error site, or the reported symptom (Step 2)
-3. Trace backward from the failure point, building premises at each step (Step 3)
-4. Trace forward to confirm the hypothesis, then follow interprocedural chains if a callee is implicated (Steps 4a–4b)
-5. Identify the root divergence: the earliest point in the trace where the premise breaks (Step 5)
-6. Classify the fault by L-code and output a focused report (Step 6)
+**Step 1. Understand the failure** (guide Step 1) — observed behavior, expected behavior, reproduction path.
 
-**Mode line in report:** `Fault Locate`
+**Step 2. Identify the entry point** (guide Step 2) — failing test, outermost application frame, or request handler — whichever is closest to the failure.
 
-**Output format:** Report focuses on the fault location, not a full codebase review. The Findings section contains a single Primary Fault (the root cause) and optionally Contributing Factors (conditions that enabled the fault). Logic Score is omitted — replace with **Fault Confidence:** High / Medium / Low based on trace completeness.
+**Step 3. Trace backward from the failure point** (guide Step 3) — walk each value and state back to its origin, building premises at every hop.
+
+**Step 4. Trace forward to confirm** (guide Step 4) — from the suspected root, verify the trace reaches the observed symptom.
+
+**Step 5. Interprocedural tracing if a callee is implicated** (guide Step 5) — trace into the callee; check return values under observed conditions, unhandled exceptions, shared-state mutation.
+
+**Step 6. Identify the root divergence and classify** (guide Step 6) — state the exact line/expression, the violated premise, the actual behavior, the propagation chain to the symptom; pick the L-code.
+
+**Step 7. Output the focused report** (guide Step 7) — Fault Confidence (High/Medium/Low, per `common.md` §7); Primary Fault (single four-field finding); optionally Contributing Factors; a minimal Remedy per `common.md` §10.
+
+**Mode line in report:** `Fault Locate` (Chinese: `故障定位`).
+
+**Output format:** the Findings section has ONE Primary Fault, not a full Critical/Warning/Suggestion split. The Logic Score line is replaced by **Fault Confidence:** High / Medium / Low.
