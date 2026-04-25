@@ -1,0 +1,29 @@
+{
+  "eval_id": 107,
+  "name": "deep-flaky-race-condition",
+  "mode": "logic-locate",
+  "is_zh": false,
+  "char_count": 3364,
+  "chinese_chars": 0,
+  "expectations": [
+    {
+      "text": "has Premises + Trace + Divergence labels (EN or ZH)",
+      "passed": true
+    },
+    {
+      "text": "contains L4",
+      "passed": true
+    },
+    {
+      "text": "identifies race / non-atomic increment",
+      "passed": true
+    },
+    {
+      "text": "has Fault Confidence",
+      "passed": true
+    }
+  ],
+  "passed": 4,
+  "total": 4,
+  "pass_rate": 1.0
+}

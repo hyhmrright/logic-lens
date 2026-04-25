@@ -1,0 +1,29 @@
+{
+  "eval_id": 101,
+  "name": "deep-cross-file-callee-contract-L6",
+  "mode": "logic-review",
+  "is_zh": false,
+  "char_count": 6043,
+  "chinese_chars": 0,
+  "expectations": [
+    {
+      "text": "has Premises + Trace + Divergence labels (EN or ZH)",
+      "passed": true
+    },
+    {
+      "text": "contains L6",
+      "passed": true
+    },
+    {
+      "text": "traces cross-file into gateway",
+      "passed": true
+    },
+    {
+      "text": "identifies amount=0 returns None",
+      "passed": true
+    }
+  ],
+  "passed": 4,
+  "total": 4,
+  "pass_rate": 1.0
+}

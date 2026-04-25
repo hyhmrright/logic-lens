@@ -4,6 +4,34 @@ All notable changes to Logic-Lens are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 Versions follow [SemVer](https://semver.org/).
 
+## [0.4.1] — 2026-04-25
+
+### Added — DEEP case verification (iteration-3, sonnet model)
+
+Extends the v0.4.0 evaluation coverage to the six advanced / boundary cases that were deferred in iteration-2. Run against the v0.4.0 SKILL.md set (no SKILL.md changes in this patch — this release is purely evidence) using the **`sonnet`** model (not opus) to confirm architecture holds on the cheaper tier.
+
+| case id | mode | scenario | pass_rate |
+|---|---|---|---|
+| 10 | logic-fix-all | shared-root-cause dedup + negative (|| 5000 fallback not a bug) | 4/4 |
+| 101 | logic-review | cross-file L6 callee contract (tracing into payments/gateway.py) | 4/4 |
+| 103 | logic-explain | async microtask queue resolution order | 2/2 |
+| 105 | logic-diff | Go nil-interface-vs-nil-pointer refactor | 3/3 |
+| 107 | logic-locate | flaky race / non-atomic increment as L4 | 4/4 |
+| 109 | logic-health | cross-module systemic L6 pattern detection | 3/3 |
+
+**iteration-3 overall pass_rate: 1.000 (20/20 assertions).**
+
+Combined with iteration-2, v0.4.x coverage now stands at **15/15 cases, 58/58 assertions, 100%** across English, Chinese, and DEEP boundaries — on both Opus (iteration-2) and Sonnet (iteration-3). See `skills-workspace/iteration-3/summary.json` + per-case `grading.json` for raw evidence.
+
+### Fixed
+
+- `scripts/grade-iteration.py` — added DEEP-case rules (id 10, 101, 103, 105, 107, 109) and loosened the id=10 "|| 5000 fallback" check to accept positive acknowledgements ("not a bug" / "correct default pattern") rather than the overly strict negative regex from the v0.4.0 draft.
+
+### Known Limitations (unchanged, tracked for v0.5.0)
+
+- Phase 4 trigger-description optimization (`scripts/run-trigger-evals.sh` with opus) still deferred.
+- `pr-review-toolkit:code-reviewer` agent second-eye review still deferred.
+
 ## [0.4.0] — 2026-04-25
 
 ### Changed (架构重构 / Architecture refactor)

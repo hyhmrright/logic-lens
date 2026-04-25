@@ -1,0 +1,21 @@
+{
+  "eval_id": 103,
+  "name": "deep-async-microtask-resolution",
+  "mode": "logic-explain",
+  "is_zh": false,
+  "char_count": 6701,
+  "chinese_chars": 0,
+  "expectations": [
+    {
+      "text": "explains microtask / promise order",
+      "passed": true
+    },
+    {
+      "text": "no Logic Score line (explain mode)",
+      "passed": true
+    }
+  ],
+  "passed": 2,
+  "total": 2,
+  "pass_rate": 1.0
+}

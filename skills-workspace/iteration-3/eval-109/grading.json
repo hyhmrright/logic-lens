@@ -1,0 +1,25 @@
+{
+  "eval_id": 109,
+  "name": "deep-systemic-cross-module-L6",
+  "mode": "logic-health",
+  "is_zh": false,
+  "char_count": 7946,
+  "chinese_chars": 0,
+  "expectations": [
+    {
+      "text": "has Premises + Trace + Divergence labels (EN or ZH)",
+      "passed": true
+    },
+    {
+      "text": "identifies systemic L6 pattern",
+      "passed": true
+    },
+    {
+      "text": "has Module Breakdown",
+      "passed": true
+    }
+  ],
+  "passed": 3,
+  "total": 3,
+  "pass_rate": 1.0
+}

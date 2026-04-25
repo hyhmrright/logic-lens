@@ -1,0 +1,25 @@
+{
+  "eval_id": 105,
+  "name": "deep-go-nil-interface-refactor",
+  "mode": "logic-diff",
+  "is_zh": false,
+  "char_count": 5313,
+  "chinese_chars": 0,
+  "expectations": [
+    {
+      "text": "has Premises + Trace + Divergence labels (EN or ZH)",
+      "passed": true
+    },
+    {
+      "text": "identifies nil-interface-vs-nil-pointer trap",
+      "passed": true
+    },
+    {
+      "text": "contains verdict",
+      "passed": true
+    }
+  ],
+  "passed": 3,
+  "total": 3,
+  "pass_rate": 1.0
+}
