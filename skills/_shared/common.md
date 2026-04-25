@@ -57,56 +57,11 @@ Three-step tracing: **Premises → Trace → Divergence**. Full methodology, lan
 
 ## 4. Report Template
 
-```
-# Logic-Lens [Mode Name]
+The full English + Chinese templates and all rendering rules live in **`report-template.md`** (single source). Every skill renders its output by following that file, applying the language rule from §1 and the mode-specific header field from §5.
 
-**Mode:** [Logic Review / Execution Explain / Semantic Diff / Fault Locate / Logic Health / Logic Fix All]
-**Scope:** [files, functions, or diff under analysis]
-[<mode-specific header field — see §5>]
-
-> [One-sentence verdict on overall logic.]
-
----
-
-## Findings
-
-### 🔴 Critical
-**[L-code] — [Short descriptive title]**
-Premises:   [what the code assumes — one or more explicit statements]
-Trace:      [step-by-step execution path, interprocedural where needed]
-Divergence: [exact line/expression where the premise breaks; what consequence follows]
-Remedy:     [minimal, paste-ready fix — see §10]
-
-### 🟡 Warning
-[same four-field structure]
-
-### 🟢 Suggestion
-[same four-field structure]
-
----
-
-## Summary
-
-[2–3 sentences: most important finding, recommended next action, overall trend if reviewing a codebase.]
-```
-
-**Localized version (Chinese):** replace headers per §1 map; the finding body becomes:
-
-```
-### 🔴 严重
-**[L-code] — [简短标题]**
-前提：   [代码所做的假设 — 一条或多条显式陈述]
-追踪：   [逐步执行路径；涉及跨函数调用时跟进被调方]
-偏差：   [前提被破坏的确切位置（行号/表达式）及后果]
-修复：   [最小、可直接粘贴的修复 — 见 §10]
-```
-
-**Rules:**
-1. No English headers in a Chinese response, and vice versa.
-2. Every finding must have all four fields. Drop it or downgrade to Suggestion with a "manual verification" note if Trace is incomplete.
-3. No prose findings — an observation without all four fields is not a finding.
-4. Severity markers `🔴 / 🟡 / 🟢`; in plain-terminal mode substitute `[CRITICAL] / [WARNING] / [SUGGESTION]` (see §11).
-5. Skill-specific additions (Module Breakdown for health, Fix Log for fix-all, Verdict details for diff) appear **after** the Summary, not between Findings and Summary.
+Quick reminder of the four-field discipline (full text in `report-template.md`):
+- Every finding has **Premises / Trace / Divergence / Remedy** — drop or downgrade if Trace is incomplete.
+- No prose findings, no headers in the wrong language, no skill-specific section between Findings and Summary.
 
 ---
 

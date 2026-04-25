@@ -21,33 +21,11 @@ to verify the conclusion.
 
 ---
 
-## Premises Construction Checklist
+## Premises Construction
 
-Before tracing execution, enumerate these premises explicitly:
+Before tracing execution, enumerate the premises explicitly using the four-section checklist in **`semiformal-checklist.md`**: Name Resolution, Type Contracts, State Preconditions, Control Flow Assumptions. The checklist is a single source — all skill guides reference it rather than re-listing.
 
-### Name Resolution
-- What is the **full qualified name** of every function called in the scope?
-  - Is there a local variable, import, class attribute, or enclosing-scope name that shadows the expected name?
-  - For method calls: what is the **actual runtime type** of the receiver? Which implementation of the method does it dispatch to?
-- For every imported name: what does the import actually bring into scope?
-  - `from module import name` — does `module` redefine a builtin `name`?
-  - `import module as alias` — is `alias` reused elsewhere with a different meaning?
-
-### Type Contracts
-- For every parameter of the function under review: what type is expected?
-- At each call site: what type is actually passed?
-  - Trace the type from its **origin** (declaration, return of another function, user input parsing)
-  - Note every transformation applied: string parsing, numeric conversion, attribute access that might return a different type
-
-### State Preconditions
-- What must be initialized/non-null/non-empty before this code runs?
-- Is that initialization guaranteed? By whom? Under what conditions might it be absent?
-- For mutable state: what was the state before this code runs, and does the code depend on a specific prior state?
-
-### Control Flow Assumptions
-- Which branch of every conditional will execute for the relevant inputs?
-- How many times will each loop execute? What terminates it?
-- Are there any early exits (return/raise/break) that the caller might not anticipate?
+A trace without explicit premises is not a valid trace: skip the checklist and you forfeit the certificate property that distinguishes semi-formal reasoning from intuition.
 
 ---
 
