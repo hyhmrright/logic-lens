@@ -4,6 +4,18 @@ All notable changes to Logic-Lens are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 Versions follow [SemVer](https://semver.org/).
 
+## [0.4.2] — 2026-04-25
+
+### Changed
+
+- **`scripts/run-trigger-evals.sh` default model is now `claude-sonnet-4-6`** (was `claude-opus-4-7`). Roughly 5× cheaper per token; opus remains available as `MODEL=claude-opus-4-7` override. Reasoning: run_loop.py uses a single `--model` flag for both bulk eval and description-proposal, so the default should minimize cost; opus upgrade is case-by-case.
+- **Release notes (`.github/RELEASE-NOTES-v0.4.x.md`) rewritten in English** for international accessibility. GitHub Release titles and bodies updated via `gh release edit` for v0.4.0 and v0.4.1. CHANGELOG remains bilingual (internal-facing).
+- `scripts/README.md` updated with new default-model guidance.
+
+### Not changed
+
+No SKILL.md, guide, shared framework, or evaluation code touched. Pure scripts-default + docs patch.
+
 ## [0.4.1] — 2026-04-25
 
 ### Added — DEEP case verification (iteration-3, sonnet model)

@@ -23,15 +23,17 @@ Drives skill-creator's `run_loop.py` against the six per-skill trigger eval sets
 - network access (each iteration issues real `claude -p` calls and costs tokens)
 
 ```bash
-# All six skills (5 iterations each, Opus 4.7 default):
+# All six skills (5 iterations each, Sonnet 4.6 default — cost-conscious):
 bash scripts/run-trigger-evals.sh
 
 # One skill:
 bash scripts/run-trigger-evals.sh review
 
-# Shorter loop, different model:
-MAX_ITERATIONS=3 MODEL=claude-sonnet-4-6 bash scripts/run-trigger-evals.sh
+# Shorter loop, upgrade to Opus only if Sonnet proposals look weak:
+MAX_ITERATIONS=3 MODEL=claude-opus-4-7 bash scripts/run-trigger-evals.sh review
 ```
+
+Default model is **`claude-sonnet-4-6`** — the run_loop uses the same model for both bulk evaluation (cheap) and the smarter description-proposal step, so one-model choice trades off cost vs proposal quality. Sonnet 4.6 handles both well at ~5× lower cost than opus; only switch to opus if you see the proposal descriptions fail to improve test scores across iterations.
 
 Each run emits a JSON result with `best_description` selected by held-out test score. Copy it into the corresponding `skills/logic-<skill>/SKILL.md` frontmatter `description:` field to apply.
 
