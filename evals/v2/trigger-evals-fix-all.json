@@ -1,0 +1,22 @@
+[
+  {"query": "audit and fix every logic bug in this repo autonomously, I'll review the diff afterward. don't ask me about each one", "should_trigger": true},
+  {"query": "clean up all logic issues across the whole codebase automatically — the full fix pipeline", "should_trigger": true},
+  {"query": "fix everything you find — I don't want to micromanage. just do the whole thing and report", "should_trigger": true},
+  {"query": "这个项目逻辑 bug 太多，帮我自动扫 + 修，一次搞定，完了给我 Fix Log", "should_trigger": true},
+  {"query": "run the full autonomous fix pipeline on this monorepo — backend + frontend + shared libs, repo-wide", "should_trigger": true},
+  {"query": "I'm tired of the recurring bugs — do a repo-wide audit and apply fixes. verify them too", "should_trigger": true},
+  {"query": "autonomous fix-all mode on this codebase — include config files and behavioral docs not just source", "should_trigger": true},
+  {"query": "scan everything, fix everything, verify each fix, and give me a final report — no back-and-forth please", "should_trigger": true},
+  {"query": "automate the full logic cleanup — find + remedy + verify + iterate. I want a clean repo when you're done", "should_trigger": true},
+  {"query": "comprehensive auto-fix with verification across the whole repo — go, one-shot", "should_trigger": true},
+  {"query": "review this one function in auth/session.py for bugs", "should_trigger": false},
+  {"query": "explain step by step what this code does for input x=5", "should_trigger": false},
+  {"query": "compare my old and new parseDate — are they equivalent?", "should_trigger": false},
+  {"query": "find the cause of this crash, stack trace attached", "should_trigger": false},
+  {"query": "audit the codebase and give me the findings — don't fix anything yet, I want to see first", "should_trigger": false},
+  {"query": "show me the bugs in this module, don't apply fixes", "should_trigger": false},
+  {"query": "reformat my codebase to match Prettier config", "should_trigger": false},
+  {"query": "fix this specific bug in auth.py line 42 — I already know what's wrong", "should_trigger": false},
+  {"query": "fix the indentation and trailing whitespace throughout the repo", "should_trigger": false},
+  {"query": "help me set up CI/CD for this project", "should_trigger": false}
+]

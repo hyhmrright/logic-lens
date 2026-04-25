@@ -1,0 +1,22 @@
+[
+  {"query": "I refactored parseDate from a regex-based implementation to an Intl.DateTimeFormat-based one. Old and new are attached — equivalent for all inputs?", "should_trigger": true},
+  {"query": "migrated a debounce helper from lodash.debounce to native setTimeout+clearTimeout. did I preserve behavior?", "should_trigger": true},
+  {"query": "这两个 SQL 等价吗？ WHERE status = 'active' AND deleted_at IS NULL  vs  WHERE status = 'active' AND deleted_at = NULL", "should_trigger": true},
+  {"query": "I rewrote the ranking algorithm from bubble sort to Python's built-in Timsort — same output for all inputs including ties and duplicates?", "should_trigger": true},
+  {"query": "Version A uses .map(...).filter(...) chain, Version B uses a single for-loop with early break — behaviorally identical for this data?", "should_trigger": true},
+  {"query": "did this refactor preserve semantics? old: [20 lines]  new: [25 lines, extracted 2 helper functions]", "should_trigger": true},
+  {"query": "swapped our custom UUID v4 gen for crypto.randomUUID() — drop-in replacement? any edge cases?", "should_trigger": true},
+  {"query": "Python: is `[x for x in xs if p(x)]` equivalent to `list(filter(p, xs))` in all cases including generators and exceptions?", "should_trigger": true},
+  {"query": "rewrote validate(data) from nested if-else to strategy-pattern classes. check for equivalence across all input types", "should_trigger": true},
+  {"query": "我把 regex 验证替换成了显式 parsing 循环，两个版本对所有合法/非法 email 行为一致吗？", "should_trigger": true},
+  {"query": "review this function for bugs — single version, I'm worried about edge cases", "should_trigger": false},
+  {"query": "explain what this sort comparator does step by step", "should_trigger": false},
+  {"query": "my test is failing after the refactor — find the bug, here's the stack trace", "should_trigger": false},
+  {"query": "audit the auth module for overall logic health", "should_trigger": false},
+  {"query": "fix all bugs in the repo", "should_trigger": false},
+  {"query": "which version is cleaner stylistically — the map/filter chain or the for-loop?", "should_trigger": false},
+  {"query": "which version is faster — v1 or v2? benchmark them", "should_trigger": false},
+  {"query": "help me write tests for the new version of parseDate", "should_trigger": false},
+  {"query": "what's the difference between git rebase and merge?", "should_trigger": false},
+  {"query": "compare React and Vue as frameworks", "should_trigger": false}
+]

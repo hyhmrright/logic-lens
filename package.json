@@ -5,8 +5,7 @@
   "license": "MIT",
   "keywords": ["code-review", "logic", "debugging", "semantic-analysis", "claude", "ai-tools"],
   "scripts": {
-    "validate": "node scripts/validate-repo.mjs",
-    "evals": "node scripts/run-evals.mjs",
-    "evals:live": "node scripts/run-evals-live.mjs"
+    "validate": "bash scripts/validate-repo.sh",
+    "trigger-evals": "bash scripts/run-trigger-evals.sh"
   }
 }

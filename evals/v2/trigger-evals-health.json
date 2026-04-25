@@ -1,0 +1,22 @@
+[
+  {"query": "we're cutting a release on Friday — give me a logic health overview of the backend/ directory. ~20 files Python", "should_trigger": true},
+  {"query": "即将上线，帮我审查整个 payments 模块的逻辑健康度，给出风险热点和优先修复项", "should_trigger": true},
+  {"query": "I'm onboarding to this repo — can you do a logic sweep and tell me which modules are risky? I want to know where to focus first", "should_trigger": true},
+  {"query": "audit the auth/ and api/ modules together — 15 files total — and prioritize risks by severity", "should_trigger": true},
+  {"query": "logic health check on src/core/ before we start the big refactor next sprint — want a baseline", "should_trigger": true},
+  {"query": "what's the overall correctness picture of this Go service? hit the 5 core packages: handlers, storage, queue, worker, config", "should_trigger": true},
+  {"query": "comprehensive audit of the React app's components/ folder — which files need attention before our next release?", "should_trigger": true},
+  {"query": "sweep the whole backend for logic issues and give me a priority list — top 5 risks to fix first", "should_trigger": true},
+  {"query": "全仓库逻辑风险盘点，release 前想过一遍，告诉我最严重的三个问题集中在哪里", "should_trigger": true},
+  {"query": "give me a scored overview of src/ — per-module Logic Score and systemic patterns if any", "should_trigger": true},
+  {"query": "review this one function for bugs", "should_trigger": false},
+  {"query": "explain what this function does step by step", "should_trigger": false},
+  {"query": "compare the old and new version of parseDate", "should_trigger": false},
+  {"query": "my test is failing — locate the bug. stack trace attached", "should_trigger": false},
+  {"query": "autonomously fix every logic issue in the repo", "should_trigger": false},
+  {"query": "what's the architecture of this project? should I add a gateway layer?", "should_trigger": false},
+  {"query": "clean up the formatting across src/ to match our style guide", "should_trigger": false},
+  {"query": "document the public API endpoints in OpenAPI format", "should_trigger": false},
+  {"query": "benchmark the whole app — where are the perf bottlenecks?", "should_trigger": false},
+  {"query": "generate integration tests for the whole checkout flow", "should_trigger": false}
+]
