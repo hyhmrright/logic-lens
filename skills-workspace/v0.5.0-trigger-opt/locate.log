@@ -1,0 +1,628 @@
+Split: 12 train, 8 test (holdout=0.4)
+
+============================================================
+Iteration 1/2
+Description: Locate the root cause of a CONFIRMED failure via backward-then-forward semi-formal tracing. Trigger when the user provides a stack trace, failing assertion, error message, or specific wrong-value observation — "find the bug", "this test is failing", "track down this crash", "why is this test failing", "KeyError at line 89", "expected 70, got 100", "NoneType has no attribute X", "cart empties when second tab opens". SCOPE HARD RULE: requires a concrete failure (exception, failing test, or specific wrong output). Vague suspicion without evidence uses logic-review; behavior explanation uses logic-explain; refactor comparison uses logic-diff; codebase audit uses logic-health. Do NOT trigger for: vague "what's wrong" without a concrete symptom, style questions, or performance issues.
+============================================================
+Train: 18/36 correct, precision=100% recall=0% accuracy=50% (151.6s)
+  [FAIL] rate=0/3 expected=True: CI fails: assert result == 42 but result is 41. function und
+  [FAIL] rate=0/3 expected=True: the React modal randomly doesn't close on ESC — maybe 1 in 5
+  [FAIL] rate=0/3 expected=True: crash: ZeroDivisionError at metrics.py:115 when computing av
+  [FAIL] rate=0/3 expected=True: intermittent failure in test_checkout_flow — about 1 in 10 C
+  [FAIL] rate=0/3 expected=True: test_pagination is failing: expected [3,4,5] but got [6,7,8]
+  [FAIL] rate=0/3 expected=True: TypeError: Cannot read properties of null (reading 'id') at 
+  [PASS] rate=0/3 expected=False: walk me through what this code does step by step for an empt
+  [PASS] rate=0/3 expected=False: write a regex that matches international phone numbers
+  [PASS] rate=0/3 expected=False: this SQL is slow — 8 seconds on 1M rows. optimize it
+  [PASS] rate=0/3 expected=False: review this function for potential bugs — I have no concrete
+  [PASS] rate=0/3 expected=False: reformat my error messages to be consistent
+  [PASS] rate=0/3 expected=False: what does 'segmentation fault' mean in general? I'm learning
+Test : 12/24 correct, precision=100% recall=0% accuracy=50% (0.0s)
+  [FAIL] rate=0/3 expected=True: stack trace: AttributeError: 'NoneType' object has no attrib
+  [FAIL] rate=0/3 expected=True: 生产环境报错 KeyError: 'config' at app/loader.py:42，帮我定位根因。代码和 tra
+  [FAIL] rate=0/3 expected=True: my function returns 100 but I expect 70 when input is [10, 2
+  [FAIL] rate=0/3 expected=True: customers report cart empties when opening a second tab. Vue
+  [PASS] rate=0/3 expected=False: give me a logic health overview of the whole backend/ direct
+  [PASS] rate=0/3 expected=False: how do I set up pytest with coverage reports for my project?
+  [PASS] rate=0/3 expected=False: are these two implementations equivalent? I refactored it ye
+  [PASS] rate=0/3 expected=False: autonomously fix every bug you find in the repo
+
+Improving description...
+Proposed (21.4s): Use this skill when you have a concrete, observable failure and need to find its root cause. This means: a test that is failing with a specific assertion error, an exception with a stack trace, a crash with an error message, or a reproducible wrong output ("expected X, got Y"). Also covers intermittent/flaky failures where you can describe the symptom. Use this to answer "why is this failing", "find the bug", "trace this crash", "locate the off-by-one", "what causes this null pointer". The key qualifier: there must be a real failure artifact (error, wrong value, test failure, crash) — not just suspicion or code smell. Do not use for: general code review without a failure, explaining code behavior, comparing two implementations, or vague "something seems wrong" without evidence.
+
+============================================================
+Iteration 2/2
+Description: Use this skill when you have a concrete, observable failure and need to find its root cause. This means: a test that is failing with a specific assertion error, an exception with a stack trace, a crash with an error message, or a reproducible wrong output ("expected X, got Y"). Also covers intermittent/flaky failures where you can describe the symptom. Use this to answer "why is this failing", "find the bug", "trace this crash", "locate the off-by-one", "what causes this null pointer". The key qualifier: there must be a real failure artifact (error, wrong value, test failure, crash) — not just suspicion or code smell. Do not use for: general code review without a failure, explaining code behavior, comparing two implementations, or vague "something seems wrong" without evidence.
+============================================================
+Train: 18/36 correct, precision=100% recall=0% accuracy=50% (115.3s)
+  [FAIL] rate=0/3 expected=True: crash: ZeroDivisionError at metrics.py:115 when computing av
+  [FAIL] rate=0/3 expected=True: CI fails: assert result == 42 but result is 41. function und
+  [FAIL] rate=0/3 expected=True: the React modal randomly doesn't close on ESC — maybe 1 in 5
+  [FAIL] rate=0/3 expected=True: intermittent failure in test_checkout_flow — about 1 in 10 C
+  [PASS] rate=0/3 expected=False: walk me through what this code does step by step for an empt
+  [FAIL] rate=0/3 expected=True: test_pagination is failing: expected [3,4,5] but got [6,7,8]
+  [FAIL] rate=0/3 expected=True: TypeError: Cannot read properties of null (reading 'id') at 
+  [PASS] rate=0/3 expected=False: write a regex that matches international phone numbers
+  [PASS] rate=0/3 expected=False: this SQL is slow — 8 seconds on 1M rows. optimize it
+  [PASS] rate=0/3 expected=False: review this function for potential bugs — I have no concrete
+  [PASS] rate=0/3 expected=False: reformat my error messages to be consistent
+  [PASS] rate=0/3 expected=False: what does 'segmentation fault' mean in general? I'm learning
+Test : 12/24 correct, precision=100% recall=0% accuracy=50% (0.0s)
+  [FAIL] rate=0/3 expected=True: stack trace: AttributeError: 'NoneType' object has no attrib
+  [FAIL] rate=0/3 expected=True: 生产环境报错 KeyError: 'config' at app/loader.py:42，帮我定位根因。代码和 tra
+  [PASS] rate=0/3 expected=False: give me a logic health overview of the whole backend/ direct
+  [FAIL] rate=0/3 expected=True: my function returns 100 but I expect 70 when input is [10, 2
+  [FAIL] rate=0/3 expected=True: customers report cart empties when opening a second tab. Vue
+  [PASS] rate=0/3 expected=False: how do I set up pytest with coverage reports for my project?
+  [PASS] rate=0/3 expected=False: are these two implementations equivalent? I refactored it ye
+  [PASS] rate=0/3 expected=False: autonomously fix every bug you find in the repo
+
+Max iterations reached (2).
+
+Exit reason: max_iterations (2)
+Best score: 4/8 (iteration 1)
+{
+  "exit_reason": "max_iterations (2)",
+  "original_description": "Locate the root cause of a CONFIRMED failure via backward-then-forward semi-formal tracing. Trigger when the user provides a stack trace, failing assertion, error message, or specific wrong-value observation \u2014 \"find the bug\", \"this test is failing\", \"track down this crash\", \"why is this test failing\", \"KeyError at line 89\", \"expected 70, got 100\", \"NoneType has no attribute X\", \"cart empties when second tab opens\". SCOPE HARD RULE: requires a concrete failure (exception, failing test, or specific wrong output). Vague suspicion without evidence uses logic-review; behavior explanation uses logic-explain; refactor comparison uses logic-diff; codebase audit uses logic-health. Do NOT trigger for: vague \"what's wrong\" without a concrete symptom, style questions, or performance issues.",
+  "best_description": "Locate the root cause of a CONFIRMED failure via backward-then-forward semi-formal tracing. Trigger when the user provides a stack trace, failing assertion, error message, or specific wrong-value observation \u2014 \"find the bug\", \"this test is failing\", \"track down this crash\", \"why is this test failing\", \"KeyError at line 89\", \"expected 70, got 100\", \"NoneType has no attribute X\", \"cart empties when second tab opens\". SCOPE HARD RULE: requires a concrete failure (exception, failing test, or specific wrong output). Vague suspicion without evidence uses logic-review; behavior explanation uses logic-explain; refactor comparison uses logic-diff; codebase audit uses logic-health. Do NOT trigger for: vague \"what's wrong\" without a concrete symptom, style questions, or performance issues.",
+  "best_score": "4/8",
+  "best_train_score": "6/12",
+  "best_test_score": "4/8",
+  "final_description": "Use this skill when you have a concrete, observable failure and need to find its root cause. This means: a test that is failing with a specific assertion error, an exception with a stack trace, a crash with an error message, or a reproducible wrong output (\"expected X, got Y\"). Also covers intermittent/flaky failures where you can describe the symptom. Use this to answer \"why is this failing\", \"find the bug\", \"trace this crash\", \"locate the off-by-one\", \"what causes this null pointer\". The key qualifier: there must be a real failure artifact (error, wrong value, test failure, crash) \u2014 not just suspicion or code smell. Do not use for: general code review without a failure, explaining code behavior, comparing two implementations, or vague \"something seems wrong\" without evidence.",
+  "iterations_run": 2,
+  "holdout": 0.4,
+  "train_size": 12,
+  "test_size": 8,
+  "history": [
+    {
+      "iteration": 1,
+      "description": "Locate the root cause of a CONFIRMED failure via backward-then-forward semi-formal tracing. Trigger when the user provides a stack trace, failing assertion, error message, or specific wrong-value observation \u2014 \"find the bug\", \"this test is failing\", \"track down this crash\", \"why is this test failing\", \"KeyError at line 89\", \"expected 70, got 100\", \"NoneType has no attribute X\", \"cart empties when second tab opens\". SCOPE HARD RULE: requires a concrete failure (exception, failing test, or specific wrong output). Vague suspicion without evidence uses logic-review; behavior explanation uses logic-explain; refactor comparison uses logic-diff; codebase audit uses logic-health. Do NOT trigger for: vague \"what's wrong\" without a concrete symptom, style questions, or performance issues.",
+      "train_passed": 6,
+      "train_failed": 6,
+      "train_total": 12,
+      "train_results": [
+        {
+          "query": "CI fails: assert result == 42 but result is 41. function under test is increment_counter() \u2014 locate the off-by-one",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "the React modal randomly doesn't close on ESC \u2014 maybe 1 in 5 times. here's the component, the useEffect and the key handler \u2014 help me find why",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "crash: ZeroDivisionError at metrics.py:115 when computing average over an empty window. trace it back and find the cause",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "intermittent failure in test_checkout_flow \u2014 about 1 in 10 CI runs. here's the test, the service, and the mock setup",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "test_pagination is failing: expected [3,4,5] but got [6,7,8]. here's the paginate(items, page, page_size) implementation \u2014 locate the bug",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "TypeError: Cannot read properties of null (reading 'id') at /src/users.ts:89. here's the full component and the get_profile function \u2014 find the cause",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "walk me through what this code does step by step for an empty list input",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "write a regex that matches international phone numbers",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "this SQL is slow \u2014 8 seconds on 1M rows. optimize it",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "review this function for potential bugs \u2014 I have no concrete failure yet but something feels wrong",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "reformat my error messages to be consistent",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "what does 'segmentation fault' mean in general? I'm learning C",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ],
+      "test_passed": 4,
+      "test_failed": 4,
+      "test_total": 8,
+      "test_results": [
+        {
+          "query": "stack trace: AttributeError: 'NoneType' object has no attribute 'name' at services/user.py:67 in format_welcome. code below",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u751f\u4ea7\u73af\u5883\u62a5\u9519 KeyError: 'config' at app/loader.py:42\uff0c\u5e2e\u6211\u5b9a\u4f4d\u6839\u56e0\u3002\u4ee3\u7801\u548c traceback \u9644\u4e0a",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "my function returns 100 but I expect 70 when input is [10, 20, 30, 10]. where's the bug in this aggregate_discount code?",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "customers report cart empties when opening a second tab. Vuex store + Cart component + localStorage sync code attached \u2014 find the race",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "give me a logic health overview of the whole backend/ directory",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "how do I set up pytest with coverage reports for my project?",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "are these two implementations equivalent? I refactored it yesterday",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "autonomously fix every bug you find in the repo",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ],
+      "passed": 6,
+      "failed": 6,
+      "total": 12,
+      "results": [
+        {
+          "query": "CI fails: assert result == 42 but result is 41. function under test is increment_counter() \u2014 locate the off-by-one",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "the React modal randomly doesn't close on ESC \u2014 maybe 1 in 5 times. here's the component, the useEffect and the key handler \u2014 help me find why",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "crash: ZeroDivisionError at metrics.py:115 when computing average over an empty window. trace it back and find the cause",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "intermittent failure in test_checkout_flow \u2014 about 1 in 10 CI runs. here's the test, the service, and the mock setup",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "test_pagination is failing: expected [3,4,5] but got [6,7,8]. here's the paginate(items, page, page_size) implementation \u2014 locate the bug",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "TypeError: Cannot read properties of null (reading 'id') at /src/users.ts:89. here's the full component and the get_profile function \u2014 find the cause",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "walk me through what this code does step by step for an empty list input",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "write a regex that matches international phone numbers",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "this SQL is slow \u2014 8 seconds on 1M rows. optimize it",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "review this function for potential bugs \u2014 I have no concrete failure yet but something feels wrong",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "reformat my error messages to be consistent",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "what does 'segmentation fault' mean in general? I'm learning C",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "iteration": 2,
+      "description": "Use this skill when you have a concrete, observable failure and need to find its root cause. This means: a test that is failing with a specific assertion error, an exception with a stack trace, a crash with an error message, or a reproducible wrong output (\"expected X, got Y\"). Also covers intermittent/flaky failures where you can describe the symptom. Use this to answer \"why is this failing\", \"find the bug\", \"trace this crash\", \"locate the off-by-one\", \"what causes this null pointer\". The key qualifier: there must be a real failure artifact (error, wrong value, test failure, crash) \u2014 not just suspicion or code smell. Do not use for: general code review without a failure, explaining code behavior, comparing two implementations, or vague \"something seems wrong\" without evidence.",
+      "train_passed": 6,
+      "train_failed": 6,
+      "train_total": 12,
+      "train_results": [
+        {
+          "query": "crash: ZeroDivisionError at metrics.py:115 when computing average over an empty window. trace it back and find the cause",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "CI fails: assert result == 42 but result is 41. function under test is increment_counter() \u2014 locate the off-by-one",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "the React modal randomly doesn't close on ESC \u2014 maybe 1 in 5 times. here's the component, the useEffect and the key handler \u2014 help me find why",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "intermittent failure in test_checkout_flow \u2014 about 1 in 10 CI runs. here's the test, the service, and the mock setup",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "walk me through what this code does step by step for an empty list input",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "test_pagination is failing: expected [3,4,5] but got [6,7,8]. here's the paginate(items, page, page_size) implementation \u2014 locate the bug",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "TypeError: Cannot read properties of null (reading 'id') at /src/users.ts:89. here's the full component and the get_profile function \u2014 find the cause",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "write a regex that matches international phone numbers",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "this SQL is slow \u2014 8 seconds on 1M rows. optimize it",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "review this function for potential bugs \u2014 I have no concrete failure yet but something feels wrong",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "reformat my error messages to be consistent",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "what does 'segmentation fault' mean in general? I'm learning C",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ],
+      "test_passed": 4,
+      "test_failed": 4,
+      "test_total": 8,
+      "test_results": [
+        {
+          "query": "stack trace: AttributeError: 'NoneType' object has no attribute 'name' at services/user.py:67 in format_welcome. code below",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u751f\u4ea7\u73af\u5883\u62a5\u9519 KeyError: 'config' at app/loader.py:42\uff0c\u5e2e\u6211\u5b9a\u4f4d\u6839\u56e0\u3002\u4ee3\u7801\u548c traceback \u9644\u4e0a",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "give me a logic health overview of the whole backend/ directory",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "my function returns 100 but I expect 70 when input is [10, 20, 30, 10]. where's the bug in this aggregate_discount code?",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "customers report cart empties when opening a second tab. Vuex store + Cart component + localStorage sync code attached \u2014 find the race",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "how do I set up pytest with coverage reports for my project?",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "are these two implementations equivalent? I refactored it yesterday",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "autonomously fix every bug you find in the repo",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ],
+      "passed": 6,
+      "failed": 6,
+      "total": 12,
+      "results": [
+        {
+          "query": "crash: ZeroDivisionError at metrics.py:115 when computing average over an empty window. trace it back and find the cause",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "CI fails: assert result == 42 but result is 41. function under test is increment_counter() \u2014 locate the off-by-one",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "the React modal randomly doesn't close on ESC \u2014 maybe 1 in 5 times. here's the component, the useEffect and the key handler \u2014 help me find why",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "intermittent failure in test_checkout_flow \u2014 about 1 in 10 CI runs. here's the test, the service, and the mock setup",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "walk me through what this code does step by step for an empty list input",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "test_pagination is failing: expected [3,4,5] but got [6,7,8]. here's the paginate(items, page, page_size) implementation \u2014 locate the bug",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "TypeError: Cannot read properties of null (reading 'id') at /src/users.ts:89. here's the full component and the get_profile function \u2014 find the cause",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "write a regex that matches international phone numbers",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "this SQL is slow \u2014 8 seconds on 1M rows. optimize it",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "review this function for potential bugs \u2014 I have no concrete failure yet but something feels wrong",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "reformat my error messages to be consistent",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "what does 'segmentation fault' mean in general? I'm learning C",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ]
+    }
+  ]
+}

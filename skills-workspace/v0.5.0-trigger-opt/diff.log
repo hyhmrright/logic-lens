@@ -1,0 +1,628 @@
+Split: 12 train, 8 test (holdout=0.4)
+
+============================================================
+Iteration 1/2
+Description: Compare two code versions for semantic equivalence via semi-formal tracing of both versions side-by-side. Trigger when the user shares a refactor, rewrite, migration, or A/B implementation and wants to confirm behavior is unchanged — "did I break anything", "is this equivalent", "check my refactor", "same behavior after the change?", "does my rewrite produce the same output", "switched from X to Y — same results?". SCOPE HARD RULE: requires two code versions (A and B). A single version for bug-finding uses logic-review; one version + a failing test uses logic-locate; explaining what one piece of code does uses logic-explain; codebase audit uses logic-health. Do NOT trigger for: single-version review, performance comparison, design-quality comparison, or "which is better-written" questions.
+============================================================
+Train: 18/36 correct, precision=100% recall=0% accuracy=50% (150.9s)
+  [FAIL] rate=0/3 expected=True: 我把 regex 验证替换成了显式 parsing 循环，两个版本对所有合法/非法 email 行为一致吗？
+  [FAIL] rate=0/3 expected=True: did this refactor preserve semantics? old: [20 lines]  new: 
+  [FAIL] rate=0/3 expected=True: swapped our custom UUID v4 gen for crypto.randomUUID() — dro
+  [FAIL] rate=0/3 expected=True: Version A uses .map(...).filter(...) chain, Version B uses a
+  [PASS] rate=0/3 expected=False: explain what this sort comparator does step by step
+  [FAIL] rate=0/3 expected=True: I refactored parseDate from a regex-based implementation to 
+  [FAIL] rate=0/3 expected=True: migrated a debounce helper from lodash.debounce to native se
+  [PASS] rate=0/3 expected=False: help me write tests for the new version of parseDate
+  [PASS] rate=0/3 expected=False: what's the difference between git rebase and merge?
+  [PASS] rate=0/3 expected=False: review this function for bugs — single version, I'm worried 
+  [PASS] rate=0/3 expected=False: which version is faster — v1 or v2? benchmark them
+  [PASS] rate=0/3 expected=False: compare React and Vue as frameworks
+Test : 12/24 correct, precision=100% recall=0% accuracy=50% (0.0s)
+  [FAIL] rate=0/3 expected=True: I rewrote the ranking algorithm from bubble sort to Python's
+  [FAIL] rate=0/3 expected=True: Python: is `[x for x in xs if p(x)]` equivalent to `list(fil
+  [FAIL] rate=0/3 expected=True: 这两个 SQL 等价吗？ WHERE status = 'active' AND deleted_at IS NULL 
+  [FAIL] rate=0/3 expected=True: rewrote validate(data) from nested if-else to strategy-patte
+  [PASS] rate=0/3 expected=False: audit the auth module for overall logic health
+  [PASS] rate=0/3 expected=False: which version is cleaner stylistically — the map/filter chai
+  [PASS] rate=0/3 expected=False: my test is failing after the refactor — find the bug, here's
+  [PASS] rate=0/3 expected=False: fix all bugs in the repo
+
+Improving description...
+Proposed (14.4s): Use this skill when the user has TWO versions of code and wants to know if they behave identically. Invoke whenever someone asks: did my refactor break anything? Is version A equivalent to version B? Did switching library X for Y change the behavior? Does my rewrite produce the same output? This skill covers any scenario where code was changed (refactored, rewritten, migrated, extracted into helpers, swapped for a different implementation) and the user wants behavioral equivalence confirmed — not just "what's different" syntactically, but whether the logic produces the same results for all inputs including edge cases. Do NOT invoke for: single-version bug review, performance benchmarking, code quality comparison, framework comparisons, or any question without two concrete code versions to compare.
+
+============================================================
+Iteration 2/2
+Description: Use this skill when the user has TWO versions of code and wants to know if they behave identically. Invoke whenever someone asks: did my refactor break anything? Is version A equivalent to version B? Did switching library X for Y change the behavior? Does my rewrite produce the same output? This skill covers any scenario where code was changed (refactored, rewritten, migrated, extracted into helpers, swapped for a different implementation) and the user wants behavioral equivalence confirmed — not just "what's different" syntactically, but whether the logic produces the same results for all inputs including edge cases. Do NOT invoke for: single-version bug review, performance benchmarking, code quality comparison, framework comparisons, or any question without two concrete code versions to compare.
+============================================================
+Train: 18/36 correct, precision=100% recall=0% accuracy=50% (125.5s)
+  [FAIL] rate=0/3 expected=True: 我把 regex 验证替换成了显式 parsing 循环，两个版本对所有合法/非法 email 行为一致吗？
+  [FAIL] rate=0/3 expected=True: Version A uses .map(...).filter(...) chain, Version B uses a
+  [FAIL] rate=0/3 expected=True: did this refactor preserve semantics? old: [20 lines]  new: 
+  [FAIL] rate=0/3 expected=True: swapped our custom UUID v4 gen for crypto.randomUUID() — dro
+  [FAIL] rate=0/3 expected=True: I refactored parseDate from a regex-based implementation to 
+  [FAIL] rate=0/3 expected=True: migrated a debounce helper from lodash.debounce to native se
+  [PASS] rate=0/3 expected=False: explain what this sort comparator does step by step
+  [PASS] rate=0/3 expected=False: help me write tests for the new version of parseDate
+  [PASS] rate=0/3 expected=False: review this function for bugs — single version, I'm worried 
+  [PASS] rate=0/3 expected=False: what's the difference between git rebase and merge?
+  [PASS] rate=0/3 expected=False: which version is faster — v1 or v2? benchmark them
+  [PASS] rate=0/3 expected=False: compare React and Vue as frameworks
+Test : 12/24 correct, precision=100% recall=0% accuracy=50% (0.0s)
+  [FAIL] rate=0/3 expected=True: Python: is `[x for x in xs if p(x)]` equivalent to `list(fil
+  [FAIL] rate=0/3 expected=True: I rewrote the ranking algorithm from bubble sort to Python's
+  [PASS] rate=0/3 expected=False: audit the auth module for overall logic health
+  [FAIL] rate=0/3 expected=True: rewrote validate(data) from nested if-else to strategy-patte
+  [FAIL] rate=0/3 expected=True: 这两个 SQL 等价吗？ WHERE status = 'active' AND deleted_at IS NULL 
+  [PASS] rate=0/3 expected=False: my test is failing after the refactor — find the bug, here's
+  [PASS] rate=0/3 expected=False: which version is cleaner stylistically — the map/filter chai
+  [PASS] rate=0/3 expected=False: fix all bugs in the repo
+
+Max iterations reached (2).
+
+Exit reason: max_iterations (2)
+Best score: 4/8 (iteration 1)
+{
+  "exit_reason": "max_iterations (2)",
+  "original_description": "Compare two code versions for semantic equivalence via semi-formal tracing of both versions side-by-side. Trigger when the user shares a refactor, rewrite, migration, or A/B implementation and wants to confirm behavior is unchanged \u2014 \"did I break anything\", \"is this equivalent\", \"check my refactor\", \"same behavior after the change?\", \"does my rewrite produce the same output\", \"switched from X to Y \u2014 same results?\". SCOPE HARD RULE: requires two code versions (A and B). A single version for bug-finding uses logic-review; one version + a failing test uses logic-locate; explaining what one piece of code does uses logic-explain; codebase audit uses logic-health. Do NOT trigger for: single-version review, performance comparison, design-quality comparison, or \"which is better-written\" questions.",
+  "best_description": "Compare two code versions for semantic equivalence via semi-formal tracing of both versions side-by-side. Trigger when the user shares a refactor, rewrite, migration, or A/B implementation and wants to confirm behavior is unchanged \u2014 \"did I break anything\", \"is this equivalent\", \"check my refactor\", \"same behavior after the change?\", \"does my rewrite produce the same output\", \"switched from X to Y \u2014 same results?\". SCOPE HARD RULE: requires two code versions (A and B). A single version for bug-finding uses logic-review; one version + a failing test uses logic-locate; explaining what one piece of code does uses logic-explain; codebase audit uses logic-health. Do NOT trigger for: single-version review, performance comparison, design-quality comparison, or \"which is better-written\" questions.",
+  "best_score": "4/8",
+  "best_train_score": "6/12",
+  "best_test_score": "4/8",
+  "final_description": "Use this skill when the user has TWO versions of code and wants to know if they behave identically. Invoke whenever someone asks: did my refactor break anything? Is version A equivalent to version B? Did switching library X for Y change the behavior? Does my rewrite produce the same output? This skill covers any scenario where code was changed (refactored, rewritten, migrated, extracted into helpers, swapped for a different implementation) and the user wants behavioral equivalence confirmed \u2014 not just \"what's different\" syntactically, but whether the logic produces the same results for all inputs including edge cases. Do NOT invoke for: single-version bug review, performance benchmarking, code quality comparison, framework comparisons, or any question without two concrete code versions to compare.",
+  "iterations_run": 2,
+  "holdout": 0.4,
+  "train_size": 12,
+  "test_size": 8,
+  "history": [
+    {
+      "iteration": 1,
+      "description": "Compare two code versions for semantic equivalence via semi-formal tracing of both versions side-by-side. Trigger when the user shares a refactor, rewrite, migration, or A/B implementation and wants to confirm behavior is unchanged \u2014 \"did I break anything\", \"is this equivalent\", \"check my refactor\", \"same behavior after the change?\", \"does my rewrite produce the same output\", \"switched from X to Y \u2014 same results?\". SCOPE HARD RULE: requires two code versions (A and B). A single version for bug-finding uses logic-review; one version + a failing test uses logic-locate; explaining what one piece of code does uses logic-explain; codebase audit uses logic-health. Do NOT trigger for: single-version review, performance comparison, design-quality comparison, or \"which is better-written\" questions.",
+      "train_passed": 6,
+      "train_failed": 6,
+      "train_total": 12,
+      "train_results": [
+        {
+          "query": "\u6211\u628a regex \u9a8c\u8bc1\u66ff\u6362\u6210\u4e86\u663e\u5f0f parsing \u5faa\u73af\uff0c\u4e24\u4e2a\u7248\u672c\u5bf9\u6240\u6709\u5408\u6cd5/\u975e\u6cd5 email \u884c\u4e3a\u4e00\u81f4\u5417\uff1f",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "did this refactor preserve semantics? old: [20 lines]  new: [25 lines, extracted 2 helper functions]",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "swapped our custom UUID v4 gen for crypto.randomUUID() \u2014 drop-in replacement? any edge cases?",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "Version A uses .map(...).filter(...) chain, Version B uses a single for-loop with early break \u2014 behaviorally identical for this data?",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "explain what this sort comparator does step by step",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "I refactored parseDate from a regex-based implementation to an Intl.DateTimeFormat-based one. Old and new are attached \u2014 equivalent for all inputs?",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "migrated a debounce helper from lodash.debounce to native setTimeout+clearTimeout. did I preserve behavior?",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "help me write tests for the new version of parseDate",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "what's the difference between git rebase and merge?",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "review this function for bugs \u2014 single version, I'm worried about edge cases",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "which version is faster \u2014 v1 or v2? benchmark them",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "compare React and Vue as frameworks",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ],
+      "test_passed": 4,
+      "test_failed": 4,
+      "test_total": 8,
+      "test_results": [
+        {
+          "query": "I rewrote the ranking algorithm from bubble sort to Python's built-in Timsort \u2014 same output for all inputs including ties and duplicates?",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "Python: is `[x for x in xs if p(x)]` equivalent to `list(filter(p, xs))` in all cases including generators and exceptions?",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u8fd9\u4e24\u4e2a SQL \u7b49\u4ef7\u5417\uff1f WHERE status = 'active' AND deleted_at IS NULL  vs  WHERE status = 'active' AND deleted_at = NULL",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "rewrote validate(data) from nested if-else to strategy-pattern classes. check for equivalence across all input types",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "audit the auth module for overall logic health",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "which version is cleaner stylistically \u2014 the map/filter chain or the for-loop?",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "my test is failing after the refactor \u2014 find the bug, here's the stack trace",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "fix all bugs in the repo",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ],
+      "passed": 6,
+      "failed": 6,
+      "total": 12,
+      "results": [
+        {
+          "query": "\u6211\u628a regex \u9a8c\u8bc1\u66ff\u6362\u6210\u4e86\u663e\u5f0f parsing \u5faa\u73af\uff0c\u4e24\u4e2a\u7248\u672c\u5bf9\u6240\u6709\u5408\u6cd5/\u975e\u6cd5 email \u884c\u4e3a\u4e00\u81f4\u5417\uff1f",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "did this refactor preserve semantics? old: [20 lines]  new: [25 lines, extracted 2 helper functions]",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "swapped our custom UUID v4 gen for crypto.randomUUID() \u2014 drop-in replacement? any edge cases?",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "Version A uses .map(...).filter(...) chain, Version B uses a single for-loop with early break \u2014 behaviorally identical for this data?",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "explain what this sort comparator does step by step",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "I refactored parseDate from a regex-based implementation to an Intl.DateTimeFormat-based one. Old and new are attached \u2014 equivalent for all inputs?",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "migrated a debounce helper from lodash.debounce to native setTimeout+clearTimeout. did I preserve behavior?",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "help me write tests for the new version of parseDate",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "what's the difference between git rebase and merge?",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "review this function for bugs \u2014 single version, I'm worried about edge cases",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "which version is faster \u2014 v1 or v2? benchmark them",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "compare React and Vue as frameworks",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "iteration": 2,
+      "description": "Use this skill when the user has TWO versions of code and wants to know if they behave identically. Invoke whenever someone asks: did my refactor break anything? Is version A equivalent to version B? Did switching library X for Y change the behavior? Does my rewrite produce the same output? This skill covers any scenario where code was changed (refactored, rewritten, migrated, extracted into helpers, swapped for a different implementation) and the user wants behavioral equivalence confirmed \u2014 not just \"what's different\" syntactically, but whether the logic produces the same results for all inputs including edge cases. Do NOT invoke for: single-version bug review, performance benchmarking, code quality comparison, framework comparisons, or any question without two concrete code versions to compare.",
+      "train_passed": 6,
+      "train_failed": 6,
+      "train_total": 12,
+      "train_results": [
+        {
+          "query": "\u6211\u628a regex \u9a8c\u8bc1\u66ff\u6362\u6210\u4e86\u663e\u5f0f parsing \u5faa\u73af\uff0c\u4e24\u4e2a\u7248\u672c\u5bf9\u6240\u6709\u5408\u6cd5/\u975e\u6cd5 email \u884c\u4e3a\u4e00\u81f4\u5417\uff1f",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "Version A uses .map(...).filter(...) chain, Version B uses a single for-loop with early break \u2014 behaviorally identical for this data?",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "did this refactor preserve semantics? old: [20 lines]  new: [25 lines, extracted 2 helper functions]",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "swapped our custom UUID v4 gen for crypto.randomUUID() \u2014 drop-in replacement? any edge cases?",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "I refactored parseDate from a regex-based implementation to an Intl.DateTimeFormat-based one. Old and new are attached \u2014 equivalent for all inputs?",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "migrated a debounce helper from lodash.debounce to native setTimeout+clearTimeout. did I preserve behavior?",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "explain what this sort comparator does step by step",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "help me write tests for the new version of parseDate",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "review this function for bugs \u2014 single version, I'm worried about edge cases",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "what's the difference between git rebase and merge?",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "which version is faster \u2014 v1 or v2? benchmark them",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "compare React and Vue as frameworks",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ],
+      "test_passed": 4,
+      "test_failed": 4,
+      "test_total": 8,
+      "test_results": [
+        {
+          "query": "Python: is `[x for x in xs if p(x)]` equivalent to `list(filter(p, xs))` in all cases including generators and exceptions?",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "I rewrote the ranking algorithm from bubble sort to Python's built-in Timsort \u2014 same output for all inputs including ties and duplicates?",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "audit the auth module for overall logic health",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "rewrote validate(data) from nested if-else to strategy-pattern classes. check for equivalence across all input types",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u8fd9\u4e24\u4e2a SQL \u7b49\u4ef7\u5417\uff1f WHERE status = 'active' AND deleted_at IS NULL  vs  WHERE status = 'active' AND deleted_at = NULL",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "my test is failing after the refactor \u2014 find the bug, here's the stack trace",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "which version is cleaner stylistically \u2014 the map/filter chain or the for-loop?",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "fix all bugs in the repo",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ],
+      "passed": 6,
+      "failed": 6,
+      "total": 12,
+      "results": [
+        {
+          "query": "\u6211\u628a regex \u9a8c\u8bc1\u66ff\u6362\u6210\u4e86\u663e\u5f0f parsing \u5faa\u73af\uff0c\u4e24\u4e2a\u7248\u672c\u5bf9\u6240\u6709\u5408\u6cd5/\u975e\u6cd5 email \u884c\u4e3a\u4e00\u81f4\u5417\uff1f",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "Version A uses .map(...).filter(...) chain, Version B uses a single for-loop with early break \u2014 behaviorally identical for this data?",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "did this refactor preserve semantics? old: [20 lines]  new: [25 lines, extracted 2 helper functions]",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "swapped our custom UUID v4 gen for crypto.randomUUID() \u2014 drop-in replacement? any edge cases?",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "I refactored parseDate from a regex-based implementation to an Intl.DateTimeFormat-based one. Old and new are attached \u2014 equivalent for all inputs?",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "migrated a debounce helper from lodash.debounce to native setTimeout+clearTimeout. did I preserve behavior?",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "explain what this sort comparator does step by step",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "help me write tests for the new version of parseDate",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "review this function for bugs \u2014 single version, I'm worried about edge cases",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "what's the difference between git rebase and merge?",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "which version is faster \u2014 v1 or v2? benchmark them",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "compare React and Vue as frameworks",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ]
+    }
+  ]
+}

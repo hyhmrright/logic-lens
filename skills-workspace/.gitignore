@@ -1,6 +1,9 @@
 # Don't commit raw evaluation outputs (large + regenerable). Keep only
 # summary.json, grading.json, COMPARISON.md, *-REPORT.md, *-STATUS.md,
 # and *-INSTRUCTIONS.md as release evidence.
-iteration-*/eval-*/output.md
+iteration-*/**/output.md
+iteration-*/**/run.log
+iteration-*/**/prompt.txt
+iteration-*/**/eval_metadata.json
 iteration-2-probe/
 driver.log

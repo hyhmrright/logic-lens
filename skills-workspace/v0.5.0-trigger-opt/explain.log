@@ -1,0 +1,628 @@
+Split: 12 train, 8 test (holdout=0.4)
+
+============================================================
+Iteration 1/2
+Description: Explain what a specific piece of code actually does for a given input by producing a step-by-step execution trace (interprocedural, with name resolution and type transitions). Trigger when the user is confused about behavior or asks why code produces X instead of Y — "walk me through this", "trace through X with input Y", "why does this return X", "what does yield-from do here", "explain the execution path". SCOPE HARD RULE: a specific function + a specific input scenario. If the user wants to find bugs without a scenario in mind, use logic-review; two-version comparison uses logic-diff; concrete failures use logic-locate; codebase-wide audit uses logic-health. Do NOT trigger for: finding bugs without a behavioral question, style or design discussion, or concept explanations not tied to specific code.
+============================================================
+Train: 18/36 correct, precision=100% recall=0% accuracy=50% (151.5s)
+  [FAIL] rate=0/3 expected=True: 为什么 async 函数在这个 Promise.all 循环里表现不像我想的？[code snippet]
+  [FAIL] rate=0/3 expected=True: trace through factorial(3) for this recursive implementation
+  [FAIL] rate=0/3 expected=True: I expected d = {'a':1}; d.update({'b':2}) to return the upda
+  [FAIL] rate=0/3 expected=True: trace the execution of handleClick(e) from line 40 to where 
+  [FAIL] rate=0/3 expected=True: why does this JavaScript print [3,3,3] instead of [0,1,2]? f
+  [FAIL] rate=0/3 expected=True: walk me through what happens when I call process_refund(orde
+  [PASS] rate=0/3 expected=False: what's a closure in general? explain the concept without any
+  [PASS] rate=0/3 expected=False: write integration tests for the payment flow
+  [PASS] rate=0/3 expected=False: reformat this to match our Prettier config
+  [PASS] rate=0/3 expected=False: review this 40-line function for logic bugs before I ship
+  [PASS] rate=0/3 expected=False: what does the Knuth-Morris-Pratt algorithm do conceptually? 
+  [PASS] rate=0/3 expected=False: how should I architect this microservice — event-driven or r
+Test : 12/24 correct, precision=100% recall=0% accuracy=50% (0.0s)
+  [FAIL] rate=0/3 expected=True: 我不理解这段 Python 为什么返回 None： def foo(): a = [1,2,3]; return a.s
+  [FAIL] rate=0/3 expected=True: what does `yield from g(x)` actually do here in this generat
+  [FAIL] rate=0/3 expected=True: what happens step by step when Promise.all([a, b]) is awaite
+  [PASS] rate=0/3 expected=False: audit the whole authentication module for logic health
+  [FAIL] rate=0/3 expected=True: explain how the closure captures `count` in this counter fun
+  [PASS] rate=0/3 expected=False: fix every bug you can find in this repo
+  [PASS] rate=0/3 expected=False: my test is failing with IndexError at line 45, find the bug.
+  [PASS] rate=0/3 expected=False: I refactored my sort function — are the old and new versions
+
+Improving description...
+Proposed (13.1s): Use this skill when the user wants to understand WHY code behaves a certain way for a specific input — not to find bugs, but to trace execution and explain observed or unexpected behavior. Ideal triggers: "walk me through", "trace through X with input Y", "why does this return/print X instead of Y", "what happens when I call F with argument A", "I expected X but got Y — explain", "explain the execution path". Covers any language. Requires a concrete scenario (a function call or code snippet plus an input or situation). Skip for: abstract concept explanations with no specific code, pure bug-hunting without a behavioral question, style/design discussions, two-version comparisons (use logic-diff), codebase-wide audits (use logic-health).
+
+============================================================
+Iteration 2/2
+Description: Use this skill when the user wants to understand WHY code behaves a certain way for a specific input — not to find bugs, but to trace execution and explain observed or unexpected behavior. Ideal triggers: "walk me through", "trace through X with input Y", "why does this return/print X instead of Y", "what happens when I call F with argument A", "I expected X but got Y — explain", "explain the execution path". Covers any language. Requires a concrete scenario (a function call or code snippet plus an input or situation). Skip for: abstract concept explanations with no specific code, pure bug-hunting without a behavioral question, style/design discussions, two-version comparisons (use logic-diff), codebase-wide audits (use logic-health).
+============================================================
+Train: 18/36 correct, precision=100% recall=0% accuracy=50% (126.2s)
+  [FAIL] rate=0/3 expected=True: trace through factorial(3) for this recursive implementation
+  [FAIL] rate=0/3 expected=True: 为什么 async 函数在这个 Promise.all 循环里表现不像我想的？[code snippet]
+  [FAIL] rate=0/3 expected=True: I expected d = {'a':1}; d.update({'b':2}) to return the upda
+  [FAIL] rate=0/3 expected=True: trace the execution of handleClick(e) from line 40 to where 
+  [FAIL] rate=0/3 expected=True: walk me through what happens when I call process_refund(orde
+  [FAIL] rate=0/3 expected=True: why does this JavaScript print [3,3,3] instead of [0,1,2]? f
+  [PASS] rate=0/3 expected=False: reformat this to match our Prettier config
+  [PASS] rate=0/3 expected=False: what's a closure in general? explain the concept without any
+  [PASS] rate=0/3 expected=False: write integration tests for the payment flow
+  [PASS] rate=0/3 expected=False: review this 40-line function for logic bugs before I ship
+  [PASS] rate=0/3 expected=False: what does the Knuth-Morris-Pratt algorithm do conceptually? 
+  [PASS] rate=0/3 expected=False: how should I architect this microservice — event-driven or r
+Test : 12/24 correct, precision=100% recall=0% accuracy=50% (0.0s)
+  [FAIL] rate=0/3 expected=True: what happens step by step when Promise.all([a, b]) is awaite
+  [FAIL] rate=0/3 expected=True: what does `yield from g(x)` actually do here in this generat
+  [FAIL] rate=0/3 expected=True: 我不理解这段 Python 为什么返回 None： def foo(): a = [1,2,3]; return a.s
+  [PASS] rate=0/3 expected=False: audit the whole authentication module for logic health
+  [PASS] rate=0/3 expected=False: fix every bug you can find in this repo
+  [PASS] rate=0/3 expected=False: my test is failing with IndexError at line 45, find the bug.
+  [FAIL] rate=0/3 expected=True: explain how the closure captures `count` in this counter fun
+  [PASS] rate=0/3 expected=False: I refactored my sort function — are the old and new versions
+
+Max iterations reached (2).
+
+Exit reason: max_iterations (2)
+Best score: 4/8 (iteration 1)
+{
+  "exit_reason": "max_iterations (2)",
+  "original_description": "Explain what a specific piece of code actually does for a given input by producing a step-by-step execution trace (interprocedural, with name resolution and type transitions). Trigger when the user is confused about behavior or asks why code produces X instead of Y \u2014 \"walk me through this\", \"trace through X with input Y\", \"why does this return X\", \"what does yield-from do here\", \"explain the execution path\". SCOPE HARD RULE: a specific function + a specific input scenario. If the user wants to find bugs without a scenario in mind, use logic-review; two-version comparison uses logic-diff; concrete failures use logic-locate; codebase-wide audit uses logic-health. Do NOT trigger for: finding bugs without a behavioral question, style or design discussion, or concept explanations not tied to specific code.",
+  "best_description": "Explain what a specific piece of code actually does for a given input by producing a step-by-step execution trace (interprocedural, with name resolution and type transitions). Trigger when the user is confused about behavior or asks why code produces X instead of Y \u2014 \"walk me through this\", \"trace through X with input Y\", \"why does this return X\", \"what does yield-from do here\", \"explain the execution path\". SCOPE HARD RULE: a specific function + a specific input scenario. If the user wants to find bugs without a scenario in mind, use logic-review; two-version comparison uses logic-diff; concrete failures use logic-locate; codebase-wide audit uses logic-health. Do NOT trigger for: finding bugs without a behavioral question, style or design discussion, or concept explanations not tied to specific code.",
+  "best_score": "4/8",
+  "best_train_score": "6/12",
+  "best_test_score": "4/8",
+  "final_description": "Use this skill when the user wants to understand WHY code behaves a certain way for a specific input \u2014 not to find bugs, but to trace execution and explain observed or unexpected behavior. Ideal triggers: \"walk me through\", \"trace through X with input Y\", \"why does this return/print X instead of Y\", \"what happens when I call F with argument A\", \"I expected X but got Y \u2014 explain\", \"explain the execution path\". Covers any language. Requires a concrete scenario (a function call or code snippet plus an input or situation). Skip for: abstract concept explanations with no specific code, pure bug-hunting without a behavioral question, style/design discussions, two-version comparisons (use logic-diff), codebase-wide audits (use logic-health).",
+  "iterations_run": 2,
+  "holdout": 0.4,
+  "train_size": 12,
+  "test_size": 8,
+  "history": [
+    {
+      "iteration": 1,
+      "description": "Explain what a specific piece of code actually does for a given input by producing a step-by-step execution trace (interprocedural, with name resolution and type transitions). Trigger when the user is confused about behavior or asks why code produces X instead of Y \u2014 \"walk me through this\", \"trace through X with input Y\", \"why does this return X\", \"what does yield-from do here\", \"explain the execution path\". SCOPE HARD RULE: a specific function + a specific input scenario. If the user wants to find bugs without a scenario in mind, use logic-review; two-version comparison uses logic-diff; concrete failures use logic-locate; codebase-wide audit uses logic-health. Do NOT trigger for: finding bugs without a behavioral question, style or design discussion, or concept explanations not tied to specific code.",
+      "train_passed": 6,
+      "train_failed": 6,
+      "train_total": 12,
+      "train_results": [
+        {
+          "query": "\u4e3a\u4ec0\u4e48 async \u51fd\u6570\u5728\u8fd9\u4e2a Promise.all \u5faa\u73af\u91cc\u8868\u73b0\u4e0d\u50cf\u6211\u60f3\u7684\uff1f[code snippet]",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "trace through factorial(3) for this recursive implementation \u2014 I'm confused why it terminates at n=0 instead of looping",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "I expected d = {'a':1}; d.update({'b':2}) to return the updated dict but it returns None \u2014 why?",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "trace the execution of handleClick(e) from line 40 to where the modal opens \u2014 I need to understand what's between them",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "why does this JavaScript print [3,3,3] instead of [0,1,2]? for (var i=0; i<3; i++) setTimeout(() => console.log(i), 0);",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "walk me through what happens when I call process_refund(order, payment_method=None) \u2014 I expected it to raise but it silently returns",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "what's a closure in general? explain the concept without any specific code",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "write integration tests for the payment flow",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "reformat this to match our Prettier config",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "review this 40-line function for logic bugs before I ship",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "what does the Knuth-Morris-Pratt algorithm do conceptually? no code needed",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "how should I architect this microservice \u2014 event-driven or request-response?",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ],
+      "test_passed": 4,
+      "test_failed": 4,
+      "test_total": 8,
+      "test_results": [
+        {
+          "query": "\u6211\u4e0d\u7406\u89e3\u8fd9\u6bb5 Python \u4e3a\u4ec0\u4e48\u8fd4\u56de None\uff1a def foo(): a = [1,2,3]; return a.sort() \u2014\u2014 sort() \u4e0d\u662f\u6539\u539f\u5730\u7684\u5417\uff1f",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "what does `yield from g(x)` actually do here in this generator? I'm new to async/generator",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "what happens step by step when Promise.all([a, b]) is awaited but b rejects first and a is still pending?",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "audit the whole authentication module for logic health",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "explain how the closure captures `count` in this counter function \u2014 I keep forgetting whether it's by-ref or by-value in JS",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "fix every bug you can find in this repo",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "my test is failing with IndexError at line 45, find the bug. here's the stack trace and the code",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "I refactored my sort function \u2014 are the old and new versions equivalent?",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ],
+      "passed": 6,
+      "failed": 6,
+      "total": 12,
+      "results": [
+        {
+          "query": "\u4e3a\u4ec0\u4e48 async \u51fd\u6570\u5728\u8fd9\u4e2a Promise.all \u5faa\u73af\u91cc\u8868\u73b0\u4e0d\u50cf\u6211\u60f3\u7684\uff1f[code snippet]",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "trace through factorial(3) for this recursive implementation \u2014 I'm confused why it terminates at n=0 instead of looping",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "I expected d = {'a':1}; d.update({'b':2}) to return the updated dict but it returns None \u2014 why?",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "trace the execution of handleClick(e) from line 40 to where the modal opens \u2014 I need to understand what's between them",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "why does this JavaScript print [3,3,3] instead of [0,1,2]? for (var i=0; i<3; i++) setTimeout(() => console.log(i), 0);",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "walk me through what happens when I call process_refund(order, payment_method=None) \u2014 I expected it to raise but it silently returns",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "what's a closure in general? explain the concept without any specific code",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "write integration tests for the payment flow",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "reformat this to match our Prettier config",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "review this 40-line function for logic bugs before I ship",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "what does the Knuth-Morris-Pratt algorithm do conceptually? no code needed",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "how should I architect this microservice \u2014 event-driven or request-response?",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "iteration": 2,
+      "description": "Use this skill when the user wants to understand WHY code behaves a certain way for a specific input \u2014 not to find bugs, but to trace execution and explain observed or unexpected behavior. Ideal triggers: \"walk me through\", \"trace through X with input Y\", \"why does this return/print X instead of Y\", \"what happens when I call F with argument A\", \"I expected X but got Y \u2014 explain\", \"explain the execution path\". Covers any language. Requires a concrete scenario (a function call or code snippet plus an input or situation). Skip for: abstract concept explanations with no specific code, pure bug-hunting without a behavioral question, style/design discussions, two-version comparisons (use logic-diff), codebase-wide audits (use logic-health).",
+      "train_passed": 6,
+      "train_failed": 6,
+      "train_total": 12,
+      "train_results": [
+        {
+          "query": "trace through factorial(3) for this recursive implementation \u2014 I'm confused why it terminates at n=0 instead of looping",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u4e3a\u4ec0\u4e48 async \u51fd\u6570\u5728\u8fd9\u4e2a Promise.all \u5faa\u73af\u91cc\u8868\u73b0\u4e0d\u50cf\u6211\u60f3\u7684\uff1f[code snippet]",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "I expected d = {'a':1}; d.update({'b':2}) to return the updated dict but it returns None \u2014 why?",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "trace the execution of handleClick(e) from line 40 to where the modal opens \u2014 I need to understand what's between them",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "walk me through what happens when I call process_refund(order, payment_method=None) \u2014 I expected it to raise but it silently returns",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "why does this JavaScript print [3,3,3] instead of [0,1,2]? for (var i=0; i<3; i++) setTimeout(() => console.log(i), 0);",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "reformat this to match our Prettier config",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "what's a closure in general? explain the concept without any specific code",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "write integration tests for the payment flow",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "review this 40-line function for logic bugs before I ship",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "what does the Knuth-Morris-Pratt algorithm do conceptually? no code needed",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "how should I architect this microservice \u2014 event-driven or request-response?",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ],
+      "test_passed": 4,
+      "test_failed": 4,
+      "test_total": 8,
+      "test_results": [
+        {
+          "query": "what happens step by step when Promise.all([a, b]) is awaited but b rejects first and a is still pending?",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "what does `yield from g(x)` actually do here in this generator? I'm new to async/generator",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u6211\u4e0d\u7406\u89e3\u8fd9\u6bb5 Python \u4e3a\u4ec0\u4e48\u8fd4\u56de None\uff1a def foo(): a = [1,2,3]; return a.sort() \u2014\u2014 sort() \u4e0d\u662f\u6539\u539f\u5730\u7684\u5417\uff1f",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "audit the whole authentication module for logic health",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "fix every bug you can find in this repo",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "my test is failing with IndexError at line 45, find the bug. here's the stack trace and the code",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "explain how the closure captures `count` in this counter function \u2014 I keep forgetting whether it's by-ref or by-value in JS",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "I refactored my sort function \u2014 are the old and new versions equivalent?",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ],
+      "passed": 6,
+      "failed": 6,
+      "total": 12,
+      "results": [
+        {
+          "query": "trace through factorial(3) for this recursive implementation \u2014 I'm confused why it terminates at n=0 instead of looping",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u4e3a\u4ec0\u4e48 async \u51fd\u6570\u5728\u8fd9\u4e2a Promise.all \u5faa\u73af\u91cc\u8868\u73b0\u4e0d\u50cf\u6211\u60f3\u7684\uff1f[code snippet]",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "I expected d = {'a':1}; d.update({'b':2}) to return the updated dict but it returns None \u2014 why?",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "trace the execution of handleClick(e) from line 40 to where the modal opens \u2014 I need to understand what's between them",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "walk me through what happens when I call process_refund(order, payment_method=None) \u2014 I expected it to raise but it silently returns",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "why does this JavaScript print [3,3,3] instead of [0,1,2]? for (var i=0; i<3; i++) setTimeout(() => console.log(i), 0);",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "reformat this to match our Prettier config",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "what's a closure in general? explain the concept without any specific code",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "write integration tests for the payment flow",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "review this 40-line function for logic bugs before I ship",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "what does the Knuth-Morris-Pratt algorithm do conceptually? no code needed",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "how should I architect this microservice \u2014 event-driven or request-response?",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ]
+    }
+  ]
+}

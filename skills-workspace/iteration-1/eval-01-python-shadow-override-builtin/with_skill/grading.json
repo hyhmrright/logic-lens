@@ -1,0 +1,34 @@
+{
+  "eval_id": 1,
+  "name": "python-shadow-override-builtin",
+  "mode": "logic-review",
+  "config": "with_skill",
+  "expectations": [
+    {
+      "id": "identifies-L1",
+      "description": "Output identifies L1 (Shadow Override) risk code",
+      "passed": true,
+      "evidence": "matched 'L1'"
+    },
+    {
+      "id": "names-module-format",
+      "description": "Output explicitly states that format() in render_year resolves to the module-level definition in utils/formatter.py, not the Python builtin",
+      "passed": true,
+      "evidence": "module-level/shadow wording"
+    },
+    {
+      "id": "states-suffix-consequence",
+      "description": "Output states that the return value will include the ' (formatted)' suffix appended by the module-level format()",
+      "passed": true,
+      "evidence": "(formatted) suffix mentioned"
+    },
+    {
+      "id": "has-premises-trace-divergence",
+      "description": "Finding has all three required sections: Premises, Trace, and Divergence",
+      "passed": true,
+      "evidence": "PTD sections"
+    }
+  ],
+  "pass_rate": 1.0,
+  "output_chars": 5324
+}

@@ -1,0 +1,628 @@
+Split: 12 train, 8 test (holdout=0.4)
+
+============================================================
+Iteration 1/2
+Description: Sweep a directory, module, or full codebase for logic correctness and produce a scored health dashboard with systemic patterns. Trigger when the scope is multi-file — "audit the whole codebase", "health check", "audit src/", "audit auth and payments modules", "where should I focus testing", "onboarding review", "logic overview before we ship". SCOPE HARD RULE: multi-file or directory scope. One file or one function uses logic-review; a concrete failure uses logic-locate; two versions uses logic-diff; explaining a path uses logic-explain; "fix everything" (no scope named) uses logic-fix-all. Do NOT trigger for: single function/file, style/architecture-only audits, security-only scans, performance-only audits.
+============================================================
+Train: 18/36 correct, precision=100% recall=0% accuracy=50% (145.6s)
+  [FAIL] rate=0/3 expected=True: logic health check on src/core/ before we start the big refa
+  [FAIL] rate=0/3 expected=True: give me a scored overview of src/ — per-module Logic Score a
+  [FAIL] rate=0/3 expected=True: what's the overall correctness picture of this Go service? h
+  [FAIL] rate=0/3 expected=True: comprehensive audit of the React app's components/ folder — 
+  [FAIL] rate=0/3 expected=True: we're cutting a release on Friday — give me a logic health o
+  [FAIL] rate=0/3 expected=True: 即将上线，帮我审查整个 payments 模块的逻辑健康度，给出风险热点和优先修复项
+  [PASS] rate=0/3 expected=False: explain what this function does step by step
+  [PASS] rate=0/3 expected=False: benchmark the whole app — where are the perf bottlenecks?
+  [PASS] rate=0/3 expected=False: document the public API endpoints in OpenAPI format
+  [PASS] rate=0/3 expected=False: review this one function for bugs
+  [PASS] rate=0/3 expected=False: generate integration tests for the whole checkout flow
+  [PASS] rate=0/3 expected=False: clean up the formatting across src/ to match our style guide
+Test : 12/24 correct, precision=100% recall=0% accuracy=50% (0.0s)
+  [FAIL] rate=0/3 expected=True: sweep the whole backend for logic issues and give me a prior
+  [FAIL] rate=0/3 expected=True: audit the auth/ and api/ modules together — 15 files total —
+  [FAIL] rate=0/3 expected=True: I'm onboarding to this repo — can you do a logic sweep and t
+  [FAIL] rate=0/3 expected=True: 全仓库逻辑风险盘点，release 前想过一遍，告诉我最严重的三个问题集中在哪里
+  [PASS] rate=0/3 expected=False: my test is failing — locate the bug. stack trace attached
+  [PASS] rate=0/3 expected=False: what's the architecture of this project? should I add a gate
+  [PASS] rate=0/3 expected=False: autonomously fix every logic issue in the repo
+  [PASS] rate=0/3 expected=False: compare the old and new version of parseDate
+
+Improving description...
+Proposed (20.2s): Use this skill when the user wants a logic correctness overview, health score, or risk assessment across multiple files, packages, or an entire codebase — not just one file. Invoke for requests like: "audit the whole backend", "give me a scored overview of src/", "which modules need attention before release", "baseline before refactor", "where are the logic risks in these packages", "逻辑健康度", "风险热点". The output is a per-module Logic Score table plus systemic patterns. Skip for: single file/function reviews (use logic-review), concrete failures to diagnose (use logic-locate), two-version comparisons (use logic-diff), path explanations (use logic-explain), or "fix everything" requests (use logic-fix-all). Also skip for performance-only, style-only, or security-only audits.
+
+============================================================
+Iteration 2/2
+Description: Use this skill when the user wants a logic correctness overview, health score, or risk assessment across multiple files, packages, or an entire codebase — not just one file. Invoke for requests like: "audit the whole backend", "give me a scored overview of src/", "which modules need attention before release", "baseline before refactor", "where are the logic risks in these packages", "逻辑健康度", "风险热点". The output is a per-module Logic Score table plus systemic patterns. Skip for: single file/function reviews (use logic-review), concrete failures to diagnose (use logic-locate), two-version comparisons (use logic-diff), path explanations (use logic-explain), or "fix everything" requests (use logic-fix-all). Also skip for performance-only, style-only, or security-only audits.
+============================================================
+Train: 18/36 correct, precision=100% recall=0% accuracy=50% (136.4s)
+  [FAIL] rate=0/3 expected=True: what's the overall correctness picture of this Go service? h
+  [FAIL] rate=0/3 expected=True: logic health check on src/core/ before we start the big refa
+  [FAIL] rate=0/3 expected=True: give me a scored overview of src/ — per-module Logic Score a
+  [FAIL] rate=0/3 expected=True: comprehensive audit of the React app's components/ folder — 
+  [FAIL] rate=0/3 expected=True: 即将上线，帮我审查整个 payments 模块的逻辑健康度，给出风险热点和优先修复项
+  [FAIL] rate=0/3 expected=True: we're cutting a release on Friday — give me a logic health o
+  [PASS] rate=0/3 expected=False: explain what this function does step by step
+  [PASS] rate=0/3 expected=False: review this one function for bugs
+  [PASS] rate=0/3 expected=False: document the public API endpoints in OpenAPI format
+  [PASS] rate=0/3 expected=False: benchmark the whole app — where are the perf bottlenecks?
+  [PASS] rate=0/3 expected=False: clean up the formatting across src/ to match our style guide
+  [PASS] rate=0/3 expected=False: generate integration tests for the whole checkout flow
+Test : 12/24 correct, precision=100% recall=0% accuracy=50% (0.0s)
+  [FAIL] rate=0/3 expected=True: sweep the whole backend for logic issues and give me a prior
+  [FAIL] rate=0/3 expected=True: audit the auth/ and api/ modules together — 15 files total —
+  [FAIL] rate=0/3 expected=True: I'm onboarding to this repo — can you do a logic sweep and t
+  [FAIL] rate=0/3 expected=True: 全仓库逻辑风险盘点，release 前想过一遍，告诉我最严重的三个问题集中在哪里
+  [PASS] rate=0/3 expected=False: my test is failing — locate the bug. stack trace attached
+  [PASS] rate=0/3 expected=False: what's the architecture of this project? should I add a gate
+  [PASS] rate=0/3 expected=False: compare the old and new version of parseDate
+  [PASS] rate=0/3 expected=False: autonomously fix every logic issue in the repo
+
+Max iterations reached (2).
+
+Exit reason: max_iterations (2)
+Best score: 4/8 (iteration 1)
+{
+  "exit_reason": "max_iterations (2)",
+  "original_description": "Sweep a directory, module, or full codebase for logic correctness and produce a scored health dashboard with systemic patterns. Trigger when the scope is multi-file \u2014 \"audit the whole codebase\", \"health check\", \"audit src/\", \"audit auth and payments modules\", \"where should I focus testing\", \"onboarding review\", \"logic overview before we ship\". SCOPE HARD RULE: multi-file or directory scope. One file or one function uses logic-review; a concrete failure uses logic-locate; two versions uses logic-diff; explaining a path uses logic-explain; \"fix everything\" (no scope named) uses logic-fix-all. Do NOT trigger for: single function/file, style/architecture-only audits, security-only scans, performance-only audits.",
+  "best_description": "Sweep a directory, module, or full codebase for logic correctness and produce a scored health dashboard with systemic patterns. Trigger when the scope is multi-file \u2014 \"audit the whole codebase\", \"health check\", \"audit src/\", \"audit auth and payments modules\", \"where should I focus testing\", \"onboarding review\", \"logic overview before we ship\". SCOPE HARD RULE: multi-file or directory scope. One file or one function uses logic-review; a concrete failure uses logic-locate; two versions uses logic-diff; explaining a path uses logic-explain; \"fix everything\" (no scope named) uses logic-fix-all. Do NOT trigger for: single function/file, style/architecture-only audits, security-only scans, performance-only audits.",
+  "best_score": "4/8",
+  "best_train_score": "6/12",
+  "best_test_score": "4/8",
+  "final_description": "Use this skill when the user wants a logic correctness overview, health score, or risk assessment across multiple files, packages, or an entire codebase \u2014 not just one file. Invoke for requests like: \"audit the whole backend\", \"give me a scored overview of src/\", \"which modules need attention before release\", \"baseline before refactor\", \"where are the logic risks in these packages\", \"\u903b\u8f91\u5065\u5eb7\u5ea6\", \"\u98ce\u9669\u70ed\u70b9\". The output is a per-module Logic Score table plus systemic patterns. Skip for: single file/function reviews (use logic-review), concrete failures to diagnose (use logic-locate), two-version comparisons (use logic-diff), path explanations (use logic-explain), or \"fix everything\" requests (use logic-fix-all). Also skip for performance-only, style-only, or security-only audits.",
+  "iterations_run": 2,
+  "holdout": 0.4,
+  "train_size": 12,
+  "test_size": 8,
+  "history": [
+    {
+      "iteration": 1,
+      "description": "Sweep a directory, module, or full codebase for logic correctness and produce a scored health dashboard with systemic patterns. Trigger when the scope is multi-file \u2014 \"audit the whole codebase\", \"health check\", \"audit src/\", \"audit auth and payments modules\", \"where should I focus testing\", \"onboarding review\", \"logic overview before we ship\". SCOPE HARD RULE: multi-file or directory scope. One file or one function uses logic-review; a concrete failure uses logic-locate; two versions uses logic-diff; explaining a path uses logic-explain; \"fix everything\" (no scope named) uses logic-fix-all. Do NOT trigger for: single function/file, style/architecture-only audits, security-only scans, performance-only audits.",
+      "train_passed": 6,
+      "train_failed": 6,
+      "train_total": 12,
+      "train_results": [
+        {
+          "query": "logic health check on src/core/ before we start the big refactor next sprint \u2014 want a baseline",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "give me a scored overview of src/ \u2014 per-module Logic Score and systemic patterns if any",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "what's the overall correctness picture of this Go service? hit the 5 core packages: handlers, storage, queue, worker, config",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "comprehensive audit of the React app's components/ folder \u2014 which files need attention before our next release?",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "we're cutting a release on Friday \u2014 give me a logic health overview of the backend/ directory. ~20 files Python",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u5373\u5c06\u4e0a\u7ebf\uff0c\u5e2e\u6211\u5ba1\u67e5\u6574\u4e2a payments \u6a21\u5757\u7684\u903b\u8f91\u5065\u5eb7\u5ea6\uff0c\u7ed9\u51fa\u98ce\u9669\u70ed\u70b9\u548c\u4f18\u5148\u4fee\u590d\u9879",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "explain what this function does step by step",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "benchmark the whole app \u2014 where are the perf bottlenecks?",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "document the public API endpoints in OpenAPI format",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "review this one function for bugs",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "generate integration tests for the whole checkout flow",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "clean up the formatting across src/ to match our style guide",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ],
+      "test_passed": 4,
+      "test_failed": 4,
+      "test_total": 8,
+      "test_results": [
+        {
+          "query": "sweep the whole backend for logic issues and give me a priority list \u2014 top 5 risks to fix first",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "audit the auth/ and api/ modules together \u2014 15 files total \u2014 and prioritize risks by severity",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "I'm onboarding to this repo \u2014 can you do a logic sweep and tell me which modules are risky? I want to know where to focus first",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u5168\u4ed3\u5e93\u903b\u8f91\u98ce\u9669\u76d8\u70b9\uff0crelease \u524d\u60f3\u8fc7\u4e00\u904d\uff0c\u544a\u8bc9\u6211\u6700\u4e25\u91cd\u7684\u4e09\u4e2a\u95ee\u9898\u96c6\u4e2d\u5728\u54ea\u91cc",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "my test is failing \u2014 locate the bug. stack trace attached",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "what's the architecture of this project? should I add a gateway layer?",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "autonomously fix every logic issue in the repo",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "compare the old and new version of parseDate",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ],
+      "passed": 6,
+      "failed": 6,
+      "total": 12,
+      "results": [
+        {
+          "query": "logic health check on src/core/ before we start the big refactor next sprint \u2014 want a baseline",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "give me a scored overview of src/ \u2014 per-module Logic Score and systemic patterns if any",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "what's the overall correctness picture of this Go service? hit the 5 core packages: handlers, storage, queue, worker, config",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "comprehensive audit of the React app's components/ folder \u2014 which files need attention before our next release?",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "we're cutting a release on Friday \u2014 give me a logic health overview of the backend/ directory. ~20 files Python",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u5373\u5c06\u4e0a\u7ebf\uff0c\u5e2e\u6211\u5ba1\u67e5\u6574\u4e2a payments \u6a21\u5757\u7684\u903b\u8f91\u5065\u5eb7\u5ea6\uff0c\u7ed9\u51fa\u98ce\u9669\u70ed\u70b9\u548c\u4f18\u5148\u4fee\u590d\u9879",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "explain what this function does step by step",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "benchmark the whole app \u2014 where are the perf bottlenecks?",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "document the public API endpoints in OpenAPI format",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "review this one function for bugs",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "generate integration tests for the whole checkout flow",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "clean up the formatting across src/ to match our style guide",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "iteration": 2,
+      "description": "Use this skill when the user wants a logic correctness overview, health score, or risk assessment across multiple files, packages, or an entire codebase \u2014 not just one file. Invoke for requests like: \"audit the whole backend\", \"give me a scored overview of src/\", \"which modules need attention before release\", \"baseline before refactor\", \"where are the logic risks in these packages\", \"\u903b\u8f91\u5065\u5eb7\u5ea6\", \"\u98ce\u9669\u70ed\u70b9\". The output is a per-module Logic Score table plus systemic patterns. Skip for: single file/function reviews (use logic-review), concrete failures to diagnose (use logic-locate), two-version comparisons (use logic-diff), path explanations (use logic-explain), or \"fix everything\" requests (use logic-fix-all). Also skip for performance-only, style-only, or security-only audits.",
+      "train_passed": 6,
+      "train_failed": 6,
+      "train_total": 12,
+      "train_results": [
+        {
+          "query": "what's the overall correctness picture of this Go service? hit the 5 core packages: handlers, storage, queue, worker, config",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "logic health check on src/core/ before we start the big refactor next sprint \u2014 want a baseline",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "give me a scored overview of src/ \u2014 per-module Logic Score and systemic patterns if any",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "comprehensive audit of the React app's components/ folder \u2014 which files need attention before our next release?",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u5373\u5c06\u4e0a\u7ebf\uff0c\u5e2e\u6211\u5ba1\u67e5\u6574\u4e2a payments \u6a21\u5757\u7684\u903b\u8f91\u5065\u5eb7\u5ea6\uff0c\u7ed9\u51fa\u98ce\u9669\u70ed\u70b9\u548c\u4f18\u5148\u4fee\u590d\u9879",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "we're cutting a release on Friday \u2014 give me a logic health overview of the backend/ directory. ~20 files Python",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "explain what this function does step by step",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "review this one function for bugs",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "document the public API endpoints in OpenAPI format",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "benchmark the whole app \u2014 where are the perf bottlenecks?",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "clean up the formatting across src/ to match our style guide",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "generate integration tests for the whole checkout flow",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ],
+      "test_passed": 4,
+      "test_failed": 4,
+      "test_total": 8,
+      "test_results": [
+        {
+          "query": "sweep the whole backend for logic issues and give me a priority list \u2014 top 5 risks to fix first",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "audit the auth/ and api/ modules together \u2014 15 files total \u2014 and prioritize risks by severity",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "I'm onboarding to this repo \u2014 can you do a logic sweep and tell me which modules are risky? I want to know where to focus first",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u5168\u4ed3\u5e93\u903b\u8f91\u98ce\u9669\u76d8\u70b9\uff0crelease \u524d\u60f3\u8fc7\u4e00\u904d\uff0c\u544a\u8bc9\u6211\u6700\u4e25\u91cd\u7684\u4e09\u4e2a\u95ee\u9898\u96c6\u4e2d\u5728\u54ea\u91cc",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "my test is failing \u2014 locate the bug. stack trace attached",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "what's the architecture of this project? should I add a gateway layer?",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "compare the old and new version of parseDate",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "autonomously fix every logic issue in the repo",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ],
+      "passed": 6,
+      "failed": 6,
+      "total": 12,
+      "results": [
+        {
+          "query": "what's the overall correctness picture of this Go service? hit the 5 core packages: handlers, storage, queue, worker, config",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "logic health check on src/core/ before we start the big refactor next sprint \u2014 want a baseline",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "give me a scored overview of src/ \u2014 per-module Logic Score and systemic patterns if any",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "comprehensive audit of the React app's components/ folder \u2014 which files need attention before our next release?",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u5373\u5c06\u4e0a\u7ebf\uff0c\u5e2e\u6211\u5ba1\u67e5\u6574\u4e2a payments \u6a21\u5757\u7684\u903b\u8f91\u5065\u5eb7\u5ea6\uff0c\u7ed9\u51fa\u98ce\u9669\u70ed\u70b9\u548c\u4f18\u5148\u4fee\u590d\u9879",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "we're cutting a release on Friday \u2014 give me a logic health overview of the backend/ directory. ~20 files Python",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "explain what this function does step by step",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "review this one function for bugs",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "document the public API endpoints in OpenAPI format",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "benchmark the whole app \u2014 where are the perf bottlenecks?",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "clean up the formatting across src/ to match our style guide",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "generate integration tests for the whole checkout flow",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ]
+    }
+  ]
+}

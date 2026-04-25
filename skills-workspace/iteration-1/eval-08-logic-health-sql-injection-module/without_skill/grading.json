@@ -1,0 +1,34 @@
+{
+  "eval_id": 8,
+  "name": "logic-health-sql-injection-module",
+  "mode": "logic-health",
+  "config": "without_skill",
+  "expectations": [
+    {
+      "id": "has-module-breakdown",
+      "description": "Output includes a Module Breakdown section or table with per-module scores",
+      "passed": false,
+      "evidence": "module bd"
+    },
+    {
+      "id": "identifies-sql-interpolation",
+      "description": "Output identifies f-string SQL interpolation as a logic risk in the functions",
+      "passed": true,
+      "evidence": "sql interp"
+    },
+    {
+      "id": "score-below-100",
+      "description": "Logic Score is below 100 (multiple confirmed findings exist)",
+      "passed": false,
+      "evidence": "score=None"
+    },
+    {
+      "id": "identifies-unconditional-true",
+      "description": "Output identifies that delete_user returns True unconditionally regardless of whether any row was deleted",
+      "passed": false,
+      "evidence": "uncond-true"
+    }
+  ],
+  "pass_rate": 0.25,
+  "output_chars": 4827
+}
