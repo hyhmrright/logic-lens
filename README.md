@@ -10,7 +10,7 @@
 <p align="center">
   <a href="#the-six-logic-risks">Six Risks</a> •
   <a href="#what-it-looks-like">Example</a> •
-  <a href="#five-skills">Five Skills</a> •
+  <a href="#six-skills">Six Skills</a> •
   <a href="#benchmark">Benchmark</a> •
   <a href="#installation">Installation</a> •
   <a href="#usage">Usage</a> •
@@ -104,6 +104,24 @@ Logic-Lens produces:
 
 *(+ 2 more findings)*
 
+![Logic-Lens demo](docs/demo.gif)
+
+---
+
+## Quickstart (60 seconds)
+
+**Claude Code users:**
+
+```
+/plugin marketplace add hyhmrright/logic-lens
+/plugin install logic-lens@logic-lens-marketplace
+/logic-review
+```
+
+Then paste any function. Done. *(Short-form commands like `/logic-review` are auto-installed on first session start.)*
+
+For Gemini CLI and Codex CLI, see [Installation](#installation) below.
+
 ---
 
 ## Six Skills
@@ -150,6 +168,8 @@ The gap isn't what Claude *can* find — it's what it *consistently* finds, with
 ## Installation
 
 ### Claude Code (Recommended)
+
+*Already ran the Quickstart? You're done — skip to [Slash Commands](#slash-commands).*
 
 #### Via Plugin Marketplace
 ```bash
@@ -385,9 +405,12 @@ logic-lens/
 │   ├── logic-locate/            # Skill 4: Fault localization
 │   │   ├── SKILL.md
 │   │   └── logic-locate-guide.md
-│   └── logic-health/            # Skill 5: Health dashboard
+│   ├── logic-health/            # Skill 5: Health dashboard
+│   │   ├── SKILL.md
+│   │   └── logic-health-guide.md
+│   └── logic-fix-all/           # Skill 6: Autonomous audit-and-fix pipeline
 │       ├── SKILL.md
-│       └── logic-health-guide.md
+│       └── logic-fix-all-guide.md
 ├── commands/                    # Short-form command wrappers (auto-installed by hook)
 ├── hooks/                       # Session-start hook
 ├── evals/
@@ -413,6 +436,8 @@ Adding AI reviewers doesn't fix the problem if they make the same reasoning erro
 See [CONTRIBUTING.md](CONTRIBUTING.md). Logic-Lens is designed for universal use — contributions must not embed assumptions about any particular language, framework, or development workflow.
 
 The best contributions right now are new eval test cases, especially interprocedural bugs drawn from real production incidents. See [CONTRIBUTING.md](CONTRIBUTING.md) for the format.
+
+**New to the project? The fastest way to contribute is a new eval test case — see the [issue template](https://github.com/hyhmrright/logic-lens/issues/new?template=eval-contribution.md).**
 
 ---
 
