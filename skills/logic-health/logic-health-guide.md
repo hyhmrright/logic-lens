@@ -75,7 +75,7 @@ This is the unique value of a health check over individual reviews. Look for:
 
 ## Step 7: Output the Health Report
 
-Use the Logic Health Report Template from `logic-health/SKILL.md`:
+Use the Report Template single source at `../_shared/report-template.md` plus the Logic-Health additions defined in `logic-health/SKILL.md` (mode line, Module Breakdown, Systemic Patterns sections). The base layout is:
 1. Standard header with overall Logic Score
 2. Module Breakdown table
 3. Full Findings section (organized by severity, then module)

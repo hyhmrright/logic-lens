@@ -30,7 +30,7 @@ New risk codes (L7+) require:
 2. A detection methodology using semi-formal tracing.
 3. Examples in at least two different languages.
 4. A severity assessment rationale.
-5. At least 2 eval cases in `evals/evals.json`.
+5. At least 2 eval cases in `evals/v2/evals-v2.json`.
 
 ## Adding a Skill
 
@@ -43,9 +43,10 @@ New skills (beyond the five core skills) require:
 
 ## Eval Cases
 
-Eval cases in `evals/evals.json` must include code snippets that a reviewer could
+Eval cases in `evals/v2/evals-v2.json` must include code snippets that a reviewer could
 evaluate without running the code. The `expected_output` should describe what a
-correct Logic-Lens analysis would find — not what the correct fix is.
+correct Logic-Lens analysis would find — not what the correct fix is. Trigger evals
+(per-skill activation tests) live in `evals/v2/trigger-evals-*.json`.
 
 ## Version Bumping
 

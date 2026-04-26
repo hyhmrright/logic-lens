@@ -51,7 +51,7 @@ Reasoning without an execution trace is guessing. Semi-formal tracing is the evi
 
 ## 3. Semi-Formal Reasoning
 
-Three-step tracing: **Premises → Trace → Divergence**. Full methodology, language-specific tracing notes, and interprocedural reasoning guidance live in `skills/_shared/semiformal-guide.md`. The premises construction checklist (used by several guides) is defined once in that file's "Premises Construction Checklist" section — guides cite it by reference rather than duplicating it.
+Three-step tracing: **Premises → Trace → Divergence**. Full methodology, language-specific tracing notes, and interprocedural reasoning guidance live in `skills/_shared/semiformal-guide.md`. The premises construction checklist is defined once in `skills/_shared/semiformal-checklist.md` — guides cite it by reference rather than duplicating it.
 
 ---
 

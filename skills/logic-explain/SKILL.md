@@ -20,11 +20,11 @@ description: >
 ## Setup
 
 Read in this order:
-1. `../_shared/common.md` — language rule, Report Template (Logic Score line is omitted for this mode), Remedy discipline (used only if the explanation surfaces a bug worth fixing).
+1. `../_shared/common.md` — language rule, Report Template (Logic Score line is omitted for this mode).
 2. `../_shared/semiformal-guide.md` — full tracing methodology and Premises Construction Checklist.
 3. `logic-explain-guide.md` — explanation process.
 
-Note: `logic-risks.md` is intentionally skipped — logic-explain does not produce L-code findings; if the trace reveals a bug, stop and recommend logic-review or logic-locate instead of tagging L-codes inside an explanation.
+Note: `logic-risks.md` is intentionally skipped — logic-explain does not produce L-code findings, and Remedy is intentionally out of scope for this mode. If the trace reveals a bug, stop and recommend logic-review or logic-locate instead of tagging L-codes or proposing a fix inside an explanation.
 
 ## Process
 

@@ -1,6 +1,6 @@
 # Logic-Lens — Premises Construction Checklist (Single Source)
 
-This is the **single source of truth** for the Premises step of semi-formal tracing. All skill guides (review / explain / diff / locate / health / fix-all) reference this file rather than re-listing it. Run through every applicable bullet before producing a Trace.
+This is the **single source of truth** for the Premises step of semi-formal tracing. Skill guides (review / explain / diff / locate / health / fix-all) cite this file — directly in review / explain / diff, indirectly in locate / health / fix-all via their "build premises at each step" instructions. Run through every applicable bullet before producing a Trace.
 
 When the user writes in Chinese (per `common.md` §1), think internally in Chinese and produce the trace in Chinese; the structure of the checklist itself is language-neutral.
 
