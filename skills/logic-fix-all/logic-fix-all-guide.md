@@ -65,4 +65,4 @@ All other decision points are internal to the pipeline and do not interrupt the 
 
 ## Output format
 
-The Fix Report layout is defined in `SKILL.md` (header fields + Scope / Skill Invocations / Iteration History / Fix Log / Resolved by Clarification / Unresolved Findings / Summary). Render it according to the language rule in `common.md` §1.
+The Fix Report layout is defined in `SKILL.md`: header fields, then the standard Findings + Summary, then the fix-all extensions (Scope / Skill Invocations / Iteration History / Fix Log / Resolved by Clarification / Unresolved Findings) appended after Summary per report-template.md Rule 4. Render it according to the language rule in `common.md` §1.

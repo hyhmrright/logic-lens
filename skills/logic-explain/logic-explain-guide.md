@@ -59,3 +59,11 @@ The plausible misreading that the trace contradicts. This is the most valuable p
 **Example:**
 "What the code actually does: `save_record()` commits the database transaction and then logs the record ID, but if the commit fails, the log statement is still executed with a stale record ID.
 What a casual reader might assume: logging happens after commit succeeds, so the logged ID is always valid."
+
+## Step 6: Map output to the report template
+
+logic-explain uses the standard report template from `report-template.md` with these adaptations:
+
+- **Header:** Mode = `Execution Explain` / `执行解释`; the mode-specific score line is omitted (see `common.md` §5).
+- **Findings section:** Always omit. logic-explain is descriptive — it produces no L-code findings and no Remedy. If the trace reveals what looks like a bug, note it in Step 4 (Non-Obvious Behavior) and recommend the user re-run with logic-review for a confirmed finding.
+- **Summary:** Place the Step-by-Step Trace (Step 3), Non-Obvious Behavior callouts (Step 4), and the Actual vs. Assumed Behavior pair (Step 5) here. Structure them as labeled sub-sections within Summary rather than as Findings entries — they are explanatory prose, not bug reports.

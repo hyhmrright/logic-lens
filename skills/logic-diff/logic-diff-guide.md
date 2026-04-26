@@ -71,9 +71,9 @@ For each divergence, write a finding using the standard four-field format with t
 
 Based on the traced scenarios:
 
-- **Semantically Equivalent:** No divergence found. Both versions produce identical behavior for all traced scenarios.
-- **Conditionally Equivalent:** Equivalent for all common cases. Diverges only when [specific condition] — state the condition precisely.
-- **Semantically Divergent:** Confirmed behavioral difference at [location] for [scenario].
+- **✅ Semantically Equivalent:** No divergence found. Both versions produce identical behavior for all traced scenarios.
+- **⚠️ Conditionally Equivalent:** Equivalent for all common cases. Diverges only when [specific condition] — state the condition precisely.
+- **❌ Semantically Divergent:** Confirmed behavioral difference at [location] for [scenario].
 
 Note: "No divergence found" is not the same as "provably equivalent." State clearly which scenarios were traced and acknowledge that untested scenarios may still diverge.
 

@@ -55,9 +55,9 @@ By risk code:
 
 **Per-module Logic Score:** Apply the standard scoring formula (100 − deductions) to each module's findings.
 
-**Overall Logic Score:** Average of per-module scores, weighted by module size (line count or function count). Do not simply average the scores — a small module with a perfect score should not mask a large module with a Critical.
+**Overall Logic Score:** Average of per-module scores, weighted by line count. Do not simply average the scores — a small module with a perfect score should not mask a large module with a Critical.
 
-Weighted formula: `sum(module_score * module_weight) / sum(module_weights)`
+Weighted formula: `sum(module_score * module_weight)`
 where `module_weight = line_count / total_lines_reviewed`.
 
 ## Step 6: Identify Systemic Patterns
@@ -77,8 +77,8 @@ This is the unique value of a health check over individual reviews. Look for:
 
 Use the Report Template single source at `../_shared/report-template.md` plus the Logic-Health additions defined in `logic-health/SKILL.md` (mode line, Module Breakdown, Systemic Patterns sections). The base layout is:
 1. Standard header with overall Logic Score
-2. Module Breakdown table
-3. Full Findings section (organized by severity, then module)
-4. Systemic Patterns section
-5. Recommended Priority Order (top 3–5 actions, ordered by impact)
-6. Standard Summary (2–3 sentences)
+2. Full Findings section (organized by severity, then module)
+3. Standard Summary (2–3 sentences)
+4. Module Breakdown table (appended after Summary, per report-template.md Rule 4)
+5. Systemic Patterns section (also after Summary)
+6. Recommended Priority Order (top 3–5 actions, ordered by impact; also after Summary)

@@ -40,7 +40,7 @@ Read in this order:
 
 **Step 6. Identify systemic patterns** (guide Step 6) — L-codes appearing in 3+ modules indicate codebase-wide habits; architectural enablers (heavy global state → L4; deep callee chains → L6) get explicit mention.
 
-**Step 7. Output the Health Report** (guide Step 7) — standard header; Module Breakdown table; Findings; Systemic Patterns; Recommended Priority Order (top 3–5). Localize all headers if the user wrote in Chinese.
+**Step 7. Output the Health Report** (guide Step 7) — standard header; Findings; Summary; then Module Breakdown, Systemic Patterns, and Recommended Priority Order (top 3–5) appended after Summary. Localize all headers if the user wrote in Chinese.
 
 **Mode line in report:** `Logic Health` (Chinese: `逻辑体检`).
 
