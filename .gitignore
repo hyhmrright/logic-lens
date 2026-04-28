@@ -1,0 +1,13 @@
+# Local eval-runner outputs — created by scripts/run-content-evals.sh
+skills-workspace/
+
+# Python bytecode (grade-iteration.py + future helpers)
+__pycache__/
+*.pyc
+
+# Stray logs (also covered by skills-workspace/ but be explicit)
+*.log
+
+# OS / editor noise
+.DS_Store
+*.swp

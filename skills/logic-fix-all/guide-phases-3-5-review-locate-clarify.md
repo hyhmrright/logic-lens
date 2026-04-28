@@ -31,7 +31,7 @@ Scope of this file: **Phase 3** (deep per-file review producing full Premises ->
 3c. Tag each finding with:
     - File path and line number range
     - File role (source / config / constraint / doc)
-    - Risk code (L1–L6 or custom Cx)
+    - Risk code (L1–L9 or custom Cx)
     - Severity (Critical / Warning / Suggestion) — assigned per finding
       based on the impact recorded in the Divergence field, not by
       L-code range

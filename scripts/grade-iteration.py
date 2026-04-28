@@ -189,7 +189,7 @@ def grade_case(case_id: int, output_path: Path) -> dict:
         ]
     elif case_id == 107:
         rules += [
-            ("contains L4", lambda t: "L4" in t),
+            ("contains L7 (concurrency hazard, not L4)", lambda t: "L7" in t),
             ("identifies race / non-atomic increment", lambda t: re.search(r'race|non-atomic|原子|数据竞争|并发|GIL|lock', t, re.I) is not None),
             ("has Fault Confidence", lambda t: re.search(r'Fault Confidence|故障置信度', t) is not None),
         ]
@@ -197,6 +197,70 @@ def grade_case(case_id: int, output_path: Path) -> dict:
         rules += [
             ("identifies systemic L6 pattern", lambda t: (re.search(r'systemic|Systemic Patterns|系统性', t, re.I) is not None) and ("L6" in t)),
             ("has Module Breakdown", lambda t: re.search(r'Module Breakdown|模块分布', t) is not None),
+        ]
+    elif case_id == 200:
+        # Require BOTH a yield-point concept AND interleave/other-coroutine concept,
+        # so a shallow "the function uses await" answer doesn't pass.
+        def _await_boundary(t):
+            yield_pt = re.search(r'await|asyncio\.sleep|yield|挂起|suspend|让出', t, re.I)
+            interleave = re.search(r'event[- ]?loop|other.{0,15}coroutin|interleav|交错|调度|reschedul', t, re.I)
+            return bool(yield_pt) and bool(interleave)
+        rules += [
+            ("contains L7 (concurrency hazard)", lambda t: "L7" in t),
+            ("identifies await yield point + interleaving", _await_boundary),
+            ("recommends semaphore or async lock", lambda t: re.search(r'asyncio\.Semaphore|asyncio\.Lock|Semaphore|atomic.*slot|信号量', t, re.I) is not None),
+        ]
+    elif case_id == 201:
+        # Replace fragile re.S/.* alternation with a keyword-counting check.
+        # Require ≥2 distinct leak-path mentions plus a release-concept mention,
+        # so the rule actually detects "more than one exit path" rather than
+        # one keyword-pair coincidence across a long output.
+        def _multiple_leak_paths(t):
+            paths = ['empty data', 'nothing to upload', 'UploadError',
+                     'exception handler', 'non-UploadError', 'open(', 'file handle']
+            hits = sum(1 for p in paths if re.search(re.escape(p), t, re.I))
+            release = re.search(r'(?:not\s+)?clos(?:e|ed)|release|leak|never.{0,15}(?:close|release)|未释放|泄漏', t, re.I)
+            return hits >= 2 and release is not None
+        rules += [
+            ("contains L8 (resource lifecycle)", lambda t: "L8" in t),
+            ("identifies multiple leak paths", _multiple_leak_paths),
+            ("recommends with-statement or try/finally", lambda t: re.search(r'with[- ]statement|with statement|context manager|try.*finally|try / finally|try-finally', t, re.I) is not None),
+        ]
+    elif case_id == 202:
+        rules += [
+            ("contains L9 (time/locale hazard)", lambda t: "L9" in t),
+            ("identifies naive vs aware datetime", lambda t: re.search(r'naive|tzinfo|timezone[- ]aware|no timezone|missing.*zone|无时区|naive datetime', t, re.I) is not None),
+            ("identifies DST transition effect", lambda t: re.search(r'DST|daylight saving|spring[- ]forward|wall[- ]clock|wall clock|23 hour|23-hour|夏令时|夏时制', t, re.I) is not None),
+        ]
+    elif case_id == 203:
+        rules += [
+            ("contains L7 (not L4)", lambda t: "L7" in t),
+            ("identifies loop variable capture by closures", lambda t: re.search(r'loop variable|capture|shared.*variable|共享.*变量|闭包捕获|引用捕获|per[- ]iteration', t, re.I) is not None),
+            ("recommends per-iteration shadow or parameter passing", lambda t: re.search(r'u := u|copy.*loop|shadow|pass.*as.*parameter|作为参数|局部变量|Go 1\.22', t, re.I) is not None),
+        ]
+    elif case_id == 204:
+        # Strong anchor: must reference is_ready() AND a release/未释放 concept.
+        # Drop the over-broad "early return / return False / leak" alternates that
+        # would pass for any locate-mode output that happens to mention them.
+        def _not_ready_leak(t):
+            anchor = re.search(r'is_ready\(\)|not\s+job\.is_ready|if not job\.is_ready', t, re.I)
+            release = re.search(r'(?:pool\.)?release|未释放', t, re.I)
+            return anchor is not None and release is not None
+        rules += [
+            ("contains L8 (resource lifecycle)", lambda t: "L8" in t),
+            ("identifies not-ready early return as leak path", _not_ready_leak),
+            ("connects leak to pool exhaustion", lambda t: re.search(r'pool size|20 (?:slot|connection|jobs?)|exhaust|耗尽|连接池', t, re.I) is not None),
+            ("has Fault Confidence", lambda t: re.search(r'Fault Confidence|故障置信度|Confidence:', t) is not None),
+        ]
+    elif case_id == 205:
+        # The case's true teaching point is L9 + UTF-16 vs locale collation.
+        # Both "Conditionally Equivalent" (limited to ASCII same-case) and
+        # "Semantically Divergent" (mixed-case + accents differ) are defensible
+        # under a real en-US locale; accept either to keep the grader stable.
+        rules += [
+            ("verdict CE or Divergent (both defensible under en-US)", lambda t: re.search(r'Conditionally Equivalent|Semantically Divergent|条件等价|语义分歧', t) is not None),
+            ("contains L9 (locale hazard)", lambda t: "L9" in t),
+            ("explains UTF-16 codepoint vs locale collation", lambda t: re.search(r'UTF-?16|code[- ]?point|code unit|locale[- ]aware|collation|locale.*compar|区分大小写|locale 排序|本地化排序', t, re.I) is not None),
         ]
 
     expectations = check(text, rules)

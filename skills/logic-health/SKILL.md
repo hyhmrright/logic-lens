@@ -20,7 +20,7 @@ description: >
 
 Read in this order:
 1. `../_shared/common.md` — language rule, Iron Law, Report Template, Logic Score (weighted-average variant in §6), Remedy discipline.
-2. `../_shared/logic-risks.md` — L1–L6 definitions.
+2. `../_shared/logic-risks.md` — L1–L9 definitions.
 3. `../_shared/semiformal-guide.md` — tracing methodology and Premises Construction Checklist.
 4. `logic-health-guide.md` — aggregation process.
 
@@ -38,7 +38,7 @@ Read in this order:
 
 **Step 5. Compute scores** (guide Step 5) — per-module Logic Score via the standard formula; overall score is the line-weighted average (per `common.md` §6).
 
-**Step 6. Identify systemic patterns** (guide Step 6) — L-codes appearing in 3+ modules indicate codebase-wide habits; architectural enablers (heavy global state → L4; deep callee chains → L6) get explicit mention.
+**Step 6. Identify systemic patterns** (guide Step 6) — L-codes appearing in 3+ modules indicate codebase-wide habits; architectural enablers (heavy global state → L7; deep callee chains → L6) get explicit mention.
 
 **Step 7. Output the Health Report** (guide Step 7) — standard header; Findings; Summary; then Module Breakdown, Systemic Patterns, and Recommended Priority Order (top 3–5) appended after Summary. Localize all headers if the user wrote in Chinese.
 

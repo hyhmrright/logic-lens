@@ -30,6 +30,20 @@ Working from the failure site (the exception, the wrong value, the missed side e
 
 This is the inverse of forward tracing. You know the symptom; you are finding the cause.
 
+**Minimum thresholds** (per `../_shared/semiformal-guide.md`): the backward chain must contain **≥ 3 substantive hops** and **≥ 2 location anchors**. Otherwise downgrade Fault Confidence to Low.
+
+**❌ Bad backward trace:** "The error means `result` was `None`. Probably `charge()` returned `None` somewhere." (No anchors; no enumeration of the path that could produce None; "probably" is speculation, not a trace.)
+
+**✅ Good backward trace:**
+```
+Symptom: TypeError at service.py:7 — 'NoneType' object is not subscriptable on `result['transaction_id']`.
+←1. [service.py:7] `result` is the variable indexed; came from line 6.
+←2. [service.py:6] `result = charge(order)`; `charge` resolves to `payments.gateway.charge`.
+←3. [gateway.py:3-4] `charge` has one return-None path: when `order.amount == 0`. All other paths return a dict.
+←4. Reproduction input: the failing test passes an order with `amount == 0`.
+Root: gateway.py returns None on amount==0; service.py assumes dict unconditionally — L6 callee contract mismatch.
+```
+
 ## Step 4: Trace Forward to Confirm
 
 Once you have a hypothesis about the root cause, trace forward from it:
@@ -59,7 +73,7 @@ This is the Primary Fault. There may also be Contributing Factors — conditions
 
 ## Step 7: Classify and Output
 
-1. Assign the L-code that best describes the root fault (L1–L6).
+1. Assign the L-code that best describes the root fault (L1–L9).
 2. Assess Fault Confidence:
    - **High:** the trace fully confirms the fault — the premises, trace, and divergence form a complete chain from cause to symptom.
    - **Medium:** the trace strongly implicates the fault, but one step relies on an assumption that could not be fully verified (e.g., a library function's behavior under edge conditions).

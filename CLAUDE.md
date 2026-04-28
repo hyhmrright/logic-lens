@@ -9,7 +9,7 @@ logic-lens/
 ├── skills/
 │   ├── _shared/
 │   │   ├── common.md              ← Shared output format conventions
-│   │   ├── logic-risks.md         ← L1–L6 risk taxonomy definitions
+│   │   ├── logic-risks.md         ← L1–L9 risk taxonomy definitions
 │   │   └── semiformal-guide.md    ← Execution tracing methodology
 │   └── logic-{review,explain,diff,locate,health}/
 │       ├── SKILL.md               ← Frontmatter + process skeleton (triggers the skill)
@@ -43,7 +43,7 @@ logic-lens/
 - Concrete examples preferred over abstract descriptions.
 
 ### Risk Codes
-- Built-in: L1–L6 (defined in `skills/_shared/logic-risks.md`)
+- Built-in: L1–L9 (defined in `skills/_shared/logic-risks.md`)
 - Custom project-specific: C1, C2, ... (defined in `.logic-lens.yaml` at the repo root — optional file, omit if no custom codes needed)
 - Every finding must be tagged with a risk code.
 

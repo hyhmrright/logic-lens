@@ -330,7 +330,7 @@
       "name": "deep-flaky-race-condition",
       "mode": "logic-locate",
       "prompt": "This test fails intermittently — about 1 in 5 runs the final counter is less than 20000. Help me locate the root cause:\n\nFailing test:\n```python\nimport threading\n\ndef test_counter_sum():\n    counter = Counter()\n    def work():\n        for _ in range(10000):\n            counter.increment()\n    t1 = threading.Thread(target=work)\n    t2 = threading.Thread(target=work)\n    t1.start(); t2.start()\n    t1.join(); t2.join()\n    assert counter.value == 20000  # sometimes fails with e.g. 17342\n```\n\nImplementation:\n```python\nclass Counter:\n    def __init__(self):\n        self.value = 0\n    def increment(self):\n        self.value = self.value + 1\n```\n\nWhat's the root cause?",
-      "expected_output": "Should locate the fault as a race condition on Counter.increment: self.value = self.value + 1 is NOT atomic — it compiles to (1) load self.value, (2) add 1, (3) store result. When two threads run concurrently, their load/add/store sequences can interleave so both threads read the same value V, both compute V+1, and both store V+1, effectively losing one increment. Over 20000 combined increments this explains the shortfall. Risk code L4 (state mutation hazard) — shared mutable state without synchronization. Fault Confidence should be high. Fix: use threading.Lock around the read-modify-write, or use itertools/atomic counter. Trace must explicitly step through the non-atomic load-modify-store interleaving.",
+      "expected_output": "Should locate the fault as a race condition on Counter.increment: self.value = self.value + 1 is NOT atomic — it compiles to (1) load self.value, (2) add 1, (3) store result. When two threads run concurrently, their load/add/store sequences can interleave so both threads read the same value V, both compute V+1, and both store V+1, effectively losing one increment. Over 20000 combined increments this explains the shortfall. Risk code L7 (Concurrency / Async Hazard) — the bug requires more than one execution context to manifest, so it is L7 not L4. Fault Confidence should be high. Fix: use threading.Lock around the read-modify-write, or use an atomic counter. Trace must explicitly step through the non-atomic load-modify-store interleaving.",
       "assertions": [
         {
           "id": "identifies-race-condition",
@@ -338,9 +338,9 @@
           "check": "Output explains that self.value = self.value + 1 is not atomic and that concurrent execution by two threads leads to lost updates / race condition"
         },
         {
-          "id": "identifies-L4",
-          "description": "Output identifies L4 (State Mutation Hazard) as the risk code",
-          "check": "Output contains 'L4'"
+          "id": "identifies-L7",
+          "description": "Output identifies L7 (Concurrency / Async Hazard) as the risk code — the bug requires more than one execution context to manifest, so it is L7 not L4",
+          "check": "Output contains 'L7'"
         },
         {
           "id": "traces-non-atomic-increment",
@@ -520,6 +520,180 @@
           "id": "does-not-flag-timeout-fallback",
           "description": "The || 5000 fallback in getTimeout is not flagged as a logic bug",
           "check": "Output does not list getTimeout's timeout fallback as a finding or fix"
+        }
+      ]
+    },
+    {
+      "id": 200,
+      "name": "logic-review-asyncio-shared-state-across-await",
+      "mode": "logic-review",
+      "prompt": "Review this Python asyncio code for logic errors:\n\n```python\nimport asyncio\n\nclass OrderProcessor:\n    def __init__(self):\n        self.in_flight = 0\n        self.max_concurrent = 5\n\n    async def process(self, order):\n        if self.in_flight >= self.max_concurrent:\n            await asyncio.sleep(0.1)  # back off then proceed\n        self.in_flight += 1\n        try:\n            await self._call_payment_api(order)\n        finally:\n            self.in_flight -= 1\n```\n\nMultiple `process()` coroutines run concurrently on the same event loop. Is the max-concurrent limit actually enforced?",
+      "expected_output": "Should identify L7 (Concurrency / Async Hazard): the limit is NOT enforced. When in_flight is already at the limit (5 of 5), every newly arriving coroutine reads `self.in_flight >= self.max_concurrent` as True, awaits `asyncio.sleep(0.1)`, and *yields control to the event loop*. Other coroutines can then run, also see in_flight at the limit, also enter sleep. When all wake up, each unconditionally `self.in_flight += 1`, so in_flight climbs above max_concurrent. Trace must show: (1) in_flight is 5 (at limit); (2) coroutine A enters, observes >= max, awaits sleep — yields; (3) coroutines B/C/D run, each see in_flight=5, each enter sleep; (4) all wake, all +1 — in_flight = 9, far above the limit. Risk code L7 — the bug requires more than one execution context (concurrent coroutines) to manifest. Remedy: use asyncio.Semaphore(max_concurrent) which atomically tracks acquired slots.",
+      "assertions": [
+        {
+          "id": "identifies-L7",
+          "description": "Output identifies L7 (Concurrency / Async Hazard) — not L4, since the bug requires concurrent coroutines",
+          "check": "Output contains 'L7'"
+        },
+        {
+          "id": "identifies-await-boundary",
+          "description": "Output explicitly identifies the await/sleep point as a yield boundary where other coroutines can interleave",
+          "check": "Output mentions that asyncio.sleep / await yields control to the event loop and that other coroutines run during the suspension, allowing the in_flight check to be defeated"
+        },
+        {
+          "id": "recommends-semaphore-or-lock",
+          "description": "Output recommends asyncio.Semaphore or an equivalent atomic concurrency primitive",
+          "check": "Output recommends asyncio.Semaphore, asyncio.Lock, or an equivalent primitive that atomically tracks slots"
+        },
+        {
+          "id": "has-premises-trace-divergence",
+          "description": "Finding has Premises, Trace, and Divergence sections",
+          "check": "Output contains 'Premises', 'Trace', and 'Divergence' as section labels in the finding"
+        }
+      ]
+    },
+    {
+      "id": 201,
+      "name": "logic-review-resource-leak-on-exception",
+      "mode": "logic-review",
+      "prompt": "Review this code for logic errors:\n\n```python\n# storage/uploader.py\ndef upload_blob(path, client):\n    conn = client.connect()\n    data = open(path, 'rb').read()\n    if not data:\n        return None  # nothing to upload\n    try:\n        result = conn.upload(data)\n    except UploadError as e:\n        log.error(f'upload failed: {e}')\n        return None\n    conn.close()\n    return result\n```",
+      "expected_output": "Should identify L8 (Resource Lifecycle Hazard): the connection acquired by client.connect() is leaked on at least three paths. (1) Empty-data early return at line 'return None  # nothing to upload' — conn is never closed. (2) UploadError exception handler returns None — conn is never closed. (3) Any non-UploadError exception inside upload() (or the open() call earlier) propagates without closing conn either. Only the single happy path reaches conn.close(). The file handle from open() is also leaked (no with-statement). Trace must enumerate the exit paths and show that close() runs on at most one of them. Risk code L8 — resource acquire/release imbalance. Remedy: wrap conn in a with-statement (if client supports context manager), or use try/finally with conn.close() in finally.",
+      "assertions": [
+        {
+          "id": "identifies-L8",
+          "description": "Output identifies L8 (Resource Lifecycle Hazard) — not L5, because the bug is broader than a single early-exit",
+          "check": "Output contains 'L8'"
+        },
+        {
+          "id": "identifies-multiple-leak-paths",
+          "description": "Output enumerates more than one exit path on which conn is not closed",
+          "check": "Output identifies at least two distinct paths (early return on empty data, exception handler, or non-UploadError propagation) where the connection is not closed"
+        },
+        {
+          "id": "recommends-with-or-finally",
+          "description": "Output recommends a with-statement or try/finally to make the release symmetric",
+          "check": "Output recommends a with-statement, context manager, or try/finally pattern to guarantee conn.close() on all paths"
+        },
+        {
+          "id": "has-premises-trace-divergence",
+          "description": "Finding has Premises, Trace, and Divergence sections",
+          "check": "Output contains 'Premises', 'Trace', and 'Divergence' as section labels in the finding"
+        }
+      ]
+    },
+    {
+      "id": 202,
+      "name": "logic-review-naive-datetime-dst-arithmetic",
+      "mode": "logic-review",
+      "prompt": "Review this Python booking code:\n\n```python\nfrom datetime import datetime, timedelta\n\ndef next_appointment_slot(last_visit_iso):\n    # last_visit_iso is a wall-clock ISO timestamp like '2026-03-08T01:30:00'\n    # Schedule the next visit exactly 24 hours later.\n    last = datetime.fromisoformat(last_visit_iso)\n    return (last + timedelta(hours=24)).isoformat()\n```\n\nUsers in `America/Los_Angeles` reported that on the day after DST starts (2026-03-08), the next appointment is shown at the wrong time — sometimes at 02:30 the next day instead of 01:30. Is the code correct?",
+      "expected_output": "Should identify L9 (Time / Locale Hazard): datetime.fromisoformat returns a naive datetime — no timezone attached. Adding timedelta(hours=24) advances by exactly 86400 wall-clock-equivalent seconds, but the user thinks of '24 hours later' as 'same wall-clock time tomorrow'. On the DST spring-forward day in America/Los_Angeles, midnight-to-midnight is only 23 wall-clock hours, so '01:30 + 24h' lands at 02:30 the next day rather than 01:30. The naive datetime carries no zone, so neither the parser nor timedelta has any way to apply the DST adjustment. Risk code L9 — the bug is triggered specifically by DST and would not appear in tests that don't span a DST boundary. Remedy: parse with an explicit timezone (`zoneinfo.ZoneInfo('America/Los_Angeles')`) and use timezone-aware arithmetic, OR explicitly document that '24 hours' means physical hours not wall-clock days.",
+      "assertions": [
+        {
+          "id": "identifies-L9",
+          "description": "Output identifies L9 (Time / Locale Hazard)",
+          "check": "Output contains 'L9'"
+        },
+        {
+          "id": "identifies-naive-vs-aware",
+          "description": "Output identifies that fromisoformat produces a naive datetime with no timezone information",
+          "check": "Output mentions 'naive' datetime / no timezone / missing tzinfo, OR explicitly states that the datetime has no zone attached"
+        },
+        {
+          "id": "identifies-dst-effect",
+          "description": "Output explains that DST spring-forward makes the wall-clock day shorter than 24 hours, causing the offset",
+          "check": "Output explains that on the DST transition day the wall-clock day is not 24 physical hours (or that timedelta(hours=24) advances physical hours, not wall-clock hours)"
+        },
+        {
+          "id": "has-premises-trace-divergence",
+          "description": "Finding has Premises, Trace, and Divergence sections",
+          "check": "Output contains 'Premises', 'Trace', and 'Divergence' as section labels in the finding"
+        }
+      ]
+    },
+    {
+      "id": 203,
+      "name": "zh-go-goroutine-loop-variable-race",
+      "mode": "logic-review",
+      "prompt": "下面这段 Go 代码（Go 1.21）在生产里偶发出现错误结果，请审查逻辑问题：\n\n```go\nfunc fanOut(urls []string) {\n    var wg sync.WaitGroup\n    for _, u := range urls {\n        wg.Add(1)\n        go func() {\n            defer wg.Done()\n            resp, err := http.Get(u)\n            if err != nil {\n                log.Printf(\"fetch %s failed: %v\", u, err)\n                return\n            }\n            resp.Body.Close()\n        }()\n    }\n    wg.Wait()\n}\n```\n\n现象：日志里同一个 URL 被打印多次，有些 URL 一次都没出现。",
+      "expected_output": "应识别 L7（并发 / 异步风险）：所有 goroutine 共享同一个循环变量 u（Go 1.22 之前的行为），每次循环迭代都覆盖 u 的值。goroutine 启动是异步的，调度时机不确定，多个 goroutine 实际读到的可能是循环结束后的 u（最后一个 URL）或循环中途某个时刻的 u。这正好解释了'同一个 URL 多次出现 + 有些 URL 缺失'的现象。L7 而不是 L4，因为 bug 只在多 goroutine 并发读取共享变量时才出现。修复：在循环内引入局部变量 `u := u`（或使用 Go 1.22+ 的 per-iteration 变量），或把 u 作为参数传给闭包 `go func(u string) {...}(u)`。输出必须以中文为主。",
+      "assertions": [
+        {
+          "id": "language-chinese-output",
+          "description": "Output body is primarily Chinese",
+          "check": "Output contains at least 50 Chinese characters and does not contain standalone English section headers like '# Findings', '## Summary', '# Premises', '# Trace', '# Divergence' on their own line"
+        },
+        {
+          "id": "identifies-L7",
+          "description": "Output identifies L7 — the bug requires concurrent goroutines to manifest, so it is L7 not L4",
+          "check": "Output contains 'L7'"
+        },
+        {
+          "id": "identifies-loop-variable-capture",
+          "description": "Output explains that all goroutines share the same loop variable u and that captures are by reference, not by value",
+          "check": "Output explains that the goroutines capture / share the loop variable u (Chinese: 共享 / 引用 / 闭包捕获 or English equivalent), not a per-iteration copy"
+        },
+        {
+          "id": "recommends-per-iteration-copy",
+          "description": "Output recommends introducing a per-iteration local variable or passing u as a parameter to the closure",
+          "check": "Output recommends one of: shadowing with `u := u`, passing u as a parameter to the goroutine, or upgrading to Go 1.22+ per-iteration semantics"
+        },
+        {
+          "id": "has-premises-trace-divergence",
+          "description": "Finding has Premises, Trace, and Divergence sections",
+          "check": "Output contains ('Premises' OR '前提') AND ('Trace' OR '追踪') AND ('Divergence' OR '偏差' OR '分歧')"
+        }
+      ]
+    },
+    {
+      "id": 204,
+      "name": "logic-locate-connection-pool-exhaustion-L8",
+      "mode": "logic-locate",
+      "prompt": "Production is alerting that our worker exhausts the database connection pool after a few thousand jobs. Pool size is 20, max wait is 30s, then we get a TimeoutError from the pool. The pool has no idle-timeout reclamation — a connection that isn't explicitly released stays out forever. Help me locate the root cause:\n\n```python\n# jobs/worker.py\ndef process_job(job, pool):\n    conn = pool.acquire()  # blocks until a connection is free\n    cursor = conn.cursor()\n    if not job.is_ready():\n        return False  # not ready yet, retry next tick\n    cursor.execute('UPDATE jobs SET status=? WHERE id=?', ('done', job.id))\n    conn.commit()\n    pool.release(conn)\n    return True\n```\n\nFailure: TimeoutError: pool exhausted after 30s, raised from process_job → pool.acquire().",
+      "expected_output": "Should locate the root cause as L8 (Resource Lifecycle Hazard): pool.acquire() is called unconditionally at the top of process_job, but pool.release(conn) is called only on the happy path after conn.commit(). The early return `if not job.is_ready(): return False` skips the release. Every not-ready job permanently leaks one connection back into the wild — the pool slot is never returned. After ~20 not-ready jobs (pool size), the pool is exhausted and subsequent acquire() calls block until the 30s timeout. Fault Confidence: High. Backward trace: TimeoutError → acquire() blocks → pool has no free connections → forward trace: not-ready jobs return without release() → leaks accumulate. Risk code L8 — acquire/release pairing is broken. Remedy: use try/finally with pool.release in finally, OR switch to a context manager (`with pool.acquire() as conn:`).",
+      "assertions": [
+        {
+          "id": "identifies-L8",
+          "description": "Output identifies L8 (Resource Lifecycle Hazard) — acquire-release imbalance, not L5 single early-exit",
+          "check": "Output contains 'L8'"
+        },
+        {
+          "id": "identifies-not-ready-leak-path",
+          "description": "Output identifies the early return on `not job.is_ready()` as the leak path that bypasses pool.release",
+          "check": "Output explicitly identifies the `if not job.is_ready(): return False` early return as the path that does not call pool.release"
+        },
+        {
+          "id": "explains-pool-exhaustion-arithmetic",
+          "description": "Output connects the leak to the observed pool exhaustion (each not-ready job leaks a slot, pool size 20)",
+          "check": "Output connects the missing release to pool exhaustion: each not-ready job leaks one slot, and after pool-size leaks the pool is empty"
+        },
+        {
+          "id": "has-fault-confidence",
+          "description": "Output uses Fault Confidence as required by logic-locate mode",
+          "check": "Output contains 'Fault Confidence' or 'Confidence:'"
+        }
+      ]
+    },
+    {
+      "id": 205,
+      "name": "logic-diff-locale-sort-rewrite",
+      "mode": "logic-diff",
+      "prompt": "I rewrote a sorting helper. Are these two versions semantically equivalent?\n\n```javascript\n// Version A (old)\nfunction sortNames(names) {\n  return names.slice().sort();\n}\n```\n\n```javascript\n// Version B (new)\nfunction sortNames(names) {\n  return names.slice().sort((a, b) => a.localeCompare(b));\n}\n```",
+      "expected_output": "Verdict: either ⚠️ Conditionally Equivalent (only for same-case ASCII input under most locales) or ❌ Semantically Divergent (because mixed-case ASCII already differs under typical en-US localeCompare semantics) — both verdicts are defensible. L9 (Time / Locale Hazard). Default Array.prototype.sort uses lexicographic UTF-16 code-unit comparison: 'Z' (0x5A) < 'a' (0x61), and 'Ä' (0xC4) sorts after 'Z'. localeCompare uses the runtime's locale-aware collation, where 'a' < 'B' < 'c' (case-insensitive in most locales) and 'Ä' may collate next to 'A'. Trace must demonstrate one input where the two versions return different orderings — e.g. ['Zoë','apple','Ä'] under 'en-US' locale: A returns ['Zoë','Ä','apple'] (UTF-16), B returns ['apple','Ä','Zoë'] or similar locale-aware order. Conditionally Equivalent because all-ASCII same-case input is unaffected.",
+      "assertions": [
+        {
+          "id": "gives-verdict-CE-or-divergent",
+          "description": "Output gives a verdict — either Conditionally Equivalent or Semantically Divergent (both defensible under en-US locale)",
+          "check": "Output contains 'Conditionally Equivalent', 'Semantically Divergent', '条件等价', or '语义分歧' as the verdict"
+        },
+        {
+          "id": "identifies-L9",
+          "description": "Output identifies L9 (Time / Locale Hazard)",
+          "check": "Output contains 'L9'"
+        },
+        {
+          "id": "explains-codepoint-vs-locale",
+          "description": "Output explains the difference between default UTF-16 codepoint sort and localeCompare's locale-aware collation",
+          "check": "Output explains that default sort compares UTF-16 code units / lexicographic code points, while localeCompare uses locale-aware collation, and gives at least one input where they diverge (accented character, non-Latin script, or case-mixed)"
         }
       ]
     }

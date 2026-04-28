@@ -14,6 +14,42 @@ Checks: required SKILL.md frontmatter in six skills, shared framework files unde
 
 Exit code 0 = release-ready; non-zero = fix before tagging.
 
+## `run-content-evals.sh` + `grade-iteration.py`
+
+End-to-end content-eval pipeline: drives every case in `evals/v2/evals-v2.json` through `claude -p`, then grades each output against the assertion rules in `grade-iteration.py` and writes a per-case + overall pass-rate `summary.json`.
+
+The split is intentional:
+- `run-content-evals.sh` is the **runner** — calls Claude, costs tokens, needs the `claude` CLI on PATH.
+- `grade-iteration.py` is the **grader** — pure Python, regex-based, costs nothing. Can be re-run on existing outputs without re-spending tokens.
+
+```bash
+# Run all 24 cases against Sonnet 4.6 (default), tag from current git SHA:
+npm run content-evals       # or: bash scripts/run-content-evals.sh
+
+# Re-run with a custom tag:
+TAG=v0.6.0-baseline bash scripts/run-content-evals.sh
+
+# Run only the new L7/L8/L9 cases (cheap subset, 6 calls):
+CASES="200 201 202 203 204 205" bash scripts/run-content-evals.sh
+
+# Run with Opus (5x cost — only when comparing models):
+MODEL=claude-opus-4-7 bash scripts/run-content-evals.sh
+
+# Run-only, grade later (e.g. CI uploads outputs as artifacts, grades elsewhere):
+SKIP_GRADE=1 bash scripts/run-content-evals.sh
+python3 scripts/grade-iteration.py skills-workspace/iteration-<TAG>
+```
+
+Outputs land in `skills-workspace/iteration-<TAG>/`:
+- `eval-<id>/prompt.md` — exact prompt sent to the model (reproducibility)
+- `eval-<id>/output.md` — model response
+- `eval-<id>/grading.json` — per-case rule pass/fail
+- `summary.json` — overall + per-mode + per-language pass rates
+
+The runner is idempotent — if `output.md` already exists for a case, it skips that case. Delete the file (or the whole `eval-<id>/` dir) to force a re-run.
+
+`skills-workspace/` is gitignored; don't commit run outputs.
+
 ## `run-trigger-evals.sh`
 
 Drives skill-creator's `run_loop.py` against the six per-skill trigger eval sets in `evals/v2/trigger-evals-<skill>.json` to tune each `SKILL.md` description for higher trigger accuracy. Requires:

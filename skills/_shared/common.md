@@ -175,6 +175,9 @@ severity: {}          # severity overrides, e.g. {L3: critical}
 ignore: []            # glob paths to skip
 focus: []             # risk codes to prioritize
 custom_risks: []      # project-specific Cx codes (schema below)
+trace:
+  min_steps: 3        # if a trace has fewer steps, the reviewer must downgrade the finding to Suggestion (no automated checker — see semiformal-guide.md "Minimum thresholds")
+  require_anchors: 2  # minimum line/file/boundary anchors across the trace; same downgrade rule applies
 fix_all:
   max_iterations: 3   # Warning/Suggestion iteration cap (Criticals loop without cap)
 ```
@@ -188,6 +191,7 @@ fix_all:
 | `ignore` | — | — | — | — | ✓ | ✓ |
 | `focus` | ✓ | — | ✓ | ✓ | ✓ | ✓ |
 | `custom_risks` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| `trace.*` | ✓ | — | ✓ | ✓ | ✓ | ✓ |
 | `fix_all.*` | — | — | — | — | — | ✓ |
 
 `custom_risks` schema:

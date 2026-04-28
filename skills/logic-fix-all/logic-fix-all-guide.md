@@ -42,13 +42,21 @@ Detailed execution for every phase is split into three sibling files so that a r
 | **3, 4, 5** | [`guide-phases-3-5-review-locate-clarify.md`](./guide-phases-3-5-review-locate-clarify.md) | Per-file deep review producing full Premises → Trace → Divergence findings (Phase 3); conditional fault localization when a concrete failure exists (Phase 4); conditional path clarification when a finding's reasoning chain is unclear (Phase 5). |
 | **6, 7, 8, 9** | [`guide-phases-6-9-fix-iterate-report.md`](./guide-phases-6-9-fix-iterate-report.md) | Fix queue assembly sorted by severity with Minimal/Targeted/Justified remedies (Phase 6); apply + verify each fix via logic-diff, revert on regression, retry up to 3× (Phase 7); iteration loop — re-run health + review on modified files and their consumers, Critical loops without cap, Warning/Suggestion capped by `fix_all.max_iterations` (Phase 8); Final Fix Report with per-role findings, skill invocation counts, iteration history (Phase 9). |
 
-## Shared context (read first)
+## Required reading before Phase 0
 
-Before following any phase file:
+Read in this order. Stage A is the same shared framework every Logic-Lens skill loads; Stage B is what makes this pipeline different — later phases reference fields, signatures, and caps defined in earlier phases (e.g. Phase 6 reads severity tags from Phase 3; Phase 8 reads the unresolved-finding signature from Phase 7d), so just-in-time reading per phase will silently break ordering, revert, and final scoring.
+
+**Stage A — shared framework:**
 1. `../_shared/common.md` — language hard constraint (§1), Iron Law (§2), Report Template pointer (§4), Mode-specific header variants (§5), Logic Score (§6), Confidence Rubric (§7), Scope Management (§9), Remedy Discipline (§10), Fallback Behavior (§11), `.logic-lens.yaml` config matrix (§12).
-2. `../_shared/logic-risks.md` — L1–L6 definitions and detection patterns.
+2. `../_shared/logic-risks.md` — L1–L9 definitions and detection patterns.
 3. `../_shared/semiformal-guide.md` + `../_shared/semiformal-checklist.md` — reasoning methodology + Premises Construction Checklist.
 4. `../_shared/report-template.md` — Report Template single source with English and Chinese layouts + the "no bugs found" rules.
+
+**Stage B — all three phase files end-to-end (BEFORE Phase 0, not just-in-time):**
+
+- [`guide-phases-0-2-consent-scope-health.md`](./guide-phases-0-2-consent-scope-health.md)
+- [`guide-phases-3-5-review-locate-clarify.md`](./guide-phases-3-5-review-locate-clarify.md)
+- [`guide-phases-6-9-fix-iterate-report.md`](./guide-phases-6-9-fix-iterate-report.md)
 
 ## Running this skill in a non-git or offline repo
 

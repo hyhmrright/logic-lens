@@ -20,7 +20,7 @@ description: >
 
 Read in this order:
 1. `../_shared/common.md` — language rule, Iron Law, Report Template, Logic Score, Remedy discipline.
-2. `../_shared/logic-risks.md` — L1–L6 definitions.
+2. `../_shared/logic-risks.md` — L1–L9 definitions.
 3. `../_shared/semiformal-guide.md` — tracing methodology and Premises Construction Checklist.
 4. `logic-review-guide.md` — step-by-step review process.
 
@@ -36,7 +36,7 @@ Read in this order:
 
 **Step 4. Trace edge cases** (guide Step 4) — empty/null/zero, max/min, else/catch branches, concurrent calls.
 
-**Step 5. Identify divergences** (guide Step 5) — classify each by L1–L6; assign severity; downgrade to Suggestion when trace is unverified.
+**Step 5. Identify divergences** (guide Step 5) — classify each by L1–L9; assign severity; downgrade to Suggestion when trace is unverified.
 
 **Step 6. Apply Iron Law** (guide Step 6) — confirm all findings have Premises → Trace → Divergence complete before Remedy is written; Remedy must be paste-ready per `common.md` §10.
 

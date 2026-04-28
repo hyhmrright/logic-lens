@@ -24,7 +24,7 @@ description: >
 
 Read in this order:
 1. `../_shared/common.md` — language rule, Iron Law, Report Template, mode header (§5: before/after Logic Scores + findings-fixed / findings-unresolved), Remedy discipline, `.logic-lens.yaml` matrix.
-2. `../_shared/logic-risks.md` — L1–L6 definitions.
+2. `../_shared/logic-risks.md` — L1–L9 definitions.
 3. `../_shared/semiformal-guide.md` — tracing methodology and Premises Construction Checklist.
 4. `logic-fix-all-guide.md` — phased pipeline. That guide is long because the pipeline has nine phases; read it end-to-end before starting.
 

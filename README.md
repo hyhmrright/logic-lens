@@ -8,7 +8,7 @@
 </p>
 
 <p align="center">
-  <a href="#the-six-logic-risks">Six Risks</a> •
+  <a href="#the-nine-logic-risks">Nine Risks</a> •
   <a href="#what-it-looks-like">Example</a> •
   <a href="#six-skills">Six Skills</a> •
   <a href="#benchmark">Benchmark</a> •
@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-0.5.2-blue.svg" alt="Version">
+  <img src="https://img.shields.io/badge/version-0.6.0-blue.svg" alt="Version">
   <img src="https://img.shields.io/badge/license-MIT-green.svg" alt="MIT License">
   <img src="https://img.shields.io/badge/Claude_Code-Plugin-blueviolet.svg" alt="Claude Code Plugin">
   <img src="https://img.shields.io/badge/Codex_CLI-Skill-orange.svg" alt="Codex CLI Skill">
@@ -44,18 +44,21 @@
 
 **Logic-Lens forces the AI to construct an explicit execution trace** before reaching any conclusion. Every finding comes with a documented Premises → Trace → Divergence → Remedy chain that shows exactly how the reviewer arrived at the finding — not just what it found.
 
-## The Six Logic Risks
+## The Nine Logic Risks
 
-Logic-Lens evaluates code across **six logic risk dimensions** derived from the semi-formal reasoning methodology in *Agentic Code Reasoning*:
+Logic-Lens evaluates code across **nine logic risk dimensions** — six derived from the semi-formal reasoning methodology in *Agentic Code Reasoning* (L1–L6), plus three covering modern hazards that fall outside the paper's single-process scope (L7–L9):
 
 | Code | Risk | What It Catches |
 |------|------|----------------|
 | 🔀 **L1** | Shadow Override | A name resolves to a different definition than assumed — shadowing, import aliasing, inheritance override |
 | 📐 **L2** | Type Contract Breach | A function receives a type it can't correctly handle, through implicit coercion or conditional paths |
 | 🔲 **L3** | Boundary Blindspot | Edge cases not traced: null, empty, zero, max/min bounds, single-element sequences |
-| ⚠️ **L4** | State Mutation Hazard | Shared mutable state read/written in incorrect order; aliased references; async race conditions |
+| ⚠️ **L4** | State Mutation Hazard | Sequential aliasing or mutation-during-iteration hazards on a single execution path |
 | 🚪 **L5** | Control Flow Escape | An early exit skips a required operation — cleanup, commit, lock release, notification |
 | 🔗 **L6** | Callee Contract Mismatch | Calling code assumes return value semantics, exception behavior, or idempotency the callee doesn't guarantee |
+| 🧵 **L7** | Concurrency / Async Hazard | Race across an `await` / lock / channel boundary; double-acquire; send-after-cancel; missing happens-before |
+| 🔁 **L8** | Resource Lifecycle Hazard | Acquire/release imbalance — missing release path, double release, ownership transferred without updating release plan |
+| 🕒 **L9** | Time / Locale Hazard | Naive vs aware datetime, DST jumps, locale-sensitive sort/case, encoding round-trip, decimal-separator drift |
 
 ## What It Looks Like
 
@@ -137,7 +140,7 @@ Tested across 3 real-world bug scenarios (interprocedural, boundary, state mutat
 | Explicit Premises stated before finding | ✅ 100% | ❌ 0% |
 | Step-by-step execution trace provided | ✅ 100% | ❌ 0% |
 | Exact divergence point identified | ✅ 100% | ❌ 0% |
-| Risk codes (L1–L6) labeled per finding | ✅ 100% | ❌ 0% |
+| Risk codes (L1–L9) labeled per finding | ✅ 100% | ❌ 0% |
 | Detects interprocedural bugs | ✅ 100% | ✅ 68% |
 | Detects boundary blindspots | ✅ 100% | ✅ 71% |
 | **Overall pass rate** | **91%** | **19%** |
@@ -317,7 +320,7 @@ Runs abbreviated logic reviews across a codebase and produces a weighted Logic H
 $logic-fix-all                      # Codex CLI
 ```
 
-Point it at a directory or file. Logic-Lens sweeps the entire scope, collects all findings at every severity level (L1–L6), applies fixes in priority order, verifies each fix with a semantic diff, and re-confirms the codebase is clean — all without requiring you to read or review any code. The final output is a Fix Log table listing every change made and its verification status.
+Point it at a directory or file. Logic-Lens sweeps the entire scope, collects all findings at every severity level (L1–L9), applies fixes in priority order, verifies each fix with a semantic diff, and re-confirms the codebase is clean — all without requiring you to read or review any code. The final output is a Fix Log table listing every change made and its verification status.
 
 ---
 
@@ -328,7 +331,7 @@ Place a `.logic-lens.yaml` in your project root to customize behavior:
 ```yaml
 # Skip concurrency checks in confirmed single-threaded code
 disable:
-  - L4
+  - L7
 
 # Treat all boundary issues as critical for this safety-critical module
 severity:
@@ -343,7 +346,7 @@ ignore:
 
 | Setting | Description |
 |---------|-------------|
-| `disable` | Risk codes to skip (`L1`–`L6`, or custom `C1`, `C2`, ...) |
+| `disable` | Risk codes to skip (`L1`–`L9`, or custom `C1`, `C2`, ...) |
 | `severity` | Override severity tier (`critical` / `warning` / `suggestion`) |
 | `ignore` | Glob patterns for files to exclude from analysis |
 | `focus` | Evaluate only these risk codes |
@@ -389,7 +392,7 @@ logic-lens/
 ├── skills/
 │   ├── _shared/                 # Shared framework files
 │   │   ├── common.md            # Iron Law, output format, health score
-│   │   ├── logic-risks.md       # L1–L6 risk taxonomy with examples
+│   │   ├── logic-risks.md       # L1–L9 risk taxonomy with examples
 │   │   └── semiformal-guide.md  # Execution tracing methodology
 │   ├── logic-review/            # Skill 1: Code logic review
 │   │   ├── SKILL.md

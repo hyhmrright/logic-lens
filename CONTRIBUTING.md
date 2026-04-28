@@ -25,8 +25,8 @@ to construct explicit execution traces rather than relying on intuition.
 
 ## Adding a Risk Code
 
-New risk codes (L7+) require:
-1. A clear definition of what the code covers that does not overlap with L1–L6.
+New built-in risk codes (the next available is **L10**) require:
+1. A clear definition of what the code covers that does not overlap with L1–L9.
 2. A detection methodology using semi-formal tracing.
 3. Examples in at least two different languages.
 4. A severity assessment rationale.

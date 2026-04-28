@@ -76,7 +76,22 @@ Scope of this file: **Phase 6** (fix queue assembly — sort by severity, write 
 **Goal:** Apply each fix and confirm it removes the divergence without
 introducing a regression.
 
-7a. Apply fixes one finding at a time. After each fix:
+7a. Apply fixes one finding at a time. **Before** the first fix, capture
+    the baseline 7d will revert to. Phase 0 already required the user to
+    commit or stash their own work, so `HEAD` *is* the pre-pipeline
+    snapshot — no stash dance needed:
+
+    ```bash
+    # Once per pipeline run, at the start of Phase 7:
+    PRE_FIX_REF=$(git rev-parse HEAD)
+    ```
+
+    If the repo is not a git repo, copy each file to
+    `.logic-fix-all-backup/<path>` before its first edit and use that
+    path as the revert source. Record which fallback was used in the
+    Fix Log.
+
+    After each fix:
     - Record file path, line range changed, one-line description → Fix
       Log row.
     - If two findings in the same file affect overlapping line ranges,
@@ -100,6 +115,19 @@ introducing a regression.
     verify each changed file in parallel. For same-file or
     cross-dependent fixes, verify one at a time.
 
+    **Hard verification gate** — before declaring a fix as "pass", confirm:
+
+    ```bash
+    # Compare actual edits against expected diff:
+    git diff -- <file>                         # actual change
+    git diff "$PRE_FIX_REF" -- <file>          # equivalent if started from snapshot
+    ```
+
+    The diff must (a) match the planned remedy in the Fix Log, (b) touch
+    no lines outside the finding's scope, and (c) leave the file
+    syntactically valid. If any of these fail, jump straight to 7d
+    without running the logic-diff trace — the fix is already invalid.
+
     logic-diff produces a single verdict per comparison — one of
     **Semantically Equivalent**, **Conditionally Equivalent**, or
     **Semantically Divergent**. Interpret as follows (note: the bug's
@@ -119,10 +147,23 @@ introducing a regression.
     in the finding's Divergence field must no longer trigger on the
     post-fix trace. Check this manually as a sanity step.
 
-7d. On regression: revert the fix, re-examine the trace, write a new
-    remedy, re-apply. After 3 failed attempts on the same finding, stop
-    retrying: record as "Unresolved — conflicting constraints" in the
-    Fix Log and continue to the next finding.
+7d. On regression: revert the fix using the snapshot from 7a, re-examine
+    the trace, write a new remedy, re-apply.
+
+    ```bash
+    # Revert just the affected file(s) to the pre-fix snapshot:
+    git checkout "$PRE_FIX_REF" -- <file>
+    # Or, when the snapshot path was used:
+    cp .logic-fix-all-backup/<path> <path>
+    ```
+
+    Never use `git reset --hard` or `git clean -f` — those would also
+    discard the user's pre-existing uncommitted work that Phase 0
+    consented to be left untouched.
+
+    After 3 failed attempts on the same finding, stop retrying: record as
+    "Unresolved — conflicting constraints" in the Fix Log and continue
+    to the next finding.
 
 7e. If logic-diff cannot confirm equivalence (function too complex, or
     involves external state not statically traceable), note as

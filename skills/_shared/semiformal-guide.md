@@ -50,6 +50,15 @@ Rules for valid traces:
 - **Cross function boundaries.** If the bug is in a callee, trace into the callee.
 - **Stop at the divergence.** The trace ends when you've identified the exact step where the premise breaks. You don't need to trace the entire program — just far enough to confirm the finding.
 
+### Minimum thresholds (mechanical check)
+
+A trace below either threshold is **incomplete**: drop the finding, or downgrade to **Suggestion** with an explicit `manual verification recommended` note. Do not promote to Critical or Warning.
+
+- **≥ 3 substantive steps.** Each step is a distinct evaluation, name resolution, type transition, mutation, branch decision, or callee return. Restating the same step in different words does not count.
+- **Line / location anchor on at least 2 of the steps.** Either `[line N]`, `[file.py:N]`, a function-boundary marker (`→ enter callee X`, `→ return from X`), or for non-line code (config / docs) a section/key reference. A trace with no anchors is unverifiable by a reader and forfeits the certificate property.
+
+Optional config: `.logic-lens.yaml` can override the defaults via `trace.min_steps` and `trace.require_anchors`. See `common.md` §12.
+
 ---
 
 ## Divergence Identification
@@ -82,7 +91,7 @@ A divergence must specify:
 - `except Exception` catching more than intended, swallowing the real error (L5)
 
 ### JavaScript / TypeScript
-- `var` hoisting and closure capture of loop variable (`for (var i = 0; ...)`) (L4)
+- `var` hoisting and closure capture of loop variable (`for (var i = 0; ...)`) — L4 if handlers fire sequentially after the loop; L7 if registered as concurrent listeners
 - Implicit coercion: `"5" + 3 === "53"`, `"5" - 3 === 2` (L2)
 - `undefined` vs `null` distinction — methods exist on one but not the other (L2, L3)
 - Promise rejection not caught: `async` function with no `try/catch` (L5)
@@ -97,7 +106,7 @@ A divergence must specify:
 ### Go
 - Named return values and `defer` with closures — captured variables evaluated at defer time, not declaration (L4)
 - Nil interface vs nil pointer — an interface holding a nil pointer is not nil (L2)
-- Goroutine closure capturing loop variable by reference (L4)
+- Goroutine closure capturing loop variable by reference — L4 if the goroutines are sequential; L7 if they read the captured variable concurrently
 - Error ignored with `_` — callee contract not checked (L6)
 
 ### Rust
@@ -109,6 +118,27 @@ A divergence must specify:
 - `NULL` propagation: any arithmetic with `NULL` produces `NULL` (L3)
 - `NOT IN` with a subquery that can return `NULL` — the entire `NOT IN` evaluates to unknown, returning no rows (L3)
 - Implicit type coercion in `WHERE` clause disabling index use and potentially matching unexpected rows (L2)
+- `TIMESTAMP` vs `TIMESTAMP WITH TIME ZONE` mismatch on insert/compare (L9)
+- Transaction left open on early-return path (L8)
+
+### Concurrency / async (cross-language, L7)
+- Read of shared state across an `await` / `yield` / channel boundary without re-checking (L7)
+- Non-reentrant lock acquired twice by the same context; lock released on a path that did not acquire it (L7, often co-occurring with L8)
+- Cancellable task that mutates shared state mid-operation, leaving partial updates (L7)
+- "Send after cancel": producer writes to a channel/queue after the consumer was cancelled (L7)
+
+### Resource lifecycle (cross-language, L8)
+- Resource acquired but released only on the success path (try without finally / with / defer) (L8)
+- Resource released twice on overlapping cleanup paths (L8)
+- Ownership returned to caller without updating the caller's release plan (L8)
+- Long-lived subscription/listener whose unsubscribe captures a stale handle (L8)
+
+### Time / locale (cross-language, L9)
+- Naive datetime compared with timezone-aware datetime (L9)
+- Wall-clock arithmetic across a DST boundary (L9)
+- `toLowerCase` / `sort` whose result depends on the active locale (L9)
+- Date parsed without an explicit zone — defaults differ across runtimes (L9)
+- Numeric parse / format that assumes `.` decimal separator under a locale that uses `,` (L9)
 
 ---
 

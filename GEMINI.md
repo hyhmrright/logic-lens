@@ -26,7 +26,7 @@ See `CLAUDE.md` for the full layout. The core content lives in `skills/` as plat
 
 - `skills/_shared/` is the shared framework. All skills load it on demand.
 - Every finding must follow Premises → Trace → Divergence → Remedy (Iron Law).
-- Risk codes L1–L6 are defined in `skills/_shared/logic-risks.md`.
+- Risk codes L1–L9 are defined in `skills/_shared/logic-risks.md`.
 - Version in `package.json` is the source of truth.
 
 ## No Hooks

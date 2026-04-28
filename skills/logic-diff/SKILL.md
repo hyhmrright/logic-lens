@@ -21,7 +21,7 @@ description: >
 
 Read in this order:
 1. `../_shared/common.md` — language rule, Iron Law, Report Template, Verdict header (see §5), Remedy discipline.
-2. `../_shared/logic-risks.md` — L1–L6 definitions (used to classify divergences).
+2. `../_shared/logic-risks.md` — L1–L9 definitions (used to classify divergences).
 3. `../_shared/semiformal-guide.md` — tracing methodology and Premises Construction Checklist.
 4. `logic-diff-guide.md` — comparison process.
 

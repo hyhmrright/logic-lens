@@ -50,6 +50,21 @@ For every parameter and return value of the code under analysis:
 
 ---
 
+## What is NOT a Premise (anti-pattern checklist)
+
+A "Premises" field that contains any of the following is invalid — rewrite before continuing:
+
+- **Goal restatement.** "The function is supposed to remove all inactive users" describes intent, not an assumption the code makes. Premises are about the code's view of the world, not the spec.
+- **Test-suite expectations.** "The test asserts the result equals 42" is what the trace must explain, not a premise. Premises live before the trace, not after.
+- **Author intent inferred from naming.** "The author probably meant X because the function is named `remove_all`" is speculation. State what the *code* assumes, not what you believe the *author* assumed.
+- **Unverified library / framework behavior.** "`requests.get` raises on 5xx" without checking the actual library is a premise you have not earned — either look it up and cite it, or mark the premise "unverified" and downgrade the finding's confidence.
+- **The fix.** "Premises: the list should not be mutated during iteration" is the remedy hidden in the premises field. Premises must be value-, type-, scope-, or control-flow statements about the *current* code, not statements about what the code *should* do.
+- **Vacuous restatement.** "Premises: the function takes a list and a boolean" with no claim about contents, lengths, nullability, or origin is not a premise — it's a signature copy.
+
+A premise is valid when it is **falsifiable by the trace**: if the trace can either confirm or contradict it, it earns its place in the finding.
+
+---
+
 ## Why each item matters (anti-cheat)
 
 The temptation is to **skip** premises and jump straight to "this looks fine / this looks broken." That move is the single biggest source of false negatives and false positives in code review.

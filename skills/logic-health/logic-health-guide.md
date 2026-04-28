@@ -18,7 +18,7 @@ For each module in the priority list, apply the Logic Review process from `logic
 
 - Focus on public functions and their entry-point logic.
 - Trace the most likely execution paths; skip internal helpers unless a trace leads into them. "Internal helper" means not reachable from outside the module: Python `_`-prefixed names, Java/Kotlin `private`, Go unexported (lowercase) identifiers, and any function absent from the module's public API documentation. When a language has no visibility modifier, treat any function not documented in public-facing docs as internal.
-- Apply the L1–L6 checklist at the module level: are there patterns that suggest systemic risk?
+- Apply the L1–L9 checklist at the module level: are there patterns that suggest systemic risk?
 - Spend more time on modules with complex control flow, many callee dependencies, or recent changes.
 
 Time allocation guidance (adjust to codebase size):
@@ -30,7 +30,7 @@ Time allocation guidance (adjust to codebase size):
 
 For each finding, apply the standard four-field format (Premises → Trace → Divergence → Remedy). Tag each finding with:
 - The module it belongs to
-- Its risk code (L1–L6 or Cx)
+- Its risk code (L1–L9 or Cx)
 - Its severity (Critical / Warning / Suggestion)
 
 Keep a running count as you go — you'll use this in Step 4.
@@ -67,7 +67,7 @@ This is the unique value of a health check over individual reviews. Look for:
 **Repeated L-codes across modules:** If L1 (Shadow Override) appears in 4 modules, that is a codebase-wide naming convention problem. The remedy is a linting rule or a naming convention document, not 4 individual fixes.
 
 **Architectural patterns enabling risks:**
-- Heavy use of global state → enables L4 across the codebase
+- Heavy use of global state → enables L7 (concurrent races) and L4 (single-context aliasing) across the codebase
 - Deep callee chains with no defensive checks → enables L6 propagation
 - No type annotations in a dynamic language → makes L2 invisible until runtime
 

@@ -22,7 +22,7 @@ See `CLAUDE.md` for the full layout. The core content lives in `skills/` as plat
 
 - `skills/_shared/` is the shared framework. Do not duplicate its content in individual skill guides.
 - Every finding in a review output must use the Premises → Trace → Divergence → Remedy format (Iron Law).
-- Risk codes L1–L6 are defined in `skills/_shared/logic-risks.md`. Do not invent new codes without updating that file.
+- Risk codes L1–L9 are defined in `skills/_shared/logic-risks.md`. Do not invent new codes without updating that file.
 - Version number in `package.json` is the source of truth — keep all metadata files in sync.
 
 ## No Hooks
