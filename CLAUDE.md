@@ -27,7 +27,7 @@ logic-lens/
 ├── gemini-extension.json          ← Gemini CLI extension metadata
 ├── commands/                      ← Short command wrappers installed by session-start hook
 ├── hooks/
-│   ├── hooks.json                 ← Claude Code hook registration (contains absolute path — must update when cloning to a new machine)
+│   ├── hooks.json                 ← Claude Code hook registration (uses ${CLAUDE_PLUGIN_ROOT} — portable across platforms)
 │   └── session-start              ← Copies commands/ to ~/.claude/commands/ on session start
 ├── evals/v2/evals-v2.json         ← Benchmark test cases (current)
 ├── evals/v1/                      ← Legacy v1 cases (archived for reference)
@@ -100,37 +100,23 @@ grep '"version"' package.json .claude-plugin/plugin.json .claude-plugin/marketpl
 
 ## First Clone Setup
 
-After cloning to a new machine, do these three steps in order:
+`hooks/hooks.json` uses the `${CLAUDE_PLUGIN_ROOT}` placeholder, so no path edit is needed regardless of where the repo lives.
 
-**1. Fix the hardcoded path in `hooks/hooks.json`** (the `command` field points to the original clone location):
-
-Edit `hooks/hooks.json` and replace the path in the `command` field with the absolute path to your clone:
-```json
-"command": "bash /your/absolute/path/to/logic-lens/hooks/session-start"
-```
-
-If your repo path has no spaces, you can do this automatically from the repo root:
-```bash
-# macOS:
-sed -i '' "s|bash .*/hooks/session-start|bash $(pwd)/hooks/session-start|" hooks/hooks.json
-# Linux:
-sed -i "s|bash .*/hooks/session-start|bash $(pwd)/hooks/session-start|" hooks/hooks.json
-```
-Note: if your repo path contains spaces, use manual editing instead.
-
-**2. Run the session-start hook once manually** to install command wrappers:
+**1. Run the session-start hook once manually** to install short-form command wrappers (the hook fires automatically on every session start once Claude Code picks the plugin up, but the first install needs a one-shot kick):
 
 ```bash
-# Run from the repo root:
+# Run from the repo root (macOS / Linux / WSL / Git Bash on Windows):
 bash hooks/session-start
 ```
 
-**3. Verify commands are installed:**
+**2. Verify commands are installed:**
 
 ```bash
 ls ~/.claude/commands/logic-*.md
 # Expected: logic-diff.md  logic-explain.md  logic-fix-all.md  logic-health.md  logic-locate.md  logic-review.md
 ```
+
+**Platform note:** the hook requires `bash`. On macOS and Linux it is preinstalled. On Windows, Claude Code itself runs under WSL or Git Bash, both of which provide `bash` — no extra install needed. For users installing through the marketplace (`/plugin install`), Claude Code auto-discovers `hooks/hooks.json` and runs the hook on every session — this manual step is only for clone-based development of the plugin itself.
 
 ## Commands in This Repo
 

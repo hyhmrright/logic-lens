@@ -236,7 +236,7 @@ cp -r /tmp/logic-lens/skills/* ~/.codex/skills/logic-lens/
 | `/logic-lens:logic-health` | `/logic-health` | Aggregate logic health dashboard for a codebase |
 | `/logic-lens:logic-fix-all` | `/logic-fix-all` | Autonomous audit-and-fix pipeline — finds and fixes every logic issue |
 
-> Short-form commands are auto-installed on first session start by the session-start hook.
+> Short-form commands are auto-installed on first session start by the session-start hook (works on macOS, Linux, and Windows via WSL / Git Bash).
 
 ### Gemini CLI
 | Command | Action |
