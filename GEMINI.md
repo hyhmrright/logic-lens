@@ -12,6 +12,7 @@ In Gemini CLI, invoke skills with the `/` prefix:
 /logic-diff      — semantic equivalence check
 /logic-locate    — fault localization
 /logic-health    — aggregate logic health dashboard
+/logic-fix-all   — autonomous audit-and-fix pipeline
 ```
 
 ## Installation

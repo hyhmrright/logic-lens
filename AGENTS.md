@@ -12,6 +12,7 @@ $logic-explain   — execution path explanation
 $logic-diff      — semantic equivalence check
 $logic-locate    — fault localization
 $logic-health    — aggregate logic health dashboard
+$logic-fix-all   — autonomous audit-and-fix pipeline
 ```
 
 ## Project Layout

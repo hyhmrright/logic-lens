@@ -34,7 +34,7 @@ New built-in risk codes (the next available is **L10**) require:
 
 ## Adding a Skill
 
-New skills (beyond the five core skills) require:
+New skills (beyond the six built-in skills) require:
 1. A SKILL.md with a clear "Do NOT trigger for:" clause.
 2. A guide file with numbered steps explaining the *why* behind each step.
 3. A command wrapper in `commands/`.

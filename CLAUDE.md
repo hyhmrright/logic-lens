@@ -8,12 +8,20 @@ This file contains instructions for Claude when working on the Logic-Lens reposi
 logic-lens/
 ├── skills/
 │   ├── _shared/
-│   │   ├── common.md              ← Shared output format conventions
+│   │   ├── common.md              ← Language rule, Iron Law, Logic Score, yaml schema
 │   │   ├── logic-risks.md         ← L1–L9 risk taxonomy definitions
-│   │   └── semiformal-guide.md    ← Execution tracing methodology
-│   └── logic-{review,explain,diff,locate,health}/
-│       ├── SKILL.md               ← Frontmatter + process skeleton (triggers the skill)
-│       └── *-guide.md             ← Detailed step-by-step instructions (loaded on demand)
+│   │   ├── semiformal-guide.md    ← Execution tracing methodology + min thresholds
+│   │   ├── semiformal-checklist.md ← Premises Construction Checklist (single source)
+│   │   └── report-template.md     ← Report Template (English + Chinese, single source)
+│   ├── logic-{review,explain,diff,locate,health}/
+│   │   ├── SKILL.md               ← Frontmatter + process skeleton (triggers the skill)
+│   │   └── *-guide.md             ← Detailed step-by-step instructions (loaded on demand)
+│   └── logic-fix-all/             ← Skill 6: orchestrates the other five into one pipeline
+│       ├── SKILL.md
+│       ├── logic-fix-all-guide.md ← Navigation + shared context
+│       ├── guide-phases-0-2-consent-scope-health.md
+│       ├── guide-phases-3-5-review-locate-clarify.md
+│       └── guide-phases-6-9-fix-iterate-report.md
 ├── .claude-plugin/                ← Claude Code plugin metadata
 ├── .codex-plugin/                 ← Codex CLI plugin metadata
 ├── gemini-extension.json          ← Gemini CLI extension metadata
@@ -34,7 +42,7 @@ logic-lens/
 - `description` must include a "Do NOT trigger for:" clause.
 - `description` should be explicit about trigger phrases — err on the side of triggering.
 - Process section: 5–7 numbered items; each item cites a step in the guide file.
-- Setup section: two fixed parts — (1) read shared files (`common.md`, `logic-risks.md` if the skill produces L-code findings, `semiformal-guide.md`); (2) read the skill's own `*-guide.md`. Do not reorder or omit unless there is a documented reason (e.g., `logic-explain` omits `logic-risks.md` because it produces no L-code findings).
+- Setup section: two fixed parts — (1) read shared files (`common.md`, `logic-risks.md` if the skill produces L-code findings, `semiformal-guide.md` + `semiformal-checklist.md`, and `report-template.md` for skills that emit reports); (2) read the skill's own `*-guide.md`. Do not reorder or omit unless there is a documented reason (e.g., `logic-explain` omits `logic-risks.md` because it produces no L-code findings).
 
 ### Guide Files
 - Numbered steps (Step 1, Step 2, ...).
@@ -74,6 +82,7 @@ See `skills/_shared/common.md` — Iron Law section. That is the canonical defin
 ```bash
 npm run validate       # Validate repo structure and metadata consistency (scripts/validate-repo.sh)
 npm run trigger-evals  # Run trigger-eval suites under evals/v2/ (scripts/run-trigger-evals.sh)
+npm run content-evals  # Run evals-v2.json end-to-end through claude -p + grade (scripts/run-content-evals.sh) — costs API tokens
 ```
 
 Manual one-liners that don't require the scripts:
@@ -120,7 +129,7 @@ bash hooks/session-start
 
 ```bash
 ls ~/.claude/commands/logic-*.md
-# Expected: logic-diff.md  logic-explain.md  logic-health.md  logic-locate.md  logic-review.md
+# Expected: logic-diff.md  logic-explain.md  logic-fix-all.md  logic-health.md  logic-locate.md  logic-review.md
 ```
 
 ## Commands in This Repo

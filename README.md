@@ -390,32 +390,30 @@ logic-lens/
 ├── .codex-plugin/               # Codex CLI plugin metadata
 ├── gemini-extension.json        # Gemini CLI extension metadata
 ├── skills/
-│   ├── _shared/                 # Shared framework files
-│   │   ├── common.md            # Iron Law, output format, health score
-│   │   ├── logic-risks.md       # L1–L9 risk taxonomy with examples
-│   │   └── semiformal-guide.md  # Execution tracing methodology
-│   ├── logic-review/            # Skill 1: Code logic review
-│   │   ├── SKILL.md
-│   │   └── logic-review-guide.md
-│   ├── logic-explain/           # Skill 2: Execution explanation
-│   │   ├── SKILL.md
-│   │   └── logic-explain-guide.md
-│   ├── logic-diff/              # Skill 3: Semantic diff
-│   │   ├── SKILL.md
-│   │   └── logic-diff-guide.md
-│   ├── logic-locate/            # Skill 4: Fault localization
-│   │   ├── SKILL.md
-│   │   └── logic-locate-guide.md
-│   ├── logic-health/            # Skill 5: Health dashboard
-│   │   ├── SKILL.md
-│   │   └── logic-health-guide.md
-│   └── logic-fix-all/           # Skill 6: Autonomous audit-and-fix pipeline
+│   ├── _shared/                  # Shared framework files
+│   │   ├── common.md             # Language rule, Iron Law, Logic Score, yaml schema
+│   │   ├── logic-risks.md        # L1–L9 risk taxonomy with examples
+│   │   ├── semiformal-guide.md   # Execution tracing methodology + min thresholds
+│   │   ├── semiformal-checklist.md  # Premises Construction Checklist (single source)
+│   │   └── report-template.md    # Report Template (English + Chinese, single source)
+│   ├── logic-review/             # Skill 1: Code logic review
+│   ├── logic-explain/            # Skill 2: Execution explanation
+│   ├── logic-diff/               # Skill 3: Semantic diff
+│   ├── logic-locate/             # Skill 4: Fault localization
+│   ├── logic-health/             # Skill 5: Health dashboard
+│   └── logic-fix-all/            # Skill 6: Autonomous audit-and-fix
 │       ├── SKILL.md
-│       └── logic-fix-all-guide.md
-├── commands/                    # Short-form command wrappers (auto-installed by hook)
-├── hooks/                       # Session-start hook
+│       ├── logic-fix-all-guide.md  # Navigation + shared context
+│       ├── guide-phases-0-2-consent-scope-health.md
+│       ├── guide-phases-3-5-review-locate-clarify.md
+│       └── guide-phases-6-9-fix-iterate-report.md
+├── commands/                     # Short-form command wrappers (auto-installed by hook)
+├── hooks/                        # Session-start hook
 ├── evals/
-│   └── evals.json               # Benchmark test cases
+│   └── v2/
+│       ├── evals-v2.json         # Content eval cases (28 across all 6 modes)
+│       └── trigger-evals-*.json  # Per-skill trigger eval sets (6 × 20 cases)
+├── scripts/                      # Dev utilities (validate, run-content-evals, grade-iteration)
 └── CONTRIBUTING.md
 ```
 
