@@ -52,7 +52,7 @@ run_skill() {
     return 0
   fi
   echo "=== logic-${skill} trigger optimization ==="
-  python "$SKILL_CREATOR_PATH/scripts/run_loop.py" \
+  python3 "$SKILL_CREATOR_PATH/scripts/run_loop.py" \
     --eval-set "$eval_file" \
     --skill-path "$skill_path" \
     --model "$MODEL" \

@@ -11,7 +11,7 @@
 #   without touching the grader.
 #
 # Cost note:
-#   Each case is one `claude -p` invocation. As of v0.6.0 there are 24 cases.
+#   Each case is one `claude -p` invocation. As of v0.6.0 there are 28 cases.
 #   Sonnet 4.6 default cost is roughly $1-2 per full run; Opus is ~5x. Set MODEL
 #   override only if you have a reason — Sonnet is the right default.
 #

@@ -14,23 +14,24 @@ Checks: required SKILL.md frontmatter in six skills, shared framework files unde
 
 Exit code 0 = release-ready; non-zero = fix before tagging.
 
-## `run-content-evals.sh` + `grade-iteration.py`
+## `run-content-evals.sh`
 
-End-to-end content-eval pipeline: drives every case in `evals/v2/evals-v2.json` through `claude -p`, then grades each output against the assertion rules in `grade-iteration.py` and writes a per-case + overall pass-rate `summary.json`.
+End-to-end content-eval pipeline. Pairs with `grade-iteration.py` (the rule-based grader): the runner calls Claude and writes outputs; the grader scores them offline against the assertion rules.
 
-The split is intentional:
-- `run-content-evals.sh` is the **runner** — calls Claude, costs tokens, needs the `claude` CLI on PATH.
-- `grade-iteration.py` is the **grader** — pure Python, regex-based, costs nothing. Can be re-run on existing outputs without re-spending tokens.
+The split is intentional — `run-content-evals.sh` is the **runner** (calls Claude, costs tokens, needs the `claude` CLI on PATH); `grade-iteration.py` is the **grader** (pure Python, regex-based, free, can be re-run on existing outputs without re-spending tokens).
 
 ```bash
-# Run all 24 cases against Sonnet 4.6 (default), tag from current git SHA:
+# Run all 28 cases against Sonnet 4.6 (default), tag from current git SHA:
 npm run content-evals       # or: bash scripts/run-content-evals.sh
 
 # Re-run with a custom tag:
 TAG=v0.6.0-baseline bash scripts/run-content-evals.sh
 
-# Run only the new L7/L8/L9 cases (cheap subset, 6 calls):
-CASES="200 201 202 203 204 205" bash scripts/run-content-evals.sh
+# Run only the L7/L8/L9 coverage (concurrency / lifecycle / locale, 7 calls):
+CASES="107 200 201 202 203 204 205" bash scripts/run-content-evals.sh
+
+# Run only the L2/L5 coverage (type contract / control-flow escape, 4 calls):
+CASES="206 207 208 209" bash scripts/run-content-evals.sh
 
 # Run with Opus (5x cost — only when comparing models):
 MODEL=claude-opus-4-7 bash scripts/run-content-evals.sh

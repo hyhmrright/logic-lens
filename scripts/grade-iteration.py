@@ -252,6 +252,39 @@ def grade_case(case_id: int, output_path: Path) -> dict:
             ("connects leak to pool exhaustion", lambda t: re.search(r'pool size|20 (?:slot|connection|jobs?)|exhaust|耗尽|连接池', t, re.I) is not None),
             ("has Fault Confidence", lambda t: re.search(r'Fault Confidence|故障置信度|Confidence:', t) is not None),
         ]
+    elif case_id == 206:
+        # The L2 angle is fragility: current operators happen to coerce numerically,
+        # but a future `+` would silently switch to string concat.
+        rules += [
+            ("contains L2 (type contract breach)", lambda t: "L2" in t),
+            ("identifies operator-mix coercion fragility", lambda t: re.search(r'\+.*concat|concat.*\+|string concat|implicit.*coerc|numeric.*coerc|operator.*mix|fragile|fragility|brittle|brittleness|silent.*string', t, re.I) is not None),
+            ("recommends explicit Number() / parseFloat / boundary validation", lambda t: re.search(r'Number\(|parseFloat|parseInt|explicit.*coerc|boundary.*validat|input.*validat|sanitize.*input|强制.*类型|显式.*转换', t, re.I) is not None),
+        ]
+    elif case_id == 207:
+        rules += [
+            ("contains L2 (type contract breach)", lambda t: "L2" in t),
+            ("identifies str vs int comparison TypeError", lambda t: re.search(r"str.*int|int.*str|字符串.*整数|整数.*字符串|TypeError|'>='.*not supported|不支持.*比较|类型.*不匹配", t, re.I) is not None),
+            ("recommends int() coercion at boundary", lambda t: re.search(r"int\s*\(\s*age\s*\)|int\(.*\)|coerce|强制.*int|显式.*转换|入口.*校验|boundary.*validat", t, re.I) is not None),
+        ]
+    elif case_id == 208:
+        # Both early exits (return + raise) must be flagged as audit-skip paths.
+        def _both_skip_paths(t):
+            unauth = re.search(r"unauthorized|_unauthorized|return.*401|authorization.*fail|未授权|授权.*失败", t, re.I)
+            malformed = re.search(r"BadRequest|malformed|raise|400|请求.*格式|格式.*错误", t, re.I)
+            audit = re.search(r"audit_log\.record|audit.*record|audit.*skip|audit.*log|审计.*跳过|skip.*audit", t, re.I)
+            return unauth is not None and malformed is not None and audit is not None
+        rules += [
+            ("contains L5 (control flow escape)", lambda t: "L5" in t),
+            ("identifies both early exits skip audit_log.record", _both_skip_paths),
+            ("recommends move-to-entry or try/finally", lambda t: re.search(r"function\s+entry|move.*to\s+(?:the\s+)?entry|first\s+line|try.*finally|finally\s+block|single\s+exit|前置|入口处|提到函数开头", t, re.I) is not None),
+        ]
+    elif case_id == 209:
+        rules += [
+            ("contains L5 (control flow escape)", lambda t: "L5" in t),
+            ("identifies _error(400) early return as the skip path", lambda t: re.search(r"_error\(400\)|return.*_error|is_valid|400\b|invalid.*input|invalid.*request|无效请求|提前返回|早返回", t, re.I) is not None),
+            ("recommends moving the increment before the validation guard", lambda t: re.search(r"before.*(?:guard|validation|check|is_valid)|move.*(?:metric|increment).*entry|function\s+entry|first\s+line|提到.*入口|放到.*开头|放到.*第一行", t, re.I) is not None),
+            ("has Fault Confidence", lambda t: re.search(r'Fault Confidence|故障置信度|Confidence:', t) is not None),
+        ]
     elif case_id == 205:
         # The case's true teaching point is L9 + UTF-16 vs locale collation.
         # Both "Conditionally Equivalent" (limited to ASCII same-case) and

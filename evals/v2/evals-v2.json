@@ -87,9 +87,9 @@
           "check": "Output's trace or finding body references both 'orders/service.py' (or service.py) and 'payments/gateway.py' (or gateway.py), showing the execution crosses from caller into callee"
         },
         {
-          "id": "has-premises-trace-divergence",
-          "description": "Finding has Premises, Trace, and Divergence sections",
-          "check": "Output contains 'Premises', 'Trace', and 'Divergence' as section labels in the finding"
+          "id": "iron-law-pre-trace-div",
+          "description": "(Reserved — Iron Law four-field discipline is enforced by the universal grader rule; do not duplicate per-case)",
+          "check": "Universal: every non-explain finding must have Premises + Trace + Divergence (handled by grade-iteration.py universal rule)"
         }
       ]
     },
@@ -333,14 +333,14 @@
       "expected_output": "Should locate the fault as a race condition on Counter.increment: self.value = self.value + 1 is NOT atomic — it compiles to (1) load self.value, (2) add 1, (3) store result. When two threads run concurrently, their load/add/store sequences can interleave so both threads read the same value V, both compute V+1, and both store V+1, effectively losing one increment. Over 20000 combined increments this explains the shortfall. Risk code L7 (Concurrency / Async Hazard) — the bug requires more than one execution context to manifest, so it is L7 not L4. Fault Confidence should be high. Fix: use threading.Lock around the read-modify-write, or use an atomic counter. Trace must explicitly step through the non-atomic load-modify-store interleaving.",
       "assertions": [
         {
-          "id": "identifies-race-condition",
-          "description": "Output identifies the non-atomic read-modify-write on self.value as a race condition between the two threads",
-          "check": "Output explains that self.value = self.value + 1 is not atomic and that concurrent execution by two threads leads to lost updates / race condition"
-        },
-        {
           "id": "identifies-L7",
           "description": "Output identifies L7 (Concurrency / Async Hazard) as the risk code — the bug requires more than one execution context to manifest, so it is L7 not L4",
           "check": "Output contains 'L7'"
+        },
+        {
+          "id": "identifies-race-condition",
+          "description": "Output identifies the non-atomic read-modify-write on self.value as a race condition between the two threads",
+          "check": "Output explains that self.value = self.value + 1 is not atomic and that concurrent execution by two threads leads to lost updates / race condition"
         },
         {
           "id": "traces-non-atomic-increment",
@@ -546,9 +546,9 @@
           "check": "Output recommends asyncio.Semaphore, asyncio.Lock, or an equivalent primitive that atomically tracks slots"
         },
         {
-          "id": "has-premises-trace-divergence",
-          "description": "Finding has Premises, Trace, and Divergence sections",
-          "check": "Output contains 'Premises', 'Trace', and 'Divergence' as section labels in the finding"
+          "id": "iron-law-pre-trace-div",
+          "description": "(Reserved — Iron Law four-field discipline is enforced by the universal grader rule; do not duplicate per-case)",
+          "check": "Universal: every non-explain finding must have Premises + Trace + Divergence (handled by grade-iteration.py universal rule)"
         }
       ]
     },
@@ -575,9 +575,9 @@
           "check": "Output recommends a with-statement, context manager, or try/finally pattern to guarantee conn.close() on all paths"
         },
         {
-          "id": "has-premises-trace-divergence",
-          "description": "Finding has Premises, Trace, and Divergence sections",
-          "check": "Output contains 'Premises', 'Trace', and 'Divergence' as section labels in the finding"
+          "id": "iron-law-pre-trace-div",
+          "description": "(Reserved — Iron Law four-field discipline is enforced by the universal grader rule; do not duplicate per-case)",
+          "check": "Universal: every non-explain finding must have Premises + Trace + Divergence (handled by grade-iteration.py universal rule)"
         }
       ]
     },
@@ -604,9 +604,9 @@
           "check": "Output explains that on the DST transition day the wall-clock day is not 24 physical hours (or that timedelta(hours=24) advances physical hours, not wall-clock hours)"
         },
         {
-          "id": "has-premises-trace-divergence",
-          "description": "Finding has Premises, Trace, and Divergence sections",
-          "check": "Output contains 'Premises', 'Trace', and 'Divergence' as section labels in the finding"
+          "id": "iron-law-pre-trace-div",
+          "description": "(Reserved — Iron Law four-field discipline is enforced by the universal grader rule; do not duplicate per-case)",
+          "check": "Universal: every non-explain finding must have Premises + Trace + Divergence (handled by grade-iteration.py universal rule)"
         }
       ]
     },
@@ -694,6 +694,112 @@
           "id": "explains-codepoint-vs-locale",
           "description": "Output explains the difference between default UTF-16 codepoint sort and localeCompare's locale-aware collation",
           "check": "Output explains that default sort compares UTF-16 code units / lexicographic code points, while localeCompare uses locale-aware collation, and gives at least one input where they diverge (accented character, non-Latin script, or case-mixed)"
+        }
+      ]
+    },
+    {
+      "id": 206,
+      "name": "logic-review-js-implicit-coercion-fragile",
+      "mode": "logic-review",
+      "prompt": "Review this JavaScript for logic risks:\n\n```javascript\nfunction calcDiscount(price, percentage) {\n  return price - (price * percentage / 100);\n}\n\n// Called from a form-handler where all values arrive as strings:\nconst final = calcDiscount(formData.price, formData.discount);\nconsole.log('You pay:', final);\n```\n\nThe form posts `formData.price = \"100\"` and `formData.discount = \"10\"`. Output today is correct. Is the code robust?",
+      "expected_output": "Should identify L2 (Type Contract Breach): the function accepts strings but works *only* by accident under the current operator mix. JS arithmetic operators `*`, `/`, `-` coerce string operands to numbers, so `'100' * '10' / 100 = 10`, then `'100' - 10 = 90` — correct. But L2 manifests as fragility: the day a developer adds another formula step using `+` (a `+` between any string operand triggers string concatenation, not numeric add), the function silently switches behavior — e.g. changing the body to `price + price * percentage / 100` would compute `'100' + 10 = '10010'`. Trace must show the operator-by-operator coercion path and demonstrate the brittleness. Risk code L2 — function does not enforce the numeric type contract on its inputs. Remedy: coerce explicitly at the boundary (`Number(price)`, `parseFloat(percentage)`) or validate before the call.",
+      "assertions": [
+        {
+          "id": "identifies-L2",
+          "description": "Output identifies L2 (Type Contract Breach)",
+          "check": "Output contains 'L2'"
+        },
+        {
+          "id": "identifies-operator-coercion-fragility",
+          "description": "Output identifies that the current operator mix masks string inputs by coincidence — and that adding `+` would silently switch to concatenation",
+          "check": "Output explains that JS `*`, `/`, `-` coerce strings to numbers but `+` triggers string concat when either operand is a string, and identifies this as a fragility (a refactor adding `+` would silently misbehave)"
+        },
+        {
+          "id": "recommends-explicit-coercion-or-validation",
+          "description": "Output recommends explicit numeric coercion at the boundary (Number / parseFloat) or input validation",
+          "check": "Output recommends `Number(...)`, `parseFloat(...)`, `parseInt(...)`, or boundary input validation to enforce the numeric contract"
+        }
+      ]
+    },
+    {
+      "id": 207,
+      "name": "zh-python-str-int-comparison-L2",
+      "mode": "logic-review",
+      "prompt": "下面这段 Python 3 代码在某些情况下会抛 TypeError，请审查：\n\n```python\ndef is_eligible(age, min_age=18):\n    \"\"\"Return True if age meets the minimum age requirement (years).\"\"\"\n    return age >= min_age\n\ndef check_signup(form):\n    age = form.get('age')   # form.get returns str (or None)\n    return is_eligible(age)\n```\n\n表单提交一个 `age=\"21\"` 字符串时，调用 `check_signup(form)` 会怎么表现？",
+      "expected_output": "应识别 L2（类型契约违反 / Type Contract Breach）：is_eligible 的默认参数 min_age=18 隐含 age 应当是数字类型（int）。但 check_signup 把 form.get('age') 直接传进去，得到的是 str。Python 3 不允许 str 与 int 直接比较：'21' >= 18 抛 TypeError: '>=' not supported between instances of 'str' and 'int'。\n\n注意 L2 不同于 L3（边界）和 L6（被调方契约）：本 case 的根因是 is_eligible 没有强制 age 的类型契约，调用方传入了不兼容类型。Trace 必须展示 form.get 返回 str → 传入 is_eligible → `>=` 运算符要求 numeric 类型 → 抛 TypeError。修复：在 is_eligible 入口处强制 `age = int(age)`，或在 check_signup 调用前显式 coerce。输出必须以中文为主。",
+      "assertions": [
+        {
+          "id": "language-chinese-output",
+          "description": "Output body is primarily Chinese",
+          "check": "Output contains at least 50 Chinese characters and does not contain standalone English section headers like '# Findings', '## Summary', '# Premises', '# Trace', '# Divergence' on their own line"
+        },
+        {
+          "id": "identifies-L2",
+          "description": "Output identifies L2 (Type Contract Breach)",
+          "check": "Output contains 'L2'"
+        },
+        {
+          "id": "identifies-str-int-mismatch",
+          "description": "Output identifies that age is str (from form) compared with int (min_age default), which Python 3 disallows",
+          "check": "Output explains that form.get returns str while min_age is int, and that Python 3 forbids `>=` between str and int (or equivalent: TypeError, 类型不匹配, str vs int)"
+        },
+        {
+          "id": "recommends-coercion-at-boundary",
+          "description": "Output recommends int() coercion at the function boundary or before the call",
+          "check": "Output recommends `int(age)` coercion at the entry of is_eligible, in check_signup, or boundary input validation"
+        }
+      ]
+    },
+    {
+      "id": 208,
+      "name": "logic-review-skip-audit-on-early-return-L5",
+      "mode": "logic-review",
+      "prompt": "Review this code for logic errors. Spec note (from team's compliance doc): every served request must be recorded by `audit_log.record(req)` for compliance, regardless of whether it was authorized or rejected.\n\n```python\n# api/handler.py\ndef serve_request(req, audit_log):\n    if not req.is_authorized():\n        return _unauthorized()\n    if not req.is_well_formed():\n        raise BadRequest('malformed payload')\n    audit_log.record(req)\n    return _process(req)\n```",
+      "expected_output": "Should identify L5 (Control Flow Escape): the spec mandates audit_log.record runs for every served request, but two early exit paths skip it. (1) `return _unauthorized()` when authorization fails — audit not recorded. (2) `raise BadRequest('malformed payload')` when the payload is malformed — audit not recorded. Only the happy-path success branch reaches audit_log.record. Trace must enumerate the three exit paths (unauthorized return, malformed raise, success) and show that audit only happens on the third. Risk code L5 — control-flow escape that skips a contract-required side effect. Note this is L5 not L8: audit_log is not a resource needing release; it is a required state-update side effect that early exits skip. Remedy: move audit_log.record to the function entry (before any early exit), or wrap the body in try/finally with audit_log.record in the finally block.",
+      "assertions": [
+        {
+          "id": "identifies-L5",
+          "description": "Output identifies L5 (Control Flow Escape) — note: not L8, because audit_log is a state-update side effect not a resource",
+          "check": "Output contains 'L5'"
+        },
+        {
+          "id": "identifies-multiple-skip-paths",
+          "description": "Output identifies BOTH the unauthorized early return AND the malformed raise as paths that skip audit_log.record",
+          "check": "Output identifies both early exit paths — the `return _unauthorized()` (or 'unauthorized', '401', 'authorization fail') AND the `raise BadRequest` (or 'malformed', 'BadRequest', 'raise') — as skipping audit_log.record"
+        },
+        {
+          "id": "recommends-move-to-entry-or-finally",
+          "description": "Output recommends moving audit_log.record to function entry, or wrapping in try/finally so all exits record audit",
+          "check": "Output recommends one of: moving audit_log.record to the function entry (before any early exit); wrapping the body in try/finally with audit in the finally; or restructuring to a single exit point that always records"
+        }
+      ]
+    },
+    {
+      "id": 209,
+      "name": "logic-locate-missing-metric-on-early-return-L5",
+      "mode": "logic-locate",
+      "prompt": "Failing test in CI:\n\n```python\ndef test_metric_increments_for_every_request():\n    initial = metrics.requests_total\n    handle_request(invalid_input)   # invalid input, but should still count\n    assert metrics.requests_total == initial + 1  # FAILS — actual: still equals initial\n```\n\nImplementation:\n\n```python\n# api/server.py\ndef handle_request(req):\n    if not req.is_valid():\n        return _error(400)\n    metrics.requests_total += 1\n    return _process(req)\n```\n\nThe contract from the SLO doc: `requests_total` counts every received request, valid or invalid. Where is the bug?",
+      "expected_output": "Should locate the fault as L5 (Control Flow Escape): the SLO contract requires metrics.requests_total to be incremented for every received request. handle_request increments it on the valid path (after the if-not-valid guard), but the early `return _error(400)` on the invalid path returns before reaching the increment. The failing test passes invalid_input, hits the early return, never increments — so metrics.requests_total stays at `initial` while the assertion expects `initial + 1`. Backward trace from the failed assertion: actual == initial → metrics.requests_total never incremented for this request → forward trace shows the if-not-valid branch returns before the increment line. Risk code L5 — early return skips a contract-required state update. Fault Confidence: High. Remedy: move `metrics.requests_total += 1` to the first line of handle_request (before the validation guard), so it counts every request regardless of validity.",
+      "assertions": [
+        {
+          "id": "identifies-L5",
+          "description": "Output identifies L5 (Control Flow Escape)",
+          "check": "Output contains 'L5'"
+        },
+        {
+          "id": "identifies-early-return-as-skip-path",
+          "description": "Output identifies the `return _error(400)` early return as the path that skips the metrics increment",
+          "check": "Output identifies the if-not-valid branch's early return (`return _error(400)`, 'early return', '_error(400)', 'is_valid', or '无效请求/早返回') as the path that bypasses metrics.requests_total += 1"
+        },
+        {
+          "id": "recommends-move-metric-before-guard",
+          "description": "Output recommends moving the metrics increment to before the validation guard, so it counts every request",
+          "check": "Output recommends moving `metrics.requests_total += 1` to the function entry / before the validation guard, OR adding the increment to the early-return path"
+        },
+        {
+          "id": "has-fault-confidence",
+          "description": "Output uses Fault Confidence as required by logic-locate mode",
+          "check": "Output contains 'Fault Confidence' or 'Confidence:'"
         }
       ]
     }
