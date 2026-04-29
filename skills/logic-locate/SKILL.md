@@ -22,8 +22,10 @@ description: >
 Read in this order:
 1. `../_shared/common.md` — language rule, Iron Law, Report Template, Fault Confidence rubric (see §5 and §7), Remedy discipline.
 2. `../_shared/logic-risks.md` — L1–L9 definitions (the root fault maps to one).
-3. `../_shared/semiformal-guide.md` — tracing methodology, Premises Construction Checklist, interprocedural reasoning.
-4. `logic-locate-guide.md` — fault-localization process.
+3. `../_shared/semiformal-guide.md` — tracing methodology and interprocedural reasoning.
+4. `../_shared/semiformal-checklist.md` — Premises Construction Checklist.
+5. `../_shared/report-template.md` — Report layout (English + Chinese).
+6. `logic-locate-guide.md` — fault-localization process.
 
 ## Process
 

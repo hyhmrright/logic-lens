@@ -25,8 +25,10 @@ description: >
 Read in this order:
 1. `../_shared/common.md` — language rule, Iron Law, Report Template, mode header (§5: before/after Logic Scores + findings-fixed / findings-unresolved), Remedy discipline, `.logic-lens.yaml` matrix.
 2. `../_shared/logic-risks.md` — L1–L9 definitions.
-3. `../_shared/semiformal-guide.md` — tracing methodology and Premises Construction Checklist.
-4. `logic-fix-all-guide.md` — phased pipeline. That guide is long because the pipeline has nine phases; read it end-to-end before starting.
+3. `../_shared/semiformal-guide.md` — tracing methodology.
+4. `../_shared/semiformal-checklist.md` — Premises Construction Checklist.
+5. `../_shared/report-template.md` — Report layout (English + Chinese).
+6. `logic-fix-all-guide.md` — phased pipeline. That guide is long because the pipeline has nine phases; read it end-to-end before starting.
 
 ## Process
 
@@ -53,12 +55,8 @@ Read in this order:
 ```
 ## Scope
 
-| Role       | Files scanned | Tier H/M/L | Truncated? |
-|------------|---------------|------------|------------|
-| source     | …             | …          | no         |
-| config     | …             | …          | no         |
-| constraint | …             | …          | no         |
-| doc        | …             | …          | no         |
+| Role (source/config/constraint/doc) | Files scanned | Tier H/M/L | Truncated? |
+|-------------------------------------|---------------|------------|------------|
 
 ## Skill Invocations
 logic-health: N · logic-review: N · logic-locate: N · logic-explain: N · logic-diff: N
@@ -69,7 +67,7 @@ logic-health: N · logic-review: N · logic-locate: N · logic-explain: N · log
 
 ## Fix Log
 
-| # | File | Lines | Finding | Risk | Severity | Fix Applied | Status |
+| # | File | Lines | Finding | Risk | Severity | Fix Applied (one-line edit or diff summary) | Status (resolved/unresolved/reverted) |
 
 ## Resolved by Clarification
 [Findings the Phase-5 logic-explain pass revealed as false positives. Empty if none.]

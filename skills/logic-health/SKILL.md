@@ -21,8 +21,10 @@ description: >
 Read in this order:
 1. `../_shared/common.md` — language rule, Iron Law, Report Template, Logic Score (weighted-average variant in §6), Remedy discipline.
 2. `../_shared/logic-risks.md` — L1–L9 definitions.
-3. `../_shared/semiformal-guide.md` — tracing methodology and Premises Construction Checklist.
-4. `logic-health-guide.md` — aggregation process.
+3. `../_shared/semiformal-guide.md` — tracing methodology.
+4. `../_shared/semiformal-checklist.md` — Premises Construction Checklist.
+5. `../_shared/report-template.md` — Report layout (English + Chinese).
+6. `logic-health-guide.md` — aggregation process.
 
 ## Process
 
@@ -51,8 +53,6 @@ Read in this order:
 
 | Module | Score | Critical | Warning | Suggestion | Top Risk |
 |--------|-------|----------|---------|------------|----------|
-| auth/  | 72    | 1        | 2       | 0          | L6       |
-| api/   | 91    | 0        | 1       | 2          | L3       |
 
 ## Systemic Patterns
 [Risk codes appearing in 3+ modules — codebase-wide habit rather than isolated bugs]

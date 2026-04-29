@@ -21,8 +21,10 @@ description: >
 Read in this order:
 1. `../_shared/common.md` — language rule, Iron Law, Report Template, Logic Score, Remedy discipline.
 2. `../_shared/logic-risks.md` — L1–L9 definitions.
-3. `../_shared/semiformal-guide.md` — tracing methodology and Premises Construction Checklist.
-4. `logic-review-guide.md` — step-by-step review process.
+3. `../_shared/semiformal-guide.md` — tracing methodology.
+4. `../_shared/semiformal-checklist.md` — Premises Construction Checklist.
+5. `../_shared/report-template.md` — Report layout (English + Chinese).
+6. `logic-review-guide.md` — step-by-step review process.
 
 ## Process
 
@@ -30,7 +32,7 @@ Read in this order:
 
 **Step 1. Establish claimed behavior** (guide Step 1) — write one sentence describing what the code is supposed to do.
 
-**Step 2. Build premises** (guide Step 2) — name resolution, type contracts, state preconditions, control-flow assumptions, per the Premises Construction Checklist in `semiformal-guide.md`.
+**Step 2. Build premises** (guide Step 2) — per the Premises Construction Checklist in `semiformal-checklist.md`.
 
 **Step 3. Trace normal path** (guide Step 3) — sequential, interprocedural trace; resolve every name; state every type.
 

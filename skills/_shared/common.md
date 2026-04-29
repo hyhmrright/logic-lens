@@ -34,7 +34,7 @@
 | Conditionally Equivalent | 条件等价 |
 | Semantically Divergent | 语义分歧 |
 
-**Stay in native form regardless of user language:** fenced code blocks, identifier names (`format`, `users.remove(...)`), L-codes (`L1`–`L6`, `C1`, `C2`...), file paths, exception class names, operator symbols.
+**Stay in native form regardless of user language:** fenced code blocks, identifier names (`format`, `users.remove(...)`), L-codes (`L1`–`L9`, `C1`, `C2`...), file paths, exception class names, operator symbols.
 
 **Violation check:** if the response is Chinese but a header reads `# Findings`, rewrite before returning.
 
@@ -58,10 +58,6 @@ Three-step tracing: **Premises → Trace → Divergence**. Full methodology, lan
 ## 4. Report Template
 
 The full English + Chinese templates and all rendering rules live in **`report-template.md`** (single source). Every skill renders its output by following that file, applying the language rule from §1 and the mode-specific header field from §5.
-
-Quick reminder of the four-field discipline (full text in `report-template.md`):
-- Every finding has **Premises / Trace / Divergence / Remedy** — drop or downgrade if Trace is incomplete.
-- No prose findings, no headers in the wrong language, no skill-specific section between Findings and Summary.
 
 ---
 
@@ -151,7 +147,7 @@ A Remedy MUST be a **minimal, concrete, paste-ready fix**. Acceptable:
 - A one-line edit instruction naming file, line range, and the new expression
 - For config/docs: the exact new value or the exact replacement sentence
 
-Unacceptable: "add validation", "be careful with", "consider refactoring", "add more tests". These are not remedies — they skip the work.
+Unacceptable: "add validation", "be careful with", "consider refactoring", "add more tests".
 
 If the fix requires a design decision the user must make, say so explicitly and list the options instead of giving vague advice.
 

@@ -1,6 +1,6 @@
 # Logic-Lens — Report Template (Single Source)
 
-This is the **single source of truth** for every Logic-Lens skill's report layout. All skills (review / explain / diff / locate / health / fix-all) render their output by following this template, applying the language rule from `common.md` §1 and the mode-specific header field from `common.md` §5.
+All skills render output by following this template, applying the language rule from `common.md` §1 and the mode-specific header from `common.md` §5.
 
 ---
 
@@ -21,9 +21,9 @@ This is the **single source of truth** for every Logic-Lens skill's report layou
 
 ### 🔴 Critical
 **[L-code] — [Short descriptive title]**
-Premises:   [what the code assumes — one or more explicit statements]
+Premises:   [what the code assumes]
 Trace:      [step-by-step execution path, interprocedural where needed]
-Divergence: [exact line/expression where the premise breaks; what consequence follows]
+Divergence: [exact line/expression where the premise breaks; consequence]
 Remedy:     [minimal, paste-ready fix — see common.md §10]
 
 ### 🟡 Warning
@@ -43,12 +43,12 @@ Remedy:     [minimal, paste-ready fix — see common.md §10]
 
 ## Chinese template (中文版)
 
-When the user writes in Chinese (`common.md` §1 detection), use this exact form. Replace headers per the §1 localized header map; the finding body becomes:
+When the user writes in Chinese (`common.md` §1 detection):
 
 ```
 # Logic-Lens [模式名称]
 
-**模式：** [逻辑审查 / 执行解释 / 语义对比 / 故障定位 / 逻辑健康 / 全量修复]
+**模式：** [逻辑审查 / 执行解释 / 语义对比 / 故障定位 / 逻辑体检 / 逻辑全修]
 **范围：** [所分析的文件、函数或 diff]
 [<模式特定字段 — 见 common.md §5>]
 
@@ -60,7 +60,7 @@ When the user writes in Chinese (`common.md` §1 detection), use this exact form
 
 ### 🔴 严重
 **[L-code] — [简短标题]**
-前提：   [代码所做的假设 — 一条或多条显式陈述]
+前提：   [代码所做的假设]
 追踪：   [逐步执行路径；涉及跨函数调用时跟进被调方]
 偏差：   [前提被破坏的确切位置（行号/表达式）及后果]
 修复：   [最小、可直接粘贴的修复 — 见 common.md §10]
@@ -80,19 +80,17 @@ When the user writes in Chinese (`common.md` §1 detection), use this exact form
 
 ---
 
-## Rules (apply to both English and Chinese output)
+## Rules
 
-1. **Language consistency.** No English headers in a Chinese response, and vice versa. The whole report — header, field labels, narrative prose — uses one language end-to-end.
-2. **Four-field discipline.** Every finding must have all four fields (Premises / Trace / Divergence / Remedy). If Trace is incomplete, drop the finding or downgrade to Suggestion with an explicit "manual verification needed" note. **No prose findings** — an observation without all four fields is not a finding.
-3. **Severity markers.** Use `🔴` / `🟡` / `🟢`. In plain-terminal / ASCII-only mode (see `common.md` §11) substitute `[CRITICAL]` / `[WARNING]` / `[SUGGESTION]`.
-4. **Skill-specific extensions.** Additional sections — `## Module Breakdown` (logic-health), `## Fix Log` / `## Iteration History` (logic-fix-all), Verdict elaboration (logic-diff), `## Resolved by Clarification` / `## Unresolved Findings` (logic-fix-all) — all appear **after** Summary, never between Findings and Summary.
-5. **No findings, high score is valid.** When the trace confirms no divergences, output an empty Findings section, set the mode-specific score to its maximum (Logic Score 100, Fault Confidence High with "no fault present", Verdict ✅ Semantically Equivalent), and state plainly in Summary. Do not invent speculative findings to fill space.
+1. **Language consistency.** All headers, field labels, and narrative use one language end-to-end per `common.md` §1. Never use English headers (`# Findings`) in a Chinese response.
+2. **Four-field discipline.** Every finding must have all four fields (Premises/Trace/Divergence/Remedy). If Trace is incomplete, drop or downgrade to Suggestion with "manual verification needed". No prose findings.
+3. **Severity markers.** Use `🔴`/`🟡`/`🟢`. In plain-terminal mode substitute `[CRITICAL]`/`[WARNING]`/`[SUGGESTION]`.
+4. **Skill-specific extensions** (Module Breakdown, Fix Log, Iteration History, etc.) appear **after** Summary, never between Findings and Summary.
+5. **No findings = valid.** Empty Findings + max score is correct. Do not invent speculative findings.
 
 ---
 
 ## Mode-specific header — quick reference
-
-For the full table see `common.md` §5. Inline:
 
 | Skill | Header line directly under `**Scope:**` |
 |-------|----------------------------------------|
@@ -101,4 +99,4 @@ For the full table see `common.md` §5. Inline:
 | logic-explain | _(omitted — descriptive, no score)_ |
 | logic-locate | `**Fault Confidence:** High / Medium / Low` |
 | logic-diff | `**Verdict:** ✅ / ⚠️ / ❌ <equivalence verdict>` |
-| logic-fix-all | `**Logic Score (before):** XX` + `**Logic Score (after):** YY` + `**Findings fixed:** N (Critical: n1 · Warning: n2 · Suggestion: n3)` + `**Findings unresolved:** M` |
+| logic-fix-all | `**Logic Score (before):** XX` + `**Logic Score (after):** YY` + `**Findings fixed:** N` + `**Findings unresolved:** M` |
