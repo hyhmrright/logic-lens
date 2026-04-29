@@ -442,7 +442,11 @@ The best contributions right now are new eval test cases, especially interproced
 
 ## License
 
-MIT License — see [LICENSE](LICENSE) for details.
+## Read
+
+- [Why AI Code Review Misses Logic Bugs — And How Structured Execution Tracing Fixes It](https://dev.to/hyhmrright/why-ai-code-review-misses-logic-bugs-and-how-structured-execution-tracing-fixes-it-3n0p) — DEV.to deep-dive on the methodology behind logic-lens
+-
+- MIT License — see [LICENSE](LICENSE) for details.
 
 ---
 
