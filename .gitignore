@@ -11,3 +11,6 @@ __pycache__/
 # OS / editor noise
 .DS_Store
 *.swp
+
+# Playwright MCP runtime artifacts (logs + page snapshots)
+.playwright-mcp/
