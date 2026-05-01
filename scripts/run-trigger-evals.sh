@@ -30,12 +30,8 @@ set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SKILL_CREATOR_PATH="${SKILL_CREATOR_PATH:-$HOME/.claude/plugins/marketplaces/anthropic-agent-skills/skills/skill-creator}"
 MAX_ITERATIONS="${MAX_ITERATIONS:-5}"
-# Default to sonnet for cost control. run_loop.py uses the same model for
-# both the per-query evaluation (cheap, bulk) and the description-proposal
-# extended-thinking step (rare, smarter). Sonnet 4.6 handles both well at
-# roughly 5x lower cost than opus. Override with MODEL=claude-opus-4-7
-# only if you have evidence sonnet is producing weak proposals.
-MODEL="${MODEL:-claude-sonnet-4-6}"
+# shellcheck source=_defaults.sh
+source "$(dirname "${BASH_SOURCE[0]}")/_defaults.sh"
 
 if [[ ! -f "$SKILL_CREATOR_PATH/scripts/run_loop.py" ]]; then
   echo "ERROR: skill-creator run_loop.py not found at $SKILL_CREATOR_PATH/scripts/run_loop.py" >&2

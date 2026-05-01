@@ -6,6 +6,7 @@
   "keywords": ["code-review", "logic", "debugging", "semantic-analysis", "claude", "ai-tools"],
   "scripts": {
     "validate": "bash scripts/validate-repo.sh",
+    "unit-tests": "python3 -m unittest discover tests/",
     "trigger-evals": "bash scripts/run-trigger-evals.sh",
     "content-evals": "bash scripts/run-content-evals.sh"
   }

@@ -11,7 +11,7 @@
 #   without touching the grader.
 #
 # Cost note:
-#   Each case is one `claude -p` invocation. As of v0.6.0 there are 28 cases.
+#   Each case is one `claude -p` invocation. As of v0.6.1 there are 28 cases.
 #   Sonnet 4.6 default cost is roughly $1-2 per full run; Opus is ~5x. Set MODEL
 #   override only if you have a reason — Sonnet is the right default.
 #
@@ -35,7 +35,8 @@ set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 EVALS_JSON="$REPO_ROOT/evals/v2/evals-v2.json"
-MODEL="${MODEL:-claude-sonnet-4-6}"
+# shellcheck source=_defaults.sh
+source "$(dirname "${BASH_SOURCE[0]}")/_defaults.sh"
 TAG="${TAG:-$(git -C "$REPO_ROOT" rev-parse --short HEAD 2>/dev/null || date +%Y%m%d-%H%M%S)}"
 ITER_DIR="$REPO_ROOT/skills-workspace/iteration-$TAG"
 SKIP_GRADE="${SKIP_GRADE:-0}"
