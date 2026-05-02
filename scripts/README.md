@@ -21,7 +21,7 @@ End-to-end content-eval pipeline. Pairs with `grade-iteration.py` (the rule-base
 The split is intentional — `run-content-evals.sh` is the **runner** (calls Claude, costs tokens, needs the `claude` CLI on PATH); `grade-iteration.py` is the **grader** (pure Python, regex-based, free, can be re-run on existing outputs without re-spending tokens).
 
 ```bash
-# Run all 28 cases against Sonnet 4.6 (default), tag from current git SHA:
+# Run all 28 cases against Haiku 4.5 (default), tag from current git SHA:
 npm run content-evals       # or: bash scripts/run-content-evals.sh
 
 # Re-run with a custom tag:
@@ -60,7 +60,7 @@ Drives skill-creator's `run_loop.py` against the six per-skill trigger eval sets
 - network access (each iteration issues real `claude -p` calls and costs tokens)
 
 ```bash
-# All six skills (5 iterations each, Sonnet 4.6 default — cost-conscious):
+# All six skills (5 iterations each, Haiku 4.5 default — cost-conscious):
 bash scripts/run-trigger-evals.sh
 
 # One skill:
@@ -70,7 +70,7 @@ bash scripts/run-trigger-evals.sh review
 MAX_ITERATIONS=3 MODEL=claude-opus-4-7 bash scripts/run-trigger-evals.sh review
 ```
 
-Default model is **`claude-sonnet-4-6`** — the run_loop uses the same model for both bulk evaluation (cheap) and the smarter description-proposal step, so one-model choice trades off cost vs proposal quality. Sonnet 4.6 handles both well at ~5× lower cost than opus; only switch to opus if you see the proposal descriptions fail to improve test scores across iterations.
+Default model is **`claude-haiku-4-5`** — lowest cost for bulk evaluation runs (~$0.10-0.20 per full 28-case content run). Override with `MODEL=claude-sonnet-4-6` when you need higher accuracy on edge cases, or `MODEL=claude-opus-4-7` for extended-thinking proposal steps.
 
 Each run emits a JSON result with `best_description` selected by held-out test score. Copy it into the corresponding `skills/logic-<skill>/SKILL.md` frontmatter `description:` field to apply.
 

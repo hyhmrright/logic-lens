@@ -39,7 +39,7 @@ Read in this order:
 
 **Step 4. Trace forward to confirm** (guide Step 4) — from the suspected root, verify the trace reaches the observed symptom.
 
-**Step 5. Interprocedural tracing if a callee is implicated** (guide Step 5) — trace into the callee; check return values under observed conditions, unhandled exceptions, shared-state mutation. Limit interprocedural depth to **≤ 4 hops** (f → g → h → i). At depth 4, state the remaining callee path as a premise assumption rather than tracing further, and downgrade the finding to **Medium confidence** (per `common.md` §7) with "manual verification recommended beyond depth 4".
+**Step 5. Interprocedural tracing if a callee is implicated** (guide Step 5) — trace into the callee; check return values under observed conditions, unhandled exceptions, shared-state mutation. Apply the depth limit and Call-Chain Context Label format defined in `semiformal-guide.md` §Call-Chain Context Labels; at the limit, state the remaining callee path as a premise assumption and downgrade to **Medium confidence** (per `common.md` §7).
 
 **Step 6. Identify the root divergence and classify** (guide Step 6) — state the exact line/expression, the violated premise, the actual behavior, the propagation chain to the symptom; pick the L-code.
 

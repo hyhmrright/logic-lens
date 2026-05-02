@@ -11,9 +11,9 @@
 #   without touching the grader.
 #
 # Cost note:
-#   Each case is one `claude -p` invocation. As of v0.6.1 there are 28 cases.
-#   Sonnet 4.6 default cost is roughly $1-2 per full run; Opus is ~5x. Set MODEL
-#   override only if you have a reason — Sonnet is the right default.
+#   Each case is one `claude -p` invocation. As of v0.6.2 there are 28 cases.
+#   Haiku 4.5 default cost is roughly $0.10-0.20 per full run; Sonnet is ~8-10x,
+#   Opus is ~50x. Override with MODEL=claude-sonnet-4-6 for edge-case accuracy.
 #
 # Usage:
 #   bash scripts/run-content-evals.sh                      # tag = current git short SHA

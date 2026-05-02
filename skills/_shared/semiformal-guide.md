@@ -128,3 +128,38 @@ When `f` calls `g(x)`, do not assume `g` behaves as its name implies. Instead:
 4. Return to `f`'s trace with the actual behavior of `g` substituted.
 
 The bug is most often in the interaction between two functions, not in the function being looked at in isolation.
+
+### Call-Chain Context Labels
+
+When a trace crosses more than one function boundary, prefix each step with a call-chain label so the reader never loses their place in the stack:
+
+```
+[entry → parse_config:12] cfg_path = args[0]  — type: str
+[entry → parse_config → read_file:34] fd = open(cfg_path)  — may raise FileNotFoundError
+[entry → parse_config → read_file:41] content = fd.read()  — fd is open here
+[entry → parse_config → read_file:47] ← early return on empty content; fd NOT closed  [L8]
+```
+
+Format: `[caller → callee → …:line]`. Omit intermediate frames only if they add no observable state change. The label makes cross-file findings unambiguous and allows a reader to reconstruct the exact call stack without re-reading source.
+
+Depth limit: stop tracing into callees beyond **4 hops** from the entry point. Beyond 4 hops the premises required to maintain accuracy compound faster than the trace gains certainty — downgrade any finding that depends on an inference at hop 5 or deeper to **Suggestion** with `manual verification recommended`.
+
+---
+
+## Backward Reasoning
+
+Use when forward tracing loses the bug path — for example: too many branches make it unclear which path leads to the failure, or a loop invariant is too complex to track forward from initialization.
+
+**Procedure:**
+
+1. **State the failure precisely.** Name the location (file, line or expression), the incorrect value or behavior, and the condition that makes it wrong: `"At line 78, result is -1 but the contract requires ≥ 0."`
+2. **Ask: what must be true one step earlier for this failure to occur?** Work backward through the most recent assignment, return, or branch that produced the failing value.
+3. **Continue backward** through assignments, function returns, and conditional branches. At each step ask: *which predecessor state is necessary for this state to hold?*
+4. **Stop at the broken premise.** When you reach a step where the necessary predecessor state contradicts a premise you established in Premises Construction, you have the root cause. Write the Divergence there — not at the symptom site.
+
+**When to use:**
+- The symptom is at a late stage (e.g., wrong output, assertion failure at return site) but the root cause is at an early input-processing step.
+- Forward tracing reaches a branch with ≥ 3 paths and you cannot determine which path was taken without executing the code.
+- L7/OV findings where you know B produced a wrong result but need to trace back to find which earlier operation A was supposed to precede B.
+
+**Do not use backward reasoning alone.** It establishes a necessary condition at the root site, not a sufficient one. After identifying the root candidate, confirm with a short forward trace (even 2–3 steps) that the root condition actually leads to the symptom — this completes the certificate.
