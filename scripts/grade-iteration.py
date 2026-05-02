@@ -159,7 +159,7 @@ _CASE_EXTRA_RULES: dict[int, list[tuple[str, Callable[[str], bool]]]] = {
     6: [
         _VERDICT_RULE,
         ("conditionally equivalent identified", lambda t: re.search(
-            r'Conditionally Equivalent|条件等价', t, re.I) is not None),
+            r'Conditionally Equivalent|条件等价|不完全等价|部分等价', t, re.I) is not None),
         ("describes divergence scenario", lambda t: re.search(
             r'generator|non-list|custom|IndexError|__getitem__|__len__', t) is not None),
     ],
@@ -168,7 +168,7 @@ _CASE_EXTRA_RULES: dict[int, list[tuple[str, Callable[[str], bool]]]] = {
             r'\b2\s*[*×]\s*3\s*=\s*6\b|start\s*=\s*6\b|偏移\s*=\s*6'
             r'|2\s*×\s*3(?!\d)|page\s*\*\s*page_size.*=\s*6\b|items\[6[^\d]', t) is not None),
         ("identifies 0/1-based indexing mismatch", lambda t: re.search(
-            r'0[-\s]?based|1[-\s]?based|zero-indexed|one-indexed|从 0 开始|从 1 开始', t, re.I) is not None),
+            r'0[-\s]?based|1[-\s]?based|zero-indexed|one-indexed|0-indexed|1-indexed|从 0 开始|从 1 开始', t, re.I) is not None),
         ("contains L3 or L6", lambda t: "L3" in t or "L6" in t),
         _FAULT_CONFIDENCE_RULE,
     ],
