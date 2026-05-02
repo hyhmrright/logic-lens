@@ -96,6 +96,18 @@ def _no_logic_score(t: str) -> bool:
     return not re.search(r'Logic Score|逻辑评分', t)
 
 
+def _case227_score_improved(t: str) -> bool:
+    def _extract(label_pat: str) -> int | None:
+        m = re.search(rf'{label_pat}[^\n0-9]{{0,25}}(\d{{1,3}})(?:/100)?', t, re.I)
+        return int(m.group(1)) if m else None
+    before = _extract(r'(?:Logic Score\s*\(?\s*(?:before|改前|修复前)\)?|改前|修复前)')
+    after  = _extract(r'(?:Logic Score\s*\(?\s*(?:after|改后|修复后)\)?|改后|修复后)')
+    if before is not None and after is not None:
+        return after > before
+    scores = [int(m.group(1)) for m in re.finditer(r'Logic Score[^0-9]{0,25}(\d{1,3})/100', t)]
+    return len(scores) >= 2 and scores[-1] > scores[0]
+
+
 # ── Shared rules reused across multiple cases ──────────────────────────────────
 
 _VERDICT_RULE: tuple[str, Callable[[str], bool]] = (
@@ -132,6 +144,19 @@ _FOUR_FIELD_RULE: tuple[str, Callable[[str], bool]] = (
         ("Divergence" in t or "偏差" in t or
          re.search(r'\*\*发现|发现的逻辑|\*\*Findings?\b', t) is not None)
     ),
+)
+
+_BOTH_VERSIONS_RULE: tuple[str, Callable[[str], bool]] = (
+    "analyzes both Version A and Version B",
+    lambda t: (
+        re.search(r'Version\s*A|版本\s*A|代码\s*A', t, re.I) is not None and
+        re.search(r'Version\s*B|版本\s*B|代码\s*B', t, re.I) is not None
+    ),
+)
+
+_DIVERGENT_RULE: tuple[str, Callable[[str], bool]] = (
+    "gives Semantically Divergent verdict",
+    lambda t: re.search(r'Semantically Divergent|语义分歧|语义.*不等价', t) is not None,
 )
 
 
@@ -338,6 +363,216 @@ _CASE_EXTRA_RULES: dict[int, list[tuple[str, Callable[[str], bool]]]] = {
             r"before.*(?:guard|validation|check|is_valid)|move.*(?:metric|increment).*entry"
             r"|function\s+entry|first\s+line|提到.*入口|放到.*开头|放到.*第一行", t, re.I) is not None),
         _FAULT_CONFIDENCE_RULE,
+    ],
+    210: [
+        ("identifies L2", lambda t: "L2" in t),
+        ("identifies as-cast is compile-time only with no runtime validation", lambda t: re.search(
+            r'compile[- ]?time|no\s+runtime|runtime.*validat|as\s+User.*no|type.*assert'
+            r'|no.*structural|不做.*运行时', t, re.I) is not None),
+        ("identifies email undefined causes TypeError", lambda t: re.search(
+            r'undefined|TypeError|toUpperCase.*undefined|email.*undefined|undefined.*email',
+            t, re.I) is not None),
+        ("recommends runtime validation or schema library", lambda t: re.search(
+            r"'email'\s+in\s+data|zod|schema.*validat|runtime.*check|structural.*check"
+            r"|运行时.*校验|校验.*结构", t, re.I) is not None),
+    ],
+    211: [
+        ("identifies L2 or L3", lambda t: "L2" in t or "L3" in t),
+        ("explains IEEE 754 float representation issue", lambda t: re.search(
+            r'IEEE\s*754|float.*precis|binary.*float|floating[- ]?point.*repr|无法.*精确|精度.*问题',
+            t, re.I) is not None),
+        ("traces actual value ~0.09999 (not exactly 0.1)", lambda t: re.search(
+            r'0\.0999|0\.09999|not.*exactly.*0\.1|0\.1.*not.*exact|1\.0\s*-\s*0\.9|不等于.*0\.1',
+            t, re.I) is not None),
+        ("recommends math.isclose or integer cents", lambda t: re.search(
+            r'math\.isclose|isclose|rel_tol|epsilon|integer.*cent|整数.*分钱|round.*compar',
+            t, re.I) is not None),
+    ],
+    212: [
+        ("identifies L7", lambda t: "L7" in t),
+        ("identifies opposite lock acquisition order", lambda t: re.search(
+            r'opposite.*order|reverse.*order|lock.*order|cache.*mu.*logger.*mu|logger.*mu.*cache.*mu'
+            r'|反向.*加锁|加锁.*顺序.*不同|different.*order', t, re.I) is not None),
+        ("traces circular wait deadlock scenario", lambda t: re.search(
+            r'circular.*wait|dead.?lock|goroutine.*hold.*wait|相互.*等待|死锁|circular dependency',
+            t, re.I) is not None),
+        ("recommends consistent global lock order", lambda t: re.search(
+            r'consistent.*order|same.*order|global.*order|固定.*顺序|统一.*加锁|always.*(?:cache|logger).*first',
+            t, re.I) is not None),
+    ],
+    213: [
+        ("identifies L3 or L6", lambda t: "L3" in t or "L6" in t),
+        ("identifies N+1 query pattern", lambda t: re.search(
+            r'N\s*\+\s*1|n\+1|N\+1|per[- ]row.*quer|one.*quer.*per|loop.*quer|每.*(?:order|row).*查询',
+            t, re.I) is not None),
+        ("quantifies scale impact: ~10001 queries for 10000 orders", lambda t: re.search(
+            r'10[,\s]?001|10001|10,?000.*\+\s*1|N\+1.*10,?000|1\s*\+\s*N.*10,?000',
+            t, re.I) is not None),
+        ("recommends JOIN or batch fetch", lambda t: re.search(
+            r'\bJOIN\b|batch.*fetch|single.*quer|WHERE.*\bIN\b|ANY\s*\(|批量.*查询|联合.*查询',
+            t, re.I) is not None),
+    ],
+    214: [
+        ("identifies L6", lambda t: "L6" in t),
+        ("identifies Optional.get() without isPresent throws NoSuchElementException", lambda t: re.search(
+            r'Optional\.get|isPresent|NoSuchElement|get\(\).*empty|empty.*Optional',
+            t, re.I) is not None),
+        ("traces call chain: sendWelcome → getUserEmail → findById → throws", lambda t: re.search(
+            r'sendWelcome|getUserEmail|findById', t, re.I) is not None),
+        ("recommends safe Optional API", lambda t: re.search(
+            r'orElseThrow|orElse|ifPresent|Optional.*map|isPresent\(\)|safe.*Optional',
+            t, re.I) is not None),
+    ],
+    215: [
+        ("identifies L3", lambda t: "L3" in t),
+        ("identifies debug vs release overflow behavior difference", lambda t: re.search(
+            r'debug.*(?:panic|release)|release.*(?:wrap|silent)|build[- ]?mode|--release'
+            r'|debug 模式|release 模式|debug.*build|release.*build', t, re.I) is not None),
+        ("identifies silent wrap in release mode", lambda t: re.search(
+            r'silent.*wrap|wrap.*silently|modulo.*256|two.*complement|wraps.*around|静默.*回绕|overflow.*wrap',
+            t, re.I) is not None),
+        ("recommends wrapping_add or explicit overflow primitive", lambda t: re.search(
+            r'wrapping_add|checked_add|saturating_add|Wrapping<u8>|显式.*溢出|wrapping.*add',
+            t, re.I) is not None),
+    ],
+    216: [
+        ("identifies L5 or describes exception swallowing control-flow risk", lambda t: "L5" in t or re.search(
+            r'bare.*except|except:\s*pass|吞.*异常|异常.*吞|swallow.*exception|silence.*exception'
+            r'|裸.*except', t, re.I) is not None),
+        ("identifies KeyboardInterrupt swallowed preventing Ctrl+C exit", lambda t: re.search(
+            r'KeyboardInterrupt|Ctrl.*C|ctrl.*c|系统.*中断|无法.*退出|不能.*退出|keyboard.*interrupt',
+            t, re.I) is not None),
+        ("recommends except Exception or specific exception type", lambda t: re.search(
+            r'except\s+Exception|except\s+\w+Error|具体.*异常|精确.*异常|specific.*exception'
+            r'|替换.*bare.*except', t, re.I) is not None),
+    ],
+    217: [
+        ("explains deferred / lazy LINQ execution", lambda t: re.search(
+            r'defer|lazy|deferred.*execution|lazy.*evaluation|lazily|惰性|延迟.*执行|not.*execut.*when.*called',
+            t, re.I) is not None),
+        ("states actual output is 4 5 6 (not 3 4 5)", lambda t: re.search(
+            r'4\s+5\s+6|4,\s*5,\s*6|output.*4.*5.*6|prints.*4.*5.*6',
+            t, re.I) is not None),
+        ("explains Step 2 mutations affect query at enumeration time", lambda t: re.search(
+            r'mutation|mutate|modif.*after|Step\s*2|numbers\.Add|numbers\.Remove|修改.*之后|集合.*修改',
+            t, re.I) is not None),
+        _NO_LOGIC_SCORE_RULE,
+    ],
+    218: [
+        ("explains CPython small integer cache (-5 to 256)", lambda t: re.search(
+            r'small.*int.*cache|cache.*small.*int|-5.*256|256.*-5|integer.*cache|intern|CPython.*cache'
+            r'|小整数.*缓存|缓存.*小整数|-5\s+to\s+256', t, re.I) is not None),
+        ("explains 257 outside cache range may create separate objects", lambda t: re.search(
+            r'257.*outside|outside.*(?:range|cache)|beyond.*256|>\s*256|not.*cached|separate.*object'
+            r'|不同.*对象|独立.*对象', t, re.I) is not None),
+        ("explains same_object returns True because a and b bind to same argument n", lambda t: re.search(
+            r'same.*argument|argument.*same|both.*bind.*same|both.*refer.*same|parameter.*same'
+            r'|绑定.*同一|同一.*对象.*参数|a.*b.*same.*n', t, re.I) is not None),
+        _NO_LOGIC_SCORE_RULE,
+    ],
+    219: [
+        ("explains Dog.prototype = Animal.prototype shares the same object", lambda t: re.search(
+            r'shared.*prototype|same.*object.*prototype|Dog\.prototype.*=.*Animal\.prototype'
+            r'|引用.*赋值|同一.*对象|原型.*共享|不是.*副本', t, re.I) is not None),
+        ("explains override on Dog.prototype.speak overwrites Animal.prototype.speak", lambda t: re.search(
+            r'overwrit.*Animal|Animal.*overwrit|覆盖.*Animal|Animal.*speak.*覆盖|override.*Animal'
+            r'|Animal\.prototype.*speak.*overrid', t, re.I) is not None),
+        ("states actual cat.speak() returns 'Cat barks' not 'Cat makes a sound'", lambda t: re.search(
+            r"Cat barks|cat.*barks|cat\.speak.*bark|cat.*bark", t, re.I) is not None),
+        _NO_LOGIC_SCORE_RULE,
+    ],
+    220: [
+        _VERDICT_RULE,
+        _DIVERGENT_RULE,
+        ("identifies == compares references not content in Java", lambda t: re.search(
+            r'reference.*equali|object.*identity|reference.*compar|string.*intern|intern.*string'
+            r'|== 比较.*引用|引用.*比较', t, re.I) is not None),
+        ("identifies non-interned string scenario causes Version A to fail", lambda t: re.search(
+            r'non[- ]?intern|new String|database.*(?:query|result)|external.*input|not.*intern'
+            r'|非.*intern|未.*intern', t, re.I) is not None),
+        _BOTH_VERSIONS_RULE,
+    ],
+    221: [
+        _VERDICT_RULE,
+        _DIVERGENT_RULE,
+        ("identifies null causes TypeError in Version B", lambda t: re.search(
+            r'null.*TypeError|TypeError.*null|null.*(?:crash|throw|error|length)|'
+            r'Version B.*(?:throw|crash|TypeError)', t, re.I) is not None),
+        ("identifies `as string` is compile-time only with no runtime effect", lambda t: re.search(
+            r'compile[- ]?time|as string.*no.*runtime|type.*assert.*runtime|no.*runtime.*effect'
+            r'|as.*类型断言.*编译', t, re.I) is not None),
+        _BOTH_VERSIONS_RULE,
+    ],
+    222: [
+        _VERDICT_RULE,
+        ("identifies memory difference: list loads all lines vs generator is lazy", lambda t: re.search(
+            r'O\s*\(\s*n\s*\)|O\s*\(\s*1\s*\)|内存.*O|generator.*lazy|inert|惰性|lazy.*eval'
+            r'|列表.*内存|generator.*memory|全部.*加载', t, re.I) is not None),
+        ("identifies large file OOM risk", lambda t: re.search(
+            r'OOM|out.of.memory|large.*file|内存.*溢出|大文件|memory.*risk|内存.*不足',
+            t, re.I) is not None),
+        _BOTH_VERSIONS_RULE,
+    ],
+    223: [
+        ("identifies L5", lambda t: "L5" in t),
+        ("identifies missing .catch() on Promise.all chain", lambda t: re.search(
+            r'\.catch\b|no.*catch|missing.*catch|catch.*handler|without.*catch|unhandled.*reject',
+            t, re.I) is not None),
+        ("explains Node.js 18+ exits on unhandled rejection", lambda t: re.search(
+            r'Node\.?js.*18|18.*Node|unhandled.*reject.*exit|exit.*unhandled|terminate.*process'
+            r'|进程.*退出|process.*(?:exit|crash|termin)', t, re.I) is not None),
+        _FAULT_CONFIDENCE_RULE,
+    ],
+    224: [
+        ("identifies L4", lambda t: "L4" in t),
+        ("explains modCount structural modification counter mechanism", lambda t: re.search(
+            r'modCount|modification.*count|structural.*modif|结构.*修改.*计数|iterator.*check.*modif',
+            t, re.I) is not None),
+        ("explains intermittent nature: only triggered when removal followed by next()", lambda t: re.search(
+            r'intermit|偶发|不必现|occasionally|not.*always|last.*element|最后.*元素|hasNext',
+            t, re.I) is not None),
+        _FAULT_CONFIDENCE_RULE,
+    ],
+    225: [
+        ("has Module Breakdown", lambda t: re.search(
+            r'Module Breakdown|模块分布|方法分析|per[- ]method', t) is not None),
+        ("identifies L8 resource leak (connection/statement not closed on all paths)", lambda t: (
+            "L8" in t and re.search(
+                r'(?:conn|stmt|rs|ResultSet|Connection|Statement).*(?:not.*clos|leak|never.*clos)',
+                t, re.I) is not None)),
+        ("identifies SQL string concatenation as logic risk", lambda t: re.search(
+            r'SQL.*concat|string.*concat|SQL.*interpolat|user.*input.*SQL|SQL.*拼接'
+            r'|userId\b.*\+|\+.*userId\b', t, re.I) is not None),
+        _LOGIC_SCORE_BELOW_100_RULE,
+        ("identifies countReports closes connection before reading ResultSet", lambda t: re.search(
+            r'ResultSet.*after.*close|close.*before.*read|conn\.close.*rs\.|rs.*after.*conn'
+            r'|关闭.*之后.*读|countReports.*close|close.*countReports', t, re.I) is not None),
+    ],
+    226: [
+        ("has Module Breakdown or per-function analysis", lambda t: re.search(
+            r'Module Breakdown|模块分解|函数分析|方法分析|fetchUserData|processPayment|loadUserAndPay',
+            t, re.I) is not None),
+        _LOGIC_SCORE_BELOW_100_RULE,
+        ("identifies at least 3 distinct issues across the 3 functions", lambda t: (
+            re.search(r'res\.ok|response\.ok|HTTP.*错误|HTTP error|res\.status', t, re.I) is not None and
+            re.search(r'catch.*(?:swallow|吞|console\.log|log.*only|不重抛|不.*rethrow)|processPayment.*catch',
+                      t, re.I) is not None and
+            re.search(r'\.catch\(\)|unhandled.*reject|Promise.*no.*catch|no.*catch.*Promise|缺少.*catch',
+                      t, re.I) is not None
+        )),
+    ],
+    227: [
+        _FIX_LOG_RULE,
+        ("has before and after scores", lambda t: (
+            re.search(r'before[:\s]+[0-9]+|Logic Score \(before\)|改前|修复前', t, re.I) is not None and
+            re.search(r'after[:\s]+[0-9]+|Logic Score \(after\)|改后|修复后', t, re.I) is not None)),
+        ("fixes resource leak with try-with-resources or explicit close", lambda t: re.search(
+            r'try[- ]with[- ]resources|try\s*\(.*(?:stmt|conn|rs)|finally.*close'
+            r'|stmt\.close|rs\.close|资源.*关闭|关闭.*资源', t, re.I) is not None),
+        ("fixes SQL concatenation with PreparedStatement", lambda t: re.search(
+            r'PreparedStatement|prepareStatement|setInt|setString|parameterized|参数化.*查询|预编译',
+            t, re.I) is not None),
+        ("score improved after fixes", _case227_score_improved),
     ],
 }
 

@@ -802,6 +802,583 @@
           "check": "Output contains 'Fault Confidence' or 'Confidence:'"
         }
       ]
+    },
+    {
+      "id": 210,
+      "name": "ts-type-assertion-bypass-L2",
+      "mode": "logic-review",
+      "prompt": "Review this TypeScript code for logic errors:\n\n```typescript\n// api/client.ts\ninterface User {\n  id: number;\n  name: string;\n  email: string;\n}\n\nasync function fetchUser(id: number): Promise<User> {\n  const response = await fetch(`/api/users/${id}`);\n  const data = await response.json();\n  return data as User;  // type assertion\n}\n\nasync function displayUser(id: number): Promise<void> {\n  const user = await fetchUser(id);\n  console.log(user.email.toUpperCase());\n}\n```\n\nThe API returns `{ id: 1, name: 'Alice', email: 'alice@example.com' }` for existing users, and `{ error: 'not found' }` for missing users. Is this code correct?",
+      "expected_output": "Should identify L2 (Type Contract Breach): the `as User` type assertion is compile-time only — it performs no runtime validation. When the API returns `{ error: 'not found' }` for a missing user, `data` at runtime has no `email` field, but TypeScript accepts it because the assertion overrides type checking. In `displayUser`, `user.email` is `undefined`, and `.toUpperCase()` throws `TypeError: Cannot read properties of undefined (reading 'toUpperCase')`. Risk code L2. Trace must show: fetchUser receives error-shaped JSON → `data as User` passes the type checker but performs no structural validation → user.email is undefined at runtime → toUpperCase() throws. Remedy: validate the response shape at runtime before casting (check `'email' in data && 'id' in data`), or use a schema validation library such as zod.",
+      "assertions": [
+        {
+          "id": "identifies-L2",
+          "description": "Output identifies L2 (Type Contract Breach)",
+          "check": "Output contains 'L2'"
+        },
+        {
+          "id": "identifies-as-cast-runtime-gap",
+          "description": "Output explains that `as User` is a compile-time assertion with no runtime validation",
+          "check": "Output explains that 'as User' (or TypeScript type assertions / as-casts) are compile-time only and perform no runtime validation or structural checks"
+        },
+        {
+          "id": "identifies-email-undefined-crash",
+          "description": "Output identifies that user.email is undefined when the API returns an error response, causing .toUpperCase() to throw TypeError",
+          "check": "Output states that user.email is undefined when the API returns the error response, and that calling .toUpperCase() on undefined throws a TypeError (or equivalent runtime error)"
+        },
+        {
+          "id": "has-premises-trace-divergence",
+          "description": "Finding has Premises, Trace, and Divergence sections",
+          "check": "Output contains 'Premises' AND 'Trace' AND 'Divergence' as section labels in the finding"
+        }
+      ]
+    },
+    {
+      "id": 211,
+      "name": "python-float-equality-L2",
+      "mode": "logic-review",
+      "prompt": "Review this Python code for logic errors:\n\n```python\n# billing/tax.py\ndef apply_discount(price: float, discount_rate: float) -> float:\n    \"\"\"Apply discount. If the discount is exactly $0.10, waive tax.\"\"\"\n    discounted = price * (1 - discount_rate)\n    discount_amount = price - discounted\n    if discount_amount == 0.1:       # check for exactly 10-cent discount\n        return discounted            # tax waiver\n    return discounted * 1.08        # 8% tax\n\n# Called as:\nresult = apply_discount(1.0, 0.1)   # 10% off $1.00 => $0.10 discount\nprint(result)                        # Expected: 0.9 (tax-free). Actual?\n```",
+      "expected_output": "Should identify L2 (Type Contract Breach) or L3 (Boundary Blindspot): the `discount_amount == 0.1` comparison is unreliable due to IEEE 754 floating-point representation. `1.0 * (1 - 0.1)` yields approximately `0.9`, so `price - discounted` = `1.0 - 0.9` = `0.09999999999999998`, not exactly `0.1`. The `== 0.1` check is False even though mathematically the discount is exactly 10 cents, so the function silently charges tax instead of granting the waiver. Trace must show the floating-point arithmetic step-by-step and demonstrate the unexpected False comparison. Risk code L2 or L3. Remedy: use `math.isclose(discount_amount, 0.1, rel_tol=1e-9)` for comparison, or work in integer cents.",
+      "assertions": [
+        {
+          "id": "identifies-L2-or-L3",
+          "description": "Output identifies L2 (Type Contract Breach) or L3 (Boundary Blindspot) for float equality",
+          "check": "Output contains 'L2' or 'L3'"
+        },
+        {
+          "id": "identifies-float-representation",
+          "description": "Output explains that floating-point arithmetic cannot represent 0.1 exactly, making == comparison unreliable",
+          "check": "Output explains that floating-point arithmetic (IEEE 754 or binary floating-point) cannot represent 0.1 exactly, or that the computed discount_amount is not exactly equal to 0.1 due to floating-point precision"
+        },
+        {
+          "id": "traces-actual-value",
+          "description": "Output traces or mentions that the computed discount_amount is approximately 0.09999... (not exactly 0.1), so == returns False",
+          "check": "Output mentions that the computed value is approximately 0.09999... or that 1.0 - 0.9 does not equal exactly 0.1 in floating-point, causing the equality check to fail"
+        },
+        {
+          "id": "recommends-isclose-or-integer",
+          "description": "Output recommends math.isclose or working in integer cents instead of float equality",
+          "check": "Output recommends math.isclose, round-then-compare, epsilon comparison, or working in integer cents/pence to avoid float equality issues"
+        },
+        {
+          "id": "has-premises-trace-divergence",
+          "description": "Finding has Premises, Trace, and Divergence sections",
+          "check": "Output contains 'Premises' AND 'Trace' AND 'Divergence' as section labels in the finding"
+        }
+      ]
+    },
+    {
+      "id": 212,
+      "name": "go-deadlock-mutex-order-L7",
+      "mode": "logic-review",
+      "prompt": "Review this Go code for logic errors:\n\n```go\n// store/state.go\ntype Cache struct {\n    mu   sync.Mutex\n    data map[string]string\n}\n\ntype Logger struct {\n    mu  sync.Mutex\n    buf []string\n}\n\nfunc (c *Cache) Write(logger *Logger, key, val string) {\n    c.mu.Lock()\n    defer c.mu.Unlock()\n    logger.mu.Lock()\n    defer logger.mu.Unlock()\n    c.data[key] = val\n    logger.buf = append(logger.buf, \"wrote: \"+key)\n}\n\nfunc (l *Logger) Flush(cache *Cache, summary string) {\n    l.mu.Lock()\n    defer l.mu.Unlock()\n    cache.mu.Lock()\n    defer cache.mu.Unlock()\n    cache.data[\"_flush\"] = summary\n    l.buf = append(l.buf, \"flushed\")\n}\n```\n\nTwo goroutines run concurrently: goroutine A calls `cache.Write(logger, ...)` while goroutine B calls `logger.Flush(cache, ...)`. Will this deadlock?",
+      "expected_output": "Should identify L7 (Concurrency / Async Hazard): a deadlock can occur. `Cache.Write` acquires cache.mu then logger.mu. `Logger.Flush` acquires logger.mu then cache.mu. These are opposite acquisition orders. If goroutine A holds cache.mu and waits for logger.mu, while goroutine B holds logger.mu and waits for cache.mu, each blocks waiting for the other — classic deadlock. Trace must show: (1) A locks cache.mu; (2) B locks logger.mu; (3) A tries to lock logger.mu — blocked; (4) B tries to lock cache.mu — blocked → neither can proceed. Risk code L7 — the bug requires concurrent goroutines, so it is L7 not L4. Remedy: establish a global lock acquisition order (always lock cache.mu before logger.mu in every function), or redesign to avoid holding two locks simultaneously.",
+      "assertions": [
+        {
+          "id": "identifies-L7",
+          "description": "Output identifies L7 (Concurrency / Async Hazard) — deadlock from lock-ordering violation, not L4",
+          "check": "Output contains 'L7'"
+        },
+        {
+          "id": "identifies-opposite-lock-order",
+          "description": "Output identifies that Write and Flush acquire the two mutexes in opposite order",
+          "check": "Output explains that Write acquires cache.mu then logger.mu, while Flush acquires logger.mu then cache.mu (or equivalently: the two methods acquire locks in opposite or reverse order)"
+        },
+        {
+          "id": "traces-deadlock-scenario",
+          "description": "Trace shows the interleaving that causes deadlock: A holds one lock while waiting for the other, B holds the other while waiting for the first",
+          "check": "Output's trace shows goroutine A holding one lock while waiting for the second, and goroutine B holding the second lock while waiting for the first, creating a circular wait"
+        },
+        {
+          "id": "recommends-consistent-lock-order",
+          "description": "Output recommends establishing a consistent global lock acquisition order",
+          "check": "Output recommends always acquiring locks in the same order across all goroutines and functions, or using a single composite lock, as the fix"
+        },
+        {
+          "id": "has-premises-trace-divergence",
+          "description": "Finding has Premises, Trace, and Divergence sections",
+          "check": "Output contains 'Premises' AND 'Trace' AND 'Divergence' as section labels in the finding"
+        }
+      ]
+    },
+    {
+      "id": 213,
+      "name": "python-n-plus-one-query-L3",
+      "mode": "logic-review",
+      "prompt": "Review this Python data access code for logic errors:\n\n```python\n# reports/orders.py\ndef get_order_summaries(db, order_ids: list[int]) -> list[dict]:\n    \"\"\"Return summary dicts with order id, customer name, and total.\"\"\"\n    orders = db.query(\n        \"SELECT id, customer_id, total FROM orders WHERE id = ANY(%s)\",\n        (order_ids,)\n    )\n    summaries = []\n    for order in orders:\n        # Fetch the customer name for each order individually\n        customer = db.query_one(\n            \"SELECT name FROM customers WHERE id = %s\",\n            (order['customer_id'],)\n        )\n        summaries.append({\n            'order_id':      order['id'],\n            'customer_name': customer['name'],\n            'total':         order['total'],\n        })\n    return summaries\n```\n\nThis works correctly in tests with 5 orders. What happens in production with 10,000 orders?",
+      "expected_output": "Should identify L3 (Boundary Blindspot): the function executes 1 + N database queries for N orders — the classic N+1 query problem. The first query batches all N orders, then a separate `db.query_one()` fires inside the loop for each individual order's customer. With 10,000 orders this becomes 10,001 database round-trips. At ~1ms per query that is ~10 seconds of query time; at higher latency the impact is worse. The bug is invisible at test scale (5 orders = 6 queries, fast) but catastrophic at production scale. Risk code L3 — the scale boundary was not considered. Trace must show: 1 batch query + N per-row queries = N+1 total. Remedy: use a single JOIN query to fetch customers together with orders, or batch-fetch all distinct customer IDs in one `WHERE id = ANY(...)` query after the initial result set.",
+      "assertions": [
+        {
+          "id": "identifies-L3-or-L6",
+          "description": "Output identifies L3 (Boundary Blindspot) or L6 (Callee Contract Mismatch) for the N+1 pattern",
+          "check": "Output contains 'L3' or 'L6'"
+        },
+        {
+          "id": "identifies-n-plus-one",
+          "description": "Output identifies the N+1 query pattern: 1 initial batch query plus 1 query per order",
+          "check": "Output identifies the N+1 query problem: 1 batch query for orders followed by 1 individual query per order for the customer (total: N+1 queries for N orders)"
+        },
+        {
+          "id": "quantifies-scale-impact",
+          "description": "Output shows that 10,000 orders result in approximately 10,001 queries, making the function impractically slow at scale",
+          "check": "Output quantifies the scale problem: approximately 10,001 (or N+1) queries for 10,000 orders, or describes this as a performance hazard at production scale"
+        },
+        {
+          "id": "recommends-join-or-batch",
+          "description": "Output recommends a JOIN or a single batch fetch to eliminate the per-row queries",
+          "check": "Output recommends using a SQL JOIN, or a single batch query with WHERE id IN / ANY to fetch all customers at once, eliminating the per-row query inside the loop"
+        },
+        {
+          "id": "has-premises-trace-divergence",
+          "description": "Finding has Premises, Trace, and Divergence sections",
+          "check": "Output contains 'Premises' AND 'Trace' AND 'Divergence' as section labels in the finding"
+        }
+      ]
+    },
+    {
+      "id": 214,
+      "name": "java-optional-get-without-check-L6",
+      "mode": "logic-review",
+      "prompt": "Review this Java code for logic errors:\n\n```java\n// service/UserService.java\nimport java.util.Optional;\n\npublic class UserService {\n    private final UserRepository repo;\n    private final EmailService emailService;\n\n    public String getUserEmail(long userId) {\n        Optional<User> user = repo.findById(userId);\n        return user.get().getEmail();  // line 9\n    }\n\n    public void sendWelcome(long userId) {\n        String email = getUserEmail(userId);  // line 13\n        emailService.send(email, \"Welcome to our platform!\");\n    }\n}\n```\n\n`repo.findById()` returns `Optional.empty()` when the user does not exist. What happens when `sendWelcome(99999L)` is called for a non-existent user?",
+      "expected_output": "Should identify L6 (Callee Contract Mismatch): `repo.findById()` returns `Optional<User>`, explicitly signalling the user might not exist. However, `user.get()` on line 9 is called without checking `user.isPresent()` first. When the user does not exist, `Optional.get()` throws `NoSuchElementException`. The Optional type is designed to force callers to handle the absent case, but using `get()` without a presence check defeats that contract. Trace: `sendWelcome(99999L)` → `getUserEmail(99999L)` → `repo.findById(99999L)` returns `Optional.empty()` → `user.get()` throws `NoSuchElementException` on line 9 → email never sent. Risk code L6. Remedy: use `user.orElseThrow(() -> new UserNotFoundException(userId))` to make the failure explicit, or `user.map(User::getEmail).orElse(null)` and handle null upstream.",
+      "assertions": [
+        {
+          "id": "identifies-L6",
+          "description": "Output identifies L6 (Callee Contract Mismatch) — using Optional.get() without a presence check",
+          "check": "Output contains 'L6'"
+        },
+        {
+          "id": "identifies-optional-get-risk",
+          "description": "Output identifies that Optional.get() without isPresent() throws NoSuchElementException when the Optional is empty",
+          "check": "Output states that calling Optional.get() on an empty Optional throws NoSuchElementException (or that get() is unsafe without a presence check)"
+        },
+        {
+          "id": "traces-call-chain",
+          "description": "Trace follows sendWelcome → getUserEmail → repo.findById returns empty Optional → get() throws",
+          "check": "Output's trace follows the call chain: sendWelcome → getUserEmail → findById returns empty Optional → get() throws"
+        },
+        {
+          "id": "recommends-safe-optional-api",
+          "description": "Output recommends safe Optional API (orElseThrow, orElse, ifPresent, map) instead of raw get()",
+          "check": "Output recommends orElseThrow, orElse, ifPresent, map, or another safe Optional API that handles the empty case without unchecked get()"
+        },
+        {
+          "id": "has-premises-trace-divergence",
+          "description": "Finding has Premises, Trace, and Divergence sections",
+          "check": "Output contains 'Premises' AND 'Trace' AND 'Divergence' as section labels in the finding"
+        }
+      ]
+    },
+    {
+      "id": 215,
+      "name": "rust-integer-overflow-release-L3",
+      "mode": "logic-review",
+      "prompt": "Review this Rust code for logic errors:\n\n```rust\n// network/checksum.rs\npub fn compute_checksum(data: &[u8]) -> u8 {\n    let mut sum: u8 = 0;\n    for &byte in data {\n        sum = sum + byte;   // plain addition\n    }\n    sum\n}\n\npub fn validate_packet(packet: &[u8]) -> bool {\n    if packet.is_empty() { return false; }\n    let payload  = &packet[..packet.len() - 1];\n    let expected = packet[packet.len() - 1];\n    compute_checksum(payload) == expected\n}\n```\n\nThe test suite (debug build) passes using small byte values like `[10, 20, 30]` with checksum `60`. In production, packets contain larger byte values. What happens in a release build (`cargo build --release`) when a production packet `[200, 100, 50]` with expected checksum `94` arrives?",
+      "expected_output": "Should identify L3 (Boundary Blindspot): Rust's integer overflow behavior differs between debug and release builds. In debug mode, `u8` arithmetic overflow panics at runtime — a safety feature. In release mode (`--release`), overflow silently wraps modulo 256 (two's complement). The test suite uses non-overflowing inputs (`[10, 20, 30]`, sum=60 fits in u8), so both modes agree and tests pass. The bug is invisible in tests. In production, the packet `[200, 100, 50]` triggers overflow: 200+100=300 wraps to 44 in release (no error); 44+50=94 matches the expected checksum for this specific input — but this is coincidental. For other large-byte inputs the wrapped checksum will differ from expected, causing valid packets to be silently rejected in release while debug would panic immediately. The function's behavior is build-mode-dependent and the test suite does not exercise the overflow boundary. Risk code L3. Remedy: use `sum.wrapping_add(byte)` to be explicit and consistent across debug and release builds.",
+      "assertions": [
+        {
+          "id": "identifies-L3",
+          "description": "Output identifies L3 (Boundary Blindspot) — overflow boundary not handled",
+          "check": "Output contains 'L3'"
+        },
+        {
+          "id": "identifies-debug-vs-release",
+          "description": "Output identifies that Rust overflow behavior differs between debug (panic) and release (silent wrap) builds",
+          "check": "Output explains that Rust panics on integer overflow in debug mode but silently wraps in release mode (or equivalently: overflow behavior is build-mode-dependent)"
+        },
+        {
+          "id": "identifies-silent-wrap-in-release",
+          "description": "Output identifies that in release mode overflow silently wraps, producing potentially incorrect results for different inputs",
+          "check": "Output states that in release mode overflow wraps silently (modulo 256 or two's complement), producing different behavior than debug mode and potentially incorrect checksums for some inputs"
+        },
+        {
+          "id": "recommends-wrapping-add",
+          "description": "Output recommends wrapping_add or another explicit overflow primitive",
+          "check": "Output recommends wrapping_add, checked_add, saturating_add, or Wrapping<u8> to make the overflow behavior explicit and consistent across build modes"
+        },
+        {
+          "id": "has-premises-trace-divergence",
+          "description": "Finding has Premises, Trace, and Divergence sections",
+          "check": "Output contains 'Premises' AND 'Trace' AND 'Divergence' as section labels in the finding"
+        }
+      ]
+    },
+    {
+      "id": 216,
+      "name": "zh-python-bare-except-swallows-L5",
+      "mode": "logic-review",
+      "prompt": "审查这段 Python 代码的逻辑问题：\n\n```python\n# jobs/processor.py\nimport queue\n\ndef run_worker(job_queue: queue.Queue):\n    \"\"\"持续处理任务队列。\"\"\"\n    while True:\n        try:\n            job = job_queue.get(timeout=1)\n            execute_job(job)\n            job_queue.task_done()\n        except:          # 捕获所有异常，防止单个任务失败影响整个 worker\n            pass         # 忽略错误，继续处理下一个任务\n```\n\n这段代码在测试中运行良好。生产中有时出现程序无法通过 Ctrl+C 退出的现象。请分析根因。",
+      "expected_output": "应识别 L5（控制流逃逸 / Control Flow Escape）：裸 `except:` 捕获所有异常，包括 `KeyboardInterrupt`（Ctrl+C 产生）、`SystemExit`（sys.exit() 产生）和 `GeneratorExit` 等系统级信号。当用户按 Ctrl+C 时，Python 抛出 `KeyboardInterrupt`，但 `except: pass` 静默吞掉了它，程序继续运行，这正是无法退出的根因。Trace 必须展示：Ctrl+C → Python 注入 KeyboardInterrupt → while 循环内 except: 捕获 → pass 丢弃 → 循环继续 → 程序挂起。L5 的核心：控制流的正常退出路径（中断信号）被意外拦截，违反了信号应当传播的契约。修复：改用 `except Exception:` 仅捕获普通异常；或对超时单独用 `except queue.Empty:`；对业务异常用精确的异常类型。输出必须是中文为主。",
+      "assertions": [
+        {
+          "id": "language-chinese-output",
+          "description": "Output body is primarily Chinese",
+          "check": "Output contains at least 50 Chinese characters and does not contain standalone English section headers like '# Findings', '## Summary', '# Premises', '# Trace', '# Divergence' on their own line"
+        },
+        {
+          "id": "identifies-L5-or-risk-code",
+          "description": "Output identifies L5 (Control Flow Escape) or describes exception swallowing as a control-flow risk",
+          "check": "Output contains 'L5' or describes the bare except as swallowing or silencing signals that should propagate"
+        },
+        {
+          "id": "identifies-keyboard-interrupt-swallowed",
+          "description": "Output identifies that bare except: catches KeyboardInterrupt, preventing Ctrl+C from terminating the program",
+          "check": "Output explains that bare except: (no type specified) catches KeyboardInterrupt (and/or SystemExit), which is why Ctrl+C cannot stop the program"
+        },
+        {
+          "id": "recommends-except-exception",
+          "description": "Output recommends using `except Exception:` or a specific exception type instead of bare except:",
+          "check": "Output recommends replacing bare `except:` with `except Exception:` or a specific exception class (such as queue.Empty or a business exception) to avoid catching system-level signals"
+        },
+        {
+          "id": "has-premises-trace-divergence",
+          "description": "Finding has Premises, Trace, and Divergence sections (Chinese or English labels accepted)",
+          "check": "Output contains ('Premises' OR '前提') AND ('Trace' OR '追踪') AND ('Divergence' OR '偏差' OR '分歧') as section labels"
+        }
+      ]
+    },
+    {
+      "id": 217,
+      "name": "csharp-linq-deferred-execution",
+      "mode": "logic-explain",
+      "prompt": "Explain step-by-step what this C# code actually prints, and why it surprises many developers:\n\n```csharp\nvar numbers = new List<int> { 1, 2, 3, 4, 5 };\n\n// Step 1: define a LINQ query\nvar query = numbers.Where(n => n > 2);\n\n// Step 2: mutate the source collection\nnumbers.Add(6);\nnumbers.Remove(3);\n\n// Step 3: enumerate the query\nforeach (var n in query)\n    Console.Write(n + \" \");\n```\n\nA developer expected to see: `3 4 5` (values > 2 at the time the query was defined). What actually prints, and why?",
+      "expected_output": "Should explain LINQ deferred execution: `numbers.Where(n => n > 2)` does NOT execute when called. It returns an `IEnumerable<int>` — a lazy query object that holds a reference to `numbers` and the predicate, not a snapshot of results. When Step 2 modifies `numbers` (adds 6, removes 3), those mutations affect the source. When Step 3 enumerates `query` (the foreach loop), the query executes for the first time against the current state of `numbers` = [1, 2, 4, 5, 6]. Numbers greater than 2: 4, 5, 6. Actual output: `4 5 6`, not `3 4 5`. Trace must show: Step 1 creates a lazy iterator (no execution); Step 2 mutates numbers; Step 3 triggers actual evaluation against the now-mutated list. The developer's mistake: treating `query` as an eagerly-evaluated snapshot (equivalent to calling `.ToList()` at Step 1).",
+      "assertions": [
+        {
+          "id": "explains-deferred-execution",
+          "description": "Output explains that LINQ Where() is lazily evaluated — not executed when called, only when enumerated",
+          "check": "Output explains that the LINQ query is lazily evaluated or deferred — Where() does not execute at call time, only when the foreach (or equivalent enumeration) triggers it"
+        },
+        {
+          "id": "states-actual-output",
+          "description": "Output states the actual output: 4 5 6 (not 3 4 5), because 3 was removed and 6 was added before enumeration",
+          "check": "Output states the actual output is '4 5 6' (or equivalently: 3 is absent because it was removed, 6 is present because it was added before enumeration)"
+        },
+        {
+          "id": "explains-mutation-effect",
+          "description": "Output explains that Step 2 mutations affect the query because the query evaluates against numbers at enumeration time (not at definition time)",
+          "check": "Output explains that the query holds a reference to numbers (not a snapshot), so modifications in Step 2 are reflected when the query executes in Step 3"
+        },
+        {
+          "id": "no-score-line",
+          "description": "Execution Explain mode does not include a Logic Score line",
+          "check": "Output does not contain the text 'Logic Score'"
+        }
+      ]
+    },
+    {
+      "id": 218,
+      "name": "python-integer-cache-identity",
+      "mode": "logic-explain",
+      "prompt": "Explain why these Python expressions produce different results:\n\n```python\n# Snippet A\na = 256\nb = 256\nprint(a is b)   # True\n\n# Snippet B\nx = 257\ny = 257\nprint(x is y)   # False (when each line is typed separately in an interactive REPL)\n\n# Snippet C\ndef same_object(n):\n    a = n\n    b = n\n    return a is b\n\nprint(same_object(1000))   # True — why?\n```\n\nA developer is confused: why does `is` return True for 256 but sometimes False for 257? And how can `same_object` return True for 1000?",
+      "expected_output": "Should explain CPython's small integer cache and parameter identity. (1) CPython pre-allocates integer objects for the range -5 to 256 as a performance optimization. Any assignment of an integer in this range reuses the cached singleton, so `a is b` for 256 is always True — there is only one object in memory. (2) Integers outside this range (like 257) are not cached. In an interactive session, two separate assignments `x = 257; y = 257` on different lines may create two distinct objects, making `x is y` False. (3) In `same_object(n)`, both `a = n` and `b = n` bind to the exact same Python object that was passed as the argument `n`. There is only one copy of the object in memory, so `a is b` is True regardless of the value — even for 1000. The key lesson: `is` tests object identity (same memory address), not value equality. Always use `==` to compare values.",
+      "assertions": [
+        {
+          "id": "explains-small-int-cache",
+          "description": "Output explains CPython's small integer cache: integers from -5 to 256 are pre-allocated singletons, so `is` always returns True in that range",
+          "check": "Output explains that CPython caches or pre-allocates small integers (range includes -5 to 256), so integers in this range always return the same object, making `is` return True for 256"
+        },
+        {
+          "id": "explains-257-new-objects",
+          "description": "Output explains that 257 is outside the cache range and may create separate objects in interactive sessions",
+          "check": "Output explains that 257 (or integers > 256) are outside the cached range, so Python may create separate objects for each assignment in some contexts, making `is` return False"
+        },
+        {
+          "id": "explains-function-same-variable",
+          "description": "Output explains why same_object(1000) returns True: both a and b are bound to the same object (the argument n)",
+          "check": "Output explains that inside same_object, both `a = n` and `b = n` refer to the same object (the argument n), so `a is b` is True regardless of the integer's value"
+        },
+        {
+          "id": "no-score-line",
+          "description": "Execution Explain mode does not include a Logic Score line",
+          "check": "Output does not contain the text 'Logic Score'"
+        }
+      ]
+    },
+    {
+      "id": 219,
+      "name": "zh-js-prototype-shared-mutation",
+      "mode": "logic-explain",
+      "prompt": "请逐步解释下面这段 JavaScript 的执行过程，以及为什么输出与预期不同：\n\n```javascript\nfunction Animal(name) {\n    this.name = name;\n}\nAnimal.prototype.speak = function() {\n    return this.name + ' makes a sound';\n};\n\nfunction Dog(name) {\n    Animal.call(this, name);\n}\nDog.prototype = Animal.prototype;   // 直接赋值，不是 Object.create\n\nDog.prototype.speak = function() {\n    return this.name + ' barks';\n};\n\nconst cat = new Animal('Cat');\nconst dog = new Dog('Dog');\nconsole.log(cat.speak());   // 预期 'Cat makes a sound'\nconsole.log(dog.speak());   // 预期 'Dog barks'\n```\n\n开发者预期 cat 输出 'Cat makes a sound'，dog 输出 'Dog barks'。实际结果是什么？请追踪原因。",
+      "expected_output": "应解释原型共享导致的副作用：`Dog.prototype = Animal.prototype` 不是创建新对象，而是让 Dog.prototype 和 Animal.prototype 指向同一个对象（引用赋值）。当执行 `Dog.prototype.speak = function() { ... }` 时，实际上是在那个共享对象上覆盖了 speak 方法，Animal.prototype.speak 也随之被覆盖。cat 是 Animal 的实例，其原型链查找 speak 找到的是同一个已被覆盖的方法。最终：cat.speak() 输出 'Cat barks'（而非预期的 'Cat makes a sound'），dog.speak() 输出 'Dog barks'（正确）。Trace 必须展示：(1) 赋值后两个原型指向同一对象；(2) 覆盖 Dog.prototype.speak 等价于覆盖 Animal.prototype.speak；(3) cat 通过原型链找到的 speak 已是新版本。修复：使用 `Dog.prototype = Object.create(Animal.prototype)` 创建独立的原型对象，再在其上覆盖 speak。输出必须以中文为主。",
+      "assertions": [
+        {
+          "id": "language-chinese-output",
+          "description": "Output body is primarily Chinese",
+          "check": "Output contains at least 50 Chinese characters and does not contain standalone English section headers like '# Trace' or '## Explanation' on their own line"
+        },
+        {
+          "id": "explains-shared-prototype",
+          "description": "Output explains that Dog.prototype = Animal.prototype makes both point to the same object (a reference, not a copy)",
+          "check": "Output explains that Dog.prototype and Animal.prototype point to the same object (not separate objects), because = assigns a reference not a copy"
+        },
+        {
+          "id": "explains-override-affects-animal",
+          "description": "Output explains that overriding Dog.prototype.speak actually overwrites Animal.prototype.speak, affecting all Animal instances",
+          "check": "Output explains that assigning to Dog.prototype.speak modifies the shared prototype object, overwriting Animal.prototype.speak and affecting all instances including cat"
+        },
+        {
+          "id": "states-actual-cat-output",
+          "description": "Output states that cat.speak() returns 'Cat barks' (not 'Cat makes a sound') because the shared prototype was overwritten",
+          "check": "Output states that cat.speak() also returns 'Cat barks' (or 'barks') instead of 'Cat makes a sound', because both share the same overwritten speak method"
+        },
+        {
+          "id": "no-score-line",
+          "description": "Execution Explain mode does not include a Logic Score line",
+          "check": "Output does not contain the text 'Logic Score'"
+        }
+      ]
+    },
+    {
+      "id": 220,
+      "name": "java-string-equality-rewrite",
+      "mode": "logic-diff",
+      "prompt": "I refactored a Java helper. Are these two versions semantically equivalent?\n\nVersion A:\n```java\npublic boolean isAdmin(String role) {\n    return role == \"admin\";\n}\n```\n\nVersion B:\n```java\npublic boolean isAdmin(String role) {\n    return \"admin\".equals(role);\n}\n```",
+      "expected_output": "Verdict: Semantically Divergent. In Java, `==` compares object references, not string content. String literals are interned in the JVM's string pool, so `role == \"admin\"` returns true only when `role` is the exact same interned object. When `role` comes from a database query, network input, `new String(\"admin\")`, or `String.substring()`, it is a non-interned object and `==` returns false even though the content is 'admin'. Version B uses `String.equals()`, which compares content character-by-character and is always correct. Additionally, `\"admin\".equals(role)` is null-safe (returns false for null), while `role.equals(\"admin\")` would throw NPE if role is null — though Version A also avoids NPE since `null == literal` is false. Primary divergence: any non-interned 'admin' string causes Version A to return false when Version B correctly returns true. Premises must analyze both versions' equality semantics.",
+      "assertions": [
+        {
+          "id": "gives-verdict-divergent",
+          "description": "Output gives verdict Semantically Divergent",
+          "check": "Output contains 'Semantically Divergent' (not 'Semantically Equivalent' and not 'Conditionally Equivalent' as the final verdict)"
+        },
+        {
+          "id": "identifies-reference-vs-content",
+          "description": "Output explains that == compares object references in Java, not string content",
+          "check": "Output explains that Java's == operator compares object references (identity), not string content (equality), and that equals() compares content"
+        },
+        {
+          "id": "identifies-non-interned-scenario",
+          "description": "Output gives a concrete scenario where Version A fails: non-interned strings from new String(), DB queries, or external input",
+          "check": "Output identifies that non-interned strings (from new String(), database queries, network input, or parsing) cause Version A to return false while Version B correctly returns true"
+        },
+        {
+          "id": "has-premises-both-versions",
+          "description": "Output builds premises for both Version A and Version B independently",
+          "check": "Output analyzes both Version A and Version B (not just one of them)"
+        }
+      ]
+    },
+    {
+      "id": 221,
+      "name": "ts-type-guard-vs-assertion-diff",
+      "mode": "logic-diff",
+      "prompt": "Are these two TypeScript functions semantically equivalent?\n\nVersion A:\n```typescript\nfunction getNameLength(val: string | null): number {\n    if (val !== null && val !== undefined) {\n        return val.length;\n    }\n    return 0;\n}\n```\n\nVersion B:\n```typescript\nfunction getNameLength(val: string | null): number {\n    return (val as string).length || 0;\n}\n```",
+      "expected_output": "Verdict: Semantically Divergent. Version A uses a runtime null/undefined check and is safe: if val is null or undefined, it returns 0. Version B uses `val as string` — a compile-time type assertion with no runtime effect. When val is null, `(null as string).length` throws `TypeError: Cannot read properties of null (reading 'length')` at runtime. The `|| 0` fallback never executes because the error occurs before it. An empty string ('') yields length 0 in both versions, so that is not a divergence point. The sole critical divergence is the null case: Version A safely returns 0, Version B throws. Premises must analyze how each version handles null at runtime.",
+      "assertions": [
+        {
+          "id": "gives-verdict-divergent",
+          "description": "Output gives verdict Semantically Divergent",
+          "check": "Output contains 'Semantically Divergent'"
+        },
+        {
+          "id": "identifies-null-crash",
+          "description": "Output identifies that Version B throws TypeError when val is null, because `as string` is compile-time only",
+          "check": "Output explains that when val is null, Version B's `(null as string).length` throws a TypeError or runtime error, while Version A safely returns 0"
+        },
+        {
+          "id": "identifies-as-compile-time-only",
+          "description": "Output identifies that `as string` is a TypeScript compile-time assertion with no runtime effect",
+          "check": "Output explains that TypeScript `as` assertions are compile-time only and perform no runtime null check or type coercion"
+        },
+        {
+          "id": "has-premises-both-versions",
+          "description": "Output builds premises for both Version A and Version B",
+          "check": "Output analyzes both Version A and Version B (not just one of them)"
+        }
+      ]
+    },
+    {
+      "id": 222,
+      "name": "zh-python-list-vs-generator-diff",
+      "mode": "logic-diff",
+      "prompt": "下面两段 Python 代码在语义上等价吗？\n\n版本 A：\n```python\ndef process_file(path):\n    lines = [line.strip() for line in open(path)]  # 列表推导式\n    return [line for line in lines if line]\n```\n\n版本 B：\n```python\ndef process_file(path):\n    lines = (line.strip() for line in open(path))  # 生成器表达式\n    return [line for line in lines if line]\n```",
+      "expected_output": "应判定为条件等价（Conditionally Equivalent）。两个版本对相同输入返回相同的列表内容（所有非空行的 strip 结果），但在资源用量和大文件行为上有区别。版本 A 使用列表推导式，一次性把整个文件所有行读入内存（O(n) 内存）；对 10GB 大文件可能导致 OOM。版本 B 使用生成器表达式，惰性逐行读取，内存占用接近 O(1)，可安全处理任意大的文件。另外，两个版本都没有显式关闭文件句柄（依赖 CPython 引用计数 GC），在 PyPy 等非 CPython 实现上文件句柄可能延迟关闭。结论：对输出内容等价，但内存使用量和大文件适用性不同，属于条件等价。输出必须以中文为主。",
+      "assertions": [
+        {
+          "id": "language-chinese-output",
+          "description": "Output body is primarily Chinese",
+          "check": "Output contains at least 50 Chinese characters and does not contain standalone English section headers on their own line"
+        },
+        {
+          "id": "gives-verdict",
+          "description": "Output gives one of the three standard verdict options",
+          "check": "Output contains one of: 'Semantically Equivalent', 'Conditionally Equivalent', 'Semantically Divergent', '语义等价', '条件等价', '语义不等价', '语义分歧'"
+        },
+        {
+          "id": "identifies-memory-difference",
+          "description": "Output identifies that Version A loads all lines into memory (O(n)) while Version B uses lazy evaluation (O(1) memory)",
+          "check": "Output explains that Version A (list comprehension) loads all lines into memory at once, while Version B (generator expression) is lazy or streams data and uses much less memory for large files"
+        },
+        {
+          "id": "identifies-large-file-risk",
+          "description": "Output identifies that Version A may cause OOM on large files while Version B handles them efficiently",
+          "check": "Output mentions that Version A may cause memory issues (OOM or 内存溢出 or 内存不足) with large files, while Version B handles them efficiently"
+        },
+        {
+          "id": "has-premises-both-versions",
+          "description": "Output builds premises for both Version A and Version B independently",
+          "check": "Output analyzes both 版本 A / Version A and 版本 B / Version B (not just one of them)"
+        }
+      ]
+    },
+    {
+      "id": 223,
+      "name": "nodejs-unhandled-rejection-L5",
+      "mode": "logic-locate",
+      "prompt": "In production (Node.js 18+), the process occasionally exits with an error. The log shows:\n\n```\nUnhandledPromiseRejection: FetchError: network timeout after 5000ms\n    at fetchWidgetData (dashboard.js:4)\n    at loadDashboard (dashboard.js:9)\n```\n\nRelevant code:\n\n```javascript\n// dashboard.js\nasync function fetchWidgetData(widgetId) {               // line 3\n    const res = await fetch(`/api/widgets/${widgetId}`); // line 4\n    return res.json();\n}\n\nfunction loadDashboard(widgetIds) {                      // line 8\n    const promises = widgetIds.map(id => fetchWidgetData(id)); // line 9\n    Promise.all(promises).then(results => {\n        renderDashboard(results);\n    });\n    // no .catch() — fire-and-forget\n}\n\napp.get('/dashboard', (req, res) => {\n    loadDashboard(req.query.widgets);\n    res.send('Loading...');\n});\n```\n\nWhere is the root cause?",
+      "expected_output": "Should locate the fault as L5 (Control Flow Escape): `loadDashboard` calls `Promise.all(...).then(...)` but does not attach a `.catch()` handler and does not return the promise to the caller. When any `fetchWidgetData` call rejects (network timeout, non-OK response, JSON parse error), `Promise.all` rejects, but the rejection has no handler — it becomes an unhandled promise rejection. In Node.js 18+, unhandled rejections terminate the process. The route handler also does not await or return `loadDashboard`, so the Express layer cannot catch the error. The rejection escapes all control flow levels without being handled anywhere. Fault Confidence: High. Backward trace: process exit → UnhandledPromiseRejection event → Promise.all rejected → no .catch() attached → forward trace: fetchWidgetData network timeout → fetch throws → propagates to Promise.all. Risk code L5. Remedy: add `.catch(err => log.error(err))` to the Promise.all chain, or make loadDashboard async and await it in the route handler inside a try/catch.",
+      "assertions": [
+        {
+          "id": "identifies-L5",
+          "description": "Output identifies L5 (Control Flow Escape) — missing catch handler lets rejection escape",
+          "check": "Output contains 'L5'"
+        },
+        {
+          "id": "identifies-missing-catch",
+          "description": "Output identifies the absence of a .catch() handler on the Promise.all chain as the root cause",
+          "check": "Output identifies that Promise.all(...).then(...) has no .catch() handler, so rejections become unhandled"
+        },
+        {
+          "id": "explains-nodejs-exit",
+          "description": "Output explains that in Node.js 18+, unhandled promise rejections terminate the process",
+          "check": "Output explains that Node.js 18+ (or newer Node.js versions) exits or crashes the process on unhandled promise rejections"
+        },
+        {
+          "id": "has-fault-confidence",
+          "description": "Output uses Fault Confidence as required by logic-locate mode",
+          "check": "Output contains 'Fault Confidence' or 'Confidence:'"
+        }
+      ]
+    },
+    {
+      "id": 224,
+      "name": "zh-java-concurrent-modification-L4",
+      "mode": "logic-locate",
+      "prompt": "测试偶发失败，错误信息为：\n\n```\njava.util.ConcurrentModificationException\n    at java.util.ArrayList$Itr.checkForComodification(ArrayList.java:911)\n    at java.util.ArrayList$Itr.next(ArrayList.java:861)\n    at SessionManager.cleanExpired(SessionManager.java:27)\n```\n\n相关代码：\n\n```java\n// SessionManager.java\npublic class SessionManager {\n    private final List<Session> sessions = new ArrayList<>();\n\n    public void addSession(Session s) {\n        sessions.add(s);\n    }\n\n    public void cleanExpired() {               // line 24\n        for (Session s : sessions) {           // line 25\n            if (s.isExpired()) {               // line 26\n                sessions.remove(s);            // line 27 — 遍历中修改\n            }\n        }\n    }\n}\n```\n\n请定位根因，并解释为什么这个异常是偶发的而非必现的。",
+      "expected_output": "应定位根因为 L4（状态变更风险 / State Mutation Hazard）：Java 的 ArrayList 维护一个 modCount（结构修改计数器），增强 for-each 循环在内部使用 Iterator，每次 iterator.next() 都会校验 modCount 是否和创建时一致。cleanExpired 在 for-each 循环内调用 sessions.remove(s)，该操作递增 modCount；下次迭代调用 next() 时检测到 modCount 不一致，抛出 ConcurrentModificationException。偶发原因：只有在 remove 之后还有后续 next() 调用时才触发。若最后一个元素被删除，iterator.hasNext() 返回 false，无需再调用 next()，不触发异常；若列表中没有过期 session，remove 不被调用，modCount 不变化，也不触发。Fault Confidence: 高。修复：改用 `Iterator<Session> it = sessions.iterator(); while (it.hasNext()) { if (it.next().isExpired()) it.remove(); }` 或更简洁的 `sessions.removeIf(Session::isExpired)`。输出必须以中文为主。",
+      "assertions": [
+        {
+          "id": "language-chinese-output",
+          "description": "Output body is primarily Chinese",
+          "check": "Output contains at least 50 Chinese characters and does not contain standalone English section headers on their own line"
+        },
+        {
+          "id": "identifies-L4",
+          "description": "Output identifies L4 (State Mutation Hazard) — ConcurrentModificationException from single-threaded loop mutation is L4, not L7",
+          "check": "Output contains 'L4'"
+        },
+        {
+          "id": "explains-modcount",
+          "description": "Output explains the ConcurrentModificationException mechanism: ArrayList's structural modification counter detected during iterator.next()",
+          "check": "Output explains that ArrayList tracks structural modifications (modCount or modification counter), and the for-each iterator detects this change in next(), throwing ConcurrentModificationException"
+        },
+        {
+          "id": "explains-intermittent",
+          "description": "Output explains why the exception is intermittent — only triggered when a removal is followed by another iterator.next() call",
+          "check": "Output explains that the exception is intermittent because it only occurs when a removal happens AND the iterator subsequently calls next() — it may not trigger if only the last element is removed or no expired sessions exist"
+        },
+        {
+          "id": "has-fault-confidence",
+          "description": "Output uses Fault Confidence as required by logic-locate mode",
+          "check": "Output contains 'Fault Confidence' or 'Confidence:' or a Chinese equivalent such as '故障置信度' or '置信度'"
+        }
+      ]
+    },
+    {
+      "id": 225,
+      "name": "java-service-health-resource-leak",
+      "mode": "logic-health",
+      "prompt": "Give me a logic health overview of this Java service module:\n\n```java\n// service/ReportService.java\nimport java.sql.*;\n\npublic class ReportService {\n    private final DataSource dataSource;\n\n    public String generateReport(int userId) throws SQLException {\n        Connection conn = dataSource.getConnection();\n        Statement stmt = conn.createStatement();\n        ResultSet rs = stmt.executeQuery(\n            \"SELECT * FROM reports WHERE user_id = \" + userId\n        );\n        if (!rs.next()) {\n            return null;  // conn, stmt, rs all leaked on this path\n        }\n        String content = rs.getString(\"content\");\n        conn.close();\n        return content;\n    }\n\n    public void deleteOldReports(int daysOld) throws SQLException {\n        Connection conn = dataSource.getConnection();\n        conn.createStatement().executeUpdate(\n            \"DELETE FROM reports WHERE created_at < NOW() - INTERVAL '\"\n            + daysOld + \" days'\"\n        );\n        conn.commit();\n        // conn never closed: unconditional resource leak\n    }\n\n    public int countReports(String status) throws SQLException {\n        Connection conn = dataSource.getConnection();\n        ResultSet rs = conn.createStatement().executeQuery(\n            \"SELECT COUNT(*) FROM reports WHERE status = '\" + status + \"'\"\n        );\n        conn.close();       // closed before reading ResultSet\n        rs.next();\n        return rs.getInt(1); // ResultSet may be invalidated after conn.close()\n    }\n}\n```",
+      "expected_output": "Should produce a health report with Logic Score well below 100 and a Module Breakdown showing ReportService. Should identify: (1) L8 in generateReport — Connection, Statement, and ResultSet are leaked on the early-return path; conn.close() only runs on the happy path. (2) L8 in deleteOldReports — Connection is never closed; unconditional resource leak. SQL string concatenation also present (L3/L6). (3) L6 or L8 in countReports — conn.close() is called before reading the ResultSet; the ResultSet may be invalidated when its underlying connection is closed, causing downstream failures. Also SQL concatenation. Systemic pattern: all three methods use SQL string concatenation and have acquire-release imbalance. Recommend try-with-resources and PreparedStatement.",
+      "assertions": [
+        {
+          "id": "has-module-breakdown",
+          "description": "Output includes a Module Breakdown section or table with per-method or per-module analysis",
+          "check": "Output contains a 'Module Breakdown' heading, or a table showing per-module or per-method logic scores or findings"
+        },
+        {
+          "id": "identifies-L8-resource-leak",
+          "description": "Output identifies L8 (Resource Lifecycle Hazard) — connections not closed on all paths",
+          "check": "Output contains 'L8' and identifies that database connections (or Statement or ResultSet resources) are not closed on all execution paths"
+        },
+        {
+          "id": "identifies-sql-concatenation",
+          "description": "Output identifies SQL string concatenation as a logic risk (not just a security issue)",
+          "check": "Output identifies that SQL strings are constructed by concatenating user-controlled input, framed as a logic or contract risk (L3 or L6)"
+        },
+        {
+          "id": "score-below-100",
+          "description": "Logic Score is below 100",
+          "check": "Output reports a Logic Score below 100 — not '100/100' or 'Logic Score: 100'"
+        },
+        {
+          "id": "identifies-resultset-after-close",
+          "description": "Output identifies that countReports closes the connection before reading from the ResultSet",
+          "check": "Output identifies that in countReports, conn.close() is called before rs.getInt(1) reads the ResultSet, which may invalidate the ResultSet"
+        }
+      ]
+    },
+    {
+      "id": 226,
+      "name": "zh-ts-async-error-health",
+      "mode": "logic-health",
+      "prompt": "帮我检查这个 TypeScript API 模块的整体逻辑健康度：\n\n```typescript\n// api/service.ts\nasync function fetchUserData(userId: string): Promise<any> {\n    const res = await fetch(`/users/${userId}`);\n    return res.json();   // 不检查 res.ok\n}\n\nasync function processPayment(amount: number, token: string) {\n    try {\n        const result = await paymentGateway.charge(amount, token);\n        return result;\n    } catch (e) {\n        console.log('payment error:', e);   // 只打印，不重抛\n        // 函数隐式返回 undefined\n    }\n}\n\nfunction loadUserAndPay(userId: string, amount: number, token: string) {\n    fetchUserData(userId).then(user => {\n        processPayment(amount, token).then(result => {\n            console.log('done', result);\n        });\n        // 内层 then 无 catch\n    });\n    // 外层 then 无 catch\n}\n```\n\n请给出整体健康度评分和每个函数的问题分析。",
+      "expected_output": "应输出中文健康报告，包含 Module Breakdown（或函数分解）表格，Logic Score 明显低于 100。应识别至少 3 个问题：fetchUserData 不检查 res.ok，HTTP 错误（404/500）时 res.json() 解析错误响应体而不抛异常，调用方误以为成功（L6）；processPayment catch 块吞掉异常只打印不重抛，函数隐式返回 undefined，调用方无法区分成功和失败（L5）；loadUserAndPay 对两层 Promise 都没有 catch 处理，任意一层 reject 都产生 Unhandled Rejection，Node.js 18+ 进程退出（L5）。输出必须是中文为主。",
+      "assertions": [
+        {
+          "id": "language-chinese-output",
+          "description": "Output body is primarily Chinese",
+          "check": "Output contains at least 50 Chinese characters and does not contain standalone English section headers like '# Findings' or '## Summary' on their own line"
+        },
+        {
+          "id": "has-module-breakdown",
+          "description": "Output includes a Module Breakdown section or table",
+          "check": "Output contains a 'Module Breakdown' heading (or Chinese equivalent like '模块分解' or '函数分析') or a table showing per-function analysis"
+        },
+        {
+          "id": "score-below-100",
+          "description": "Logic Score is below 100",
+          "check": "Output reports a Logic Score (or 逻辑分数) below 100 — not 100 or 100/100"
+        },
+        {
+          "id": "identifies-at-least-3-findings",
+          "description": "Output identifies at least 3 distinct findings across the three functions",
+          "check": "Output lists or discusses at least 3 distinct issues from: fetchUserData missing res.ok check, processPayment swallowing errors in catch block, loadUserAndPay missing .catch() on both promise chains or unhandled rejection risk"
+        }
+      ]
+    },
+    {
+      "id": 227,
+      "name": "java-fix-all-resource-leak-L8",
+      "mode": "logic-fix-all",
+      "prompt": "Fix all logic issues in this Java code:\n\n```java\n// data/UserLoader.java\nimport java.sql.*;\n\npublic class UserLoader {\n    private final Connection conn;\n\n    public UserLoader(Connection conn) {\n        this.conn = conn;\n    }\n\n    public String getUsername(int userId) throws SQLException {\n        Statement stmt = conn.createStatement();\n        ResultSet rs = stmt.executeQuery(\n            \"SELECT username FROM users WHERE id = \" + userId\n        );\n        if (rs.next()) {\n            return rs.getString(\"username\");  // stmt and rs never closed\n        }\n        return null;                          // stmt and rs never closed\n    }\n\n    public void updateEmail(int userId, String email) throws SQLException {\n        Statement stmt = conn.createStatement();\n        stmt.executeUpdate(\n            \"UPDATE users SET email = '\" + email + \"' WHERE id = \" + userId\n        );\n        // stmt never closed\n    }\n}\n```",
+      "expected_output": "Should apply fixes (not just report findings) and output a Fix Log table. Issues: (1) getUsername leaks Statement and ResultSet on all paths — L8; fix with try-with-resources. (2) updateEmail leaks Statement on all paths — L8; same fix. (3) Both methods use SQL string concatenation, not parameterized queries — L3/L6; fix with PreparedStatement. Fix Log must list all applied fixes. Logic Score (after) must be higher than Logic Score (before). The output must NOT be a plain review report — it must include fixed code and a Fix Log table with before/after scores.",
+      "assertions": [
+        {
+          "id": "has-fix-log",
+          "description": "Output includes a Fix Log section or table listing changes made",
+          "check": "Output contains 'Fix Log' as a heading or table label"
+        },
+        {
+          "id": "has-before-after-scores",
+          "description": "Output shows Logic Score before and after fixes",
+          "check": "Output contains both 'before' and 'after' Logic Score values (or equivalent labels like 'Logic Score (before)' and 'Logic Score (after)')"
+        },
+        {
+          "id": "fixes-resource-leak",
+          "description": "A fix was applied to close Statement and ResultSet resources on all paths",
+          "check": "Output's Fix Log or code change shows try-with-resources, finally blocks, or explicit close() calls added to handle Statement and ResultSet lifecycle in getUsername and/or updateEmail"
+        },
+        {
+          "id": "fixes-sql-concatenation",
+          "description": "A fix was applied to replace SQL string concatenation with PreparedStatement",
+          "check": "Output's Fix Log or code change shows PreparedStatement (or parameterized queries using setInt or setString) replacing string concatenation in at least one method"
+        },
+        {
+          "id": "score-improved",
+          "description": "Logic Score after fixes is higher than before",
+          "check": "The after score is numerically higher than the before score"
+        }
+      ]
     }
   ]
 }
