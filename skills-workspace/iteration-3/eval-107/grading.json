@@ -11,8 +11,8 @@
       "passed": true
     },
     {
-      "text": "contains L4",
-      "passed": true
+      "text": "contains L7 (concurrency hazard, not L4)",
+      "passed": false
     },
     {
       "text": "identifies race / non-atomic increment",
@@ -23,7 +23,7 @@
       "passed": true
     }
   ],
-  "passed": 4,
+  "passed": 3,
   "total": 4,
-  "pass_rate": 1.0
+  "pass_rate": 0.75
 }

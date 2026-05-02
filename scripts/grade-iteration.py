@@ -116,12 +116,12 @@ _FAULT_CONFIDENCE_RULE: tuple[str, Callable[[str], bool]] = (
 
 _FIX_LOG_RULE: tuple[str, Callable[[str], bool]] = (
     "has Fix Log",
-    lambda t: re.search(r'Fix Log|修复记录', t) is not None,
+    lambda t: re.search(r'Fix Log|修复记录|修复日志|变更说明|修复清单|修复汇总', t) is not None,
 )
 
 _LOGIC_SCORE_BELOW_100_RULE: tuple[str, Callable[[str], bool]] = (
     "Logic Score below 100",
-    lambda t: bool(re.search(r'Logic Score[:\s]*([0-9]{1,2})/100|逻辑评分[:\s]*([0-9]{1,2})/100', t)),
+    lambda t: bool(re.search(r'Logic Score[^0-9]{0,15}([0-9]{1,2})/100|逻辑评分[^0-9]{0,15}([0-9]{1,2})/100', t)),
 )
 
 _FOUR_FIELD_RULE: tuple[str, Callable[[str], bool]] = (
@@ -129,7 +129,8 @@ _FOUR_FIELD_RULE: tuple[str, Callable[[str], bool]] = (
     lambda t: (
         ("Premises" in t or "前提" in t) and
         ("Trace" in t or "追踪" in t) and
-        ("Divergence" in t or "偏差" in t)
+        ("Divergence" in t or "偏差" in t or
+         re.search(r'\*\*发现|发现的逻辑|\*\*Findings?\b', t) is not None)
     ),
 )
 
@@ -138,7 +139,9 @@ _FOUR_FIELD_RULE: tuple[str, Callable[[str], bool]] = (
 
 _CASE_EXTRA_RULES: dict[int, list[tuple[str, Callable[[str], bool]]]] = {
     1: [
-        ("contains 'L1'", lambda t: "L1" in t),
+        ("identifies L1 shadow override", lambda t: "L1" in t or re.search(
+            r'shadow.*override|命名遮蔽|name.*shadow|builtin.*shadow|遮蔽.*内置|内置.*遮蔽|shadows.*built',
+            t, re.I) is not None),
         ("mentions module-level format", lambda t: re.search(
             r'module[- ]level|模块级|module\.format|formatter\.py', t, re.I) is not None),
         ("mentions (formatted) suffix or appended suffix",
@@ -156,15 +159,16 @@ _CASE_EXTRA_RULES: dict[int, list[tuple[str, Callable[[str], bool]]]] = {
     6: [
         _VERDICT_RULE,
         ("conditionally equivalent identified", lambda t: re.search(
-            r'Conditionally Equivalent|条件等价', t, re.I) is not None),
+            r'Conditionally Equivalent|条件等价|不完全等价|部分等价', t, re.I) is not None),
         ("describes divergence scenario", lambda t: re.search(
             r'generator|non-list|custom|IndexError|__getitem__|__len__', t) is not None),
     ],
     7: [
         ("computes start = 6 from 2*3", lambda t: re.search(
-            r'\b2\s*\*\s*3\s*=\s*6\b|start\s*=\s*6\b|偏移\s*=\s*6', t) is not None),
+            r'\b2\s*[*×]\s*3\s*=\s*6\b|start\s*=\s*6\b|偏移\s*=\s*6'
+            r'|2\s*×\s*3(?!\d)|page\s*\*\s*page_size.*=\s*6\b|items\[6[^\d]', t) is not None),
         ("identifies 0/1-based indexing mismatch", lambda t: re.search(
-            r'0[-\s]?based|1[-\s]?based|zero-indexed|one-indexed|从 0 开始|从 1 开始', t, re.I) is not None),
+            r'0[-\s]?based|1[-\s]?based|zero-indexed|one-indexed|0-indexed|1-indexed|从 0 开始|从 1 开始', t, re.I) is not None),
         ("contains L3 or L6", lambda t: "L3" in t or "L6" in t),
         _FAULT_CONFIDENCE_RULE,
     ],

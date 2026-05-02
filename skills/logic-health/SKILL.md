@@ -3,15 +3,18 @@ name: logic-health
 description: >
   Sweep a directory, module, or full codebase for logic correctness and
   produce a scored health dashboard with systemic patterns. Trigger when
-  the scope is multi-file — "audit the whole codebase", "health check",
-  "audit src/", "audit auth and payments modules", "where should I focus
-  testing", "onboarding review", "logic overview before we ship".
-  SCOPE HARD RULE: multi-file or directory scope. One file or one
-  function uses logic-review; a concrete failure uses logic-locate; two
-  versions uses logic-diff; explaining a path uses logic-explain; "fix
-  everything" (no scope named) uses logic-fix-all.
-  Do NOT trigger for: single function/file, style/architecture-only
-  audits, security-only scans, performance-only audits.
+  the user requests a health view — "audit the whole codebase",
+  "health check", "health overview", "logic health overview",
+  "audit src/", "audit auth and payments modules",
+  "where should I focus testing", "onboarding review",
+  "logic overview before we ship", "give me a health overview of this module".
+  SCOPE RULE: prefer multi-file; also trigger for a single module when
+  the user explicitly uses "health check", "health overview", or
+  "logic health" — a concrete failure uses logic-locate; two versions
+  uses logic-diff; explaining a path uses logic-explain; "fix
+  everything" uses logic-fix-all.
+  Do NOT trigger for: style/architecture-only audits, security-only
+  scans, performance-only audits.
 ---
 
 # Logic-Lens — Logic Health
@@ -28,7 +31,7 @@ Read in this order:
 
 ## Process
 
-**Step 0. Language + scope routing.** Detect language per `common.md` §1. Confirm scope is multi-file (directory / module list / repo). If scope is one file or one function, switch to logic-review.
+**Step 0. Language + scope routing.** Detect language per `common.md` §1. Proceed for multi-file scopes and for single-module scopes when the user explicitly uses "health check", "health overview", or "logic health". If scope is one file and none of those health phrases appear, switch to logic-review.
 
 **Step 1. Enumerate modules and plan the sweep** (guide Step 1) — prioritize public API surfaces, recently changed files, and user-flagged modules. Read `.logic-lens.yaml` for `ignore:` globs.
 

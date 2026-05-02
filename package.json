@@ -1,6 +1,6 @@
 {
   "name": "logic-lens",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "Logic-first code review using semi-formal execution tracing. Surfaces behavioral bugs that linters miss.",
   "license": "MIT",
   "keywords": ["code-review", "logic", "debugging", "semantic-analysis", "claude", "ai-tools"],
