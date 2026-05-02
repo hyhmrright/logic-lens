@@ -1,7 +1,7 @@
 {
   "iteration_dir": "skills-workspace/iteration-3",
   "cases_graded": 6,
-  "overall_pass_rate": 1.0,
+  "overall_pass_rate": 0.9583333333333334,
   "per_mode": {
     "logic-fix-all": {
       "n": 1,
@@ -21,7 +21,7 @@
     },
     "logic-locate": {
       "n": 1,
-      "avg_pass_rate": 1.0
+      "avg_pass_rate": 0.75
     },
     "logic-health": {
       "n": 1,
@@ -66,8 +66,8 @@
       "id": 107,
       "name": "deep-flaky-race-condition",
       "mode": "logic-locate",
-      "pass_rate": 1.0,
-      "passed": 4,
+      "pass_rate": 0.75,
+      "passed": 3,
       "total": 4
     },
     {

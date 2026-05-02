@@ -116,7 +116,7 @@ _FAULT_CONFIDENCE_RULE: tuple[str, Callable[[str], bool]] = (
 
 _FIX_LOG_RULE: tuple[str, Callable[[str], bool]] = (
     "has Fix Log",
-    lambda t: re.search(r'Fix Log|修复记录', t) is not None,
+    lambda t: re.search(r'Fix Log|修复记录|修复日志|变更说明|修复清单|修复汇总', t) is not None,
 )
 
 _LOGIC_SCORE_BELOW_100_RULE: tuple[str, Callable[[str], bool]] = (
