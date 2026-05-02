@@ -31,7 +31,7 @@ Read in this order:
 
 **Step 0. Language + scope routing.** Detect language per `common.md` §1. Confirm two versions are provided. If only one version, switch to logic-review.
 
-**Step 1. Identify the shared specification** (guide Step 1) — what inputs should both versions handle; what outputs/side effects are expected.
+**Step 1. Identify the shared specification** (guide Step 1) — what inputs should both versions handle; what outputs/side effects are expected. If the user states the refactor intentionally changed behavior in a specific area (e.g., "I changed the error path to raise instead of returning None"), record that as a **declared spec change** and treat divergences within that area as expected. Flag only divergences outside the declared change as findings.
 
 **Step 2. Build independent premises for each version** (guide Step 2) — apply the Premises Construction Checklist to Version A and Version B separately.
 

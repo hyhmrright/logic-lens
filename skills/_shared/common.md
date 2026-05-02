@@ -2,7 +2,7 @@
 
 ## 1. Language Hard Constraint (HIGHEST PRIORITY)
 
-**Rule:** Identify the dominant language of the user's most recent message. Treat a message as Chinese if ≥ 50% of its characters are CJK; otherwise English. All response text MUST use that same language — including:
+**Rule:** Identify the dominant language of the user's most recent message. Treat as Chinese if ≥ 50% of characters are Chinese Han (not Japanese kana or Korean Hangul — respond in those languages for those scripts). Default to English if ambiguous. All response text MUST use the detected language — including:
 
 - Every section header (`# Findings`, `## Summary`, and every header listed in the map below)
 - Every finding's four field labels (Premises / Trace / Divergence / Remedy)
@@ -86,7 +86,7 @@ Start at 100. Deduct only per **confirmed** finding (Trace supports the finding 
 | Warning | −7 |
 | Suggestion | −2 |
 
-Floor: 0. Cap at one deduction per unique L-code per scope (do not stack four L1 findings for the same shadow).
+Floor: 0. Cap at one deduction per unique L-code per **module** (do not stack multiple L1 findings for the same shadow). In logic-health this cap applies per-module, not repo-wide — five modules each with an L3 each lose 7 points independently.
 
 logic-health weights per-module scores by `line_count / total_lines_reviewed` — a tiny perfect module must not mask a large Critical-heavy one.
 
@@ -149,7 +149,17 @@ A Remedy MUST be a **minimal, concrete, paste-ready fix**. Acceptable:
 
 Unacceptable: "add validation", "be careful with", "consider refactoring", "add more tests".
 
-If the fix requires a design decision the user must make, say so explicitly and list the options instead of giving vague advice.
+If the fix requires a design decision the user must make, say so explicitly using this block format:
+
+```
+[DESIGN DECISION REQUIRED]
+Options:
+  A. <option> — <trade-off>
+  B. <option> — <trade-off>
+Recommendation: <which option and why, or "no recommendation — depends on X">
+```
+
+When responding in Chinese, translate all user-visible text in the block: use `[需要设计决策]` as the block label; `选项：` for "Options:"; `推荐：` for "Recommendation:"; `无推荐——取决于 X` for "no recommendation — depends on X". Keep `<option>` and `<trade-off>` placeholders and A./B. option letters in their original form.
 
 ---
 

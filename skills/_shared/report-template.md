@@ -26,6 +26,10 @@ Trace:      [step-by-step execution path, interprocedural where needed]
 Divergence: [exact line/expression where the premise breaks; consequence]
 Remedy:     [minimal, paste-ready fix — see common.md §10]
 
+*Cross-file finding (when the fix spans multiple files):*
+  Remedy (caller):  <file A> line N — <edit>
+  Remedy (callee):  <file B> line M — <edit>
+
 ### 🟡 Warning
 [same four-field structure]
 
@@ -64,6 +68,10 @@ When the user writes in Chinese (`common.md` §1 detection):
 追踪：   [逐步执行路径；涉及跨函数调用时跟进被调方]
 偏差：   [前提被破坏的确切位置（行号/表达式）及后果]
 修复：   [最小、可直接粘贴的修复 — 见 common.md §10]
+
+*跨文件发现（修复涉及多个文件时）：*
+  修复（调用方）：<文件 A> 第 N 行 — <改动>
+  修复（被调方）：<文件 B> 第 M 行 — <改动>
 
 ### 🟡 警告
 [同样的四字段结构]

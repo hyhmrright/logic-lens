@@ -44,7 +44,7 @@ Read in this order:
 
 **Step 5. Fix queue + remedy** (guide Phase 6) — sort by severity; write a paste-ready Remedy per finding; route cross-file contradictions to the correct edit target (code / constraint / config / doc).
 
-**Step 6. Apply + verify** (guide Phase 7) — apply each fix, then apply logic-diff methodology to verify (expect `⚠️ Conditionally Equivalent` matching the original failing scenario). Revert on regression; retry up to 3×.
+**Step 6. Apply + verify** (guide Phase 7) — apply each fix, then apply logic-diff methodology comparing original vs. fixed code. Expected verdict: `⚠️ Conditionally Equivalent` where the differing condition is exactly the bug scenario. Revert if verdict is `✅ Semantically Equivalent` (fix had no effect) or shows new divergences outside the bug scenario (regression). Retry up to 3×.
 
 **Step 7. Iterate + report** (guide Phase 8–9) — re-run health + review on modified files and their consumers; Criticals loop without cap; Warning/Suggestion rounds capped by `fix_all.max_iterations` with user-escalation prompt at the cap. Output the Fix Report.
 

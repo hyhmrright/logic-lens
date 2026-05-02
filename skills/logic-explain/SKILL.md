@@ -26,7 +26,7 @@ Read in this order:
 4. `../_shared/report-template.md` — Report layout (English + Chinese).
 5. `logic-explain-guide.md` — explanation process.
 
-Note: `logic-risks.md` is intentionally skipped — logic-explain does not produce L-code findings, and Remedy is intentionally out of scope for this mode. If the trace reveals a bug, stop and recommend logic-review or logic-locate instead of tagging L-codes or proposing a fix inside an explanation.
+Note: `logic-risks.md` is intentionally skipped — logic-explain does not produce L-code findings, and Remedy is intentionally out of scope for this mode. If the trace reveals a bug, stop and recommend logic-review or logic-locate. When handing off, do not discard work already done — present the premises established and trace steps completed under a **"Partial trace context (carry into next skill):"** heading so the user can pass them directly to the follow-on skill.
 
 ## Process
 

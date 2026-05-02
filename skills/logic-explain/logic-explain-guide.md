@@ -58,5 +58,15 @@ What a casual reader might assume: logging happens after commit succeeds, so the
 ## Step 6: Map to Report Template
 
 - **Header:** Mode = `Execution Explain` / `执行解释`; omit the mode-specific score line.
-- **Findings section:** Always omit — logic-explain produces no L-code findings and no Remedy. If the trace reveals a bug, note it in Step 4 and recommend re-running with logic-review.
+- **Findings section:** Always omit — logic-explain produces no L-code findings and no Remedy. If the trace reveals a bug, note it in Step 4, recommend re-running with logic-review or logic-locate, and output a handoff block:
+
+  ```
+  **Partial trace context (carry into next skill):**
+  Premises established: [list key premises from Step 2]
+  Trace completed to: [last confirmed step before the bug was spotted]
+  Suspected divergence: [one-sentence description — no L-code, no Remedy]
+  ```
+
+  Chinese equivalent: `**部分追踪上下文（移交至下一技能）：**` / `已建立的前提：` / `追踪进展至：` / `疑似偏差：`
+
 - **Summary:** Place the Step-by-Step Trace (Step 3), Non-Obvious Behavior (Step 4), and Actual vs. Assumed pair (Step 5) as labeled sub-sections within Summary.
