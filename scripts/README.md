@@ -70,7 +70,7 @@ bash scripts/run-trigger-evals.sh review
 MAX_ITERATIONS=3 MODEL=claude-opus-4-7 bash scripts/run-trigger-evals.sh review
 ```
 
-Default model is **`claude-haiku-4-5`** — lowest cost for bulk evaluation runs (~$0.10-0.20 per full 28-case content run). Override with `MODEL=claude-sonnet-4-6` when you need higher accuracy on edge cases, or `MODEL=claude-opus-4-7` for extended-thinking proposal steps.
+Default model is **`claude-sonnet-4-6`** for content-evals (semi-formal format compliance requires it; haiku skips structured output and fails ~60% of rules) and **`claude-haiku-4-5`** for trigger-evals (simple classification, ~$0.01/run). Override either with `MODEL=<id>`.
 
 Each run emits a JSON result with `best_description` selected by held-out test score. Copy it into the corresponding `skills/logic-<skill>/SKILL.md` frontmatter `description:` field to apply.
 
