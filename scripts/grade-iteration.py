@@ -121,7 +121,7 @@ _FIX_LOG_RULE: tuple[str, Callable[[str], bool]] = (
 
 _LOGIC_SCORE_BELOW_100_RULE: tuple[str, Callable[[str], bool]] = (
     "Logic Score below 100",
-    lambda t: bool(re.search(r'Logic Score[:\s]*([0-9]{1,2})/100|逻辑评分[:\s]*([0-9]{1,2})/100', t)),
+    lambda t: bool(re.search(r'Logic Score[^0-9]{0,15}([0-9]{1,2})/100|逻辑评分[^0-9]{0,15}([0-9]{1,2})/100', t)),
 )
 
 _FOUR_FIELD_RULE: tuple[str, Callable[[str], bool]] = (

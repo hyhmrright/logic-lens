@@ -4,8 +4,10 @@ description: >
   Compare two code versions for semantic equivalence via semi-formal tracing
   of both versions side-by-side. Trigger when the user shares a refactor,
   rewrite, migration, or A/B implementation and wants to confirm behavior
-  is unchanged — "did I break anything", "is this equivalent", "check my
-  refactor", "same behavior after the change?", "does my rewrite produce
+  is unchanged — "did I break anything", "is this equivalent",
+  "are these equivalent", "semantically equivalent", "are these two
+  implementations semantically equivalent", "check my refactor",
+  "same behavior after the change?", "does my rewrite produce
   the same output", "switched from X to Y — same results?".
   SCOPE HARD RULE: requires two code versions (A and B). A single version
   for bug-finding uses logic-review; one version + a failing test uses
@@ -43,6 +45,6 @@ Read in this order:
 
 **Step 6. Equivalence verdict** (guide Step 6) — one of: `✅ Semantically Equivalent`, `⚠️ Conditionally Equivalent` (state the condition precisely), `❌ Semantically Divergent`.
 
-**Step 7. Output** (guide Step 7) — Report Template with the Verdict header per `common.md` §5; localize headers if the user wrote in Chinese.
+**Step 7. Output** (guide Step 7) — Report Template with the Verdict header per `common.md` §5; localize headers if the user wrote in Chinese. **Format is mandatory even for trivially short snippets: every divergence finding MUST use the four labeled fields (Premises / Trace / Divergence / Remedy); never substitute with a plain paragraph or table.**
 
 **Mode line in report:** `Semantic Diff` (Chinese: `语义对比`).

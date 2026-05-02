@@ -4,18 +4,18 @@ description: >
   Autonomous repository-wide audit-and-fix pipeline: health → review →
   locate/explain → fix → diff-verify → iterate until clean. Starts with a
   mandatory consent prompt (token-intensive); after consent runs hands-free.
-  Trigger when the user wants all logic issues resolved across a codebase
-  without naming specific files — "fix everything", "clean up all logic
-  issues", "audit and fix the whole repo", "fix all bugs automatically",
-  or frustration with recurring bugs wanting a one-shot pass.
-  SCOPE HARD RULE: repo-wide fixing without a specific target named. If
-  the user names one function/file to fix, use logic-review then a direct
-  Edit. Analysis-only requests use logic-health or logic-review. Single
-  failure uses logic-locate. Two versions uses logic-diff. One path
-  explanation uses logic-explain.
-  Do NOT trigger for: analysis-only ("show me the bugs"), single-file
-  fixes, style/lint/format concerns, or a user who already knows what
-  to fix.
+  Trigger when the user wants ALL logic issues found and fixed — "fix
+  everything", "fix all logic issues", "fix all logic issues in this
+  code", "clean up all logic issues", "audit and fix the whole repo",
+  "fix all bugs automatically", or frustration with recurring bugs
+  wanting a one-shot pass.
+  SCOPE RULE: repo-wide by default; also trigger for a pasted code
+  snippet when the user says "fix all" — produce the full Fix Report
+  (Fix Log, before/after Logic Score). Analysis-only requests use
+  logic-health or logic-review. Single failure uses logic-locate. Two
+  versions uses logic-diff. One path explanation uses logic-explain.
+  Do NOT trigger for: analysis-only ("show me the bugs"),
+  style/lint/format concerns, or fixing a single named finding.
 ---
 
 # Logic-Lens — Logic Fix All
@@ -32,9 +32,9 @@ Read in this order:
 
 ## Process
 
-**Step 0. Language + scope routing.** Detect language per `common.md` §1. Default scope is the repo root; honor a user-named subpath. Read `.logic-lens.yaml` for `ignore:`, `custom_risks`, `severity:`, `focus:`, and `fix_all.max_iterations`.
+**Step 0. Language + scope routing.** Detect language per `common.md` §1. Default scope is the repo root; honor a user-named subpath or pasted snippet. For a pasted snippet, skip the consent prompt and run the fix pipeline directly. Read `.logic-lens.yaml` for `ignore:`, `custom_risks`, `severity:`, `focus:`, and `fix_all.max_iterations`.
 
-**Step 1. Consent + scope enumeration** (guide Phase 0–1) — mandatory consent prompt displaying scope / method / cost / iteration cap; on consent, enumerate runtime-affecting files (source / config / constraint / doc), exclude `.git` and build artifacts, classify by risk tier.
+**Step 1. Consent + scope enumeration** (guide Phase 0–1) — for repo/directory scope: mandatory consent prompt displaying scope / method / cost / iteration cap; on consent, enumerate runtime-affecting files (source / config / constraint / doc), exclude `.git` and build artifacts, classify by risk tier. For a pasted snippet: skip consent, enumerate the snippet's functions directly.
 
 **Step 2. Health pass** (guide Phase 2) — apply logic-health methodology to map per-module Logic Scores and L-code patterns.
 
