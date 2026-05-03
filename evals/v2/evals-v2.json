@@ -1379,6 +1379,690 @@
           "check": "The after score is numerically higher than the before score"
         }
       ]
+    },
+    {
+      "id": 228,
+      "name": "ruby-class-shadows-stdlib-logger-L1",
+      "mode": "logic-review",
+      "prompt": "Review this Ruby code for logic errors:\n\n```ruby\n# lib/payment/logger.rb\nmodule Payment\n  class Logger\n    def log(msg)\n      $stdout.puts \"[PAY] #{msg}\"\n    end\n  end\nend\n\n# lib/payment/service.rb\nrequire_relative 'logger'\nrequire 'logger'   # stdlib Logger\n\nmodule Payment\n  class Service\n    def initialize\n      @logger = Logger.new   # which Logger?\n    end\n\n    def process(amount)\n      @logger.info \"Processing #{amount}\"\n    end\n  end\nend\n```\n\nThe `Service` class calls `@logger.info`. The developer intended to use Ruby's standard `Logger` class (with `.info`, `.warn`, `.error`). Is there a logic problem?",
+      "expected_output": "Should identify L1 (Shadow Override): inside the `Payment` module, the constant lookup for `Logger` resolves to `Payment::Logger` before falling through to `::Logger` (the stdlib class). `Payment::Logger` only defines `#log`, not `#info`. Calling `@logger.info` raises `NoMethodError: undefined method 'info' for #<Payment::Logger>`. The `require 'logger'` line loads the stdlib but the constant resolution still picks up `Payment::Logger` first because Ruby's constant lookup searches the enclosing module hierarchy before the global namespace. Risk code L1. Remedy: qualify the intended constant as `::Logger.new` to force resolution to the top-level stdlib class, or rename `Payment::Logger` to avoid the collision.",
+      "assertions": [
+        {
+          "id": "identifies-L1",
+          "description": "Output identifies L1 (Shadow Override)",
+          "check": "Output contains 'L1'"
+        },
+        {
+          "id": "identifies-constant-lookup",
+          "description": "Output explains that Ruby's constant lookup resolves Payment::Logger before ::Logger",
+          "check": "Output explains that Ruby's constant lookup (or constant resolution / namespace lookup) finds Payment::Logger before the stdlib Logger, because the enclosing module is searched first"
+        },
+        {
+          "id": "identifies-no-method-error",
+          "description": "Output identifies that #info is missing on Payment::Logger causing NoMethodError",
+          "check": "Output states that Payment::Logger does not have an #info method (or only has #log), so calling @logger.info raises NoMethodError"
+        },
+        {
+          "id": "recommends-qualified-constant",
+          "description": "Output recommends using ::Logger or renaming the class",
+          "check": "Output recommends qualifying the constant as ::Logger (or ::Logger.new), or renaming Payment::Logger to avoid collision with the stdlib Logger"
+        },
+        {
+          "id": "has-premises-trace-divergence",
+          "description": "Finding has Premises, Trace, and Divergence sections",
+          "check": "Output contains 'Premises' AND 'Trace' AND 'Divergence' as section labels in the finding"
+        }
+      ]
+    },
+    {
+      "id": 229,
+      "name": "kotlin-coroutine-nonatomic-counter-L7",
+      "mode": "logic-review",
+      "prompt": "Review this Kotlin code for logic errors:\n\n```kotlin\n// tracking/RequestTracker.kt\nimport kotlinx.coroutines.*\n\nclass RequestTracker {\n    var activeRequests = 0   // plain Int, not AtomicInteger\n\n    suspend fun trackRequest(block: suspend () -> Unit) {\n        activeRequests++      // read-modify-write, NOT atomic\n        try {\n            block()\n        } finally {\n            activeRequests--  // also NOT atomic\n        }\n    }\n\n    fun isOverloaded(): Boolean = activeRequests > 100\n}\n```\n\nThis tracker is used concurrently: many coroutines launched with `Dispatchers.Default` call `trackRequest` simultaneously. What logic problem exists?",
+      "expected_output": "Should identify L7/AV (Concurrency / Async Hazard — Atomicity Violation): `activeRequests++` compiles to a read-modify-write sequence (read current value, add 1, write back). Under `Dispatchers.Default`, multiple coroutines run on a thread pool. Two coroutines can interleave: both read `activeRequests = 5`, both add 1, both write 6 — one increment is lost. The same applies to `activeRequests--`. Over 1000 concurrent requests, `activeRequests` may be far below the true count, making `isOverloaded()` return `false` when the system is actually overloaded. Plain `var Int` has no visibility or atomicity guarantees under concurrent access. Risk code L7 (subtype AV). Remedy: use `AtomicInteger` (or `java.util.concurrent.atomic.AtomicInteger`) with `incrementAndGet()` and `decrementAndGet()`, or protect accesses with a `Mutex`.",
+      "assertions": [
+        {
+          "id": "identifies-L7",
+          "description": "Output identifies L7 (Concurrency Hazard)",
+          "check": "Output contains 'L7'"
+        },
+        {
+          "id": "identifies-atomicity-violation",
+          "description": "Output identifies that ++ is a non-atomic read-modify-write that can be interleaved",
+          "check": "Output explains that `activeRequests++` (or the increment/decrement) is a non-atomic read-modify-write operation that can be interleaved by concurrent coroutines, causing lost updates"
+        },
+        {
+          "id": "identifies-dispatchers-default-concurrency",
+          "description": "Output identifies that Dispatchers.Default runs coroutines on multiple threads enabling concurrent access",
+          "check": "Output identifies that Dispatchers.Default uses a thread pool (multiple threads), enabling true concurrent access to the shared variable"
+        },
+        {
+          "id": "recommends-atomicinteger-or-mutex",
+          "description": "Output recommends AtomicInteger or Mutex",
+          "check": "Output recommends AtomicInteger (or java.util.concurrent.atomic.AtomicInteger) with atomic operations, or protecting the variable with a Mutex or synchronized block"
+        },
+        {
+          "id": "has-premises-trace-divergence",
+          "description": "Finding has Premises, Trace, and Divergence sections",
+          "check": "Output contains 'Premises' AND 'Trace' AND 'Divergence' as section labels in the finding"
+        }
+      ]
+    },
+    {
+      "id": 230,
+      "name": "php-fopen-resource-leak-exception-L8",
+      "mode": "logic-review",
+      "prompt": "Review this PHP code for logic errors:\n\n```php\n<?php\n// src/CsvParser.php\n\nfunction parseCsv(string $path): array {\n    $handle = fopen($path, 'r');\n    if ($handle === false) {\n        throw new \\RuntimeException(\"Cannot open: $path\");\n    }\n\n    $rows = [];\n    while (($cols = fgetcsv($handle)) !== false) {\n        if (count($cols) !== 3) {\n            throw new \\InvalidArgumentException(\n                \"Row must have 3 columns, got \" . count($cols)\n            );\n            // file handle never closed\n        }\n        $rows[] = $cols;\n    }\n\n    fclose($handle);\n    return $rows;\n}\n```\n\nThe function opens a CSV file, validates each row, and returns the rows. What logic problem exists?",
+      "expected_output": "Should identify L8 (Resource Lifecycle Hazard): `fopen` acquires a file handle resource. The `fclose($handle)` call only appears on the happy path — when all rows have exactly 3 columns. When a malformed row triggers `throw new InvalidArgumentException(...)`, the exception unwinds the stack without executing `fclose`. PHP does not automatically close file handles when they go out of scope (unlike Python's `with` or Rust's Drop). Over many calls with bad CSV files, file descriptors accumulate until the OS limit is hit, causing `fopen` to return `false` for subsequent legitimate calls. Risk code L8. Remedy: wrap the body in a try-finally block so `fclose($handle)` always executes, or use a generator/SplFileObject that manages its own lifecycle.",
+      "assertions": [
+        {
+          "id": "identifies-L8",
+          "description": "Output identifies L8 (Resource Lifecycle Hazard)",
+          "check": "Output contains 'L8'"
+        },
+        {
+          "id": "identifies-exception-skips-fclose",
+          "description": "Output identifies that the InvalidArgumentException path skips fclose",
+          "check": "Output identifies that when InvalidArgumentException is thrown, fclose($handle) is never called, leaving the file handle open"
+        },
+        {
+          "id": "identifies-fd-exhaustion-risk",
+          "description": "Output mentions file descriptor accumulation or OS limit",
+          "check": "Output mentions file descriptor leaks accumulating, or the OS file descriptor limit being reached, or that PHP does not automatically close handles when they go out of scope"
+        },
+        {
+          "id": "recommends-try-finally",
+          "description": "Output recommends try-finally or equivalent resource management",
+          "check": "Output recommends try-finally to ensure fclose always runs, or SplFileObject, or a generator with proper cleanup"
+        },
+        {
+          "id": "has-premises-trace-divergence",
+          "description": "Finding has Premises, Trace, and Divergence sections",
+          "check": "Output contains 'Premises' AND 'Trace' AND 'Divergence' as section labels in the finding"
+        }
+      ]
+    },
+    {
+      "id": 231,
+      "name": "cpp-size-t-underflow-infinite-loop-L3",
+      "mode": "logic-review",
+      "prompt": "Review this C++ code for logic errors:\n\n```cpp\n// search/vector_utils.cpp\n#include <vector>\n\nint findLastNegative(const std::vector<int>& nums) {\n    for (size_t i = nums.size() - 1; i >= 0; i--) {\n        if (nums[i] < 0) return nums[i];\n    }\n    return 0;   // no negative found\n}\n```\n\nThe function searches backward for the last negative number. What logic problem exists, and when does it manifest?",
+      "expected_output": "Should identify L3 (Boundary Blindspot): the loop variable `i` is declared as `size_t`, which is an unsigned integer type. When the loop reaches `i == 0` and executes `i--`, unsigned underflow occurs: `i` wraps around to the maximum value of `size_t` (typically 2^64-1 on 64-bit systems). The condition `i >= 0` is always true for an unsigned type — a signed comparison warning that many compilers emit. The result is an infinite loop (or out-of-bounds memory access) when no negative number is found before index 0. The bug manifests any time `findLastNegative` is called with a vector that contains no negative numbers. Risk code L3. Remedy: use a signed index (`int i = (int)nums.size() - 1; i >= 0; i--`), or use reverse iterators (`std::find_if` with `rbegin`/`rend`), or check `i < nums.size()` with early break instead of `i >= 0`. Edge case: when `nums` is empty, `nums.size() - 1` itself underflows (0 - 1 wraps to SIZE_MAX), so `nums[SIZE_MAX]` on the first iteration is immediate out-of-bounds access (undefined behavior, typically a crash) — the infinite-loop scenario does not even have a chance to manifest.",
+      "assertions": [
+        {
+          "id": "identifies-L3",
+          "description": "Output identifies L3 (Boundary Blindspot)",
+          "check": "Output contains 'L3'"
+        },
+        {
+          "id": "identifies-unsigned-underflow",
+          "description": "Output identifies that size_t is unsigned and i-- wraps around when i==0",
+          "check": "Output explains that size_t is an unsigned type, so decrementing i when i==0 causes unsigned underflow (wraps to the maximum value of size_t), not a negative value (or notes that an empty vector causes immediate underflow at initialization, making nums[SIZE_MAX] out-of-bounds access)"
+        },
+        {
+          "id": "identifies-always-true-condition",
+          "description": "Output identifies that i >= 0 is always true for unsigned type",
+          "check": "Output states that `i >= 0` is always true for an unsigned type (size_t), so the loop never terminates when no negative is found"
+        },
+        {
+          "id": "recommends-signed-index-or-reverse-iterator",
+          "description": "Output recommends a signed index or reverse iterators",
+          "check": "Output recommends using a signed integer index (int or ptrdiff_t), or reverse iterators (rbegin/rend), or std::find_if to avoid the unsigned underflow"
+        },
+        {
+          "id": "has-premises-trace-divergence",
+          "description": "Finding has Premises, Trace, and Divergence sections",
+          "check": "Output contains 'Premises' AND 'Trace' AND 'Divergence' as section labels"
+        }
+      ]
+    },
+    {
+      "id": 232,
+      "name": "js-constructor-const-shadow-L1",
+      "mode": "logic-review",
+      "prompt": "Review this JavaScript code for logic errors:\n\n```javascript\n// billing/invoice.js\nconst TAX_RATE = 0.08;   // module-level constant\n\nclass Invoice {\n    constructor(subtotal, taxExempt = false) {\n        const TAX_RATE = taxExempt ? 0 : 0.08;  // local const, same name\n        this.subtotal = subtotal;\n        this.taxExempt = taxExempt;\n        // TAX_RATE local is unused after this line\n    }\n\n    total() {\n        return this.subtotal * (1 + TAX_RATE);  // which TAX_RATE?\n    }\n}\n\nconsole.log(new Invoice(100, true).total());  // expected 100, actual?\n```\n\nThe developer expected `new Invoice(100, true).total()` to return `100` (no tax for exempt). What is the actual return value and why?",
+      "expected_output": "Should identify L1 (Shadow Override): `total()` references `TAX_RATE` in its closure. JavaScript's lexical scoping resolves `TAX_RATE` in `total()` to the nearest enclosing scope where it is defined. The `const TAX_RATE = taxExempt ? 0 : 0.08` declaration inside `constructor` is block-scoped to the constructor body — it does NOT exist in the class method scope. The `total()` method is defined at class scope (not inside the constructor), so it looks outward to the module scope and finds `const TAX_RATE = 0.08`. For `new Invoice(100, true).total()`, the constructor's local `TAX_RATE = 0` is created and immediately discarded; `total()` uses the module-level `0.08` and returns `100 * 1.08 = 108`, not `100`. Risk code L1. Remedy: store the intended rate as an instance field (`this.taxRate = taxExempt ? 0 : 0.08`) and reference `this.taxRate` in `total()`.",
+      "assertions": [
+        {
+          "id": "identifies-L1",
+          "description": "Output identifies L1 (Shadow Override)",
+          "check": "Output contains 'L1'"
+        },
+        {
+          "id": "identifies-wrong-scope",
+          "description": "Output explains that total() captures the module-level TAX_RATE, not the constructor-local one",
+          "check": "Output explains that the `const TAX_RATE` inside the constructor is block-scoped to the constructor and not accessible in `total()`, which therefore resolves to the module-level TAX_RATE = 0.08"
+        },
+        {
+          "id": "identifies-wrong-result",
+          "description": "Output identifies that the return value is 108 (not 100) for the tax-exempt case",
+          "check": "Output states that new Invoice(100, true).total() returns 108 (or 100 * 1.08), not the expected 100, because the tax-exempt rate (0) is never applied"
+        },
+        {
+          "id": "recommends-instance-field",
+          "description": "Output recommends storing the rate as an instance field",
+          "check": "Output recommends storing the computed tax rate as an instance property (this.taxRate or similar) so that total() can reference it correctly"
+        },
+        {
+          "id": "has-premises-trace-divergence",
+          "description": "Finding has Premises, Trace, and Divergence sections",
+          "check": "Output contains 'Premises' AND 'Trace' AND 'Divergence' as section labels"
+        }
+      ]
+    },
+    {
+      "id": 233,
+      "name": "go-import-shadows-builtin-len-L1",
+      "mode": "logic-review",
+      "prompt": "Review this Go code for logic errors:\n\n```go\n// util/strings.go\npackage util\n\nimport (\n    \"strings\"\n)\n\nfunc CountWords(text string) int {\n    words := strings.Fields(text)\n    return len(words)\n}\n\nfunc TruncateWords(text string, max int) string {\n    words := strings.Fields(text)\n    if len(words) <= max {\n        return text\n    }\n    return strings.Join(words[:max], \" \")\n}\n```\n\nNow a new developer modifies the file to add a helper:\n\n```go\n// util/strings.go  (modified)\npackage util\n\nimport (\n    \"strings\"\n    len \"github.com/internal/constraints\"  // accidentally named 'len'\n)\n\nfunc CountWords(text string) int {\n    words := strings.Fields(text)\n    return len(words)   // which len?\n}\n\nfunc TruncateWords(text string, max int) string {\n    words := strings.Fields(text)\n    if len(words) <= max {\n        return text\n    }\n    return strings.Join(words[:max], \" \")\n}\n\nfunc IsWithinLimit(count, limit int) bool {\n    return len.Check(count, limit)   // intended use of the import\n}\n```\n\nWhat logic problem is introduced by the import alias?",
+      "expected_output": "Should identify L1 (Shadow Override): the import alias `len \"github.com/internal/constraints\"` binds the identifier `len` to the imported package `constraints`, shadowing Go's built-in `len` function. In Go, package-level identifiers (including imports) shadow built-ins from the universe block. After the change, `len(words)` in `CountWords` and `TruncateWords` resolves to the `constraints` package, not the built-in `len` function. Calling a package value as a function causes a compile error ('constraints.constraints is not a function') or, if the package exports a `len`-named symbol that happens to be callable, produces wrong values. Risk code L1. Remedy: use a non-conflicting import alias (`import constraints \"github.com/internal/constraints\"`) and call `constraints.Check(count, limit)` instead.",
+      "assertions": [
+        {
+          "id": "identifies-L1",
+          "description": "Output identifies L1 (Shadow Override)",
+          "check": "Output contains 'L1'"
+        },
+        {
+          "id": "identifies-import-alias-shadows-builtin",
+          "description": "Output explains that the import alias 'len' shadows Go's built-in len function",
+          "check": "Output explains that naming the import alias 'len' shadows (or overrides) Go's built-in len function, because package-level bindings take precedence over universe-block built-ins in Go's scope rules"
+        },
+        {
+          "id": "identifies-len-resolves-to-package",
+          "description": "Output identifies that len(words) now refers to the package, not the built-in",
+          "check": "Output states that after the import alias, `len(words)` in CountWords and TruncateWords resolves to the imported package (constraints), not the built-in len function"
+        },
+        {
+          "id": "recommends-non-conflicting-alias",
+          "description": "Output recommends renaming the import alias",
+          "check": "Output recommends using a non-conflicting import alias (e.g., 'constraints' or another name that does not shadow a built-in)"
+        },
+        {
+          "id": "has-premises-trace-divergence",
+          "description": "Finding has Premises, Trace, and Divergence sections",
+          "check": "Output contains 'Premises' AND 'Trace' AND 'Divergence' as section labels"
+        }
+      ]
+    },
+    {
+      "id": 234,
+      "name": "sql-timestamp-no-tz-locale-hazard-L9",
+      "mode": "logic-review",
+      "prompt": "Review this PostgreSQL schema and query for logic errors:\n\n```sql\n-- schema.sql\nCREATE TABLE events (\n    id        SERIAL PRIMARY KEY,\n    user_id   INT NOT NULL,\n    created_at TIMESTAMP NOT NULL   -- no timezone\n);\n\n-- query: fetch events from the last 24 hours\nSELECT * FROM events\nWHERE created_at >= NOW() - INTERVAL '24 hours';\n```\n\nThe application server is in UTC. The PostgreSQL server is deployed to a production host where `TimeZone = 'America/New_York'`. Rows are inserted with `NOW()` from the DB session. A developer in London (UTC+1) runs the same query during BST (British Summer Time). What logic problem exists?",
+      "expected_output": "Should identify L9 (Time / Locale Hazard): `TIMESTAMP` (without time zone) in PostgreSQL stores a local date-time with no timezone metadata. `NOW()` returns a `TIMESTAMPTZ` (with time zone). When comparing `created_at TIMESTAMP` with `NOW() - INTERVAL '24 hours'` (TIMESTAMPTZ), PostgreSQL implicitly casts one side using the session's `TimeZone` setting. If the DB server has `TimeZone = 'America/New_York'` and rows were inserted with `NOW()` cast to local time, the stored values represent New York local times — but the query comparison uses the session timezone of whoever runs it. The London developer's session may have `TimeZone = 'Europe/London'`, so the implicit cast shifts the comparison window by 5 hours (ET vs BST offset difference), returning rows from a different 24-hour window than intended. Risk code L9. Remedy: change the column type to `TIMESTAMP WITH TIME ZONE` (`TIMESTAMPTZ`), which stores UTC internally and converts correctly for any session timezone.",
+      "assertions": [
+        {
+          "id": "identifies-L9",
+          "description": "Output identifies L9 (Time / Locale Hazard)",
+          "check": "Output contains 'L9'"
+        },
+        {
+          "id": "identifies-timestamp-no-tz",
+          "description": "Output identifies that TIMESTAMP (without timezone) has no timezone metadata",
+          "check": "Output explains that the `created_at TIMESTAMP` column stores a naive local time with no timezone metadata, causing interpretation to depend on the session timezone"
+        },
+        {
+          "id": "identifies-session-tz-dependency",
+          "description": "Output identifies that the comparison result depends on the session timezone setting",
+          "check": "Output identifies that the implicit cast between TIMESTAMP and TIMESTAMPTZ uses the session's TimeZone setting, so different sessions or DB server configurations produce different query results for the same stored data"
+        },
+        {
+          "id": "recommends-timestamptz",
+          "description": "Output recommends TIMESTAMPTZ (TIMESTAMP WITH TIME ZONE)",
+          "check": "Output recommends changing the column type to TIMESTAMP WITH TIME ZONE (or TIMESTAMPTZ) to store UTC and convert correctly regardless of session timezone"
+        },
+        {
+          "id": "has-premises-trace-divergence",
+          "description": "Finding has Premises, Trace, and Divergence sections",
+          "check": "Output contains 'Premises' AND 'Trace' AND 'Divergence' as section labels"
+        }
+      ]
+    },
+    {
+      "id": 235,
+      "name": "python-strptime-locale-dependent-L9",
+      "mode": "logic-review",
+      "prompt": "Review this Python code for logic errors:\n\n```python\n# reports/parser.py\nimport datetime\n\ndef parse_report_date(date_str: str) -> datetime.date:\n    \"\"\"Parse dates like 'Monday, 03 March 2025'.\"\"\"\n    return datetime.datetime.strptime(date_str, \"%A, %d %B %Y\").date()\n\n# Example: parse_report_date('Monday, 03 March 2025') -> date(2025, 3, 3)\n```\n\nThis works on the developer's macOS laptop (locale: `en_US.UTF-8`). The service is deployed to a Ubuntu container with `LANG=fr_FR.UTF-8`. What logic problem exists?",
+      "expected_output": "Should identify L9 (Time / Locale Hazard): Python's `strptime` uses the process locale to interpret `%A` (weekday name) and `%B` (month name) directives. On the developer's machine with `en_US.UTF-8`, `%A` matches 'Monday' and `%B` matches 'March'. On the French-locale container (`fr_FR.UTF-8`), `%A` expects 'lundi' and `%B` expects 'mars' — parsing 'Monday, 03 March 2025' raises `ValueError: time data 'Monday, 03 March 2025' does not match format '%A, %d %B %Y'`. The function works in development, passes all tests run with the developer's locale, and fails silently (or raises) in production whenever the container locale differs. Risk code L9. Remedy: force locale-independent parsing by using a fixed-locale approach (`locale.setlocale` with `C` or `en_US.UTF-8` inside a context manager), or replace locale-sensitive directives with numeric equivalents (e.g., `%d %m %Y`).",
+      "assertions": [
+        {
+          "id": "identifies-L9",
+          "description": "Output identifies L9 (Time / Locale Hazard)",
+          "check": "Output contains 'L9'"
+        },
+        {
+          "id": "identifies-strptime-locale-dependency",
+          "description": "Output identifies that strptime's %A and %B directives are locale-dependent",
+          "check": "Output explains that Python's strptime uses the process locale to interpret %A (weekday) and %B (month name) directives, so results differ by locale"
+        },
+        {
+          "id": "identifies-french-locale-failure",
+          "description": "Output identifies that fr_FR locale causes ValueError because month names differ",
+          "check": "Output states that on a French locale (fr_FR), strptime expects 'mars' not 'March' for %B (or 'lundi' not 'Monday' for %A), causing a ValueError or mismatch"
+        },
+        {
+          "id": "recommends-locale-fix",
+          "description": "Output recommends locale-independent parsing",
+          "check": "Output recommends using locale.setlocale to force a fixed locale, or replacing %A/%B with numeric format directives, or using a locale-agnostic date parsing library"
+        },
+        {
+          "id": "has-premises-trace-divergence",
+          "description": "Finding has Premises, Trace, and Divergence sections",
+          "check": "Output contains 'Premises' AND 'Trace' AND 'Divergence' as section labels"
+        }
+      ]
+    },
+    {
+      "id": 236,
+      "name": "bash-or-true-suppresses-error-L5",
+      "mode": "logic-review",
+      "prompt": "Review this Bash deployment script for logic errors:\n\n```bash\n#!/usr/bin/env bash\nset -euo pipefail\n\ndeploy() {\n    echo \"Running migrations...\"\n    ./manage.py migrate || true      # suppress migration errors\n\n    echo \"Restarting service...\"\n    systemctl restart myapp\n\n    echo \"Notifying team...\"\n    curl -s -X POST \"$SLACK_WEBHOOK\" -d '{\"text\":\"Deploy successful\"}'\n}\n\ndeploy\n```\n\nThe `|| true` is intended to make migration failures non-fatal so the script can report them without stopping. What logic problem exists?",
+      "expected_output": "Should identify L5 (Control Flow Escape): `|| true` causes the shell to evaluate to exit code 0 regardless of whether `./manage.py migrate` succeeds or fails. Because `set -euo pipefail` only aborts on non-zero exit codes, the subsequent `systemctl restart myapp` runs even when migrations failed — restarting a service that requires a migrated schema against an un-migrated database, which can cause data corruption or service startup failures. `curl` then sends 'Deploy successful' to Slack even though the deploy is in an inconsistent state. The intent was to handle migration failures gracefully, but the implementation silently skips the failure check entirely. Risk code L5. Remedy: capture the migration exit code explicitly (`./manage.py migrate; MIGRATE_EXIT=$?`), check it after the command, and either abort or run a separate error-notification branch — do not restart the service on migration failure.",
+      "assertions": [
+        {
+          "id": "identifies-L5",
+          "description": "Output identifies L5 (Control Flow Escape)",
+          "check": "Output contains 'L5'"
+        },
+        {
+          "id": "identifies-or-true-suppresses-failure",
+          "description": "Output explains that || true resets exit code to 0, allowing subsequent steps to run",
+          "check": "Output explains that `|| true` (or the `|| true` pattern) sets the pipeline exit code to 0 regardless of whether the migration command failed, so set -e does not abort and subsequent steps always execute"
+        },
+        {
+          "id": "identifies-service-restart-on-failed-migration",
+          "description": "Output identifies that the service restarts even when migration failed",
+          "check": "Output identifies that systemctl restart myapp runs even when migrations failed, potentially causing the service to start against an unmigrated schema"
+        },
+        {
+          "id": "identifies-false-success-notification",
+          "description": "Output identifies that Slack is notified of success even on failure",
+          "check": "Output identifies that the Slack notification sends 'Deploy successful' even when migrations failed, giving a false success signal"
+        },
+        {
+          "id": "recommends-explicit-exit-code-check",
+          "description": "Output recommends capturing and checking the migration exit code explicitly",
+          "check": "Output recommends capturing the migration exit code explicitly (e.g., storing $? or using an if block) and conditionally aborting or branching rather than using || true"
+        },
+        {
+          "id": "has-premises-trace-divergence",
+          "description": "Finding has Premises, Trace, and Divergence sections",
+          "check": "Output contains 'Premises' AND 'Trace' AND 'Divergence' as section labels in the finding"
+        }
+      ]
+    },
+    {
+      "id": 237,
+      "name": "rust-raii-drop-lock-guard-explain",
+      "mode": "logic-explain",
+      "prompt": "Explain step by step what happens when this Rust code runs:\n\n```rust\nuse std::sync::{Arc, Mutex};\nuse std::thread;\n\nfn main() {\n    let data = Arc::new(Mutex::new(0u64));\n    let data2 = Arc::clone(&data);\n\n    let handle = thread::spawn(move || {\n        let mut guard = data2.lock().unwrap(); // (A)\n        *guard += 1;                           // (B)\n        println!(\"Thread sees: {}\", *guard);   // (C)\n        // guard drops here                    // (D)\n    });\n\n    {\n        let mut guard = data.lock().unwrap();   // (E)\n        *guard += 10;                           // (F)\n    }                                           // (G) guard drops\n\n    handle.join().unwrap();\n    println!(\"Final: {}\", *data.lock().unwrap());\n}\n```\n\nFocus on: (1) what `lock().unwrap()` returns and why, (2) when the Mutex is released in both contexts, (3) whether the main thread's block (E–G) can interleave with the spawned thread's block (A–D), and (4) what the final printed value is.",
+      "expected_output": "Should explain: (1) `lock()` acquires the Mutex and returns a `MutexGuard<u64>` — a RAII guard that holds the lock for its lifetime. The guard derefs to `u64`. `unwrap()` panics if the Mutex is poisoned (a previous holder panicked while holding it). (2) The MutexGuard releases the Mutex when it goes out of scope (Drop is called). In the spawned thread, the guard drops at point (D) — end of the closure. In main, the guard drops at point (G) — end of the inner block. (3) The two blocks are mutually exclusive: whichever thread acquires the lock first runs to its guard's drop point before the other can proceed. If the spawned thread runs first (A–D), it increments to 1 then drops; main then increments by 10, final = 11. If main runs first (E–G), it increments to 10 then drops; the thread increments to 11, final = 11. Either way, final = 11. (4) Final printed value is 11 regardless of scheduling order.",
+      "assertions": [
+        {
+          "id": "explains-mutexguard-raii",
+          "description": "Output explains that lock() returns a MutexGuard (RAII guard) that releases the Mutex when dropped",
+          "check": "Output explains that lock() returns a MutexGuard (or RAII guard / lock guard) and that the Mutex is released when the guard goes out of scope (Drop is called)"
+        },
+        {
+          "id": "identifies-drop-points",
+          "description": "Output identifies where each guard drops (end of block/closure)",
+          "check": "Output identifies that the spawned thread's guard drops at the end of the closure (point D) and the main thread's guard drops at the end of the inner block (point G, the closing brace)"
+        },
+        {
+          "id": "explains-mutual-exclusion",
+          "description": "Output explains that the two lock acquisitions are mutually exclusive",
+          "check": "Output explains that the two lock() calls are mutually exclusive — only one thread holds the Mutex at a time, so the two increment blocks cannot interleave"
+        },
+        {
+          "id": "identifies-final-value-11",
+          "description": "Output identifies the final value as 11 regardless of scheduling",
+          "check": "Output states that the final printed value is 11 (or that both increments always complete, 0+1+10=11 or 0+10+1=11) regardless of which thread runs first"
+        }
+      ]
+    },
+    {
+      "id": 238,
+      "name": "kotlin-null-safety-elvis-smartcast-explain",
+      "mode": "logic-explain",
+      "prompt": "Explain step by step what happens when this Kotlin code runs:\n\n```kotlin\ndata class User(val name: String, val email: String?)\n\nfun getEmailDomain(user: User): String {\n    val email = user.email ?: return \"no-email\"   // (A)\n    val atIndex = email.indexOf('@')              // (B)\n    if (atIndex < 0) return \"malformed\"           // (C)\n    return email.substring(atIndex + 1)           // (D)\n}\n\nfun main() {\n    println(getEmailDomain(User(\"Alice\", \"alice@example.com\")))\n    println(getEmailDomain(User(\"Bob\", null)))\n    println(getEmailDomain(User(\"Carol\", \"carol-no-at\")))\n}\n```\n\nTrace each call: what is the value of `email` after line (A), what does each `return` produce, and what are the three printed values?",
+      "expected_output": "Should explain: Call 1 — Alice: `user.email` is `\"alice@example.com\"` (non-null). The Elvis operator `?: return \"no-email\"` only returns when the left side is null; since it's non-null, `email` is smart-cast to `String` (non-nullable) and assigned `\"alice@example.com\"`. `indexOf('@')` returns 5. 5 >= 0 so the early return is skipped. `substring(6)` returns `\"example.com\"`. Printed: `example.com`. Call 2 — Bob: `user.email` is `null`. The Elvis operator fires: `return \"no-email\"` exits the function immediately with `\"no-email\"`. Lines B–D never execute. Printed: `no-email`. Call 3 — Carol: `user.email` is `\"carol-no-at\"` (non-null). Elvis operator passes. `indexOf('@')` returns -1. `atIndex < 0` is true → `return \"malformed\"`. Printed: `malformed`.",
+      "assertions": [
+        {
+          "id": "explains-elvis-null-path",
+          "description": "Output explains that the Elvis operator returns early when email is null (Bob case)",
+          "check": "Output explains that when user.email is null, the Elvis operator (?:) triggers `return \"no-email\"`, causing the function to exit immediately without executing the remaining lines"
+        },
+        {
+          "id": "explains-smart-cast",
+          "description": "Output explains that after the Elvis check, email is smart-cast to non-nullable String",
+          "check": "Output explains that after line (A), Kotlin's smart cast (or the Elvis operator guaranteeing non-null) means `email` is treated as a non-nullable String for the rest of the function"
+        },
+        {
+          "id": "identifies-three-outputs",
+          "description": "Output identifies all three printed values correctly",
+          "check": "Output states that the three printed values are 'example.com', 'no-email', and 'malformed' (in that order)"
+        },
+        {
+          "id": "explains-malformed-path",
+          "description": "Output explains that indexOf returns -1 for Carol's email triggering the malformed return",
+          "check": "Output explains that for 'carol-no-at', indexOf('@') returns -1, the condition atIndex < 0 is true, and the function returns 'malformed'"
+        },
+        {
+          "id": "explains-happy-path-substring",
+          "description": "Output traces Call 1 (Alice): indexOf('@') returns 5 and substring(atIndex+1) returns 'example.com'",
+          "check": "Output states that for Alice's email 'alice@example.com', indexOf('@') returns 5 (or atIndex == 5) and substring(atIndex + 1) or substring(6) returns 'example.com'"
+        }
+      ]
+    },
+    {
+      "id": 239,
+      "name": "python-mutable-default-arg-shared-state-explain",
+      "mode": "logic-explain",
+      "prompt": "Explain step by step what happens when this Python code runs:\n\n```python\ndef add_tag(tags=[], new_tag=None):\n    tags.append(new_tag)\n    return tags\n\nresult1 = add_tag(new_tag='python')\nresult2 = add_tag(new_tag='django')\nresult3 = add_tag(['fastapi'], new_tag='starlette')\n\nprint(result1)\nprint(result2)\nprint(result3)\n```\n\nTrace each call: what is the default value of `tags` in Python, what does `.append()` do to it, and what do `result1`, `result2`, `result3` contain?",
+      "expected_output": "Should explain the mutable default argument trap: Python evaluates default argument expressions **once at function definition time**, not on each call. The `tags=[]` default creates a single list object that persists for the lifetime of the function. Call 1 — `add_tag(new_tag='python')`: `tags` is the shared default list `[]`. `.append('python')` mutates it in-place to `['python']`. `result1` is bound to this same object. Call 2 — `add_tag(new_tag='django')`: `tags` is the SAME shared default list, now `['python']`. `.append('django')` mutates it to `['python', 'django']`. `result2` is also bound to this same object. Call 3 — `add_tag(['fastapi'], new_tag='starlette')`: an explicit list is passed, so the default is NOT used. A fresh list `['fastapi']` receives `.append('starlette')` → `['fastapi', 'starlette']`. `result3` is this independent list. Printed: `result1` → `['python', 'django']`, `result2` → `['python', 'django']`, `result3` → `['fastapi', 'starlette']`. `result1` and `result2` point to the same mutated default list; `result3` is independent.",
+      "assertions": [
+        {
+          "id": "explains-default-evaluated-once",
+          "description": "Output explains that the default [] is evaluated once at function definition, not per call",
+          "check": "Output explains that Python evaluates the default argument expression ([] in this case) once at function definition time, not on each call — so all calls that omit the argument share the same list object"
+        },
+        {
+          "id": "explains-append-mutates-in-place",
+          "description": "Output explains that .append() mutates the list in-place (not a copy)",
+          "check": "Output explains that .append() mutates the list object in-place rather than creating a new list"
+        },
+        {
+          "id": "identifies-result1-result2-same-object",
+          "description": "Output identifies that result1 and result2 reference the same default list",
+          "check": "Output states that result1 and result2 reference the same underlying list object (or both print ['python', 'django'] because they share the default list)"
+        },
+        {
+          "id": "identifies-result3-independent",
+          "description": "Output identifies that result3 is independent because an explicit list was passed",
+          "check": "Output explains that result3 is independent (prints ['fastapi', 'starlette']) because an explicit list argument was passed, bypassing the shared default"
+        }
+      ]
+    },
+    {
+      "id": 240,
+      "name": "ruby-safe-nav-vs-exception-diff",
+      "mode": "logic-diff",
+      "prompt": "Are these two Ruby implementations semantically equivalent?\n\n**Version A:**\n```ruby\ndef user_email_domain(user_id)\n    User.find(user_id).email.split('@').last\nend\n```\n\n**Version B:**\n```ruby\ndef user_email_domain(user_id)\n    User.find_by(id: user_id)&.email&.split('@')&.last\nend\n```\n\nConsider: what happens when `user_id` does not exist in the database, when `email` is `nil`, and when `email` contains no `@` character.",
+      "expected_output": "They are NOT semantically equivalent. Version A: `User.find(user_id)` raises `ActiveRecord::RecordNotFound` when the user doesn't exist — the caller must rescue this exception. If the user exists but `email` is nil, `nil.split('@')` raises `NoMethodError`. If email has no '@', `split('@')` returns a one-element array and `.last` returns the full email string (no exception). Version B: `User.find_by(id: user_id)` returns nil (not an exception) when the user doesn't exist; the safe navigation `&.` propagates nil through the chain, returning nil. If email is nil, `nil&.split(...)` returns nil. If email has no '@', `split('@')` still returns a one-element array and `.last` returns the full email — same as A for this sub-case. Key divergences: (1) missing user: A raises RecordNotFound, B returns nil. (2) nil email: A raises NoMethodError, B returns nil. These are different observable behaviors for callers that depend on exception vs nil semantics.",
+      "assertions": [
+        {
+          "id": "concludes-not-equivalent",
+          "description": "Output concludes the two versions are NOT semantically equivalent",
+          "check": "Output concludes that the two versions are NOT semantically equivalent (or 'divergent' / 'different')"
+        },
+        {
+          "id": "identifies-find-vs-find-by",
+          "description": "Output identifies that find raises RecordNotFound while find_by returns nil",
+          "check": "Output identifies that `User.find(id)` raises `ActiveRecord::RecordNotFound` (or an exception) when the record doesn't exist, while `User.find_by(id:)` returns nil"
+        },
+        {
+          "id": "identifies-nil-email-divergence",
+          "description": "Output identifies that nil email raises NoMethodError in A but returns nil in B",
+          "check": "Output identifies that when email is nil, Version A raises NoMethodError (nil.split raises), while Version B returns nil via safe navigation"
+        },
+        {
+          "id": "identifies-no-at-behavior",
+          "description": "Output explains that both versions behave the same when email has no @ character",
+          "check": "Output explains that when email contains no '@', split('@') returns a one-element array in both versions, and .last returns the full email string in both — this sub-case behaves the same"
+        }
+      ]
+    },
+    {
+      "id": 241,
+      "name": "php-null-coalescing-rewrite-diff",
+      "mode": "logic-diff",
+      "prompt": "Are these two PHP implementations semantically equivalent?\n\n**Version A:**\n```php\n<?php\nfunction getConfig(array $options, string $key, $default = null) {\n    return isset($options[$key]) ? $options[$key] : $default;\n}\n```\n\n**Version B:**\n```php\n<?php\nfunction getConfig(array $options, string $key, $default = null) {\n    return $options[$key] ?? $default;\n}\n```\n\nConsider: what happens when `$key` is missing from `$options`, when `$options[$key]` is `null`, when `$options[$key]` is `false` or `0`, and when `$options[$key]` is `''` (empty string).",
+      "expected_output": "They ARE semantically equivalent for all input cases. `isset($x)` returns false when $x does not exist OR when $x is null. The `??` (null coalescing) operator in PHP 7+ also returns the right-hand side when the left-hand side does not exist or is null — it is defined as exactly equivalent to `isset($x) ? $x : $default`. Key cases: (1) Key missing: both return `$default`. (2) Key present, value null: `isset` returns false → returns `$default`; `??` treats null as absent → returns `$default`. Same result. (3) Key present, value false or 0: `isset` returns true (false and 0 are set, just falsy); `??` sees a non-null value → returns the value. Same result — neither version uses `empty()` or boolean coercion. (4) Key present, value '': same as false/0 — both return ''. The implementations are semantically equivalent in PHP 7+.",
+      "assertions": [
+        {
+          "id": "concludes-equivalent",
+          "description": "Output concludes the two versions ARE semantically equivalent",
+          "check": "Output concludes that the two versions are semantically equivalent (or identical in behavior)"
+        },
+        {
+          "id": "explains-isset-vs-null-coalescing",
+          "description": "Output explains that both isset and ?? treat null (and missing keys) the same way",
+          "check": "Output explains that `isset($x)` returns false when $x is null or missing, and `??` also falls through to the default when the left-hand side is null or missing — making them equivalent"
+        },
+        {
+          "id": "explains-falsy-values-preserved",
+          "description": "Output explains that false, 0, and '' are NOT treated as null by either version",
+          "check": "Output explains that false, 0, and empty string are preserved by both versions (neither uses empty() or boolean coercion) — isset returns true for these and ?? returns the value since it's non-null"
+        },
+        {
+          "id": "identifies-php7-requirement",
+          "description": "Output notes that ?? requires PHP 7+",
+          "check": "Output mentions that the null coalescing operator (??) is a PHP 7+ feature (or that the equivalence holds in PHP 7+)"
+        }
+      ]
+    },
+    {
+      "id": 242,
+      "name": "python-naive-vs-aware-datetime-fix-diff",
+      "mode": "logic-diff",
+      "prompt": "Are these two Python implementations semantically equivalent?\n\n**Version A (original):**\n```python\nfrom datetime import datetime, timedelta\n\ndef is_token_expired(issued_at: datetime, ttl_hours: int = 24) -> bool:\n    return datetime.now() > issued_at + timedelta(hours=ttl_hours)\n```\n\n**Version B (proposed fix):**\n```python\nfrom datetime import datetime, timedelta, timezone\n\ndef is_token_expired(issued_at: datetime, ttl_hours: int = 24) -> bool:\n    now = datetime.now(tz=timezone.utc)\n    if issued_at.tzinfo is None:\n        issued_at = issued_at.replace(tzinfo=timezone.utc)\n    return now > issued_at + timedelta(hours=ttl_hours)\n```\n\nConsider: what happens when `issued_at` is timezone-naive, when it's timezone-aware (UTC), and when it's timezone-aware (non-UTC). Are the behaviors identical for all cases?",
+      "expected_output": "They are NOT semantically equivalent — Version B is a semantic correction, not an equivalent rewrite. Version A: `datetime.now()` returns a naive datetime (no tzinfo). Comparing a naive datetime with a timezone-aware `issued_at` raises `TypeError: can't compare offset-naive and offset-aware datetimes` in Python 3. If both are naive, comparison works but is clock-local — a server clock shift or DST transition can cause incorrect results. Version B: uses `datetime.now(tz=timezone.utc)` which always returns a timezone-aware UTC datetime. If `issued_at` is naive, B assumes it represents UTC and attaches the UTC tzinfo — A would raise TypeError. If `issued_at` is UTC-aware, both behave the same logically. If `issued_at` is non-UTC-aware (e.g., `+05:30`), B compares UTC now against UTC-offset-adjusted issued_at correctly; A would raise TypeError. Key divergences: (1) naive issued_at: A raises TypeError in Python 3, B succeeds (assumes UTC). (2) non-UTC-aware issued_at: A raises TypeError, B handles correctly. The behaviors differ — B is a safer, corrected implementation, not an equivalent refactor.",
+      "assertions": [
+        {
+          "id": "concludes-not-equivalent",
+          "description": "Output concludes the two versions are NOT semantically equivalent",
+          "check": "Output concludes that the two versions are NOT semantically equivalent (Version B is a fix, not an equivalent rewrite)"
+        },
+        {
+          "id": "identifies-typeerror-in-a",
+          "description": "Output identifies that Version A raises TypeError when issued_at is timezone-aware",
+          "check": "Output identifies that Version A raises TypeError when comparing naive datetime.now() with a timezone-aware issued_at (Python 3 prohibits naive-aware comparison)"
+        },
+        {
+          "id": "explains-b-assumes-utc-for-naive",
+          "description": "Output explains that Version B treats naive issued_at as UTC",
+          "check": "Output explains that Version B attaches UTC tzinfo to a naive issued_at (via .replace(tzinfo=timezone.utc)), treating it as UTC — whereas Version A would raise TypeError"
+        },
+        {
+          "id": "identifies-l9-risk",
+          "description": "Output frames the divergence as a timezone/locale hazard (L9)",
+          "check": "Output identifies the root cause as a timezone handling issue (L9 or equivalent framing: naive vs timezone-aware datetime mismatch)"
+        }
+      ]
+    },
+    {
+      "id": 243,
+      "name": "ruby-order-manager-health-L3-L4-L6",
+      "mode": "logic-health",
+      "prompt": "Give me a logic health overview of this Ruby module:\n\n```ruby\n# lib/order_manager.rb\n\nclass OrderManager\n  DISCOUNTS = { 'SAVE10' => 10, 'SAVE20' => 20 }\n\n  def calculate_total(order)\n    subtotal = order[:items].map { |i| i[:price] }.sum\n    tax = subtotal * 0.1\n    subtotal + tax\n  end\n\n  def apply_discount(order, code)\n    discount = DISCOUNTS[code]          # nil if code unknown\n    order[:total] -= discount           # NoMethodError: nil - ... if invalid code\n    order\n  end\n\n  def process(order)\n    order[:total] = calculate_total(order)\n    apply_discount(order, order[:promo_code])  # promo_code may be nil\n    save_order(order)\n    order\n  end\n\n  def bulk_process(orders)\n    orders.each do |order|\n      orders.delete(order) if order[:items].empty?  # mutating collection during iteration\n      process(order)\n    end\n  end\nend\n```",
+      "expected_output": "Should produce a health report with Logic Score below 100 and a Module Breakdown. Should identify: (1) L3 in calculate_total — `order[:items]` may be nil or empty; calling `.map` on nil raises NoMethodError; summing empty array is fine but nil items is not. (2) L6 in apply_discount — `DISCOUNTS[code]` returns nil for unknown codes; `order[:total] -= nil` raises NoMethodError or TypeError. When called from process with a nil promo_code, same issue. (3) L4 in bulk_process — `orders.delete(order)` mutates the `orders` array while `each` is iterating over it, causing elements to be skipped and producing incorrect results. (4) L3 in process — `order[:promo_code]` is not validated before passing to apply_discount. Systemic pattern: missing guard clauses and no defensive validation at module boundaries.",
+      "assertions": [
+        {
+          "id": "has-module-breakdown",
+          "description": "Output includes a Module Breakdown section or per-method analysis",
+          "check": "Output contains a 'Module Breakdown' heading or a table showing per-method findings or logic scores"
+        },
+        {
+          "id": "identifies-nil-items-risk",
+          "description": "Output identifies the nil items risk in calculate_total (L3)",
+          "check": "Output identifies that order[:items] may be nil, causing NoMethodError when .map is called on it, or frames this as an L3 boundary risk"
+        },
+        {
+          "id": "identifies-nil-discount-risk",
+          "description": "Output identifies the nil discount risk in apply_discount (L6 or L3)",
+          "check": "Output identifies that DISCOUNTS[code] returns nil for unknown codes, and subtracting nil raises TypeError or NoMethodError — or frames this as a callee-contract / boundary risk"
+        },
+        {
+          "id": "identifies-mutation-during-iteration",
+          "description": "Output identifies the L4 mutation-during-iteration in bulk_process",
+          "check": "Output identifies that orders.delete(order) mutates the collection while each is iterating over it (L4 State Mutation Hazard), causing elements to be skipped"
+        },
+        {
+          "id": "score-below-100",
+          "description": "Logic Score is below 100",
+          "check": "Output reports a Logic Score below 100"
+        }
+      ]
+    },
+    {
+      "id": 244,
+      "name": "php-service-health-L5-L8",
+      "mode": "logic-health",
+      "prompt": "Give me a logic health overview of this PHP service:\n\n```php\n<?php\n// src/UserService.php\n\nclass UserService {\n    private PDO $db;\n\n    public function __construct(PDO $db) {\n        $this->db = $db;\n    }\n\n    public function getUser(int $id): ?array {\n        $stmt = $this->db->prepare('SELECT * FROM users WHERE id = ?');\n        $stmt->execute([$id]);\n        $row = $stmt->fetch(PDO::FETCH_ASSOC);\n        return $row ?: null;  // ok\n    }\n\n    public function updateEmail(int $id, string $email): bool {\n        $this->db->beginTransaction();\n        $stmt = $this->db->prepare('UPDATE users SET email = ? WHERE id = ?');\n        $ok = $stmt->execute([$email, $id]);\n        if (!$ok) {\n            return false;  // transaction not rolled back: L5\n        }\n        $this->db->commit();\n        return true;\n    }\n\n    public function exportUsers(): string {\n        $tmp = tmpfile();                          // L8: tmpfile handle\n        $stmt = $this->db->query('SELECT * FROM users');\n        while ($row = $stmt->fetch()) {\n            fputcsv($tmp, $row);\n        }\n        rewind($tmp);\n        return stream_get_contents($tmp);          // L8: $tmp never fclose'd\n    }\n}\n```",
+      "expected_output": "Should produce a health report with Logic Score below 100 and a Module Breakdown. Should identify: (1) L5 in updateEmail — when `$stmt->execute()` returns false, the function returns false without calling `$this->db->rollBack()`. The open transaction is left in an indeterminate state, which can cause the next DB operation in the same connection to fail or see dirty data. (2) L8 in exportUsers — `tmpfile()` returns a resource handle that should be closed with `fclose($tmp)` when no longer needed. The function reads the contents and returns the string but never closes the handle. Over many calls, temporary file handles accumulate. Also `$stmt` from `query()` is never closed (minor L8). Systemic pattern: exception and error paths are not properly handled; resource lifecycle is not managed.",
+      "assertions": [
+        {
+          "id": "has-module-breakdown",
+          "description": "Output includes a Module Breakdown section or per-method analysis",
+          "check": "Output contains a 'Module Breakdown' heading or a table/list showing per-method findings"
+        },
+        {
+          "id": "identifies-L5-transaction-not-rolled-back",
+          "description": "Output identifies that updateEmail does not rollBack on failure (L5)",
+          "check": "Output identifies that when execute() returns false in updateEmail, the transaction is not rolled back (rollBack() is never called), leaving an open transaction — frames as L5 or control-flow escape"
+        },
+        {
+          "id": "identifies-L8-tmpfile-leak",
+          "description": "Output identifies that the tmpfile handle is never closed (L8)",
+          "check": "Output identifies that the tmpfile() handle in exportUsers is never closed (fclose is missing), causing file handle or temp file leaks — frames as L8"
+        },
+        {
+          "id": "score-below-100",
+          "description": "Logic Score is below 100",
+          "check": "Output reports a Logic Score below 100"
+        }
+      ]
+    },
+    {
+      "id": 245,
+      "name": "swift-force-unwrap-config-crash-L6",
+      "mode": "logic-locate",
+      "prompt": "This Swift app crashes on first launch in App Store builds (Release configuration) but not in Xcode debug runs. The crash log shows a fatal error at line 11 of Config.swift. Locate the fault.\n\n```swift\n// Config.swift\nimport Foundation\n\nstruct AppConfig {\n    let apiKey: String\n    let baseURL: URL\n}\n\nfunc loadAppConfig() -> AppConfig {\n    let path = Bundle.main.path(forResource: \"Config\", ofType: \"plist\")  // line 10\n    let dict = NSDictionary(contentsOfFile: path!)                        // line 11 — force unwrap path\n    return AppConfig(\n        apiKey: dict![\"apiKey\"] as! String,                              // line 12 — force unwrap dict\n        baseURL: URL(string: dict![\"baseURL\"] as! String)!\n    )\n}\n```\n\nIn Xcode debug builds, `Config.plist` is included in the app bundle. In Release/Archive builds, the plist is excluded by a misconfigured build phase (target membership unchecked). The crash log shows `EXC_BAD_INSTRUCTION` at line 11.",
+      "expected_output": "Should locate the fault at line 11 or 12: `Bundle.main.path(forResource:ofType:)` returns an `Optional<String>` — it returns `nil` when the file is not in the bundle. Force-unwrapping `path!` on line 11 causes the fatal error when `path` is `nil`. In Release builds, `Config.plist` is not in the bundle (build phase misconfiguration), so `path` is `nil` → `path!` triggers `EXC_BAD_INSTRUCTION (unexpectedly found nil while unwrapping an Optional value)`. In debug builds, the plist is present so `path` is non-nil and the force-unwrap succeeds. The root cause is L6 (Callee Contract Mismatch): the caller assumes `Bundle.main.path(forResource:ofType:)` always returns a non-nil path, but the method's contract is to return `nil` when the resource is absent. The build misconfiguration exposes the assumption. Remedy: guard against nil path with proper error handling (`guard let path = ... else { fatalError(\"Config.plist missing from bundle\") }`) and investigate why the plist is excluded from the Release build phase.",
+      "assertions": [
+        {
+          "id": "locates-line-11",
+          "description": "Output locates the fault at line 11 (path! force-unwrap)",
+          "check": "Output identifies line 11 (or the `path!` force-unwrap of the Optional path) as the crash site where nil is force-unwrapped"
+        },
+        {
+          "id": "identifies-path-returns-nil",
+          "description": "Output identifies that Bundle.main.path returns nil when the resource is absent",
+          "check": "Output identifies that `Bundle.main.path(forResource:ofType:)` returns Optional<String> and returns nil when the resource file is not in the bundle"
+        },
+        {
+          "id": "identifies-debug-vs-release-discrepancy",
+          "description": "Output explains why it crashes in Release but not Debug",
+          "check": "Output explains that Config.plist is present in Debug builds (so force-unwrap succeeds) but absent in Release builds due to the build phase misconfiguration (so force-unwrap crashes)"
+        },
+        {
+          "id": "identifies-L6-contract-mismatch",
+          "description": "Output identifies L6 (Callee Contract Mismatch)",
+          "check": "Output identifies L6 — the caller assumes a non-nil return from Bundle.main.path but the method's contract allows nil"
+        },
+        {
+          "id": "recommends-guard-let",
+          "description": "Output recommends guard let or safe unwrapping",
+          "check": "Output recommends using guard let (or if let) to safely unwrap the Optional path and handle the nil case explicitly"
+        }
+      ]
+    },
+    {
+      "id": 246,
+      "name": "bash-suppressed-error-misleads-ci-L5",
+      "mode": "logic-locate",
+      "prompt": "A CI pipeline always reports green even though integration tests are failing. The pipeline script is below. Locate the fault that causes test failures to be hidden.\n\n```bash\n#!/usr/bin/env bash\nset -euo pipefail\n\nrun_tests() {\n    echo \"Starting services...\"\n    docker-compose up -d\n\n    echo \"Waiting for services...\"\n    sleep 5\n\n    echo \"Running integration tests...\"\n    pytest tests/integration/ --tb=short 2>&1 | tee /tmp/test-output.log || true\n\n    echo \"Stopping services...\"\n    docker-compose down\n}\n\nrun_tests\necho \"Pipeline complete\"\nexit 0\n```\n\nPytest exits with code 1 when tests fail. The pipeline always exits 0. Where exactly is the fault?",
+      "expected_output": "Should locate the fault at the pytest line: `pytest tests/integration/ ... | tee /tmp/test-output.log || true`. This is a two-part problem: (1) The pipe `| tee` in pipefail mode: by default, a pipeline's exit code is the exit code of the last command in the pipe. `tee` exits 0 (successfully writing to the log). With `pipefail`, the pipeline exits with the non-zero code of any failed command — but `|| true` after the entire pipeline resets the exit code to 0 regardless. So even if pytest exits 1, `|| true` converts it to 0. (2) `set -e` would normally abort on a non-zero exit, but `|| true` prevents that. The `run_tests` function therefore always succeeds and the outer `exit 0` confirms it. The fault is the `|| true` appended to the pytest pipeline — it was likely added to prevent docker-compose down from being skipped, but it also masks pytest's failure exit code. Risk code L5. Remedy: save pytest's exit code before the || true (`PYTEST_EXIT=${PIPESTATUS[0]}`), run cleanup unconditionally, then re-exit with the saved code.",
+      "assertions": [
+        {
+          "id": "locates-or-true-on-pytest-line",
+          "description": "Output locates the fault at the || true after the pytest pipeline",
+          "check": "Output identifies the `|| true` appended to the pytest command (or the pytest pipeline) as the specific location of the fault"
+        },
+        {
+          "id": "explains-or-true-resets-exit-code",
+          "description": "Output explains that || true resets pytest's non-zero exit to 0",
+          "check": "Output explains that `|| true` evaluates to 0 regardless of pytest's exit code, causing the shell to treat the test run as successful even when tests fail"
+        },
+        {
+          "id": "identifies-L5",
+          "description": "Output identifies L5 (Control Flow Escape)",
+          "check": "Output contains 'L5' or identifies this as a control-flow escape where the failure path is silently swallowed"
+        },
+        {
+          "id": "recommends-pipestatus-or-trap",
+          "description": "Output recommends PIPESTATUS or a trap to preserve exit code",
+          "check": "Output recommends saving pytest's exit code via PIPESTATUS[0] (or a similar mechanism), running cleanup separately, and re-exiting with the saved non-zero code"
+        }
+      ]
+    },
+    {
+      "id": 247,
+      "name": "ruby-fix-all-shadow-and-resource-leak-L1-L8",
+      "mode": "logic-fix-all",
+      "prompt": "Fix all logic issues in this Ruby code:\n\n```ruby\n# lib/report_exporter.rb\nrequire 'csv'\nrequire 'logger'\n\nmodule Reports\n  class Logger   # shadows ::Logger\n    def log(msg)\n      puts \"[REPORT] #{msg}\"\n    end\n  end\n\n  class Exporter\n    def initialize\n      @logger = Logger.new   # gets Reports::Logger, not ::Logger\n    end\n\n    def export(records, path)\n      @logger.info \"Exporting #{records.size} records to #{path}\"\n      file = File.open(path, 'w')\n      csv = CSV.new(file)\n      records.each { |r| csv << [r[:id], r[:name], r[:value]] }\n      file.close   # closed only on happy path; exception in records.each leaks file\n      path\n    end\n  end\nend\n```",
+      "expected_output": "Should apply fixes and output a Fix Log. Issues: (1) L1 in Exporter#initialize — `Logger.new` resolves to `Reports::Logger` which has only `#log`, not `#info`. Calling `@logger.info` raises NoMethodError. Fix: rename `Reports::Logger` to `Reports::ReportLogger` (or use `::Logger.new`), and update the `#log` call to use the stdlib Logger interface. (2) L8 in export — `File.open(path, 'w')` acquires a file handle. `file.close` only runs on the happy path. If `records.each` raises (e.g., malformed record), the file handle leaks. Fix: wrap the body in a `File.open(...) do |file|` block (block form auto-closes on exit), or use begin/ensure. Fix Log must list both fixes. Logic Score (after) must be higher than (before). Output must include fixed code, not just a review.",
+      "assertions": [
+        {
+          "id": "has-fix-log",
+          "description": "Output includes a Fix Log section or table",
+          "check": "Output contains 'Fix Log' as a heading or table label"
+        },
+        {
+          "id": "has-before-after-scores",
+          "description": "Output shows Logic Score before and after",
+          "check": "Output contains both 'before' and 'after' Logic Score values (or equivalent labels like 'Logic Score (before)' and 'Logic Score (after)')"
+        },
+        {
+          "id": "fixes-l1-logger-shadow",
+          "description": "A fix was applied to resolve the Logger name collision (L1)",
+          "check": "Output's Fix Log or code change shows the Logger naming collision resolved — either renaming Reports::Logger, qualifying as ::Logger, or using a different class name"
+        },
+        {
+          "id": "fixes-l8-file-leak",
+          "description": "A fix was applied to ensure the file handle is closed on all paths (L8)",
+          "check": "Output's Fix Log or code change shows File.open used with a block (do |file| ... end) or a begin/ensure pattern to guarantee file.close runs on all exit paths"
+        },
+        {
+          "id": "score-improved",
+          "description": "Logic Score after fixes is higher than before",
+          "check": "The after score is numerically higher than the before score"
+        }
+      ]
+    },
+    {
+      "id": 248,
+      "name": "kotlin-fix-all-coroutine-counter-and-resource-L7-L8",
+      "mode": "logic-fix-all",
+      "prompt": "Fix all logic issues in this Kotlin code:\n\n```kotlin\n// data/DataProcessor.kt\nimport kotlinx.coroutines.*\nimport java.io.BufferedReader\nimport java.io.FileReader\n\nclass DataProcessor {\n    var processedCount = 0   // not thread-safe\n\n    suspend fun processAll(paths: List<String>) = coroutineScope {\n        paths.map { path ->\n            async(Dispatchers.IO) {\n                processFile(path)\n                processedCount++   // L7: non-atomic concurrent increment\n            }\n        }.awaitAll()\n    }\n\n    private fun processFile(path: String): List<String> {\n        val reader = BufferedReader(FileReader(path))  // L8: never closed\n        return reader.readLines()\n    }\n}\n```",
+      "expected_output": "Should apply fixes and output a Fix Log. Issues: (1) L7/AV in processAll — `processedCount++` is a non-atomic read-modify-write executed concurrently on Dispatchers.IO (multiple threads). Lost updates cause the final count to be less than the actual number of files processed. Fix: use `AtomicInteger` and `incrementAndGet()`, or use a `Mutex` to protect the increment. (2) L8 in processFile — `BufferedReader(FileReader(path))` acquires two resource objects (FileReader and BufferedReader). Neither is closed; on every call, file handles leak. Fix: use Kotlin's `use` extension function (`BufferedReader(FileReader(path)).use { it.readLines() }`) which calls `close()` on exit including exceptions. Fix Log must list both fixes with before/after Logic Scores. Output must include fixed code.",
+      "assertions": [
+        {
+          "id": "has-fix-log",
+          "description": "Output includes a Fix Log section or table",
+          "check": "Output contains 'Fix Log' as a heading or table label"
+        },
+        {
+          "id": "has-before-after-scores",
+          "description": "Output shows Logic Score before and after",
+          "check": "Output contains both 'before' and 'after' Logic Score values (or equivalent labels like 'Logic Score (before)' and 'Logic Score (after)')"
+        },
+        {
+          "id": "fixes-l7-atomic-increment",
+          "description": "A fix was applied to make the counter increment thread-safe (L7)",
+          "check": "Output's Fix Log or code change shows processedCount changed to AtomicInteger with incrementAndGet(), or protected by a Mutex — making the increment atomic under concurrent coroutine dispatch"
+        },
+        {
+          "id": "fixes-l8-reader-leak",
+          "description": "A fix was applied to close the BufferedReader/FileReader on all paths (L8)",
+          "check": "Output's Fix Log or code change shows the reader wrapped in .use { } (or try-with-resources / try-finally) so it is closed after readLines(), including on exception paths"
+        },
+        {
+          "id": "score-improved",
+          "description": "Logic Score after fixes is higher than before",
+          "check": "The after score is numerically higher than the before score"
+        }
+      ]
     }
   ]
 }
