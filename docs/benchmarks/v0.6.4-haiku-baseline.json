@@ -1,0 +1,666 @@
+{
+  "iteration_dir": "skills-workspace/iteration-haiku-baseline-full",
+  "cases_graded": 79,
+  "overall_pass_rate": 0.38734177215189874,
+  "per_mode": {
+    "logic-review": {
+      "n": 31,
+      "avg_pass_rate": 0.3435483870967742
+    },
+    "logic-fix-all": {
+      "n": 6,
+      "avg_pass_rate": 0.2638888888888889
+    },
+    "logic-explain": {
+      "n": 9,
+      "avg_pass_rate": 0.6166666666666667
+    },
+    "logic-diff": {
+      "n": 14,
+      "avg_pass_rate": 0.38095238095238093
+    },
+    "logic-locate": {
+      "n": 9,
+      "avg_pass_rate": 0.38333333333333336
+    },
+    "logic-health": {
+      "n": 10,
+      "avg_pass_rate": 0.4033333333333333
+    }
+  },
+  "chinese_language_pass": "13/13",
+  "per_case": [
+    {
+      "id": 1,
+      "name": "python-shadow-override-builtin",
+      "mode": "logic-review",
+      "pass_rate": 0.75,
+      "passed": 3,
+      "total": 4
+    },
+    {
+      "id": 10,
+      "name": "fix-all-deduplicates-shared-root-cause",
+      "mode": "logic-fix-all",
+      "pass_rate": 0.0,
+      "passed": 0,
+      "total": 4
+    },
+    {
+      "id": 100,
+      "name": "zh-python-mutation-during-iteration",
+      "mode": "logic-review",
+      "pass_rate": 0.6,
+      "passed": 3,
+      "total": 5
+    },
+    {
+      "id": 101,
+      "name": "deep-cross-file-callee-contract-L6",
+      "mode": "logic-review",
+      "pass_rate": 0.5,
+      "passed": 2,
+      "total": 4
+    },
+    {
+      "id": 102,
+      "name": "zh-python-generator-lazy",
+      "mode": "logic-explain",
+      "pass_rate": 1.0,
+      "passed": 3,
+      "total": 3
+    },
+    {
+      "id": 103,
+      "name": "deep-async-microtask-resolution",
+      "mode": "logic-explain",
+      "pass_rate": 1.0,
+      "passed": 2,
+      "total": 2
+    },
+    {
+      "id": 104,
+      "name": "zh-sql-rewrite-null-comparison",
+      "mode": "logic-diff",
+      "pass_rate": 0.5,
+      "passed": 2,
+      "total": 4
+    },
+    {
+      "id": 105,
+      "name": "deep-go-nil-interface-refactor",
+      "mode": "logic-diff",
+      "pass_rate": 0.0,
+      "passed": 0,
+      "total": 3
+    },
+    {
+      "id": 106,
+      "name": "zh-save-blank-undefined-access",
+      "mode": "logic-locate",
+      "pass_rate": 0.5,
+      "passed": 2,
+      "total": 4
+    },
+    {
+      "id": 107,
+      "name": "deep-flaky-race-condition",
+      "mode": "logic-locate",
+      "pass_rate": 0.25,
+      "passed": 1,
+      "total": 4
+    },
+    {
+      "id": 108,
+      "name": "zh-multi-module-health",
+      "mode": "logic-health",
+      "pass_rate": 0.2,
+      "passed": 1,
+      "total": 5
+    },
+    {
+      "id": 109,
+      "name": "deep-systemic-cross-module-L6",
+      "mode": "logic-health",
+      "pass_rate": 0.0,
+      "passed": 0,
+      "total": 3
+    },
+    {
+      "id": 110,
+      "name": "zh-fix-all-session-module",
+      "mode": "logic-fix-all",
+      "pass_rate": 0.75,
+      "passed": 3,
+      "total": 4
+    },
+    {
+      "id": 200,
+      "name": "logic-review-asyncio-shared-state-across-await",
+      "mode": "logic-review",
+      "pass_rate": 0.25,
+      "passed": 1,
+      "total": 4
+    },
+    {
+      "id": 201,
+      "name": "logic-review-resource-leak-on-exception",
+      "mode": "logic-review",
+      "pass_rate": 0.25,
+      "passed": 1,
+      "total": 4
+    },
+    {
+      "id": 202,
+      "name": "logic-review-naive-datetime-dst-arithmetic",
+      "mode": "logic-review",
+      "pass_rate": 0.5,
+      "passed": 2,
+      "total": 4
+    },
+    {
+      "id": 203,
+      "name": "zh-go-goroutine-loop-variable-race",
+      "mode": "logic-review",
+      "pass_rate": 0.6,
+      "passed": 3,
+      "total": 5
+    },
+    {
+      "id": 204,
+      "name": "logic-locate-connection-pool-exhaustion-L8",
+      "mode": "logic-locate",
+      "pass_rate": 0.4,
+      "passed": 2,
+      "total": 5
+    },
+    {
+      "id": 205,
+      "name": "logic-diff-locale-sort-rewrite",
+      "mode": "logic-diff",
+      "pass_rate": 0.25,
+      "passed": 1,
+      "total": 4
+    },
+    {
+      "id": 206,
+      "name": "logic-review-js-implicit-coercion-fragile",
+      "mode": "logic-review",
+      "pass_rate": 0.25,
+      "passed": 1,
+      "total": 4
+    },
+    {
+      "id": 207,
+      "name": "zh-python-str-int-comparison-L2",
+      "mode": "logic-review",
+      "pass_rate": 0.6,
+      "passed": 3,
+      "total": 5
+    },
+    {
+      "id": 208,
+      "name": "logic-review-skip-audit-on-early-return-L5",
+      "mode": "logic-review",
+      "pass_rate": 0.25,
+      "passed": 1,
+      "total": 4
+    },
+    {
+      "id": 209,
+      "name": "logic-locate-missing-metric-on-early-return-L5",
+      "mode": "logic-locate",
+      "pass_rate": 0.4,
+      "passed": 2,
+      "total": 5
+    },
+    {
+      "id": 210,
+      "name": "ts-type-assertion-bypass-L2",
+      "mode": "logic-review",
+      "pass_rate": 0.4,
+      "passed": 2,
+      "total": 5
+    },
+    {
+      "id": 211,
+      "name": "python-float-equality-L2",
+      "mode": "logic-review",
+      "pass_rate": 0.6,
+      "passed": 3,
+      "total": 5
+    },
+    {
+      "id": 212,
+      "name": "go-deadlock-mutex-order-L7",
+      "mode": "logic-review",
+      "pass_rate": 0.4,
+      "passed": 2,
+      "total": 5
+    },
+    {
+      "id": 213,
+      "name": "python-n-plus-one-query-L3",
+      "mode": "logic-review",
+      "pass_rate": 0.6,
+      "passed": 3,
+      "total": 5
+    },
+    {
+      "id": 214,
+      "name": "java-optional-get-without-check-L6",
+      "mode": "logic-review",
+      "pass_rate": 0.6,
+      "passed": 3,
+      "total": 5
+    },
+    {
+      "id": 215,
+      "name": "rust-integer-overflow-release-L3",
+      "mode": "logic-review",
+      "pass_rate": 0.2,
+      "passed": 1,
+      "total": 5
+    },
+    {
+      "id": 216,
+      "name": "zh-python-bare-except-swallows-L5",
+      "mode": "logic-review",
+      "pass_rate": 0.8,
+      "passed": 4,
+      "total": 5
+    },
+    {
+      "id": 217,
+      "name": "csharp-linq-deferred-execution",
+      "mode": "logic-explain",
+      "pass_rate": 1.0,
+      "passed": 4,
+      "total": 4
+    },
+    {
+      "id": 218,
+      "name": "python-integer-cache-identity",
+      "mode": "logic-explain",
+      "pass_rate": 0.75,
+      "passed": 3,
+      "total": 4
+    },
+    {
+      "id": 219,
+      "name": "zh-js-prototype-shared-mutation",
+      "mode": "logic-explain",
+      "pass_rate": 0.8,
+      "passed": 4,
+      "total": 5
+    },
+    {
+      "id": 220,
+      "name": "java-string-equality-rewrite",
+      "mode": "logic-diff",
+      "pass_rate": 0.5,
+      "passed": 3,
+      "total": 6
+    },
+    {
+      "id": 221,
+      "name": "ts-type-guard-vs-assertion-diff",
+      "mode": "logic-diff",
+      "pass_rate": 0.5,
+      "passed": 3,
+      "total": 6
+    },
+    {
+      "id": 222,
+      "name": "zh-python-list-vs-generator-diff",
+      "mode": "logic-diff",
+      "pass_rate": 0.3333333333333333,
+      "passed": 2,
+      "total": 6
+    },
+    {
+      "id": 223,
+      "name": "nodejs-unhandled-rejection-L5",
+      "mode": "logic-locate",
+      "pass_rate": 0.2,
+      "passed": 1,
+      "total": 5
+    },
+    {
+      "id": 224,
+      "name": "zh-java-concurrent-modification-L4",
+      "mode": "logic-locate",
+      "pass_rate": 0.5,
+      "passed": 3,
+      "total": 6
+    },
+    {
+      "id": 225,
+      "name": "java-service-health-resource-leak",
+      "mode": "logic-health",
+      "pass_rate": 0.3333333333333333,
+      "passed": 2,
+      "total": 6
+    },
+    {
+      "id": 226,
+      "name": "zh-ts-async-error-health",
+      "mode": "logic-health",
+      "pass_rate": 0.6,
+      "passed": 3,
+      "total": 5
+    },
+    {
+      "id": 227,
+      "name": "java-fix-all-resource-leak-L8",
+      "mode": "logic-fix-all",
+      "pass_rate": 0.3333333333333333,
+      "passed": 2,
+      "total": 6
+    },
+    {
+      "id": 228,
+      "name": "ruby-class-shadows-stdlib-logger-L1",
+      "mode": "logic-review",
+      "pass_rate": 0.0,
+      "passed": 0,
+      "total": 1
+    },
+    {
+      "id": 229,
+      "name": "kotlin-coroutine-nonatomic-counter-L7",
+      "mode": "logic-review",
+      "pass_rate": 0.0,
+      "passed": 0,
+      "total": 1
+    },
+    {
+      "id": 230,
+      "name": "php-fopen-resource-leak-exception-L8",
+      "mode": "logic-review",
+      "pass_rate": 0.0,
+      "passed": 0,
+      "total": 1
+    },
+    {
+      "id": 231,
+      "name": "cpp-size-t-underflow-infinite-loop-L3",
+      "mode": "logic-review",
+      "pass_rate": 0.0,
+      "passed": 0,
+      "total": 1
+    },
+    {
+      "id": 232,
+      "name": "js-constructor-const-shadow-L1",
+      "mode": "logic-review",
+      "pass_rate": 0.0,
+      "passed": 0,
+      "total": 1
+    },
+    {
+      "id": 233,
+      "name": "go-import-shadows-builtin-len-L1",
+      "mode": "logic-review",
+      "pass_rate": 0.0,
+      "passed": 0,
+      "total": 1
+    },
+    {
+      "id": 234,
+      "name": "sql-timestamp-no-tz-locale-hazard-L9",
+      "mode": "logic-review",
+      "pass_rate": 0.0,
+      "passed": 0,
+      "total": 1
+    },
+    {
+      "id": 235,
+      "name": "python-strptime-locale-dependent-L9",
+      "mode": "logic-review",
+      "pass_rate": 0.0,
+      "passed": 0,
+      "total": 1
+    },
+    {
+      "id": 236,
+      "name": "bash-or-true-suppresses-error-L5",
+      "mode": "logic-review",
+      "pass_rate": 0.0,
+      "passed": 0,
+      "total": 1
+    },
+    {
+      "id": 237,
+      "name": "rust-raii-drop-lock-guard-explain",
+      "mode": "logic-explain",
+      "pass_rate": 0.0,
+      "passed": 0,
+      "total": 0
+    },
+    {
+      "id": 238,
+      "name": "kotlin-null-safety-elvis-smartcast-explain",
+      "mode": "logic-explain",
+      "pass_rate": 0.0,
+      "passed": 0,
+      "total": 0
+    },
+    {
+      "id": 239,
+      "name": "python-mutable-default-arg-shared-state-explain",
+      "mode": "logic-explain",
+      "pass_rate": 0.0,
+      "passed": 0,
+      "total": 0
+    },
+    {
+      "id": 240,
+      "name": "ruby-safe-nav-vs-exception-diff",
+      "mode": "logic-diff",
+      "pass_rate": 0.0,
+      "passed": 0,
+      "total": 1
+    },
+    {
+      "id": 241,
+      "name": "php-null-coalescing-rewrite-diff",
+      "mode": "logic-diff",
+      "pass_rate": 0.0,
+      "passed": 0,
+      "total": 1
+    },
+    {
+      "id": 242,
+      "name": "python-naive-vs-aware-datetime-fix-diff",
+      "mode": "logic-diff",
+      "pass_rate": 0.0,
+      "passed": 0,
+      "total": 1
+    },
+    {
+      "id": 243,
+      "name": "ruby-order-manager-health-L3-L4-L6",
+      "mode": "logic-health",
+      "pass_rate": 0.0,
+      "passed": 0,
+      "total": 1
+    },
+    {
+      "id": 244,
+      "name": "php-service-health-L5-L8",
+      "mode": "logic-health",
+      "pass_rate": 1.0,
+      "passed": 1,
+      "total": 1
+    },
+    {
+      "id": 245,
+      "name": "swift-force-unwrap-config-crash-L6",
+      "mode": "logic-locate",
+      "pass_rate": 1.0,
+      "passed": 1,
+      "total": 1
+    },
+    {
+      "id": 246,
+      "name": "bash-suppressed-error-misleads-ci-L5",
+      "mode": "logic-locate",
+      "pass_rate": 0.0,
+      "passed": 0,
+      "total": 1
+    },
+    {
+      "id": 247,
+      "name": "ruby-fix-all-shadow-and-resource-leak-L1-L8",
+      "mode": "logic-fix-all",
+      "pass_rate": 0.0,
+      "passed": 0,
+      "total": 1
+    },
+    {
+      "id": 248,
+      "name": "kotlin-fix-all-coroutine-counter-and-resource-L7-L8",
+      "mode": "logic-fix-all",
+      "pass_rate": 0.0,
+      "passed": 0,
+      "total": 1
+    },
+    {
+      "id": 249,
+      "name": "python-none-sentinel-no-bug",
+      "mode": "logic-review",
+      "pass_rate": 0.5,
+      "passed": 2,
+      "total": 4
+    },
+    {
+      "id": 250,
+      "name": "go-defer-unlock-all-paths-no-bug",
+      "mode": "logic-review",
+      "pass_rate": 0.25,
+      "passed": 1,
+      "total": 4
+    },
+    {
+      "id": 251,
+      "name": "js-let-loop-closure-no-bug",
+      "mode": "logic-review",
+      "pass_rate": 0.5,
+      "passed": 2,
+      "total": 4
+    },
+    {
+      "id": 252,
+      "name": "python-with-statement-no-bug",
+      "mode": "logic-review",
+      "pass_rate": 0.75,
+      "passed": 3,
+      "total": 4
+    },
+    {
+      "id": 253,
+      "name": "sql-parameterized-query-no-bug",
+      "mode": "logic-review",
+      "pass_rate": 0.5,
+      "passed": 2,
+      "total": 4
+    },
+    {
+      "id": 254,
+      "name": "go-clean-service-health-high-score",
+      "mode": "logic-health",
+      "pass_rate": 0.5,
+      "passed": 2,
+      "total": 4
+    },
+    {
+      "id": 255,
+      "name": "java-try-with-resources-clean-health",
+      "mode": "logic-health",
+      "pass_rate": 0.5,
+      "passed": 2,
+      "total": 4
+    },
+    {
+      "id": 256,
+      "name": "python-async-context-manager-clean-health",
+      "mode": "logic-health",
+      "pass_rate": 0.5,
+      "passed": 2,
+      "total": 4
+    },
+    {
+      "id": 257,
+      "name": "python-comprehension-vs-map-filter-equivalent",
+      "mode": "logic-diff",
+      "pass_rate": 0.5,
+      "passed": 2,
+      "total": 4
+    },
+    {
+      "id": 258,
+      "name": "ruby-map-vs-collect-alias-equivalent",
+      "mode": "logic-diff",
+      "pass_rate": 0.75,
+      "passed": 3,
+      "total": 4
+    },
+    {
+      "id": 259,
+      "name": "python-join-list-vs-generator-equivalent",
+      "mode": "logic-diff",
+      "pass_rate": 1.0,
+      "passed": 4,
+      "total": 4
+    },
+    {
+      "id": 260,
+      "name": "go-empty-string-check-equivalent",
+      "mode": "logic-diff",
+      "pass_rate": 0.25,
+      "passed": 1,
+      "total": 4
+    },
+    {
+      "id": 5,
+      "name": "logic-explain-closure-capture",
+      "mode": "logic-explain",
+      "pass_rate": 1.0,
+      "passed": 4,
+      "total": 4
+    },
+    {
+      "id": 6,
+      "name": "logic-diff-semantic-equivalence",
+      "mode": "logic-diff",
+      "pass_rate": 0.75,
+      "passed": 3,
+      "total": 4
+    },
+    {
+      "id": 7,
+      "name": "logic-locate-off-by-one",
+      "mode": "logic-locate",
+      "pass_rate": 0.2,
+      "passed": 1,
+      "total": 5
+    },
+    {
+      "id": 8,
+      "name": "logic-health-sql-injection-module",
+      "mode": "logic-health",
+      "pass_rate": 0.4,
+      "passed": 2,
+      "total": 5
+    },
+    {
+      "id": 9,
+      "name": "fix-all-applies-fixes-and-reports-fix-log",
+      "mode": "logic-fix-all",
+      "pass_rate": 0.5,
+      "passed": 2,
+      "total": 4
+    }
+  ]
+}

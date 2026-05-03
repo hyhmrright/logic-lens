@@ -2396,6 +2396,656 @@
           "check": "Output notes that len() counts bytes (not runes) in Go, but both checks correctly identify the empty string (zero bytes) regardless of Unicode content"
         }
       ]
+    },
+    {
+      "id": 261,
+      "name": "rust-ownership-and-option-fix-all-L1-L6",
+      "mode": "logic-fix-all",
+      "prompt": "Fix all logic issues in this Rust code:\n\n```rust\n// src/cache.rs\nuse std::collections::HashMap;\n\npub struct Cache {\n    store: HashMap<String, String>,\n}\n\nimpl Cache {\n    pub fn get_or_default(&self, key: String) -> String {\n        let value = self.store.get(&key);\n        value.unwrap().clone()\n    }\n\n    pub fn set(&mut self, key: String, value: String) -> bool {\n        self.store.insert(key, value);\n        true\n    }\n}\n```",
+      "expected_output": "Two findings. (1) L6 Critical: `get_or_default` calls `.unwrap()` on `Option<&String>` returned by `HashMap::get`; panics for any missing key, contradicting the function name. Fix: use `.cloned().unwrap_or_default()` or accept `&str` and return `String`. (2) L6 Warning: `set` returns `bool` always-true, masking whether key was new vs replaced; `HashMap::insert` returns `Option<String>` with the previous value. Fix: return `Option<String>` or a `bool` derived from `self.store.insert(...).is_none()`. Also: taking `key: String` by value forces caller cloning; `&str` would be more idiomatic but is a Suggestion. Output must be the Logic Fix All template with before/after Logic Score and a Fix Log table.",
+      "assertions": [
+        {
+          "id": "before-after-score",
+          "description": "Has before and after Logic Score",
+          "check": "Output has both Logic Score (before) and Logic Score (after) lines"
+        },
+        {
+          "id": "fix-log",
+          "description": "Has Fix Log table",
+          "check": "Output has Fix Log section/table"
+        },
+        {
+          "id": "fixes-unwrap-panic",
+          "description": "Fixes the .unwrap() panic in get_or_default",
+          "check": "Output identifies and fixes the .unwrap() panic on missing key"
+        },
+        {
+          "id": "fixes-set-return",
+          "description": "Fixes the always-true bool return",
+          "check": "Output flags or fixes the always-true bool return of set()"
+        }
+      ]
+    },
+    {
+      "id": 262,
+      "name": "java-concurrent-map-and-resource-fix-all-L7-L8",
+      "mode": "logic-fix-all",
+      "prompt": "Fix all logic issues in this Java service:\n\n```java\n// SessionService.java\npublic class SessionService {\n    private HashMap<String, Session> sessions = new HashMap<>();\n\n    public Session getOrCreate(String userId) {\n        Session s = sessions.get(userId);\n        if (s == null) {\n            s = new Session(userId);\n            sessions.put(userId, s);\n        }\n        return s;\n    }\n\n    public void persistAll(String path) throws IOException {\n        FileWriter w = new FileWriter(path);\n        for (Session s : sessions.values()) {\n            w.write(s.toJson());\n        }\n        w.close();\n    }\n}\n```",
+      "expected_output": "Three findings. (1) L7/AV Critical: `HashMap` accessed without synchronization in a `Service` class — concurrent `getOrCreate` calls race on the check-then-put, can corrupt the bucket array, lose updates. Fix: use `ConcurrentHashMap` and `computeIfAbsent`. (2) L8 Critical: `FileWriter` not in try-with-resources; if `w.write` throws, `close` is skipped, file handle leaks. Fix: `try (FileWriter w = ...) { ... }`. (3) L7 Warning: iterating `sessions.values()` while another thread can mutate it raises `ConcurrentModificationException` (or `IllegalStateException` on `ConcurrentHashMap` iterators after weakly-consistent reads). Output is Logic Fix All template.",
+      "assertions": [
+        {
+          "id": "before-after-score",
+          "description": "Has before and after Logic Score",
+          "check": "Output has both Logic Score (before) and Logic Score (after) lines"
+        },
+        {
+          "id": "fix-log",
+          "description": "Has Fix Log",
+          "check": "Output has Fix Log section/table"
+        },
+        {
+          "id": "identifies-concurrent-hashmap",
+          "description": "Identifies HashMap concurrency hazard",
+          "check": "Output identifies HashMap is not thread-safe and recommends ConcurrentHashMap or synchronization"
+        },
+        {
+          "id": "fixes-filewriter-leak",
+          "description": "Fixes FileWriter resource leak",
+          "check": "Output identifies FileWriter not in try-with-resources and applies the fix"
+        }
+      ]
+    },
+    {
+      "id": 263,
+      "name": "python-datetime-locale-fix-all-L9-L2",
+      "mode": "logic-fix-all",
+      "prompt": "Fix all logic issues in this Python billing module:\n\n```python\n# billing.py\nfrom datetime import datetime\n\ndef compute_invoice_age_days(invoice):\n    created = datetime.strptime(invoice['created_at'], '%Y-%m-%d %H:%M:%S')\n    now = datetime.now()\n    return (now - created).days\n\ndef format_amount(amount_cents, currency='USD'):\n    dollars = amount_cents / 100\n    return f'{currency} {dollars}'\n```",
+      "expected_output": "Three findings. (1) L9 Critical in `compute_invoice_age_days`: `strptime` produces a NAIVE datetime; `datetime.now()` is also naive but in local timezone — if `created_at` is UTC (typical DB convention), this miscomputes age by hours of local offset and silently breaks across DST. Fix: use `datetime.strptime(...).replace(tzinfo=timezone.utc)` and `datetime.now(timezone.utc)`. (2) L2 Warning in `format_amount`: `amount_cents / 100` produces float (Python 3 true division) — currency math must not use float; rounding errors compound. Fix: use `Decimal` or `divmod(amount_cents, 100)` for dollars/cents pair, then format with two decimal places. (3) L9 Suggestion: hard-coded `%Y-%m-%d %H:%M:%S` format breaks on ISO 8601 inputs with `T` or `Z`; use `datetime.fromisoformat`. Output is Logic Fix All template.",
+      "assertions": [
+        {
+          "id": "before-after-score",
+          "description": "Has before and after Logic Score",
+          "check": "Output has both Logic Score (before) and Logic Score (after) lines"
+        },
+        {
+          "id": "fix-log",
+          "description": "Has Fix Log",
+          "check": "Output has Fix Log section or table"
+        },
+        {
+          "id": "fixes-naive-datetime",
+          "description": "Fixes naive vs aware datetime",
+          "check": "Output identifies the naive-vs-aware datetime hazard and applies a timezone-aware fix"
+        },
+        {
+          "id": "flags-float-currency",
+          "description": "Flags float currency arithmetic",
+          "check": "Output flags the float division for currency and recommends Decimal or integer-cents pattern"
+        }
+      ]
+    },
+    {
+      "id": 264,
+      "name": "typescript-async-race-and-mutation-fix-all-L7-L4",
+      "mode": "logic-fix-all",
+      "prompt": "Fix all logic issues in this TypeScript code:\n\n```typescript\n// src/userCache.ts\nlet cache: Record<string, User> = {};\nlet inflight: Record<string, Promise<User>> = {};\n\nasync function fetchUser(id: string): Promise<User> {\n    if (cache[id]) return cache[id];\n    if (inflight[id]) return inflight[id];\n\n    const p = fetch(`/api/users/${id}`).then(r => r.json());\n    inflight[id] = p;\n    const user = await p;\n    cache[id] = user;\n    return user;\n}\n```",
+      "expected_output": "Two findings. (1) L7/AV Critical: between `if (cache[id])` and `cache[id] = user`, the await yields control — a second concurrent `fetchUser(id)` call can pass the `cache[id]` check (still false) AND the `inflight[id]` check (still null because `inflight[id] = p` happens AFTER the fetch is initiated synchronously but the dedup-via-inflight intent is broken if reorder happens). The order `inflight[id] = p` then `await p` is correct, but if multiple calls arrive in the same microtask between the two reads they race. Fix: set `inflight[id] = p` BEFORE the fetch await is even constructed — already done — but additionally clear `inflight[id]` in a `finally` so failed fetches don't poison subsequent calls. (2) L4/L8 Warning: `inflight[id]` is never deleted on success or failure, leaking memory and preventing retry on transient errors. Fix: `try { … } finally { delete inflight[id]; }`. Output is Logic Fix All template.",
+      "assertions": [
+        {
+          "id": "before-after-score",
+          "description": "Has before and after Logic Score",
+          "check": "Output has both Logic Score (before) and Logic Score (after) lines"
+        },
+        {
+          "id": "fix-log",
+          "description": "Has Fix Log",
+          "check": "Output has Fix Log section or table"
+        },
+        {
+          "id": "identifies-inflight-leak",
+          "description": "Identifies inflight not cleared",
+          "check": "Output identifies that inflight[id] is never cleared and adds a finally/cleanup"
+        },
+        {
+          "id": "addresses-race",
+          "description": "Addresses the await/race window",
+          "check": "Output addresses the race / atomicity hazard around the await boundary"
+        }
+      ]
+    },
+    {
+      "id": 265,
+      "name": "php-sql-and-null-deref-fix-all-L2-L6",
+      "mode": "logic-fix-all",
+      "prompt": "Fix all logic issues in this PHP code:\n\n```php\n<?php\n// UserRepository.php\nclass UserRepository {\n    private $pdo;\n    public function __construct($pdo) { $this->pdo = $pdo; }\n\n    public function findByEmail($email) {\n        $sql = \"SELECT * FROM users WHERE email = '$email'\";\n        $stmt = $this->pdo->query($sql);\n        $row = $stmt->fetch();\n        return $row['id'];\n    }\n\n    public function emailExists($email) {\n        return $this->findByEmail($email) !== null;\n    }\n}\n```",
+      "expected_output": "Three findings. (1) L6 Critical (security overlap, but logic finding stands): `$email` interpolated directly into SQL — quote-escape failure or quote-injection produces SQL syntax error or SQL injection. Fix: prepared statement `prepare('... WHERE email = ?')` then `execute([$email])`. (2) L6 Critical: when `$email` does not match a row, `$stmt->fetch()` returns `false` (PDO default) — `$row['id']` then either accesses `false['id']` (PHP 8 `Cannot access offset of type string on bool`) or returns `null` silently in older versions. Then `emailExists` calls `findByEmail !== null` — but the buggy path returns null on no-match, AND null on match-with-null-id, AND a fatal error on PHP 8. Fix: check `$row === false` and return `null`; in `emailExists`, use a dedicated `SELECT 1` count query or compare against `false`. (3) L3 Suggestion: `findByEmail` returns just an id, not the user record — name promises more than the implementation delivers; rename or expand return. Output is Logic Fix All template.",
+      "assertions": [
+        {
+          "id": "before-after-score",
+          "description": "Has before and after Logic Score",
+          "check": "Output has both Logic Score (before) and Logic Score (after) lines"
+        },
+        {
+          "id": "fix-log",
+          "description": "Has Fix Log",
+          "check": "Output has Fix Log section or table"
+        },
+        {
+          "id": "fixes-sql-injection",
+          "description": "Fixes SQL string interpolation with prepared statements",
+          "check": "Output identifies the SQL string interpolation and applies prepared statements / parameterized query"
+        },
+        {
+          "id": "fixes-fetch-false",
+          "description": "Fixes the fetch() returning false on no-match",
+          "check": "Output identifies that fetch() returns false on no-match and the unguarded $row['id'] access"
+        }
+      ]
+    },
+    {
+      "id": 266,
+      "name": "csharp-idisposable-and-linq-fix-all-L8-L4",
+      "mode": "logic-fix-all",
+      "prompt": "Fix all logic issues in this C# code:\n\n```csharp\npublic class ReportService {\n    public IEnumerable<string> GetActiveUserNames(IEnumerable<User> users) {\n        var conn = new SqlConnection(_connStr);\n        conn.Open();\n        return users.Where(u => u.IsActive).Select(u => u.Name);\n    }\n\n    public List<int> ProcessIds(List<int> ids) {\n        var result = ids;\n        result.Add(-1);\n        return result;\n    }\n}\n```",
+      "expected_output": "Three findings. (1) L8 Critical: `SqlConnection conn` opened but never disposed; the method returns a deferred LINQ query that does NOT use `conn` — so the connection leaks unconditionally. Fix: wrap in `using` AND remove the unused connection (it has no caller in this method) OR if the original intent was to query through `conn`, materialize within the using block. (2) L4 Critical: `ProcessIds` aliases the input parameter (`var result = ids`) and then mutates it via `Add(-1)` — caller's list is silently modified. Fix: `var result = new List<int>(ids); result.Add(-1);`. (3) L6 Warning: deferred LINQ — `Where().Select()` is lazy; if the caller iterates twice they re-evaluate; if `users` is itself a deferred query backed by a connection that closes, second iteration fails. Fix: `.ToList()` to materialize. Output is Logic Fix All template.",
+      "assertions": [
+        {
+          "id": "before-after-score",
+          "description": "Has before and after Logic Score",
+          "check": "Output has both Logic Score (before) and Logic Score (after) lines"
+        },
+        {
+          "id": "fix-log",
+          "description": "Has Fix Log",
+          "check": "Output has Fix Log section or table"
+        },
+        {
+          "id": "fixes-sqlconn-leak",
+          "description": "Fixes SqlConnection not disposed",
+          "check": "Output identifies SqlConnection is not disposed and applies using or removes it"
+        },
+        {
+          "id": "fixes-list-aliasing",
+          "description": "Fixes List<int> aliasing mutation",
+          "check": "Output identifies that result = ids aliases the parameter and applies a defensive copy"
+        }
+      ]
+    },
+    {
+      "id": 267,
+      "name": "rust-lifetime-explain-borrow-checker",
+      "mode": "logic-explain",
+      "prompt": "Walk me through what happens when this Rust code is compiled and called with `find_first(&[1, 2, 3], |x| *x > 1)`:\n\n```rust\nfn find_first<'a, T>(slice: &'a [T], pred: impl Fn(&T) -> bool) -> Option<&'a T> {\n    for item in slice {\n        if pred(item) {\n            return Some(item);\n        }\n    }\n    None\n}\n```\n\nExplain the lifetime, the iterator desugaring, and what `item` is at each step.",
+      "expected_output": "Step-by-step trace. Step 1: caller passes `&[1, 2, 3]` (a `&'a [i32]` where `'a` is the slice's borrow lifetime) and a closure `|x| *x > 1` (an `impl Fn(&i32) -> bool`). Step 2: the lifetime `'a` is unified with the slice's lifetime; the return type `Option<&'a T>` borrows from the same input. Step 3: `for item in slice` desugars to `for item in IntoIterator::into_iter(slice)`; for `&'a [T]`, that produces `core::slice::Iter<'a, T>`, and each `item` from the iterator is `&'a T` (a reference into the slice). Step 4: iteration yields item=&1, &2, &3 in order. Step 5: pred(&1) → 1>1 → false. Step 6: pred(&2) → 2>1 → true; `return Some(item)` — `item` is `&'a i32` pointing into the original slice; `Some(&2)` is returned. Step 7: caller receives `Option<&i32>` borrowing from the slice for `'a`. The borrow checker accepts this because `'a` outlives the function frame.",
+      "assertions": [
+        {
+          "id": "explains-lifetime",
+          "description": "Explains the lifetime parameter 'a",
+          "check": "Output explains the lifetime parameter 'a links input slice and returned reference"
+        },
+        {
+          "id": "explains-iter-desugar",
+          "description": "Explains for-in desugaring to slice::Iter",
+          "check": "Output explains that the for loop iterates with each item being a &T reference (slice::Iter)"
+        },
+        {
+          "id": "traces-return-some",
+          "description": "Reaches Some(&2) on the second iteration",
+          "check": "Output traces that pred(&2) returns true and the function returns Some(&2)"
+        }
+      ]
+    },
+    {
+      "id": 268,
+      "name": "js-microtask-vs-macrotask-explain",
+      "mode": "logic-explain",
+      "prompt": "Explain the exact order in which the four console.log statements fire when this code runs in a browser:\n\n```js\nconsole.log('1');\nsetTimeout(() => console.log('2'), 0);\nPromise.resolve().then(() => console.log('3'));\nconsole.log('4');\n```",
+      "expected_output": "Output order: 1, 4, 3, 2. Step 1: `console.log('1')` runs synchronously → prints `1`. Step 2: `setTimeout(cb, 0)` schedules `cb` on the macrotask queue (will run after the current task completes and any microtasks drain). Step 3: `Promise.resolve()` produces an already-resolved promise; `.then(cb)` enqueues `cb` on the microtask queue. Step 4: `console.log('4')` runs synchronously → prints `4`. Step 5: the current synchronous task ends; before yielding to the next macrotask, the JS runtime drains the microtask queue → the promise callback runs → prints `3`. Step 6: the runtime moves to the next macrotask → setTimeout callback runs → prints `2`. Key concept: microtasks (Promise then/catch/finally, queueMicrotask, MutationObserver) drain BEFORE the next macrotask (setTimeout, setInterval, I/O, UI events).",
+      "assertions": [
+        {
+          "id": "correct-order",
+          "description": "States the order 1, 4, 3, 2",
+          "check": "Output states or implies the output order is 1, 4, 3, 2"
+        },
+        {
+          "id": "explains-microtask-queue",
+          "description": "Explains microtasks drain before next macrotask",
+          "check": "Output explains that microtasks drain before the next macrotask, or that Promise.then is microtask while setTimeout is macrotask"
+        },
+        {
+          "id": "trace-each-step",
+          "description": "Traces each statement step by step",
+          "check": "Output walks through the code statement by statement (or step by step) rather than just stating the answer"
+        }
+      ]
+    },
+    {
+      "id": 269,
+      "name": "zh-python-decorator-order-explain",
+      "mode": "logic-explain",
+      "prompt": "解释这段 Python 代码在调用 `greet('hello')` 时实际发生了什么：\n\n```python\ndef bold(fn):\n    def wrapper(*args, **kw):\n        return f'<b>{fn(*args, **kw)}</b>'\n    return wrapper\n\ndef italic(fn):\n    def wrapper(*args, **kw):\n        return f'<i>{fn(*args, **kw)}</i>'\n    return wrapper\n\n@bold\n@italic\ndef greet(msg):\n    return msg\n```\n\n请逐步追踪装饰器应用顺序，以及调用时函数嵌套的展开过程。",
+      "expected_output": "执行追踪。Step 1：模块加载时 `def greet(msg)` 创建普通函数对象。Step 2：装饰器**自下而上**应用 — 先 `@italic` 包装 `greet`：`greet = italic(greet)`，此时 `greet` 是 `italic.wrapper`，闭包捕获原始 `greet`。Step 3：再 `@bold` 包装上一步的结果：`greet = bold(greet)`，此时 `greet` 是 `bold.wrapper`，闭包捕获 `italic.wrapper`。Step 4：调用 `greet('hello')` 实际进入 `bold.wrapper('hello')`。Step 5：`bold.wrapper` 调用 `fn(*args, **kw)` 即 `italic.wrapper('hello')`。Step 6：`italic.wrapper` 调用其捕获的 `fn('hello')`，即原始 `greet('hello')` → 返回 `'hello'`。Step 7：`italic.wrapper` 返回 `'<i>hello</i>'`。Step 8：`bold.wrapper` 包装为 `'<b><i>hello</i></b>'` 并返回。关键概念：装饰器写在上面的**最后**应用，但调用时**最先**进入 — 装饰器栈的应用顺序与调用展开顺序相反。",
+      "assertions": [
+        {
+          "id": "explains-bottom-up-application",
+          "description": "Explains decorator application bottom-up",
+          "check": "Output explains that decorators are applied bottom-up (italic before bold) at definition time"
+        },
+        {
+          "id": "explains-call-order",
+          "description": "Explains call order top-down",
+          "check": "Output explains that at call time bold.wrapper runs first, then italic.wrapper, then the original greet"
+        },
+        {
+          "id": "final-output",
+          "description": "States the final output is <b><i>hello</i></b>",
+          "check": "Output states or shows the final result is <b><i>hello</i></b>"
+        }
+      ]
+    },
+    {
+      "id": 270,
+      "name": "java-cme-locate-during-iteration-L4",
+      "mode": "logic-locate",
+      "prompt": "This Java code throws ConcurrentModificationException at line 7 in production but not in our unit tests:\n\n```java\n// 1: public List<Order> filterPaid(List<Order> orders) {\n// 2:     for (Order o : orders) {\n// 3:         if (!o.isPaid()) {\n// 4:             logger.warn(\"unpaid: {}\", o.getId());\n// 5:             notifier.send(o);\n// 6:             if (o.shouldRefund()) {\n// 7:                 orders.remove(o);\n// 8:             }\n// 9:         }\n// 10:    }\n// 11:    return orders;\n// 12: }\n```\n\nStack trace: `java.util.ConcurrentModificationException at java.util.ArrayList$Itr.checkForComodification(ArrayList.java:1042)`. Why does this fail in prod but pass in tests? Locate the root cause.",
+      "expected_output": "Fault Confidence: High. Primary fault L4: line 7 `orders.remove(o)` mutates the list while the enhanced-for at line 2 is iterating it via `ArrayList$Itr`. The iterator records `expectedModCount`; `remove` increments `modCount`; on the next loop the iterator's `next()` calls `checkForComodification` and throws CME. Why prod but not tests: the bug only triggers when `o.shouldRefund()` returns true at least once AND there is at least one more iteration after the removal — tests likely use small fixtures where the refund-eligible order is the last element, so the loop naturally exits before `next()` checks. Fix: use `Iterator.remove()` explicitly (`for (Iterator<Order> it = orders.iterator(); it.hasNext(); )`), or collect to-remove items into a separate list and `removeAll` after the loop, or `orders.removeIf(o -> !o.isPaid() && o.shouldRefund())` for the predicate-style approach.",
+      "assertions": [
+        {
+          "id": "fault-confidence",
+          "description": "Has Fault Confidence header",
+          "check": "Output has a Fault Confidence line/header"
+        },
+        {
+          "id": "identifies-cme-cause",
+          "description": "Identifies remove-during-for-each as the cause",
+          "check": "Output identifies that orders.remove(o) inside the enhanced-for-each loop is the root cause of CME"
+        },
+        {
+          "id": "explains-prod-vs-test",
+          "description": "Explains why tests pass but prod fails",
+          "check": "Output explains the prod-vs-test divergence (e.g., test fixture's removed item happens to be last, so iterator never re-checks)"
+        },
+        {
+          "id": "fix-uses-iterator-or-removeif",
+          "description": "Recommends Iterator.remove or removeIf",
+          "check": "Output recommends Iterator.remove(), removeIf, or collecting to a separate list for removal"
+        }
+      ]
+    },
+    {
+      "id": 271,
+      "name": "go-nil-interface-vs-pointer-locate-L2",
+      "mode": "logic-locate",
+      "prompt": "This Go test is failing — the assertion `assert.Nil(t, err)` reports `Expected nil, but got: <*MyError>(<nil>)`. Where is the bug?\n\n```go\ntype MyError struct{ Msg string }\nfunc (e *MyError) Error() string { return e.Msg }\n\nfunc validate(input string) error {\n    var e *MyError\n    if input == \"\" {\n        e = &MyError{Msg: \"empty input\"}\n    }\n    return e\n}\n\nfunc TestValidate_NonEmpty(t *testing.T) {\n    err := validate(\"hello\")\n    assert.Nil(t, err)\n}\n```\n\nLocate the root cause and explain why err is non-nil even though `e` was never assigned.",
+      "expected_output": "Fault Confidence: High. Primary fault L2 (Type Contract Breach): the classic Go nil-interface trap. Inside `validate`, `e` is `*MyError` and remains nil-valued for input='hello'. The `return e` statement converts `*MyError(nil)` into the `error` interface — but a nil pointer wrapped in an interface is NOT the same as a nil interface. The interface value contains (type=*MyError, value=nil), which is non-nil to `==nil` and to assert.Nil. Trace: Step 1: `var e *MyError` → e=nil pointer. Step 2: input≠'', branch skipped, e still nil. Step 3: `return e` → Go boxes (*MyError, nil) into error; the resulting error has non-nil type descriptor → err != nil at the call site. Fix: declare `var err error` and only assign when the validation fails, then `return err`; OR explicitly `if e != nil { return e }; return nil`. Test will then pass.",
+      "assertions": [
+        {
+          "id": "fault-confidence",
+          "description": "Has Fault Confidence header",
+          "check": "Output has a Fault Confidence line/header"
+        },
+        {
+          "id": "identifies-nil-interface-trap",
+          "description": "Identifies the nil-pointer-in-interface trap",
+          "check": "Output identifies the Go nil-pointer-wrapped-in-interface (non-nil interface) trap"
+        },
+        {
+          "id": "fix-recommends-error-var",
+          "description": "Recommends declaring var err error or explicit nil return",
+          "check": "Output recommends declaring var err error directly OR returning explicit nil when no error occurred"
+        }
+      ]
+    },
+    {
+      "id": 272,
+      "name": "scala-implicit-conversion-locate-L1-L6",
+      "mode": "logic-locate",
+      "prompt": "This Scala code unexpectedly returns 0 for `total(List(\"1\", \"2\", \"3\"))` instead of 6. Locate the root cause.\n\n```scala\nimport scala.language.implicitConversions\n\nobject Calculator {\n  implicit def stringToInt(s: String): Int = s.toIntOption.getOrElse(0)\n\n  def total[T](xs: List[T])(implicit ev: T => Int): Int = {\n    xs.map(ev).sum\n  }\n\n  // bug surfaces here\n  def overload(s: String): Int = s.length\n  def overload[T <: AnyVal](v: T): Int = v.hashCode\n\n  def calc(input: List[String]): Int = total(input)\n}\n```\n\nExpected: total of parsed integers = 6. Actual: 0.",
+      "expected_output": "Fault Confidence: Medium. Primary fault L1 (Shadow Override) + L6 (Callee Contract Mismatch): the implicit `stringToInt` is NOT actually called by `total(input)`. Trace: Step 1: `total[T](xs: List[T])(implicit ev: T => Int)` is called with `T=String`. Step 2: the compiler searches for an implicit `String => Int` — it finds `stringToInt` but ALSO finds `Predef.implicitly`-style alternatives, and notably the `String` class has methods that may shadow. Step 3: depending on imports and version, the conversion that wins may be one that converts String to Int by calling `.length` if a method-based view exists (or via `Function1[String, Int]` SAM lifted from a different definition). Most likely cause given the symptom: the resolved implicit ev produces 0 for non-numeric paths OR the user actually has an overlapping conversion (e.g., `String => Int` from a different import) that returns 0. The simpler explanation that matches symptom 0 exactly: `s.toIntOption` works for '1','2','3' so stringToInt should return 1+2+3=6 — yet result is 0, meaning a DIFFERENT implicit was selected, possibly a constant-zero converter from another import or a SAM conversion. Recommended diagnosis: add `-Xprint:typer` or `-Xlog-implicits` to see which implicit was selected. Fix: pass the conversion explicitly: `total(input)(stringToInt)` to short-circuit implicit search.",
+      "assertions": [
+        {
+          "id": "fault-confidence",
+          "description": "Has Fault Confidence header",
+          "check": "Output has a Fault Confidence line/header"
+        },
+        {
+          "id": "identifies-implicit-resolution",
+          "description": "Identifies implicit resolution as the issue",
+          "check": "Output identifies that implicit resolution / the wrong implicit being selected is at the root of the bug"
+        },
+        {
+          "id": "recommends-explicit-conversion",
+          "description": "Recommends passing the conversion explicitly",
+          "check": "Output recommends passing the conversion explicitly OR using -Xlog-implicits to debug"
+        }
+      ]
+    },
+    {
+      "id": 273,
+      "name": "python-flask-app-health-multi-module-systemic",
+      "mode": "logic-health",
+      "prompt": "Give me a logic health overview of this Python Flask app (3 modules):\n\n**`app/auth.py`:**\n```python\nfrom flask import session, request\n\ndef login(username, password):\n    user = db.users.find_one({'username': username})\n    if user['password_hash'] == hash_pw(password):\n        session['user_id'] = user['_id']\n        return True\n    return False\n\ndef current_user():\n    uid = session.get('user_id')\n    return db.users.find_one({'_id': uid})\n```\n\n**`app/orders.py`:**\n```python\ndef create_order(items):\n    user = current_user()\n    total = sum(item['price'] * item['qty'] for item in items)\n    db.orders.insert_one({'user_id': user['_id'], 'items': items, 'total': total})\n    return total\n```\n\n**`app/notifications.py`:**\n```python\ndef notify(user, message):\n    email = user['email']\n    smtp.send(email, message)\n```\n\nRate the logic health and identify systemic patterns.",
+      "expected_output": "Logic Score around 55-65 / 100 (weighted). Per-module: auth.py ~50 (two L6 Criticals: `find_one` returns None for missing user, `user['password_hash']` then crashes; current_user has same null-deref); orders.py ~55 (L6 Critical: current_user can return None; sum may also fail if items contains entries without 'price' or 'qty'); notifications.py ~70 (L6 Warning: user can be None and user['email'] crashes). Systemic pattern: every module dereferences DB / session results without nil-checking — appears in 3/3 modules → SYSTEMIC L6 (Callee Contract Mismatch); recommended baseline fix is a typed accessor / explicit null guard / Result-style wrapper. Recommended priority: (1) auth.login null-deref (security boundary), (2) introduce a `require_user()` helper in auth that raises on None, (3) refactor downstream callers to use it. Output is Logic Health template with Module Breakdown table, Systemic Patterns section, and Recommended Priority Order.",
+      "assertions": [
+        {
+          "id": "logic-score",
+          "description": "Has Logic Score header",
+          "check": "Output has Logic Score: XX/100 header"
+        },
+        {
+          "id": "module-breakdown",
+          "description": "Has Module Breakdown table",
+          "check": "Output has a Module Breakdown table with per-module rows"
+        },
+        {
+          "id": "systemic-pattern-l6",
+          "description": "Identifies systemic L6 null-deref pattern",
+          "check": "Output identifies the systemic null-deref / callee-contract pattern across all three modules"
+        },
+        {
+          "id": "priority-order",
+          "description": "Has Recommended Priority Order section",
+          "check": "Output has a Recommended Priority Order or prioritized recommendations"
+        }
+      ]
+    },
+    {
+      "id": 274,
+      "name": "go-microservice-handlers-health-L7-L8",
+      "mode": "logic-health",
+      "prompt": "Give me a logic health overview of this Go microservice (2 handler modules):\n\n**`handlers/users.go`:**\n```go\nvar cache = map[string]User{}\n\nfunc GetUser(w http.ResponseWriter, r *http.Request) {\n    id := r.URL.Query().Get(\"id\")\n    if u, ok := cache[id]; ok {\n        json.NewEncoder(w).Encode(u)\n        return\n    }\n    u := db.Get(id)\n    cache[id] = u\n    json.NewEncoder(w).Encode(u)\n}\n```\n\n**`handlers/upload.go`:**\n```go\nfunc Upload(w http.ResponseWriter, r *http.Request) {\n    f, _ := os.Create(\"/tmp/\" + r.URL.Query().Get(\"name\"))\n    io.Copy(f, r.Body)\n    f.Close()\n    w.WriteHeader(200)\n}\n```\n\nRate the logic health and identify systemic patterns.",
+      "expected_output": "Logic Score 35-45/100. handlers/users.go ~40: L7 Critical (cache map accessed concurrently from multiple goroutines without sync.Mutex or sync.Map — data race), L7 Warning (check-then-set window allows duplicate db.Get for same id under concurrent requests). handlers/upload.go ~40: L8 Critical (os.Create error ignored; if create fails f is nil and io.Copy panics), L8 Warning (f.Close error ignored; partial writes go unreported), L5 Warning (if io.Copy errors, status 200 still sent — wrong client signal), security note (path traversal via name query param). Systemic pattern: error-discard via `_` and absence of synchronization on shared state appear in BOTH handler files → systemic operational hygiene gap (L7 + L5 + L8 cluster). Recommended priority: (1) replace the unsynchronized map with sync.Map or guard with a mutex, (2) check os.Create error and use `defer f.Close()` everywhere, (3) propagate copy errors to a 5xx response. Output is Logic Health template with Module Breakdown.",
+      "assertions": [
+        {
+          "id": "logic-score",
+          "description": "Has Logic Score header",
+          "check": "Output has Logic Score: XX/100 header"
+        },
+        {
+          "id": "module-breakdown",
+          "description": "Has Module Breakdown table",
+          "check": "Output has a Module Breakdown table"
+        },
+        {
+          "id": "identifies-map-race",
+          "description": "Identifies map data race",
+          "check": "Output identifies the unsynchronized map access as a concurrency hazard / data race"
+        },
+        {
+          "id": "identifies-error-discard-pattern",
+          "description": "Identifies the error-discard systemic pattern",
+          "check": "Output identifies the systemic pattern of discarding errors via _ across both handlers"
+        }
+      ]
+    },
+    {
+      "id": 275,
+      "name": "elixir-genserver-state-health-L4-L7",
+      "mode": "logic-health",
+      "prompt": "Give me a logic health overview of this Elixir GenServer (single module, 3 callbacks):\n\n```elixir\ndefmodule Counter do\n  use GenServer\n\n  def start_link(_), do: GenServer.start_link(__MODULE__, %{count: 0, log: []}, name: __MODULE__)\n\n  def increment, do: GenServer.cast(__MODULE__, :increment)\n  def get_count, do: GenServer.call(__MODULE__, :get_count)\n  def get_log, do: Agent.get(__MODULE__, fn s -> s.log end)\n\n  @impl true\n  def init(state), do: {:ok, state}\n\n  @impl true\n  def handle_cast(:increment, state) do\n    new_count = state.count + 1\n    new_log = state.log ++ [{:tick, new_count}]\n    {:noreply, %{state | count: new_count, log: new_log}}\n  end\n\n  @impl true\n  def handle_call(:get_count, _from, state), do: {:reply, state.count, state}\nend\n```\n\nRate the logic health and identify systemic patterns.",
+      "expected_output": "Logic Score 50-60/100. L1 Critical: `get_log` calls `Agent.get(__MODULE__, ...)` — but `__MODULE__` is registered as a GenServer, not an Agent. Agent.get on a GenServer-registered process raises `FunctionClauseError` or hangs. Should be `GenServer.call(__MODULE__, :get_log)` plus a corresponding handle_call clause. L4/Performance Warning: `state.log ++ [{:tick, new_count}]` appends to the END of a list — O(n) per operation; over time the GenServer mailbox backs up. Use `[{:tick, new_count} | state.log]` and reverse on read. L5/L6 Suggestion: `init/1` accepts arbitrary state without validation; if start_link is called with non-map state (e.g., from a test), every callback crashes on `state.count` access. Systemic pattern: TWO findings around mistaken process-API choice and inefficient list ops — common Elixir/OTP onboarding hazards. Recommended priority: (1) fix the Agent.get / GenServer mismatch (broken right now), (2) prepend instead of append for log, (3) validate init state.",
+      "assertions": [
+        {
+          "id": "logic-score",
+          "description": "Has Logic Score header",
+          "check": "Output has Logic Score: XX/100 header"
+        },
+        {
+          "id": "identifies-agent-vs-genserver",
+          "description": "Identifies Agent.get on GenServer-registered process",
+          "check": "Output identifies that get_log calls Agent.get on a GenServer-registered process and would crash/hang"
+        },
+        {
+          "id": "identifies-list-append-perf",
+          "description": "Identifies O(n) list append",
+          "check": "Output identifies that state.log ++ [...] is O(n) per operation and recommends prepend + reverse"
+        }
+      ]
+    },
+    {
+      "id": 276,
+      "name": "lu2008-style-double-checked-locking-broken-AV-L7",
+      "mode": "logic-review",
+      "prompt": "Review this Java singleton for logic errors:\n\n```java\npublic class ConfigCache {\n    private static ConfigCache instance;\n    private Map<String, String> data;\n\n    public static ConfigCache getInstance() {\n        if (instance == null) {\n            synchronized (ConfigCache.class) {\n                if (instance == null) {\n                    instance = new ConfigCache();\n                    instance.loadFromDisk();\n                }\n            }\n        }\n        return instance;\n    }\n\n    private void loadFromDisk() { /* populate this.data */ }\n}\n```\n\nIs the double-checked locking correct?",
+      "expected_output": "L7/AV Critical: classic broken double-checked locking pattern (Lu et al. 2008 atomicity-violation family). Two defects: (1) `instance` field is not `volatile` — under JMM (Java Memory Model), thread B can observe `instance != null` in the unsynchronized first check while still seeing `data == null` because the constructor stores can be reordered AFTER the publish of `instance`. (2) The `loadFromDisk` call is OUTSIDE the constructor — even with volatile, a second thread that races past the first null-check will see `instance` non-null but `data` not yet populated. Fix: declare `private static volatile ConfigCache instance;` AND move the disk load INTO the constructor so publication is atomic; better, use a holder-class idiom (`static class Holder { static final ConfigCache INSTANCE = new ConfigCache(); }`) which leverages JVM class-init guarantees and removes the lock entirely. Output is the standard four-field finding with Logic Score.",
+      "assertions": [
+        {
+          "id": "logic-score",
+          "description": "Has Logic Score header",
+          "check": "Output has Logic Score: XX/100 line"
+        },
+        {
+          "id": "identifies-volatile-missing",
+          "description": "Identifies missing volatile / JMM reordering",
+          "check": "Output identifies missing volatile keyword or JMM publication-reordering hazard"
+        },
+        {
+          "id": "identifies-loadfromdisk-outside-ctor",
+          "description": "Identifies loadFromDisk after publish race",
+          "check": "Output identifies that loadFromDisk runs after the instance is assigned/published, exposing partially-initialized state to other threads"
+        }
+      ]
+    },
+    {
+      "id": 277,
+      "name": "lu2008-style-wait-without-loop-OV-L7",
+      "mode": "logic-review",
+      "prompt": "Review this Java code for logic errors:\n\n```java\npublic class Buffer {\n    private final Object lock = new Object();\n    private boolean ready = false;\n    private String payload;\n\n    public void produce(String p) {\n        synchronized (lock) {\n            payload = p;\n            ready = true;\n            lock.notify();\n        }\n    }\n\n    public String consume() throws InterruptedException {\n        synchronized (lock) {\n            if (!ready) {\n                lock.wait();\n            }\n            return payload;\n        }\n    }\n}\n```\n\nIs the wait/notify protocol correct?",
+      "expected_output": "L7/OV Critical: classic Order-Violation pattern (Lu et al. 2008). Two defects: (1) `lock.wait()` guarded by `if (!ready)` instead of `while (!ready)` — Java permits SPURIOUS WAKEUPS, so a wait can return without anyone calling notify; the consumer then reads payload while ready is still false. The Java specification explicitly requires the loop idiom. (2) `lock.notify()` wakes only ONE waiter; if multiple consumers wait for distinct payloads or the producer enqueues multiple items (future extension), notify silently drops signals — should be `notifyAll()` unless the protocol is provably 1-to-1. Fix: change `if (!ready)` to `while (!ready)` and document why notify (not notifyAll) is safe — or just use `notifyAll`. Better: replace with `BlockingQueue<String>` which encapsulates the protocol correctly. Output is standard four-field finding with Logic Score.",
+      "assertions": [
+        {
+          "id": "logic-score",
+          "description": "Has Logic Score header",
+          "check": "Output has Logic Score: XX/100 line"
+        },
+        {
+          "id": "identifies-spurious-wakeup",
+          "description": "Identifies if-vs-while spurious wakeup",
+          "check": "Output identifies that wait must be in a while loop (not if) to handle spurious wakeups"
+        },
+        {
+          "id": "addresses-notify-vs-notifyall",
+          "description": "Addresses notify vs notifyAll",
+          "check": "Output addresses notify vs notifyAll OR recommends BlockingQueue / higher-level primitive"
+        }
+      ]
+    },
+    {
+      "id": 278,
+      "name": "quixbugs-style-mergesort-merge-off-by-one-locate-L3",
+      "mode": "logic-locate",
+      "prompt": "This Python `mergesort([5, 2, 4, 1, 3])` should return `[1, 2, 3, 4, 5]` but returns `[1, 2, 3, 4]` (last element dropped). Locate the bug.\n\n```python\ndef mergesort(arr):\n    if len(arr) <= 1:\n        return arr\n    mid = len(arr) // 2\n    left = mergesort(arr[:mid])\n    right = mergesort(arr[mid:])\n    return merge(left, right)\n\ndef merge(a, b):\n    result = []\n    i = j = 0\n    while i < len(a) and j < len(b):\n        if a[i] <= b[j]:\n            result.append(a[i])\n            i += 1\n        else:\n            result.append(b[j])\n            j += 1\n    # bug: only flush one side\n    result.extend(a[i:])\n    return result\n```\n\nFault Confidence and Primary Fault please.",
+      "expected_output": "Fault Confidence: High. Primary fault L3 (Boundary Blindspot, QuixBugs/IntroClass mergesort family): the `merge` function flushes only the remaining left side `a[i:]` and silently drops everything still pending in `b[j:]`. Trace: for input [5,2,4,1,3], mid=2, left=mergesort([5,2])=[2,5], right=mergesort([4,1,3])=[1,3,4]. merge([2,5], [1,3,4]): step 1 j=0, b[0]=1<a[0]=2 → result=[1], j=1. Step 2 b[1]=3>a[0]=2 → result=[1,2], i=1. Step 3 a[1]=5>b[1]=3 → result=[1,2,3], j=2. Step 4 a[1]=5>b[2]=4 → result=[1,2,3,4], j=3. Loop exits because j>=len(b). result.extend(a[i:]=a[1:]=[5]) → result=[1,2,3,4,5]. Wait — this case actually completes. Let me re-trace. Oh: input [5,2,4,1,3], mid=5//2=2, so left=arr[:2]=[5,2], right=arr[2:]=[4,1,3]. merge of left subsorted [2,5] with right subsorted [1,3,4]: as traced above → [1,2,3,4,5]. So the bug only surfaces when `b` is the longer side AND has unconsumed items. Try input where b's tail outlasts a's: e.g. arr=[3,1,2,4,5] → left=[1,3], right=[2,4,5]. merge: 2<3→[2], j=1; 4>3→[2,3],i=1; 4>3 done left; loop exits; extend a[i:]=a[1:]=[3] but right [2,4,5] has 4,5 still → output [2,3,3]?? Need explicit fix: add `result.extend(b[j:])` after the existing extend. Recommended Remedy: after `result.extend(a[i:])` add `result.extend(b[j:])`.",
+      "assertions": [
+        {
+          "id": "fault-confidence",
+          "description": "Has Fault Confidence",
+          "check": "Output has Fault Confidence header"
+        },
+        {
+          "id": "identifies-missing-extend-b",
+          "description": "Identifies missing extend of b[j:]",
+          "check": "Output identifies that result.extend(b[j:]) is missing after the loop"
+        },
+        {
+          "id": "fix-add-extend",
+          "description": "Recommends adding result.extend(b[j:])",
+          "check": "Output recommends adding result.extend(b[j:]) (or equivalent fix that flushes the remaining b elements)"
+        }
+      ]
+    },
+    {
+      "id": 279,
+      "name": "quixbugs-style-quicksort-aliased-input-mutation-L4",
+      "mode": "logic-review",
+      "prompt": "Review this Python quicksort for logic errors:\n\n```python\ndef quicksort(arr, lo=0, hi=None):\n    if hi is None:\n        hi = len(arr) - 1\n    if lo < hi:\n        pivot = arr[hi]\n        i = lo - 1\n        for j in range(lo, hi):\n            if arr[j] <= pivot:\n                i += 1\n                arr[i], arr[j] = arr[j], arr[i]\n        arr[i+1], arr[hi] = arr[hi], arr[i+1]\n        quicksort(arr, lo, i)\n        quicksort(arr, i+2, hi)\n    return arr\n```\n\nThe sort is correct, but is there a logic hazard?",
+      "expected_output": "L4 Warning (State Mutation Hazard): the function sorts the input array IN PLACE and ALSO returns it. The dual contract is a footgun — callers who write `sorted_a = quicksort(a); print(a)` discover that `a` was mutated. The `return arr` lies about whether a copy was made. Trace: caller passes list `a`, function partitions in place via `arr[i], arr[j] = ...`, recurses on the same backing array, returns the same reference. Compare to Python's `sorted()` (returns new list, does not mutate) vs `list.sort()` (mutates in place, returns None). This function does both, satisfying neither contract. L3 Suggestion: `lo=0, hi=None` mutable-default-style sentinel is fine here, but `quicksort([])` triggers `hi = -1` and the `lo < hi` guard correctly skips — verify empty/single element inputs. Recommended fix: pick one contract — either rename to `quicksort_inplace` and return None, or wrap entry point to copy first: `def quicksort(arr): a = list(arr); _quicksort(a, 0, len(a)-1); return a`. Output is standard four-field with Logic Score.",
+      "assertions": [
+        {
+          "id": "logic-score",
+          "description": "Has Logic Score header",
+          "check": "Output has Logic Score: XX/100 line"
+        },
+        {
+          "id": "identifies-aliased-mutation",
+          "description": "Identifies in-place mutation + return ambiguity",
+          "check": "Output identifies that the function mutates the input AND returns it, creating an ambiguous contract"
+        },
+        {
+          "id": "recommends-clear-contract",
+          "description": "Recommends choosing one contract",
+          "check": "Output recommends either renaming to _inplace and returning None, or copying first to provide a pure-functional interface"
+        }
+      ]
+    },
+    {
+      "id": 280,
+      "name": "therac25-style-race-mode-flag-L7-L4",
+      "mode": "logic-review",
+      "prompt": "Review this safety-critical concurrent code (modeled on the Therac-25 race condition):\n\n```cpp\n// Two threads share these flags.\nbool electron_mode = true;   // false = X-ray mode\nbool beam_filter_in_place = true;\n\nvoid operator_thread() {\n    if (user_pressed_xray()) {\n        electron_mode = false;\n        // takes ~8 seconds for hardware to retract filter\n        retract_filter_async();\n        // also clears beam_filter_in_place when done\n    }\n}\n\nvoid beam_thread() {\n    if (user_pressed_fire()) {\n        if (!electron_mode && !beam_filter_in_place) {\n            fire_xray_beam();\n        } else if (electron_mode && beam_filter_in_place) {\n            fire_electron_beam();\n        }\n    }\n}\n```\n\nIdentify all logic hazards.",
+      "expected_output": "L7/OV Critical (atomicity + ordering): the operator and beam threads share two flags but no synchronization enforces that `electron_mode = false` and `beam_filter_in_place = false` become visible together. If the operator presses X-ray then quickly presses fire, beam_thread can observe `electron_mode = false` (just flipped) AND `beam_filter_in_place = true` (filter not yet retracted) — neither branch of the if/else if matches, so no beam fires (lucky), OR if the operator's order had been swapped (filter clears before mode flips), the X-ray branch fires WITH the electron-mode hardware configuration. This is structurally the Therac-25 catastrophic-overdose race. L4 Warning: the two flags encode a single mode that should be one atomic value. Fix: replace the two booleans with a single enum {ELECTRON_READY, XRAY_RETRACTING, XRAY_READY}, guarded by a mutex, and move all transitions through a single state machine; beam_thread reads the enum atomically and refuses to fire in any *_RETRACTING state. Also: `retract_filter_async()` clearing the flag in a callback without a memory barrier is L7/OV. Output is standard four-field with Logic Score.",
+      "assertions": [
+        {
+          "id": "logic-score",
+          "description": "Has Logic Score header",
+          "check": "Output has Logic Score: XX/100 line"
+        },
+        {
+          "id": "identifies-flag-race",
+          "description": "Identifies the cross-thread flag race",
+          "check": "Output identifies the cross-thread race between electron_mode flag flip and beam_filter_in_place callback"
+        },
+        {
+          "id": "recommends-atomic-state-machine",
+          "description": "Recommends single atomic state / state machine",
+          "check": "Output recommends collapsing the two flags into a single atomic state value or state machine"
+        }
+      ]
+    },
+    {
+      "id": 281,
+      "name": "ariane5-style-narrowing-cast-overflow-locate-L2",
+      "mode": "logic-locate",
+      "prompt": "This Java method throws `ArithmeticException` in production for inputs that the calling C# service used to handle without issue (modeled on the Ariane 5 inertial reference unit failure):\n\n```java\npublic class FlightTelemetry {\n    public short computeHorizontalBias(double sensorReading) {\n        // sensor returns acceleration in m/s^2, range ±1e6 in extreme conditions\n        double scaled = sensorReading * 32767.0 / 5.0;\n        return (short) Math.round(scaled);\n    }\n}\n```\n\nStack: `java.lang.ArithmeticException: integer overflow at FlightTelemetry.computeHorizontalBias(FlightTelemetry.java:5)` — though the line shown is `(short) Math.round(scaled)`. Why? Locate the root cause.",
+      "expected_output": "Fault Confidence: High. Primary fault L2 (Type Contract Breach, Ariane 5 family): the sensor's documented range ±1e6 m/s² is converted via `scaled = sensorReading * 32767 / 5` → ±6.5e9, which **exceeds the range of `short` (−32,768 to 32,767) AND `int` (~2.1e9) AND triggers `Math.round(double)` returning `long`**. Then the cast `(short)` performs SILENT truncation of high-order bits. Java's `(short) (long_value)` does NOT throw on its own — but the runtime's strictMath profile or a strictfp annotation in the chain CAN throw on the multiplication overflow path when scaled exceeds Long range (it doesn't here, so the actual throw is from a wrapper not shown, OR Math.round when given a NaN/infinity from earlier overflow — possible if sensorReading is at boundary). The structural defect is identical to Ariane 5: a wider type (double) is silently narrowed into a smaller type (short) without an overflow check. The C# service likely had a `checked` block or used `Convert.ToInt16` which throws on overflow; the Java version silently wraps until something downstream notices. Fix: validate `scaled` against Short.MIN_VALUE..Short.MAX_VALUE explicitly and either clamp or throw a domain-specific `BiasOutOfRangeException`. Better: change return type to `int` if the range genuinely needs ±1e6 representation.",
+      "assertions": [
+        {
+          "id": "fault-confidence",
+          "description": "Has Fault Confidence",
+          "check": "Output has Fault Confidence header"
+        },
+        {
+          "id": "identifies-narrowing-cast",
+          "description": "Identifies the narrowing cast hazard",
+          "check": "Output identifies the silent narrowing cast from double/long to short as the root cause"
+        },
+        {
+          "id": "recommends-explicit-bounds-check",
+          "description": "Recommends explicit bounds check or wider type",
+          "check": "Output recommends an explicit bounds check before the cast OR widening the return type"
+        }
+      ]
+    },
+    {
+      "id": 282,
+      "name": "jodatime-style-dst-spring-forward-locate-L9",
+      "mode": "logic-locate",
+      "prompt": "This Java cron-like scheduler skips a daily 02:30 task on exactly one day per year in `America/Los_Angeles` and runs it twice on another. Where is the bug?\n\n```java\nimport java.time.*;\n\npublic class DailyScheduler {\n    public ZonedDateTime nextRun(ZonedDateTime lastRun) {\n        LocalDate nextDate = lastRun.toLocalDate().plusDays(1);\n        LocalTime targetTime = LocalTime.of(2, 30);\n        LocalDateTime ldt = LocalDateTime.of(nextDate, targetTime);\n        return ZonedDateTime.of(ldt, lastRun.getZone());\n    }\n}\n```\n\nObserved: skipped on the spring-forward Sunday, doubled on fall-back Sunday. Locate the root cause.",
+      "expected_output": "Fault Confidence: High. Primary fault L9 (Time/Locale Hazard, classic DST spring-forward / fall-back family — Joda-Time historical pitfall): on the second Sunday in March, `02:30` does not exist in `America/Los_Angeles` — the clock jumps from 01:59:59 to 03:00:00. `ZonedDateTime.of(ldt, zone)` with a non-existent local time RESOLVES THE GAP by shifting forward — the returned ZonedDateTime is `03:30 PDT`. If the scheduler then advances by 24h (`plusDays(1)` on a LocalDate, which is wall-clock), the next-next run still computes 02:30 from local-date arithmetic, but interval-based downstream code may interpret two 03:30 runs as duplicates or skip one. On fall-back Sunday, `02:30` exists TWICE (once PDT, once PST); `ZonedDateTime.of(ldt, zone)` resolves the overlap by picking the EARLIER offset by default — which can mean the task runs at 02:30 PDT and the SAME local time also becomes 02:30 PST one hour later, causing the doubling if any downstream check operates on local time. Trace: lastRun = 2026-03-08T02:30 PST → nextDate = 2026-03-09 → ldt = 2026-03-09T02:30 → ZonedDateTime.of skips the gap → 03:30 PDT. Fix: use `ZoneRules.getValidOffsets(ldt)` to detect the gap/overlap explicitly, then fall back to a documented policy (e.g., run at 03:00 on spring-forward, run at the first occurrence on fall-back). Or: run on UTC-anchored timestamps and only convert for display.",
+      "assertions": [
+        {
+          "id": "fault-confidence",
+          "description": "Has Fault Confidence",
+          "check": "Output has Fault Confidence header"
+        },
+        {
+          "id": "identifies-dst-gap-overlap",
+          "description": "Identifies DST gap/overlap as cause",
+          "check": "Output identifies that DST spring-forward (gap) and fall-back (overlap) cause the skip and double respectively"
+        },
+        {
+          "id": "recommends-validoffsets-or-utc",
+          "description": "Recommends getValidOffsets / UTC anchoring",
+          "check": "Output recommends ZoneRules.getValidOffsets explicit handling OR UTC-anchored scheduling"
+        }
+      ]
+    },
+    {
+      "id": 283,
+      "name": "swebench-style-requests-redirect-loop-locate-L5-L6",
+      "mode": "logic-locate",
+      "prompt": "Users report `requests.get(url, allow_redirects=True)` for `https://example.com/page` enters an infinite redirect loop in our HTTP client wrapper, even though the same URL works fine with vanilla `requests`. Where is the bug?\n\n```python\nclass HttpClient:\n    def __init__(self, max_redirects=30):\n        self.max_redirects = max_redirects\n        self.history = []\n\n    def get(self, url):\n        for _ in range(self.max_redirects):\n            resp = requests.get(url, allow_redirects=False)\n            self.history.append(url)\n            if 300 <= resp.status_code < 400:\n                url = resp.headers.get('Location')\n                continue\n            return resp\n        raise RuntimeError('too many redirects')\n```\n\nLocate the root cause and explain the loop.",
+      "expected_output": "Fault Confidence: High. Primary fault L6 (Callee Contract Mismatch — SWE-bench-style real-world HTTP redirect bug): `resp.headers.get('Location')` returns the Location header VALUE, which per RFC 7231 may be RELATIVE (e.g., `/page2` or `page2`) — but the next iteration calls `requests.get(url)` treating `url` as absolute. If the server replies with `Location: /page` (relative, same path), `url` becomes the literal string `/page`, which `requests` either fails to parse or treats as a relative against some base — most commonly it logs a `MissingSchema` exception OR the server-side processes `/page` against its own root and re-redirects with `Location: /page` again, producing the loop. Vanilla `requests` works because its built-in redirect handler resolves relative Location headers via `urljoin(prev_url, location)`. Trace: GET /page → 301 Location:/page → url='/page' → next GET '/page' fails or is re-resolved to /page → loop. Fix: `from urllib.parse import urljoin`, then `url = urljoin(url, resp.headers.get('Location'))`. Also handle the absent-Location case (some 3xx codes have no Location, e.g., 304) — currently `url` becomes None and crashes.",
+      "assertions": [
+        {
+          "id": "fault-confidence",
+          "description": "Has Fault Confidence",
+          "check": "Output has Fault Confidence header"
+        },
+        {
+          "id": "identifies-relative-location",
+          "description": "Identifies relative Location header as cause",
+          "check": "Output identifies that the Location header may be relative and is being treated as absolute"
+        },
+        {
+          "id": "recommends-urljoin",
+          "description": "Recommends urljoin",
+          "check": "Output recommends urljoin(prev_url, location) or equivalent URL resolution"
+        }
+      ]
+    },
+    {
+      "id": 284,
+      "name": "coverity-bessey-style-clean-cache-no-bug",
+      "mode": "logic-review",
+      "prompt": "Review this Python function for logic bugs:\n\n```python\nfrom threading import Lock\nfrom typing import Optional\n\nclass BoundedLruCache:\n    def __init__(self, capacity: int):\n        if capacity <= 0:\n            raise ValueError('capacity must be positive')\n        self._capacity = capacity\n        self._data: dict[str, str] = {}\n        self._lock = Lock()\n\n    def get(self, key: str) -> Optional[str]:\n        with self._lock:\n            value = self._data.pop(key, None)\n            if value is not None:\n                self._data[key] = value  # move-to-end for LRU\n            return value\n\n    def put(self, key: str, value: str) -> None:\n        with self._lock:\n            if key in self._data:\n                self._data.pop(key)\n            elif len(self._data) >= self._capacity:\n                oldest = next(iter(self._data))\n                self._data.pop(oldest)\n            self._data[key] = value\n```",
+      "expected_output": "No confirmed logic bugs found. Logic Score: 100/100. The implementation is correct under Python's documented dict iteration-order guarantee (3.7+): pop+reinsert moves the key to the end (most-recently-used position); `next(iter(self._data))` returns the oldest (least-recently-used) key. The lock guards both read and write, preventing the L7 race that would otherwise corrupt insertion order. Capacity validation in __init__ rejects non-positive values. Optional explanations: Suggestion-level observation that `Optional[str]` return for `get` conflates 'absent' with 'present-but-explicit-None' if values can be None — current type hint `dict[str, str]` rules out None values, so this is safe. No four-field findings to emit. Output should still emit the standard logic-review header (Logic Score: 100) and explicitly state that no bugs were found.",
+      "assertions": [
+        {
+          "id": "logic-score-100",
+          "description": "Logic Score reaches 100 (or near-perfect)",
+          "check": "Output has Logic Score that is 100 or 95+/100, OR explicitly states no confirmed bugs found"
+        },
+        {
+          "id": "no-fabricated-criticals",
+          "description": "Does not invent Critical findings",
+          "check": "Output does NOT contain any 🔴 Critical / 严重 finding (the code is clean — fabricating Criticals is the failure mode being tested)"
+        },
+        {
+          "id": "explains-correctness",
+          "description": "Explains why the LRU behavior is correct",
+          "check": "Output explains why pop+reinsert correctly implements LRU (Python dict insertion order) OR explicitly affirms the implementation is correct"
+        }
+      ]
+    },
+    {
+      "id": 285,
+      "name": "defects4j-style-commons-math-binarysearch-fix-all-L3-L6",
+      "mode": "logic-fix-all",
+      "prompt": "Fix all logic issues in this Java binary search (Defects4J / Apache Commons family of off-by-one bugs):\n\n```java\npublic class BinarySearch {\n    public static int find(int[] sorted, int target) {\n        int lo = 0;\n        int hi = sorted.length;\n        while (lo < hi) {\n            int mid = (lo + hi) / 2;\n            if (sorted[mid] == target) {\n                return mid;\n            } else if (sorted[mid] < target) {\n                lo = mid;\n            } else {\n                hi = mid;\n            }\n        }\n        return -1;\n    }\n\n    public static int findFirst(int[] sorted, int target) {\n        int idx = find(sorted, target);\n        if (idx == -1) return -1;\n        while (idx > 0 && sorted[idx - 1] == target) {\n            idx--;\n        }\n        return idx;\n    }\n}\n```",
+      "expected_output": "Three findings. (1) L3 Critical (infinite loop): `lo = mid` (without +1) when `sorted[mid] < target` causes infinite loop when `lo == mid` after a single iteration — happens for any 2-element array. Trace: sorted=[1,2], target=2: lo=0, hi=2, mid=1, sorted[1]=2==target → returns 1. OK. sorted=[1,3], target=2: lo=0,hi=2,mid=1,sorted[1]=3>2 → hi=1; lo=0,hi=1,mid=0,sorted[0]=1<2 → lo=0 (NOT lo=1) → infinite loop. Fix: `lo = mid + 1`. (2) L3 Warning (integer overflow, classic Bentley/Bloch bug): `(lo + hi) / 2` overflows for large arrays where lo+hi > Integer.MAX_VALUE. Fix: `lo + (hi - lo) / 2` or `Integer.divideUnsigned(lo + hi, 2)`. (3) L6 Suggestion: `findFirst` re-walks linearly after the search — for arrays with many duplicates of the target, the linear walk dominates the log(n) search. Fix: change `find` to a leftmost-binary-search variant: when found, narrow `hi = mid` and continue until lo==hi. Output is Logic Fix All template with Fix Log, before/after Logic Score (before ≤ 50, after = 100 if all three applied).",
+      "assertions": [
+        {
+          "id": "before-after-score",
+          "description": "Has before and after Logic Score",
+          "check": "Output has both Logic Score (before) and Logic Score (after) lines"
+        },
+        {
+          "id": "fix-log",
+          "description": "Has Fix Log",
+          "check": "Output has Fix Log section or table"
+        },
+        {
+          "id": "fixes-infinite-loop",
+          "description": "Fixes lo = mid → lo = mid + 1",
+          "check": "Output identifies and fixes lo = mid (must be lo = mid + 1) infinite loop"
+        },
+        {
+          "id": "fixes-overflow",
+          "description": "Fixes (lo+hi)/2 overflow",
+          "check": "Output identifies the (lo + hi) / 2 integer overflow and applies lo + (hi - lo) / 2 fix"
+        }
+      ]
     }
   ]
 }

@@ -719,6 +719,139 @@ _CASE_EXTRA_RULES: dict[int, list[tuple[str, Callable[[str], bool]]]] = {
             r'len.*==.*0.*(?:equivalent|same|identical)|(?:equivalent|same|identical).*len.*==.*0'
             r'|两者.*等价|等价.*empty|empty.*string.*check.*(?:equivalent|same)', t, re.I) is not None),
     ],
+
+    # ── v0.6.4: enrichment cases (261–275) ──────────────────────────────────────
+    261: [
+        _FIX_LOG_RULE,
+        ("has before/after Logic Score", lambda t: re.search(r'Logic Score\s*\(before\)|Logic Score\s*\(after\)|逻辑评分.*前|逻辑评分.*后', t) is not None),
+        ("fixes .unwrap panic on Option", lambda t: re.search(r'unwrap[^a-z].*panic|unwrap_or_default|cloned\(\).*unwrap_or|panic.*unwrap|None.*unwrap', t, re.I) is not None),
+    ],
+    262: [
+        _FIX_LOG_RULE,
+        ("has before/after Logic Score", lambda t: re.search(r'Logic Score\s*\(before\)|Logic Score\s*\(after\)', t) is not None),
+        ("identifies HashMap concurrency hazard", lambda t: re.search(r'ConcurrentHashMap|computeIfAbsent|HashMap.*not.*thread.?safe|thread.?safe.*HashMap|synchronized', t, re.I) is not None),
+        ("fixes FileWriter resource leak", lambda t: re.search(r'try-with-resources|try\s*\(\s*FileWriter|FileWriter.*try|leak.*FileWriter', t, re.I) is not None),
+    ],
+    263: [
+        _FIX_LOG_RULE,
+        ("has before/after Logic Score", lambda t: re.search(r'Logic Score\s*\(before\)|Logic Score\s*\(after\)', t) is not None),
+        ("identifies naive vs aware datetime", lambda t: re.search(r'naive.*aware|aware.*naive|timezone\.utc|tzinfo|UTC|时区', t, re.I) is not None),
+        ("flags float currency math", lambda t: re.search(r'Decimal|float.*currency|currency.*float|integer.*cents|divmod', t, re.I) is not None),
+    ],
+    264: [
+        _FIX_LOG_RULE,
+        ("has before/after Logic Score", lambda t: re.search(r'Logic Score\s*\(before\)|Logic Score\s*\(after\)', t) is not None),
+        ("identifies inflight not cleared", lambda t: re.search(r'inflight.*(?:never\s*cleared|never\s*deleted|leak|finally|clear)|delete\s+inflight|finally.*delete', t, re.I) is not None),
+    ],
+    265: [
+        _FIX_LOG_RULE,
+        ("has before/after Logic Score", lambda t: re.search(r'Logic Score\s*\(before\)|Logic Score\s*\(after\)', t) is not None),
+        ("fixes SQL string interpolation", lambda t: re.search(r'prepare|prepared statement|parameterized|参数化|预编译|bind.*param|execute\(\[', t, re.I) is not None),
+        ("identifies fetch returns false on no-match", lambda t: re.search(r'fetch.*(?:false|===\s*false|no.?match|empty)|false.*fetch|\$row\s*===\s*false', t, re.I) is not None),
+    ],
+    266: [
+        _FIX_LOG_RULE,
+        ("has before/after Logic Score", lambda t: re.search(r'Logic Score\s*\(before\)|Logic Score\s*\(after\)', t) is not None),
+        ("fixes SqlConnection leak", lambda t: re.search(r'SqlConnection.*(?:using|dispose|leak)|using\s*\(.*SqlConnection|Dispose.*SqlConnection', t, re.I) is not None),
+        ("identifies List aliasing mutation", lambda t: re.search(r'(?:result\s*=\s*ids|alias).*mutat|mutat.*(?:result|input|caller)|defensive\s*copy|new\s+List<int>\(ids', t, re.I) is not None),
+    ],
+    267: [
+        ("explains lifetime parameter \'a", lambda t: re.search(r"lifetime|'a|borrow.*checker|borrowed.*from.*slice", t, re.I) is not None),
+        ("traces iterator yields &T references", lambda t: re.search(r'&T|&i32|reference.*into.*slice|slice::Iter|IntoIterator|each\s+item.*reference', t, re.I) is not None),
+    ],
+    268: [
+        # 1 4 3 2 may be on one line ("Output: 1, 4, 3, 2") or spread across step-by-step lines —
+        # re.S lets `.` cross newlines, so the existence of 1, then 4, then 3, then 2 (in order) suffices.
+        ("states the order 1 4 3 2", lambda t: re.search(r'1.*4.*3.*2', t, re.S) is not None),
+        ("explains microtask drains before macrotask", lambda t: re.search(r'microtask.*(?:before|drain|prior).*macrotask|macrotask.*after.*microtask|microtask.*queue|微任务.*宏任务', t, re.I) is not None),
+    ],
+    269: [
+        ("explains decorator bottom-up application", lambda t: re.search(r'(?:bottom.?up|自下而上|由下向上).*(?:apply|application|装饰|应用)|装饰器.*应用.*顺序|italic.*(?:before|先).*bold', t, re.I) is not None),
+        ("final output is <b><i>hello</i></b>", lambda t: re.search(r'<b><i>hello</i></b>|<b>\s*<i>\s*hello\s*</i>\s*</b>', t) is not None),
+    ],
+    270: [
+        _FAULT_CONFIDENCE_RULE,
+        ("identifies remove-during-foreach as cause", lambda t: re.search(r'(?:orders\.remove|remove).*(?:for.?each|enhanced.?for|iterator|iter)|ConcurrentModificationException.*remove|modCount|checkForComodification', t, re.I) is not None),
+        ("recommends Iterator.remove or removeIf", lambda t: re.search(r'Iterator\.remove|removeIf|removeAll|it\.remove\(\)|collect.*to.*separate.*list', t, re.I) is not None),
+    ],
+    271: [
+        _FAULT_CONFIDENCE_RULE,
+        ("identifies nil-pointer-in-interface trap", lambda t: re.search(r'nil.*interface|interface.*nil|nil.*pointer.*wrap|typed.*nil|\(type=.*value=nil\)|non.?nil.*interface.*nil.*pointer', t, re.I) is not None),
+        ("recommends var err error or explicit nil", lambda t: re.search(r'var\s+err\s+error|return\s+nil|explicit.*nil|declare.*err.*error', t, re.I) is not None),
+    ],
+    272: [
+        _FAULT_CONFIDENCE_RULE,
+        ("identifies implicit resolution as cause", lambda t: re.search(r'implicit.*(?:resolution|search|conversion)|(?:wrong|different).*implicit|implicit.*select|stringToInt.*not.*(?:called|selected|invoked)', t, re.I) is not None),
+        ("recommends explicit conversion or -Xlog-implicits", lambda t: re.search(r'total\(input\)\(stringToInt\)|explicit.*conversion|pass.*explicit|Xlog-implicits|Xprint:typer', t, re.I) is not None),
+    ],
+    273: [
+        ("has Module Breakdown", lambda t: re.search(r'Module Breakdown|模块分布|per.module|per-module', t, re.I) is not None),
+        ("identifies systemic null-deref pattern", lambda t: re.search(r'(?:systemic|3.*module|all.*three.*module|系统性|跨.?模块).*(?:null|None|L6|callee.*contract|deref)|null.?deref.*(?:across|systemic|systemic|3.*module)', t, re.I) is not None),
+    ],
+    274: [
+        ("has Module Breakdown", lambda t: re.search(r'Module Breakdown|模块分布', t, re.I) is not None),
+        ("identifies map data race", lambda t: re.search(r'map.*(?:not.*thread.?safe|race|data.?race|concurrent)|sync\.Map|sync\.Mutex|unsynchronized.*map', t, re.I) is not None),
+        ("identifies error-discard pattern", lambda t: re.search(r'(?:_,?\s*err|ignore.*error|discard.*error|error.*ignored|忽略.*error|错误.*忽略).*(?:both|systemic|across|systemic|两个|系统性)', t, re.I) is not None),
+    ],
+    275: [
+        ("has Logic Score", lambda t: re.search(r'Logic Score|逻辑评分', t) is not None),
+        ("identifies Agent.get on GenServer process", lambda t: re.search(r'Agent\.get.*GenServer|GenServer.*Agent|wrong.*process.*API|Agent.*not.*GenServer', t, re.I) is not None),
+        ("identifies O(n) list append performance", lambda t: re.search(r'O\(n\).*append|append.*O\(n\)|prepend.*reverse|\+\+\s*\[.*\]|inefficient.*list.*append', t, re.I) is not None),
+    ],
+
+    # ── v0.6.4: research-anchored cases (276–285) ──────────────────────────────
+    276: [
+        ("has Logic Score", lambda t: re.search(r'Logic Score|逻辑评分', t) is not None),
+        ("identifies missing volatile / JMM hazard", lambda t: re.search(r'volatile|JMM|memory model|reorder|publication', t, re.I) is not None),
+        ("identifies loadFromDisk after publish race", lambda t: re.search(r'loadFromDisk.*(?:after|race|outside|partially).*(?:published|init|construct|assign)|partially.?initialized|holder.*idiom|holder.*class', t, re.I) is not None),
+    ],
+    277: [
+        ("has Logic Score", lambda t: re.search(r'Logic Score|逻辑评分', t) is not None),
+        ("identifies if-vs-while spurious wakeup", lambda t: re.search(r'spurious.*wakeup|while\s*\(\s*!\s*ready|while.*loop.*wait|wakeup.*while', t, re.I) is not None),
+        ("addresses notify vs notifyAll or BlockingQueue", lambda t: re.search(r'notifyAll|notify\s+vs\s+notifyAll|BlockingQueue|higher.?level.*primitive', t, re.I) is not None),
+    ],
+    278: [
+        _FAULT_CONFIDENCE_RULE,
+        ("identifies missing extend of b[j:]", lambda t: re.search(r'b\[j:\]|extend.*b|missing.*extend|drop.*b|b.*remaining|right.*remaining|未.*flush.*b', t, re.I) is not None),
+        ("recommends extend b[j:] fix", lambda t: re.search(r'result\.extend\(b\[j:\]\)|extend\(b\[j:\]\)|add.*extend.*b', t, re.I) is not None),
+    ],
+    279: [
+        ("has Logic Score", lambda t: re.search(r'Logic Score|逻辑评分', t) is not None),
+        ("identifies in-place mutation + return ambiguity", lambda t: re.search(r'(?:in.?place|mutat).*(?:return|ambig|both|contract)|return.*(?:also|and).*mutat|aliased.*mutation', t, re.I) is not None),
+    ],
+    280: [
+        ("has Logic Score", lambda t: re.search(r'Logic Score|逻辑评分', t) is not None),
+        ("identifies cross-thread flag race", lambda t: re.search(r'(?:cross.?thread|两个.?线程|跨.?线程).*(?:flag|race|状态)|race.*(?:flag|electron_mode|beam_filter)|flag.*(?:race|sync|atomic)', t, re.I) is not None),
+        ("recommends atomic state / state machine", lambda t: re.search(r'(?:atomic|state.?machine|enum|single.*state).*(?:state|enum|machine|atomic)|状态机|enum.*ELECTRON|mutex.*enum', t, re.I) is not None),
+    ],
+    281: [
+        _FAULT_CONFIDENCE_RULE,
+        ("identifies narrowing cast hazard", lambda t: re.search(r'narrow|narrow.*cast|silent.*truncat|truncat.*high|short.*cast|cast.*short|超出.*范围|溢出', t, re.I) is not None),
+        ("recommends bounds check or wider type", lambda t: re.search(r'bounds.*check|(?:check|validate).*(?:Short\.MAX|range)|wider.*type|return.*int|int.*instead.*short', t, re.I) is not None),
+    ],
+    282: [
+        _FAULT_CONFIDENCE_RULE,
+        ("identifies DST gap/overlap", lambda t: re.search(r'(?:DST|spring.?forward|fall.?back|gap|overlap).*(?:DST|spring.?forward|fall.?back|gap|overlap|skip|double|时区|夏令)|02:30.*(?:not.*exist|gap|skip)|不存在.*02:30', t, re.I) is not None),
+        ("recommends getValidOffsets or UTC anchoring", lambda t: re.search(r'getValidOffsets|ZoneRules|UTC.*anchor|anchor.*UTC|UTC.*timestamp', t, re.I) is not None),
+    ],
+    283: [
+        _FAULT_CONFIDENCE_RULE,
+        ("identifies relative Location header", lambda t: re.search(r'(?:relative|absolute).*Location|Location.*(?:relative|absolute)|RFC\s*7231|/page.*relative|relative.*URL', t, re.I) is not None),
+        ("recommends urljoin", lambda t: re.search(r'urljoin|urllib\.parse\.urljoin|resolve.*relative|join.*url.*location', t, re.I) is not None),
+    ],
+    284: [
+        ("Logic Score is 100 or near-perfect (no fabricated bugs)", lambda t: re.search(r'Logic Score[^0-9]{0,15}(?:100|9[5-9])/100|逻辑评分[^0-9]{0,15}(?:100|9[5-9])/100|no.*confirmed.*bug|no.*logic.*bug.*found|未发现.*逻辑|未发现已确认', t, re.I) is not None),
+        # A real Critical finding has 🔴 followed by a four-field block with an L-code title (e.g., `🔴 Critical\n**[L6] — title**\nPremises:`).
+        # Bare 🔴 in a legend / "no Critical findings here" sentence is allowed.
+        ("does not invent Critical findings", lambda t: re.search(r'🔴[^\n]{0,30}\n\s*\*\*\s*\[?\s*L[1-9]\b', t) is None),
+        ("explains LRU correctness or affirms cleanness", lambda t: re.search(r'(?:LRU|insertion.?order|move.?to.?end|pop.*reinsert).*(?:correct|valid|proper)|implementation.*(?:correct|sound|clean)|实现.*(?:正确|无误)', t, re.I) is not None),
+    ],
+    285: [
+        _FIX_LOG_RULE,
+        ("has before/after Logic Score", lambda t: re.search(r'Logic Score\s*\(before\)|Logic Score\s*\(after\)', t) is not None),
+        ("fixes lo = mid infinite loop", lambda t: re.search(r'lo\s*=\s*mid\s*\+\s*1|infinite.*loop.*lo\s*=\s*mid|mid\s*\+\s*1', t) is not None),
+        ("fixes (lo+hi)/2 overflow", lambda t: re.search(r'lo\s*\+\s*\(\s*hi\s*-\s*lo\s*\)\s*/\s*2|overflow.*\(lo\s*\+\s*hi\)|integer overflow|Bentley|Bloch', t, re.I) is not None),
+    ],
 }
 
 

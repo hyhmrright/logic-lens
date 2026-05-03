@@ -164,6 +164,76 @@ root cause, not just the manifestation.
 
 ---
 
+## Bug Benchmarks Informing the Eval Suite
+
+**Defects4J: A Database of Existing Faults to Enable Controlled Testing Studies
+for Java Programs**
+Just, R., Jalali, D. & Ernst, M. D. (2014). *Proceedings of the International
+Symposium on Software Testing and Analysis (ISSTA)*, pp. 437–440.
+https://doi.org/10.1145/2610384.2628055
+
+Catalogue of 357 real, isolated Java bugs from Apache Commons Math, Joda-Time,
+JFreeChart, Closure, and other widely-used libraries — each with the buggy and
+fixed versions, the failing test, and the patch. Logic-Lens borrows the *style*
+of these bugs (off-by-one in numerical libraries, DST handling in date
+libraries, narrowing-cast overflows) for several `evals/v2/evals-v2.json` cases:
+the `defects4j-style-commons-math-binarysearch-fix-all-L3-L6` case (id 285)
+recreates the canonical lo+hi midpoint overflow alongside the lo=mid infinite
+loop, both directly traceable to defects in Commons Math's history. The
+`jodatime-style-dst-spring-forward-locate-L9` case (id 282) reproduces the
+LocalDate-vs-ZonedDateTime hazard that motivated Joda-Time's eventual
+deprecation in favor of `java.time` with explicit `getValidOffsets`.
+
+---
+
+**QuixBugs: A Multi-Lingual Program Repair Benchmark Set Based on the Quixey
+Challenge**
+Lin, D., Koppel, J., Chen, A. & Solar-Lezama, A. (2017). *Proceedings of the
+Companion to the 2017 ACM SIGPLAN Conference on Systems, Programming,
+Languages, and Applications: Software for Humanity (SPLASH)*, pp. 55–56.
+https://doi.org/10.1145/3135932.3135941
+
+40 single-line algorithmic bugs in 40 classic algorithms (mergesort, quicksort,
+sieve, knapsack, …) with parallel Python and Java versions. Designed to test
+program-repair tools on small, well-understood, deterministic faults. Logic-Lens
+adapts this style for cases like `quixbugs-style-mergesort-merge-off-by-one-locate-L3`
+(id 278) and `quixbugs-style-quicksort-aliased-input-mutation-L4` (id 279) —
+familiar algorithms with a single subtle defect, ensuring the eval surface tests
+the methodology on canonical CS-textbook material rather than only domain-specific
+business logic.
+
+---
+
+**An Investigation of the Therac-25 Accidents**
+Leveson, N. G. & Turner, C. S. (1993). *IEEE Computer*, 26(7), pp. 18–41.
+https://doi.org/10.1109/MC.1993.274940
+
+The definitive analysis of the Therac-25 radiation therapy machine that
+delivered fatal overdoses to six patients between 1985 and 1987. The root cause
+was a race condition between the operator console thread and the beam-control
+thread on shared mode-and-filter flags — a textbook L7 atomicity-and-ordering
+violation. Logic-Lens encodes this pattern in the
+`therac25-style-race-mode-flag-L7-L4` case (id 280) so the eval suite tests
+detection of safety-critical concurrency hazards, not just throughput-class
+race conditions.
+
+---
+
+**ARIANE 5 Flight 501 Failure: Report by the Inquiry Board**
+Lions, J. L. *et al.* (1996). European Space Agency.
+http://sunnyday.mit.edu/nasa-class/Ariane5-report.html
+
+The Ariane 5 launcher self-destructed 37 seconds after liftoff because a 64-bit
+floating-point value (horizontal velocity from the inertial reference unit) was
+silently narrowed to a 16-bit signed integer; the operand exceeded the range,
+and the resulting Operand Error went unhandled. A single L2 (Type Contract
+Breach) at a system boundary produced a $370M loss. Logic-Lens encodes this
+pattern in `ariane5-style-narrowing-cast-overflow-locate-L2` (id 281) so the
+eval suite explicitly probes for silent narrowing-cast hazards at boundaries
+between languages or numeric domains.
+
+---
+
 ## Architecture and Module Design
 
 **On the Criteria To Be Used in Decomposing Systems into Modules**

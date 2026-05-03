@@ -1,0 +1,22 @@
+{
+  "iteration_dir": "skills-workspace/iteration-direct-skill-sonnet",
+  "cases_graded": 1,
+  "overall_pass_rate": 1.0,
+  "per_mode": {
+    "logic-fix-all": {
+      "n": 1,
+      "avg_pass_rate": 1.0
+    }
+  },
+  "chinese_language_pass": "0/0",
+  "per_case": [
+    {
+      "id": 9,
+      "name": "fix-all-applies-fixes-and-reports-fix-log",
+      "mode": "logic-fix-all",
+      "pass_rate": 1.0,
+      "passed": 4,
+      "total": 4
+    }
+  ]
+}

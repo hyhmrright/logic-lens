@@ -4,6 +4,43 @@ All notable changes to Logic-Lens are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 Versions follow [SemVer](https://semver.org/).
 
+## [0.6.4] — 2026-05-03
+
+### Added — benchmark expansion (79 → 104 cases, +25)
+
+Two waves of new eval cases bring the suite from 79 to 104, with mode coverage now balanced (logic-fix-all 6 → 13, logic-explain 9 → 12, logic-locate 9 → 16, logic-health 10 → 13) and L-code coverage strengthened across L1–L9 (every code now has 4–10 representative cases, no code below 4).
+
+**Wave 1 — coverage gap fills (ids 261–275, 15 cases).** Targets the most underweight mode (logic-fix-all) and previously thin L-codes (L4 mutation, L7 concurrency, L9 time/locale, L2 type contract). New languages introduced: Rust (`rust-ownership-and-option-fix-all-L1-L6`, `rust-lifetime-explain-borrow-checker`), C# (`csharp-idisposable-and-linq-fix-all-L8-L4`), Scala (`scala-implicit-conversion-locate-L1-L6`), Elixir (`elixir-genserver-state-health-L4-L7`), plus richer multi-bug TypeScript / Java / Python / PHP fix-all scenarios.
+
+**Wave 2 — research-anchored cases (ids 276–285, 10 cases).** Each case is named with its source lineage so contributors can trace the inspiration:
+
+- `lu2008-style-double-checked-locking-broken-AV-L7` (id 276) and `lu2008-style-wait-without-loop-OV-L7` (id 277) — atomicity-violation and order-violation patterns from Lu et al.'s 105-bug concurrency study (already cited in `docs/research-references.md` for the L7 subtype taxonomy).
+- `quixbugs-style-mergesort-merge-off-by-one-locate-L3` (id 278) and `quixbugs-style-quicksort-aliased-input-mutation-L4` (id 279) — single-line algorithmic defects in classic CS-textbook algorithms (Lin et al. 2017 — newly cited).
+- `therac25-style-race-mode-flag-L7-L4` (id 280) — safety-critical concurrency, modeled on the 1985–87 Therac-25 radiation-therapy accidents (Leveson & Turner 1993 — newly cited).
+- `ariane5-style-narrowing-cast-overflow-locate-L2` (id 281) — silent 64-bit-to-16-bit narrowing at a system boundary, modeled on the 1996 Ariane 5 Flight 501 inquiry (Lions et al. 1996 — newly cited).
+- `jodatime-style-dst-spring-forward-locate-L9` (id 282) — DST gap/overlap handling, the canonical Defects4J Joda-Time family of bugs (Just et al. 2014 — newly cited).
+- `swebench-style-requests-redirect-loop-locate-L5-L6` (id 283) — relative `Location` header treated as absolute, a real-world HTTP-client pattern in the SWE-bench tradition (Jimenez et al. 2024 — already cited).
+- `coverity-bessey-style-clean-cache-no-bug` (id 284) — false-positive resistance: a correctly-implemented bounded LRU cache; the case asserts that the skill must NOT fabricate Critical findings on clean code, applying the Coverity false-positive-control discipline (Bessey et al. 2010 — already cited).
+- `defects4j-style-commons-math-binarysearch-fix-all-L3-L6` (id 285) — the canonical `(lo + hi) / 2` overflow plus the `lo = mid` (without `+1`) infinite-loop pair, a multi-bug fix-all sourced from Apache Commons Math's actual defect history.
+
+`docs/research-references.md` gains four new citations (Defects4J, QuixBugs, Therac-25 inquiry, Ariane 5 inquiry) under a new "Bug Benchmarks Informing the Eval Suite" section, each pointing to the specific case ids it inspired.
+
+### Added — model compatibility evidence
+
+- `docs/MODEL_COMPATIBILITY.md` — recommended model + mode matrix backed by a 79-case Haiku benchmark. Headline: `claude-haiku-4-5` in `claude -p` mode triggers logic-lens skills only ~5 % of the time and answers most prompts directly without invoking the skill — overall pass rate 38.7 %. Sonnet (the default in `scripts/run-content-evals.sh`) and in-session interactive Claude Code remain the recommended targets.
+- `docs/benchmarks/v0.6.4-haiku-baseline.json` — full per-mode summary for the 79-case Haiku run (overall pass 0.387, skill trigger 4 / 79).
+- `docs/benchmarks/v0.6.4-haiku-after-skillmd-rewrite.json` — second 79-case Haiku run after a SKILL.md rewrite experiment (description tightening + body-top "Quick Output Schema" cheatsheet, +205 lines across all six SKILL.md files). Pass rate 0.377 (−1.05 pp), trigger 3 / 79 (−1). Confirms editing SKILL.md alone does not move the needle when the host model is not invoking the skill — the rewrite was reverted before tagging this release.
+- `docs/benchmarks/v0.6.4-sonnet-eval-9-in-session.json` — single-case A/B sanity check: the same `logic-fix-all` case scored 4 / 4 (100 %) when Sonnet invoked the skill in-session vs 2 / 4 (Haiku baseline) and 1 / 4 (Haiku after SKILL.md rewrite) under `claude -p`. Skill design is sound; trigger reliability is the ceiling.
+
+### Changed
+
+- `package.json`, `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`, `.codex-plugin/plugin.json`, `gemini-extension.json`, `README.md` — version bump 0.6.3 → 0.6.4.
+
+### Notes for contributors
+
+- **No skill behavior changes ship in this release.** All six `skills/*/SKILL.md` files are identical to v0.6.3.
+- If you are tempted to rewrite SKILL.md descriptions to lift Haiku-`-p` numbers, read `docs/MODEL_COMPATIBILITY.md` first — that path was tried, measured, and reverted in this cycle. The leverage point is outside the skill files (host model choice or session-start hook injecting schema into the system prompt), not inside them.
+
 ## [0.5.0] — 2026-04-25
 
 ### Added — outreach pack & first case study
