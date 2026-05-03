@@ -2063,6 +2063,339 @@
           "check": "The after score is numerically higher than the before score"
         }
       ]
+    },
+    {
+      "id": 249,
+      "name": "python-none-sentinel-no-bug",
+      "mode": "logic-review",
+      "prompt": "Review this Python code for logic errors:\n\n```python\n# utils/cache.py\n\ndef append_to_cache(item, cache=None):\n    \"\"\"Append item to cache list; creates a new list if cache not provided.\"\"\"\n    if cache is None:\n        cache = []\n    cache.append(item)\n    return cache\n\nr1 = append_to_cache('a')\nr2 = append_to_cache('b')\nr3 = append_to_cache('c', r1)\nprint(r1, r2, r3)\n```\n\nThe developer is aware that mutable default arguments in Python are evaluated once at function definition. They say the `cache=None` pattern avoids the mutable-default bug. Are they correct? Is there a logic error?",
+      "expected_output": "Should conclude there is NO logic error. The `cache=None` pattern is the correct Python idiom for avoiding the mutable default argument trap. When `cache` is omitted, the default `None` is evaluated (None is immutable; it is the same object every call), and `if cache is None: cache = []` creates a fresh list on each call. This means `r1 = ['a', 'c']`, `r2 = ['b']` (independent), `r3 = r1 = ['a', 'c']`. No list is shared across unrelated calls. The developer's analysis is correct. There is no L4 hazard here — the pattern exists precisely to prevent it. A quality review should acknowledge this is the standard correct pattern and find no divergence.",
+      "assertions": [
+        {
+          "id": "concludes-no-bug",
+          "description": "Output concludes no logic error exists",
+          "check": "Output concludes that the code has NO logic error (or that the None sentinel pattern is correct / no bug found / no divergence)"
+        },
+        {
+          "id": "explains-none-sentinel-correct",
+          "description": "Output explains why the None sentinel is the correct approach",
+          "check": "Output explains that `cache=None` with `if cache is None: cache = []` creates a fresh list on each call, correctly avoiding the mutable default trap"
+        },
+        {
+          "id": "does-not-falsely-flag-l4",
+          "description": "Output does NOT incorrectly flag this as a mutable default bug (L4)",
+          "check": "Output does NOT claim that r1 and r2 share state or that the mutable default causes a bug (it may mention L4 to explain what the pattern prevents, but should not conclude a bug exists)"
+        },
+        {
+          "id": "has-premises-trace-divergence",
+          "description": "Finding uses four-field format even when concluding no bug",
+          "check": "Output contains 'Premises' AND 'Trace' AND 'Divergence' as section labels in the finding"
+        }
+      ]
+    },
+    {
+      "id": 250,
+      "name": "go-defer-unlock-all-paths-no-bug",
+      "mode": "logic-review",
+      "prompt": "Review this Go code for logic errors:\n\n```go\n// store/cache.go\npackage store\n\nimport (\n    \"errors\"\n    \"sync\"\n)\n\ntype Store struct {\n    mu      sync.RWMutex\n    data    map[string]string\n    maxSize int\n}\n\nfunc (s *Store) Get(key string) (string, bool) {\n    s.mu.RLock()\n    defer s.mu.RUnlock()\n    val, ok := s.data[key]\n    return val, ok\n}\n\nfunc (s *Store) Set(key, value string) error {\n    s.mu.Lock()\n    defer s.mu.Unlock()\n    if len(s.data) >= s.maxSize {\n        return errors.New(\"cache full\")\n    }\n    s.data[key] = value\n    return nil\n}\n```\n\nA reviewer flagged that `Set` returns early when the cache is full — does this cause a lock leak (L8)?",
+      "expected_output": "Should conclude there is NO logic error. The reviewer's concern is unfounded. `defer s.mu.Unlock()` is registered before the early return check, so it executes on ALL exit paths — including the `return errors.New(\"cache full\")` path. In Go, deferred functions run when the surrounding function returns, regardless of which return statement is reached. The lock is correctly released on every exit path. The `Get` method is similarly correct with `defer s.mu.RUnlock()`. No L8 resource leak, no L7 concurrency hazard. The code follows the standard Go idiom for mutex-guarded operations.",
+      "assertions": [
+        {
+          "id": "concludes-no-bug",
+          "description": "Output concludes no lock leak or logic error exists",
+          "check": "Output concludes that the code has NO logic error, lock leak, or resource hazard (or that defer correctly releases the lock on all paths)"
+        },
+        {
+          "id": "explains-defer-runs-on-all-paths",
+          "description": "Output explains that defer executes on all exit paths including early return",
+          "check": "Output explains that `defer s.mu.Unlock()` (or defer in Go generally) executes when the surrounding function returns, on ALL exit paths including the early return for 'cache full'"
+        },
+        {
+          "id": "does-not-falsely-flag-l8",
+          "description": "Output does NOT incorrectly flag this as a resource leak (L8)",
+          "check": "Output does NOT conclude that the mutex is leaked or that L8 (Resource Lifecycle Hazard) applies to this code"
+        },
+        {
+          "id": "has-premises-trace-divergence",
+          "description": "Finding uses four-field format",
+          "check": "Output contains 'Premises' AND 'Trace' AND 'Divergence' as section labels in the finding"
+        }
+      ]
+    },
+    {
+      "id": 251,
+      "name": "js-let-loop-closure-no-bug",
+      "mode": "logic-review",
+      "prompt": "Review this JavaScript code for logic errors:\n\n```javascript\n// ui/buttons.js\n\nfunction createButtons(labels) {\n    const buttons = [];\n    for (let i = 0; i < labels.length; i++) {\n        buttons.push({\n            label: labels[i],\n            onClick: () => alert(`Clicked: ${labels[i]}`)\n        });\n    }\n    return buttons;\n}\n\nconst btns = createButtons(['Home', 'About', 'Contact']);\nbtns[0].onClick();  // Should alert 'Clicked: Home'\nbtns[2].onClick();  // Should alert 'Clicked: Contact'\n```\n\nA junior developer raised a concern: 'This looks like the classic for-loop closure bug — all buttons will alert the same label.' Is the concern valid?",
+      "expected_output": "Should conclude there is NO logic error. The junior developer's concern would be valid if `var` were used instead of `let`, but this code uses `let`. With `let`, each iteration creates a new block-scoped binding for `i` — each closure captures its own independent copy of `i`. `btns[0].onClick()` correctly alerts 'Clicked: Home' (i=0 → labels[0]), and `btns[2].onClick()` correctly alerts 'Clicked: Contact' (i=2 → labels[2]). This is not the classic var-closure bug. The classic bug occurs with `var i` because `var` is function-scoped: all closures share the same `i`, which ends at `labels.length` when the callbacks run. Using `let` was the correct fix and is already applied here. No logic error.",
+      "assertions": [
+        {
+          "id": "concludes-no-bug",
+          "description": "Output concludes no closure bug exists with let",
+          "check": "Output concludes that the code has NO logic error (or that let correctly creates per-iteration bindings, or that the junior developer's concern is unfounded / not applicable here)"
+        },
+        {
+          "id": "explains-let-per-iteration-binding",
+          "description": "Output explains that let creates a new binding per iteration",
+          "check": "Output explains that `let` creates a new block-scoped binding for `i` on each iteration, so each closure captures its own independent `i` value"
+        },
+        {
+          "id": "contrasts-with-var-bug",
+          "description": "Output explains why the concern would apply to var but not let",
+          "check": "Output explains or implies that the classic closure bug applies to `var` (function-scoped, shared across iterations) but NOT to `let` (block-scoped, independent per iteration)"
+        },
+        {
+          "id": "has-premises-trace-divergence",
+          "description": "Finding uses four-field format",
+          "check": "Output contains 'Premises' AND 'Trace' AND 'Divergence' as section labels in the finding"
+        }
+      ]
+    },
+    {
+      "id": 252,
+      "name": "python-with-statement-no-bug",
+      "mode": "logic-review",
+      "prompt": "Review this Python code for logic errors:\n\n```python\n# config/loader.py\nimport json\n\ndef load_config(path: str) -> dict:\n    with open(path, encoding='utf-8') as f:\n        return json.load(f)\n\ndef load_all_configs(paths: list[str]) -> list[dict]:\n    return [load_config(p) for p in paths]\n```\n\nA code reviewer commented: 'The file handle is opened inside `with` but `return json.load(f)` returns while the `with` block is still open — does the file get closed properly?' Is this a resource leak?",
+      "expected_output": "Should conclude there is NO logic error or resource leak. The reviewer's concern reflects a misunderstanding of Python's `with` statement. `return json.load(f)` does NOT return before the `with` block completes cleanup. Python's `with` statement guarantees that `__exit__` (which calls `f.close()`) is called before the function returns, even when a `return` statement is inside the `with` block. The sequence is: (1) `json.load(f)` is evaluated; (2) the `with` block's `__exit__` is called, closing the file; (3) the function returns the value. If `json.load(f)` raises a `JSONDecodeError`, the `with` block still closes the file before the exception propagates. No L8 resource leak. This is the idiomatic and correct Python file-reading pattern.",
+      "assertions": [
+        {
+          "id": "concludes-no-bug",
+          "description": "Output concludes no resource leak or logic error",
+          "check": "Output concludes that the code has NO logic error or resource leak (or that the with-statement correctly closes the file / the reviewer's concern is unfounded)"
+        },
+        {
+          "id": "explains-with-exit-before-return",
+          "description": "Output explains that __exit__ (file close) runs before the function returns",
+          "check": "Output explains that Python's with-statement calls __exit__ (or closes the file) before the function returns, even when return is inside the with block"
+        },
+        {
+          "id": "does-not-falsely-flag-l8",
+          "description": "Output does NOT flag this as a resource leak (L8)",
+          "check": "Output does NOT conclude that the file handle is leaked or that L8 applies to this code"
+        },
+        {
+          "id": "has-premises-trace-divergence",
+          "description": "Finding uses four-field format",
+          "check": "Output contains 'Premises' AND 'Trace' AND 'Divergence' as section labels in the finding"
+        }
+      ]
+    },
+    {
+      "id": 253,
+      "name": "sql-parameterized-query-no-bug",
+      "mode": "logic-review",
+      "prompt": "Review this Python database code for logic errors:\n\n```python\n# db/orders.py\n\ndef get_user_orders(conn, user_id: int, status: str) -> list:\n    cursor = conn.cursor()\n    cursor.execute(\n        \"SELECT id, amount, status FROM orders \"\n        \"WHERE user_id = %s AND status = %s \"\n        \"ORDER BY created_at DESC\",\n        (user_id, status)\n    )\n    return cursor.fetchall()\n\ndef count_orders(conn, user_id: int) -> int:\n    cursor = conn.cursor()\n    cursor.execute(\n        \"SELECT COUNT(*) FROM orders WHERE user_id = %s\",\n        (user_id,)\n    )\n    return cursor.fetchone()[0]\n```\n\nIs there a SQL injection vulnerability or any logic error in this code?",
+      "expected_output": "Should conclude there is NO SQL injection vulnerability and NO significant logic error. Both queries use parameterized statements: the SQL template uses `%s` placeholders and the actual values are passed as a separate tuple `(user_id, status)` / `(user_id,)`. The database driver substitutes values safely, preventing injection regardless of what `user_id` or `status` contain. This is the correct, idiomatic approach for parameterized queries in Python database APIs (DB-API 2.0). Minor observation: cursors are not explicitly closed, which may hold server-side resources; however, this is typically handled when the connection is closed or returned to a pool and does not constitute a logic error in isolation. No L3 boundary blindspot, no injection risk.",
+      "assertions": [
+        {
+          "id": "concludes-no-injection",
+          "description": "Output concludes no SQL injection vulnerability exists",
+          "check": "Output concludes that there is NO SQL injection vulnerability (or that the parameterized queries correctly prevent injection)"
+        },
+        {
+          "id": "explains-parameterization",
+          "description": "Output explains that %s placeholders with separate tuple is the correct parameterized approach",
+          "check": "Output explains that the %s placeholders with values passed as a separate tuple to cursor.execute() is parameterized (not string concatenation), safely preventing SQL injection"
+        },
+        {
+          "id": "does-not-falsely-flag-injection",
+          "description": "Output does NOT falsely flag these queries as injection risks",
+          "check": "Output does NOT claim that the queries are vulnerable to SQL injection or that string concatenation is used"
+        },
+        {
+          "id": "has-premises-trace-divergence",
+          "description": "Finding uses four-field format",
+          "check": "Output contains 'Premises' AND 'Trace' AND 'Divergence' as section labels in the finding"
+        }
+      ]
+    },
+    {
+      "id": 254,
+      "name": "go-clean-service-health-high-score",
+      "mode": "logic-health",
+      "prompt": "Give me a logic health overview of this Go service module:\n\n```go\n// service/order_service.go\npackage service\n\nimport (\n    \"context\"\n    \"database/sql\"\n    \"errors\"\n    \"fmt\"\n)\n\ntype OrderService struct {\n    db *sql.DB\n}\n\nfunc (s *OrderService) GetOrder(ctx context.Context, id int64) (*Order, error) {\n    row := s.db.QueryRowContext(ctx,\n        \"SELECT id, user_id, amount, status FROM orders WHERE id = $1\", id)\n    var o Order\n    if err := row.Scan(&o.ID, &o.UserID, &o.Amount, &o.Status); err != nil {\n        if errors.Is(err, sql.ErrNoRows) {\n            return nil, nil\n        }\n        return nil, fmt.Errorf(\"query order %d: %w\", id, err)\n    }\n    return &o, nil\n}\n\nfunc (s *OrderService) CreateOrder(ctx context.Context, userID int64, amount float64) (int64, error) {\n    var id int64\n    err := s.db.QueryRowContext(ctx,\n        \"INSERT INTO orders(user_id, amount, status) VALUES($1, $2, 'pending') RETURNING id\",\n        userID, amount,\n    ).Scan(&id)\n    if err != nil {\n        return 0, fmt.Errorf(\"create order: %w\", err)\n    }\n    return id, nil\n}\n```",
+      "expected_output": "Should produce a health report with Logic Score of 80 or above (ideally 85-100). The code is well-structured: parameterized queries prevent injection, context propagation is correct, errors are wrapped with context using fmt.Errorf and %w, ErrNoRows is explicitly handled and does not propagate as an error, resources (sql.Row) are implicitly cleaned up by QueryRowContext. Minor observations (if any): amount validation (negative values) and userID existence check are callers' responsibility, not a module defect. No L8 resource leaks, no L7 concurrency issues, no L5 control flow escapes. Overall logic health is high.",
+      "assertions": [
+        {
+          "id": "score-above-80",
+          "description": "Logic Score is 80 or above",
+          "check": "Output reports a Logic Score of 80 or above (e.g., 80/100, 85/100, 90/100, 95/100, or 100/100)"
+        },
+        {
+          "id": "identifies-no-resource-leak",
+          "description": "Output does not flag a resource leak in this code",
+          "check": "Output does NOT identify an L8 resource leak or unclosed connection as a significant finding in this module"
+        },
+        {
+          "id": "identifies-parameterized-queries",
+          "description": "Output acknowledges the queries are parameterized (safe)",
+          "check": "Output acknowledges that the SQL queries use parameterized statements ($1 placeholders) and are not vulnerable to injection"
+        },
+        {
+          "id": "has-module-breakdown",
+          "description": "Output includes a Module Breakdown section",
+          "check": "Output contains a 'Module Breakdown' heading or a table/list showing per-method analysis"
+        }
+      ]
+    },
+    {
+      "id": 255,
+      "name": "java-try-with-resources-clean-health",
+      "mode": "logic-health",
+      "prompt": "Give me a logic health overview of this Java utility class:\n\n```java\n// io/ReportReader.java\nimport java.io.*;\nimport java.nio.charset.StandardCharsets;\nimport java.nio.file.*;\nimport java.util.*;\nimport java.util.stream.*;\n\npublic class ReportReader {\n\n    public List<String> readNonBlankLines(Path path) throws IOException {\n        List<String> lines = new ArrayList<>();\n        try (BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8)) {\n            String line;\n            while ((line = reader.readLine()) != null) {\n                if (!line.isBlank()) {\n                    lines.add(line.trim());\n                }\n            }\n        }\n        return lines;\n    }\n\n    public Optional<String> findSection(Path path, String header) throws IOException {\n        try (Stream<String> stream = Files.lines(path, StandardCharsets.UTF_8)) {\n            return stream\n                .dropWhile(l -> !l.equals(header))\n                .skip(1)\n                .findFirst();\n        }\n    }\n}\n```",
+      "expected_output": "Should produce a health report with Logic Score of 80 or above. The code correctly uses try-with-resources for both BufferedReader and Stream<String>, ensuring resources are closed on all exit paths including exceptions. Explicit charset (StandardCharsets.UTF_8) is specified, avoiding locale-dependent encoding issues (no L9). `findSection` correctly uses `dropWhile` + `skip(1)` + `findFirst()` and wraps the result in Optional — no unchecked array access. The stream is closed in try-with-resources. No significant logic defects found. Minor: if `header` appears multiple times, only the first occurrence's next line is returned — this is presumably intended. Logic health is high.",
+      "assertions": [
+        {
+          "id": "score-above-80",
+          "description": "Logic Score is 80 or above",
+          "check": "Output reports a Logic Score of 80 or above (e.g., 80/100, 85/100, 90/100, or 100/100)"
+        },
+        {
+          "id": "identifies-try-with-resources-correct",
+          "description": "Output acknowledges try-with-resources is correctly used",
+          "check": "Output acknowledges that try-with-resources (or the try block with AutoCloseable) correctly closes BufferedReader and Stream resources"
+        },
+        {
+          "id": "no-major-finding",
+          "description": "Output does not flag a high-severity L-code finding",
+          "check": "Output does NOT identify a high-severity finding (L7, L8, or critical L5/L6) as a confirmed bug in this module"
+        },
+        {
+          "id": "has-module-breakdown",
+          "description": "Output includes a Module Breakdown section",
+          "check": "Output contains a 'Module Breakdown' heading or per-method analysis table"
+        }
+      ]
+    },
+    {
+      "id": 256,
+      "name": "python-async-context-manager-clean-health",
+      "mode": "logic-health",
+      "prompt": "Give me a logic health overview of this Python async module:\n\n```python\n# db/pool.py\nimport asyncpg\nfrom contextlib import asynccontextmanager\nfrom typing import AsyncIterator\n\nclass AsyncDBPool:\n    def __init__(self, dsn: str, max_size: int = 10) -> None:\n        self._dsn = dsn\n        self._max_size = max_size\n        self._pool: asyncpg.Pool | None = None\n\n    async def setup(self) -> None:\n        self._pool = await asyncpg.create_pool(\n            self._dsn, max_size=self._max_size\n        )\n\n    async def teardown(self) -> None:\n        if self._pool is not None:\n            await self._pool.close()\n            self._pool = None\n\n    @asynccontextmanager\n    async def acquire(self) -> AsyncIterator[asyncpg.Connection]:\n        if self._pool is None:\n            raise RuntimeError(\"Pool not initialized; call setup() first\")\n        async with self._pool.acquire() as conn:\n            yield conn\n```",
+      "expected_output": "Should produce a health report with Logic Score of 80 or above. The module is well-designed: `asynccontextmanager` ensures connections are returned to the pool on all exit paths including exceptions. The `teardown` guard `if self._pool is not None` prevents double-close. The pool-not-initialized check in `acquire` raises early with a clear error rather than crashing with an AttributeError. Type hints are correct. No L7/L8 hazards identified. Minor observations: setup() is not idempotent (calling twice creates a second pool, leaking the first); however this is a design concern at the caller level, not a defect in the module itself. Overall logic health is high.",
+      "assertions": [
+        {
+          "id": "score-above-80",
+          "description": "Logic Score is 80 or above",
+          "check": "Output reports a Logic Score of 80 or above (e.g., 80/100, 85/100, 90/100, or 100/100)"
+        },
+        {
+          "id": "identifies-asynccontextmanager-correct",
+          "description": "Output acknowledges asynccontextmanager correctly manages connection lifecycle",
+          "check": "Output acknowledges that the asynccontextmanager (or async with self._pool.acquire()) correctly returns the connection to the pool on all exit paths"
+        },
+        {
+          "id": "no-l7-l8-finding",
+          "description": "Output does not flag a confirmed L7 or L8 bug",
+          "check": "Output does NOT identify a confirmed L7 (concurrency) or L8 (resource lifecycle) bug as a definite defect in this module"
+        },
+        {
+          "id": "has-module-breakdown",
+          "description": "Output includes a Module Breakdown section",
+          "check": "Output contains a 'Module Breakdown' heading or per-method analysis"
+        }
+      ]
+    },
+    {
+      "id": 257,
+      "name": "python-comprehension-vs-map-filter-equivalent",
+      "mode": "logic-diff",
+      "prompt": "Are these two Python implementations semantically equivalent?\n\n**Version A:**\n```python\ndef positive_doubled(numbers):\n    return [x * 2 for x in numbers if x > 0]\n```\n\n**Version B:**\n```python\ndef positive_doubled(numbers):\n    return list(map(lambda x: x * 2, filter(lambda x: x > 0, numbers)))\n```\n\nConsider: all numeric types (int, float), empty list, list with all negatives, list with zeros.",
+      "expected_output": "They ARE semantically equivalent for all standard inputs. Both filter for elements where x > 0 (strictly positive, excluding zero), then multiply each by 2, and return a list. Version A uses a list comprehension; Version B uses filter/map/list combination. For any iterable of numbers, both produce identical output in the same order. Edge cases: empty input → both return []. All negative/zero → both return []. The lambda `x > 0` and the comprehension condition `if x > 0` use the same comparison. `map` and the comprehension expression both apply `x * 2`. The wrapping `list()` collects the lazy iterator into a list, matching the comprehension's output type. Performance differs (comprehension is typically faster; map+filter are lazy iterators), but the observable result is identical.",
+      "assertions": [
+        {
+          "id": "concludes-equivalent",
+          "description": "Output concludes the two versions are semantically equivalent",
+          "check": "Output concludes that the two versions are semantically equivalent (or produce identical output for all inputs)"
+        },
+        {
+          "id": "explains-filter-condition-matches",
+          "description": "Output explains that the filter condition x > 0 matches the comprehension condition",
+          "check": "Output explains that filter(lambda x: x > 0, ...) and the comprehension's `if x > 0` apply the same condition, both excluding zero and negatives"
+        },
+        {
+          "id": "notes-performance-difference",
+          "description": "Output notes that performance may differ but results are the same",
+          "check": "Output notes that Version B uses lazy evaluation (map/filter return iterators) while Version A builds a list directly — performance differs but the final result list is identical"
+        },
+        {
+          "id": "checks-edge-cases",
+          "description": "Output checks edge cases (empty list, all negatives)",
+          "check": "Output verifies behavior for empty input or all-negative input, confirming both return an empty list"
+        }
+      ]
+    },
+    {
+      "id": 258,
+      "name": "ruby-map-vs-collect-alias-equivalent",
+      "mode": "logic-diff",
+      "prompt": "Are these two Ruby implementations semantically equivalent?\n\n**Version A:**\n```ruby\ndef transform_prices(prices)\n  prices.map { |p| (p * 1.1).round(2) }\nend\n```\n\n**Version B:**\n```ruby\ndef transform_prices(prices)\n  prices.collect { |p| (p * 1.1).round(2) }\nend\n```\n\nThe function applies a 10% markup and rounds to 2 decimal places.",
+      "expected_output": "They ARE semantically equivalent. In Ruby, `map` and `collect` are exact method aliases — they are the same method with two names. Both iterate over the array, apply the block to each element, and return a new array with the results. There is no difference in behavior, return value, error handling, or performance. Both return a new array without modifying `prices`. For any input (empty array, single element, floats, integers), both produce identical output. This is a stylistic choice only — Ruby inherited `collect` from Smalltalk convention and added `map` as the more common functional programming name.",
+      "assertions": [
+        {
+          "id": "concludes-equivalent",
+          "description": "Output concludes the two versions are semantically equivalent",
+          "check": "Output concludes that the two versions are semantically equivalent (or identical in behavior)"
+        },
+        {
+          "id": "identifies-map-collect-aliases",
+          "description": "Output identifies that map and collect are exact aliases in Ruby",
+          "check": "Output identifies that Ruby's map and collect are exact aliases (the same method with two names), with no difference in behavior"
+        },
+        {
+          "id": "notes-no-behavioral-difference",
+          "description": "Output notes there is no performance or behavioral difference",
+          "check": "Output notes that there is no behavioral, performance, or semantic difference between map and collect in Ruby"
+        }
+      ]
+    },
+    {
+      "id": 259,
+      "name": "python-join-list-vs-generator-equivalent",
+      "mode": "logic-diff",
+      "prompt": "Are these two Python implementations semantically equivalent?\n\n**Version A:**\n```python\ndef format_ids(ids):\n    return ', '.join([str(x) for x in ids])\n```\n\n**Version B:**\n```python\ndef format_ids(ids):\n    return ', '.join(str(x) for x in ids)\n```\n\nConsider: empty list, single element, mixed types that support str(), very large lists.",
+      "expected_output": "They ARE semantically equivalent in terms of output. Both produce the same comma-separated string for any input iterable. Version A uses a list comprehension `[str(x) for x in ids]` — this creates an intermediate list, then `str.join()` consumes it. Version B uses a generator expression `str(x) for x in ids` — `str.join()` directly consumes the generator without creating an intermediate list. Edge cases: empty input → both return ''. Single element → both return that element as string. The final string is identical in all cases. Performance/memory differs: Version B avoids the intermediate list allocation (better for large inputs), but both produce identical output. Note: `str.join()` actually has a special optimization for generator expressions — it may internally buffer results — but the observable output is identical.",
+      "assertions": [
+        {
+          "id": "concludes-equivalent",
+          "description": "Output concludes the two versions produce identical output",
+          "check": "Output concludes that the two versions are semantically equivalent or produce identical string output for all inputs"
+        },
+        {
+          "id": "explains-list-vs-generator",
+          "description": "Output explains the difference: list comprehension vs generator expression",
+          "check": "Output explains that Version A creates an intermediate list (list comprehension) while Version B uses a generator expression, with the same final string result"
+        },
+        {
+          "id": "notes-memory-performance-difference",
+          "description": "Output notes memory/performance difference is the only distinction",
+          "check": "Output notes that the only difference between the versions is memory usage or performance (Version B avoids the intermediate list), not the output"
+        }
+      ]
+    },
+    {
+      "id": 260,
+      "name": "go-empty-string-check-equivalent",
+      "mode": "logic-diff",
+      "prompt": "Are these two Go implementations semantically equivalent?\n\n**Version A:**\n```go\nfunc validateName(name string) error {\n    if len(name) == 0 {\n        return errors.New(\"name must not be empty\")\n    }\n    if len(name) > 100 {\n        return errors.New(\"name too long\")\n    }\n    return nil\n}\n```\n\n**Version B:**\n```go\nfunc validateName(name string) error {\n    if name == \"\" {\n        return errors.New(\"name must not be empty\")\n    }\n    if len(name) > 100 {\n        return errors.New(\"name too long\")\n    }\n    return nil\n}\n```\n\nConsider: empty string, normal strings, strings near the 100-character boundary, Unicode strings.",
+      "expected_output": "They ARE semantically equivalent. In Go, `len(name) == 0` and `name == \"\"` are exactly equivalent checks for an empty string. Both evaluate to true if and only if the string has zero bytes. For Unicode strings, `len()` returns the byte count, not the rune count — but both `len(s) == 0` and `s == \"\"` correctly identify the empty string (zero bytes) regardless. The `> 100` check uses byte length in both versions. The error messages, return values, and control flow are identical. Go's compiler may optimize both forms to the same machine code. The choice between the two is purely stylistic — `name == \"\"` is slightly more readable, `len(name) == 0` is marginally more explicit about byte length. No semantic difference exists.",
+      "assertions": [
+        {
+          "id": "concludes-equivalent",
+          "description": "Output concludes the two versions are semantically equivalent",
+          "check": "Output concludes that the two versions are semantically equivalent (or identical in behavior)"
+        },
+        {
+          "id": "explains-len-zero-vs-empty-string",
+          "description": "Output explains that len(s)==0 and s==\"\" are equivalent for empty string detection in Go",
+          "check": "Output explains that `len(name) == 0` and `name == \"\"` are equivalent ways to check for an empty string in Go"
+        },
+        {
+          "id": "addresses-unicode",
+          "description": "Output addresses Unicode behavior (len counts bytes, both still detect empty correctly)",
+          "check": "Output notes that len() counts bytes (not runes) in Go, but both checks correctly identify the empty string (zero bytes) regardless of Unicode content"
+        }
+      ]
     }
   ]
 }

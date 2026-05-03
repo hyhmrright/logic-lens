@@ -96,6 +96,44 @@ def _no_logic_score(t: str) -> bool:
     return not re.search(r'Logic Score|逻辑评分', t)
 
 
+def _no_bug_conclusion(t: str) -> bool:
+    """Model concludes no significant logic bug exists."""
+    return re.search(
+        r'no\s+(?:significant\s+)?(?:logic\s+)?(?:bug|error|issue|problem|flaw|defect|finding)'
+        r'|code\s+is\s+correct|this\s+is\s+(?:the\s+)?correct\s+(?:pattern|approach|idiom)'
+        r'|no\s+(?:logic\s+)?(?:finding|divergence)\s+(?:found|identified|detected)'
+        r'|concern\s+is\s+(?:unfounded|not\s+valid|incorrect)'
+        r'|没有.*(?:问题|bug|错误|缺陷)|代码.*正确|这段代码.*正确'
+        r'|Divergence\s*[:\-]\s*(?:None|无|没有|不存在)'
+        r'|no\s+divergence\s+found|未发现.*(?:问题|错误)',
+        t, re.I
+    ) is not None
+
+
+def _score_above_80(t: str) -> bool:
+    """Logic Score is 80 or above. Accepts both '88/100' and '88 / 100'."""
+    matches = re.findall(
+        r'Logic Score[^0-9]{0,20}(\d{1,3})\s*/\s*100|逻辑评分[^0-9]{0,20}(\d{1,3})\s*/\s*100', t, re.I
+    )
+    for m in matches:
+        score = int(m[0] or m[1])
+        if score >= 80:
+            return True
+    return False
+
+
+def _equivalent_verdict(t: str) -> bool:
+    """Model gives Semantically Equivalent verdict (not Divergent)."""
+    return re.search(
+        r'Semantically Equivalent|语义等价|完全等价|semantically identical'
+        r'|are\s+(?:semantically\s+)?equivalent|两者.*等价|行为.*(?:相同|一致)',
+        t, re.I
+    ) is not None and re.search(
+        r'NOT\s+(?:semantically\s+)?equivalent|语义分歧|不等价|are\s+not\s+equivalent',
+        t, re.I
+    ) is None
+
+
 def _case227_score_improved(t: str) -> bool:
     def _extract(label_pat: str) -> int | None:
         m = re.search(rf'{label_pat}[^\n0-9]{{0,25}}(\d{{1,3}})(?:/100)?', t, re.I)
@@ -573,6 +611,113 @@ _CASE_EXTRA_RULES: dict[int, list[tuple[str, Callable[[str], bool]]]] = {
             r'PreparedStatement|prepareStatement|setInt|setString|parameterized|参数化.*查询|预编译',
             t, re.I) is not None),
         ("score improved after fixes", _case227_score_improved),
+    ],
+    # ── No-bug review cases (false-positive suppression tests) ──────────────
+    249: [
+        ("concludes no logic error (None sentinel correct)", _no_bug_conclusion),
+        ("explains None sentinel creates fresh list each call", lambda t: re.search(
+            r'None.*sentinel|sentinel.*None|if.*None.*=.*\[\]|cache\s*=\s*\[\]'
+            r'|fresh.*list|新.*列表|每次.*调用.*新', t, re.I) is not None),
+        # only fails on confirmed/definitive bug claim, not mere mention of pattern name
+        ("does not falsely flag mutable default as confirmed bug", lambda t: not re.search(
+            r'(?:this\s+(?:is|creates?|has)|confirmed|缺陷|存在).*mutable.*default.*bug'
+            r'|L4.*(?:confirmed|found|this\s+is\s+a\s+bug|这是.*bug)'
+            r'|mutable.*default.*(?:issue|bug).*(?:exists?|found|confirmed)', t, re.I)),
+    ],
+    250: [
+        ("concludes no lock leak or resource hazard", _no_bug_conclusion),
+        ("explains defer releases lock on all exit paths", lambda t: re.search(
+            r'defer.*(?:all|every).*(?:path|exit|return)|defer.*(?:run|execute).*return'
+            r'|所有.*路径.*释放|defer.*解锁', t, re.I) is not None),
+        # only fails on confirmed lock leak claim, not mere mention of the concept
+        ("does not falsely flag L8 lock leak as confirmed", lambda t: not re.search(
+            r'(?:mutex|lock)\s+(?:is\s+)?(?:leaked|not\s+released|未释放)'
+            r'|L8.*(?:confirmed|this\s+code.*leak|lock.*bug)'
+            r'|(?:lock|mutex).*leak.*(?:here|this|found|confirmed)', t, re.I)),
+    ],
+    251: [
+        ("concludes no closure bug with let", _no_bug_conclusion),
+        ("explains let creates per-iteration binding", lambda t: re.search(
+            r'\blet\b.*(?:block[- ]scoped|per[- ]iter|new.*binding|块级|每次.*迭代)'
+            r'|(?:block[- ]scoped|per[- ]iter).*\blet\b', t, re.I) is not None),
+        ("contrasts with var (concern applies to var not let)", lambda t: re.search(
+            r'\bvar\b.*(?:function[- ]scoped|hoist|shar(?:e|ed|es)|共享)'
+            r'|concern.*\bvar\b|applies.*\bvar\b|with\s+var.*all.*clos', t, re.I) is not None),
+    ],
+    252: [
+        ("concludes no resource leak (with closes file)", _no_bug_conclusion),
+        ("explains with-statement __exit__ runs before return", lambda t: re.search(
+            r'__exit__|with.*(?:close|cleanup|释放).*return|return.*(?:after|before).*close'
+            r'|with.*(?:语句|块).*(?:关闭|close)|context.*manager.*close', t, re.I) is not None),
+        # only fails on confirmed leak claim, not mere mention of "file leak" concept
+        ("does not falsely flag L8 file leak as confirmed", lambda t: not re.search(
+            r'file\s+(?:handle\s+)?(?:is\s+)?(?:leaked|not\s+closed|未关闭)'
+            r'|L8.*(?:confirmed|file.*leak.*this|this.*is.*L8)'
+            r'|handle.*(?:is\s+)?leaked.*(?:here|this|found)', t, re.I)),
+    ],
+    253: [
+        ("concludes no SQL injection vulnerability", lambda t: re.search(
+            r'no\s+(?:sql\s+)?injection|injection.*(?:prevent|safe|correct|parameteriz)'
+            r'|parameteriz.*(?:safe|correct|prevent)|没有.*注入|注入.*安全', t, re.I) is not None),
+        ("explains %s placeholders with tuple is parameterized", lambda t: re.search(
+            r'%s.*(?:parameteriz|placeholder|tuple)|parameteriz.*%s'
+            r'|(?:separate|独立).*(?:tuple|元组).*(?:safe|安全)', t, re.I) is not None),
+        # only fails on confirmed injection claim, not mere mention of injection concept
+        ("does not falsely flag injection as confirmed vulnerability", lambda t: not re.search(
+            r'(?:this\s+(?:code\s+)?is\s+vulnerable|confirmed.*injection|injection.*confirmed)'
+            r'|sql.*injection.*(?:found\s+here|exists?\s+in\s+this|present\s+in\s+this)', t, re.I)),
+    ],
+    # ── Clean health cases (score calibration tests) ─────────────────────────
+    254: [
+        ("Logic Score 80 or above", _score_above_80),
+        ("no L8 resource leak finding", lambda t: not re.search(
+            r'L8.*(?:confirmed|found|identified)|resource.*leak.*(?:confirmed|bug)', t, re.I)),
+        ("acknowledges parameterized queries are safe", lambda t: re.search(
+            r'parameteriz|placeholder.*\$1|\$1.*safe|防注入|没有.*注入', t, re.I) is not None),
+    ],
+    255: [
+        ("Logic Score 80 or above", _score_above_80),
+        ("acknowledges try-with-resources correct", lambda t: re.search(
+            r'try[- ]with[- ]resources|AutoCloseable|correctly.*close|close.*correctly'
+            r'|正确.*关闭|关闭.*正确', t, re.I) is not None),
+        ("no high-severity confirmed bug", lambda t: not re.search(
+            r'(?:L7|L8).*(?:confirmed|definite|found|bug)|confirmed.*(?:L7|L8)', t, re.I)),
+    ],
+    256: [
+        ("Logic Score 80 or above", _score_above_80),
+        ("acknowledges asynccontextmanager correct", lambda t: re.search(
+            r'asynccontextmanager|async.*with.*(?:correct|release|return)'
+            r'|连接.*正确.*归还|归还.*连接', t, re.I) is not None),
+        ("no confirmed L7 or L8 bug", lambda t: not re.search(
+            r'(?:L7|L8).*(?:confirmed|definite|bug|found)', t, re.I)),
+    ],
+    # ── Equivalent diff cases (balance ratio) ────────────────────────────────
+    257: [
+        _BOTH_VERSIONS_RULE,
+        ("gives Semantically Equivalent verdict", _equivalent_verdict),
+        ("explains filter condition matches comprehension if-clause", lambda t: re.search(
+            r'filter.*x\s*>\s*0|x\s*>\s*0.*filter|same.*condition|条件.*相同|相同.*条件', t, re.I) is not None),
+    ],
+    258: [
+        _BOTH_VERSIONS_RULE,
+        ("gives Semantically Equivalent verdict", _equivalent_verdict),
+        ("identifies map and collect as aliases", lambda t: re.search(
+            r'(?:map|collect).*(?:alias|同名|别名|identical|same method)'
+            r'|alias.*(?:map|collect)|别名|完全相同', t, re.I) is not None),
+    ],
+    259: [
+        _BOTH_VERSIONS_RULE,
+        ("gives Semantically Equivalent verdict", _equivalent_verdict),
+        ("explains list comprehension vs generator expression difference", lambda t: re.search(
+            r'(?:list.*comprehension|generator.*expression|列表.*推导|生成器.*表达式)'
+            r'.*(?:differ|vs|versus|而|但)|generator.*no.*intermediate|中间.*列表', t, re.I) is not None),
+    ],
+    260: [
+        _BOTH_VERSIONS_RULE,
+        ("gives Semantically Equivalent verdict", _equivalent_verdict),
+        ("explains len(s)==0 and s=='' are equivalent in Go", lambda t: re.search(
+            r'len.*==.*0.*(?:equivalent|same|identical)|(?:equivalent|same|identical).*len.*==.*0'
+            r'|两者.*等价|等价.*empty|empty.*string.*check.*(?:equivalent|same)', t, re.I) is not None),
     ],
 }
 
