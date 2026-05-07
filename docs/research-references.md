@@ -176,7 +176,7 @@ Catalogue of 357 real, isolated Java bugs from Apache Commons Math, Joda-Time,
 JFreeChart, Closure, and other widely-used libraries — each with the buggy and
 fixed versions, the failing test, and the patch. Logic-Lens borrows the *style*
 of these bugs (off-by-one in numerical libraries, DST handling in date
-libraries, narrowing-cast overflows) for several `evals/v2/evals-v2.json` cases:
+libraries, narrowing-cast overflows) for several `evals/content/v2/evals-v2.json` cases:
 the `defects4j-style-commons-math-binarysearch-fix-all-L3-L6` case (id 285)
 recreates the canonical lo+hi midpoint overflow alongside the lo=mid infinite
 loop, both directly traceable to defects in Commons Math's history. The

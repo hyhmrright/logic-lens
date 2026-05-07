@@ -21,13 +21,10 @@ description: >
 
 ## Setup
 
-Read in this order:
-1. `../_shared/common.md` — language rule, Iron Law, Report Template, Verdict header (see §5), Remedy discipline.
-2. `../_shared/logic-risks.md` — L1–L9 definitions (used to classify divergences).
-3. `../_shared/semiformal-guide.md` — tracing methodology.
-4. `../_shared/semiformal-checklist.md` — Premises Construction Checklist.
-5. `../_shared/report-template.md` — Report layout (English + Chinese).
-6. `logic-diff-guide.md` — comparison process.
+Use lazy loading per `../_shared/common.md` §13:
+1. Read `../_shared/common.md` only for language, Iron Law, Verdict header, scope routing, Remedy discipline, config fields, and loading budget.
+2. Read only the relevant step in `logic-diff-guide.md` as you reach it.
+3. Load `../_shared/logic-risks.md`, `../_shared/semiformal-guide.md`, `../_shared/semiformal-checklist.md`, and `../_shared/report-template.md` on demand when the current step needs them.
 
 ## Process
 
@@ -39,7 +36,7 @@ Read in this order:
 
 **Step 3. Trace both versions for the common case** (guide Step 3) — parallel trace, same input, note the first divergence if any.
 
-**Step 4. Trace boundary cases** (guide Step 4) — empty/null/zero, max/min, error inputs, first/last of collections.
+**Step 4. Trace boundary cases** (guide Step 4) — empty/null/zero, max/min, error inputs, first/last of collections. Start with at most three highest-risk boundary scenarios unless the user asks for exhaustive equivalence or the shared specification requires more.
 
 **Step 5. Identify and classify semantic divergences** (guide Step 5) — each divergence is a finding with Premises → Trace → Divergence → Remedy and an L-code.
 

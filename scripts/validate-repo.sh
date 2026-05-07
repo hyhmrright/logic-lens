@@ -28,7 +28,18 @@ done
 check "skills/logic-fix-all phase files present" \
   '[[ -f "skills/logic-fix-all/guide-phases-0-2-consent-scope-health.md" && -f "skills/logic-fix-all/guide-phases-3-5-review-locate-clarify.md" && -f "skills/logic-fix-all/guide-phases-6-9-fix-iterate-report.md" ]]'
 
-echo "[4/4] Version consistency"
+echo "[4/5] Benchmark layout"
+check "evals/content/v2/evals-v2.json exists" '[[ -f "evals/content/v2/evals-v2.json" ]]'
+for skill in review explain diff locate health fix-all; do
+  check "evals/trigger/v2/trigger-evals-${skill}.json exists" \
+    '[[ -f "evals/trigger/v2/trigger-evals-'"$skill"'.json" ]]'
+done
+check "benchmarks/index.json exists" '[[ -f "benchmarks/index.json" ]]'
+for f in benchmarks/runs/v0.6.4-haiku-baseline.json benchmarks/runs/v0.6.4-haiku-after-skillmd-rewrite.json benchmarks/runs/v0.6.4-sonnet-eval-9-in-session.json; do
+  check "$f exists" "[[ -f '$f' ]]"
+done
+
+echo "[5/5] Version consistency"
 pkg_ver=$(grep -o '"version"[[:space:]]*:[[:space:]]*"[^"]*"' package.json | head -1 | sed 's/.*"\([^"]*\)"$/\1/')
 check "package.json version non-empty" "[[ -n '$pkg_ver' ]]"
 for mf in .claude-plugin/plugin.json .claude-plugin/marketplace.json .codex-plugin/plugin.json gemini-extension.json; do

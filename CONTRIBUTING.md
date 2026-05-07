@@ -30,7 +30,7 @@ New built-in risk codes (the next available is **L10**) require:
 2. A detection methodology using semi-formal tracing.
 3. Examples in at least two different languages.
 4. A severity assessment rationale.
-5. At least 2 eval cases in `evals/v2/evals-v2.json`.
+5. At least 2 eval cases in `evals/content/v2/evals-v2.json`.
 
 ## Adding a Skill
 
@@ -43,10 +43,10 @@ New skills (beyond the six built-in skills) require:
 
 ## Eval Cases
 
-Eval cases in `evals/v2/evals-v2.json` must include code snippets that a reviewer could
+Eval cases in `evals/content/v2/evals-v2.json` must include code snippets that a reviewer could
 evaluate without running the code. The `expected_output` should describe what a
 correct Logic-Lens analysis would find — not what the correct fix is. Trigger evals
-(per-skill activation tests) live in `evals/v2/trigger-evals-*.json`.
+(per-skill activation tests) live in `evals/trigger/v2/trigger-evals-*.json`.
 
 ## Version Bumping
 

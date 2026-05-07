@@ -35,7 +35,7 @@ Rules:
 
 ### Minimum thresholds
 
-A trace below either threshold is **incomplete**: drop the finding or downgrade to **Suggestion** with `manual verification recommended`. Do not promote to Critical or Warning.
+A trace below either threshold is **incomplete**. For review/diff/health, drop the finding or downgrade to **Suggestion** with `manual verification recommended`; do not promote it to Critical or Warning. For locate, downgrade Fault Confidence to **Low** unless the missing anchor/step is supplied by a concrete stack trace, failing assertion, or observed output.
 
 - **≥ 3 substantive steps.** Each step is a distinct evaluation, name resolution, type transition, mutation, branch decision, or callee return.
 - **≥ 2 location anchors.** `[line N]`, `[file.py:N]`, a function-boundary marker (`→ enter callee X`), or for non-line code a section/key reference.
@@ -80,7 +80,7 @@ attribute 'strftime'` at runtime.
 - Subclass method hiding a parent method (L1)
 
 ### Go
-- Named return values and `defer` with closures — captured variables evaluated at defer time (L4)
+- Named return values and `defer` — deferred call arguments are evaluated immediately, while deferred closures read captured variables when the closure runs (L4)
 - Nil interface vs nil pointer — an interface holding a nil pointer is not nil (L2)
 - Goroutine closure capturing loop variable — L4 if sequential; L7 if concurrent
 - Error ignored with `_` (L6)
@@ -142,7 +142,7 @@ When a trace crosses more than one function boundary, prefix each step with a ca
 
 Format: `[caller → callee → …:line]`. Omit intermediate frames only if they add no observable state change. The label makes cross-file findings unambiguous and allows a reader to reconstruct the exact call stack without re-reading source.
 
-Depth limit: stop tracing into callees beyond **4 hops** from the entry point. Beyond 4 hops the premises required to maintain accuracy compound faster than the trace gains certainty — downgrade any finding that depends on an inference at hop 5 or deeper to **Suggestion** with `manual verification recommended`.
+Depth limit: stop tracing into callees beyond **4 hops** from the entry point. Beyond 4 hops the premises required to maintain accuracy compound faster than the trace gains certainty. For review/diff/health findings, downgrade any finding that depends on an inference at hop 5 or deeper to **Suggestion** with `manual verification recommended`; for locate, downgrade Fault Confidence according to `common.md` §7.
 
 ---
 

@@ -19,12 +19,10 @@ description: >
 
 ## Setup
 
-Read in this order:
-1. `../_shared/common.md` — language rule, Report Template (Logic Score line is omitted for this mode).
-2. `../_shared/semiformal-guide.md` — full tracing methodology.
-3. `../_shared/semiformal-checklist.md` — Premises Construction Checklist.
-4. `../_shared/report-template.md` — Report layout (English + Chinese).
-5. `logic-explain-guide.md` — explanation process.
+Use lazy loading per `../_shared/common.md` §13:
+1. Read `../_shared/common.md` only for language, report header variants, scope routing, and loading budget.
+2. Read only the relevant step in `logic-explain-guide.md` as you reach it.
+3. Load `../_shared/semiformal-guide.md`, `../_shared/semiformal-checklist.md`, and `../_shared/report-template.md` on demand when the current step needs them.
 
 Note: `logic-risks.md` is intentionally skipped — logic-explain does not produce L-code findings, and Remedy is intentionally out of scope for this mode. If the trace reveals a bug, stop and recommend logic-review or logic-locate. When handing off, do not discard work already done — present the premises established and trace steps completed under a **"Partial trace context (carry into next skill):"** heading so the user can pass them directly to the follow-on skill.
 
@@ -36,7 +34,7 @@ Note: `logic-risks.md` is intentionally skipped — logic-explain does not produ
 
 **Step 2. Build premises** (guide Step 2) — resolve every non-obvious name, state the types of key variables at entry, note global/module state accessed.
 
-**Step 3. Produce step-by-step trace** (guide Step 3) — numbered, interprocedural, active voice; cross function boundaries whenever relevant.
+**Step 3. Produce step-by-step trace** (guide Step 3) — numbered, interprocedural, active voice; cross function boundaries whenever relevant to the user's scenario. Keep the trace scenario-bound; do not branch into alternative paths unless they explain the user's confusion.
 
 **Step 4. Highlight non-obvious behavior** (guide Step 4) — name resolutions, implicit coercions, hidden side effects; the "gotchas" the casual reader would miss.
 

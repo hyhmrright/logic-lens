@@ -21,19 +21,16 @@ description: >
 
 ## Setup
 
-Read in this order:
-1. `../_shared/common.md` — language rule, Iron Law, Report Template, Logic Score (weighted-average variant in §6), Remedy discipline.
-2. `../_shared/logic-risks.md` — L1–L9 definitions.
-3. `../_shared/semiformal-guide.md` — tracing methodology.
-4. `../_shared/semiformal-checklist.md` — Premises Construction Checklist.
-5. `../_shared/report-template.md` — Report layout (English + Chinese).
-6. `logic-health-guide.md` — aggregation process.
+Use lazy loading per `../_shared/common.md` §13:
+1. Read `../_shared/common.md` only for language, Iron Law, Logic Score, scope routing, Remedy discipline, config fields, and loading budget.
+2. Read only the relevant step in `logic-health-guide.md` as you reach it.
+3. Load `../_shared/logic-risks.md`, `../_shared/semiformal-guide.md`, `../_shared/semiformal-checklist.md`, `../_shared/report-template.md`, and `../logic-review/logic-review-guide.md` on demand when the current module trace needs them.
 
 ## Process
 
 **Step 0. Language + scope routing.** Detect language per `common.md` §1. Proceed for multi-file scopes and for single-module scopes when the user explicitly uses "health check", "health overview", or "logic health". If scope is one file and none of those health phrases appear, switch to logic-review.
 
-**Step 1. Enumerate modules and plan the sweep** (guide Step 1) — prioritize public API surfaces, recently changed files, and user-flagged modules. Read `.logic-lens.yaml` for `ignore:` globs.
+**Step 1. Enumerate modules and plan the sweep** (guide Step 1) — prioritize public API surfaces, recently changed files, and user-flagged modules. Read `.logic-lens.yaml` only for `ignore:`, `focus:`, `disable:`, `severity:`, `custom_risks`, and `trace.*` fields. For broad scopes, build a ranked worklist before opening files.
 
 **Step 2. Run focused logic-review per module** (guide Step 2) — apply Premises → Trace → Divergence on public-facing functions; skip internal helpers unless a trace leads into them. Apply the per-module function budget from guide Step 2 (small/medium/large line-count tiers) — do not trace all functions in large modules.
 

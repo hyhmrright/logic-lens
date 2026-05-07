@@ -26,11 +26,12 @@ Method:   Semi-formal execution tracing — Premises → Trace →
 Skills:   logic-health → logic-review → logic-locate → logic-explain
           → logic-diff, iterated until clean.
 
-Token cost: HIGH. Budget roughly 5k–15k tokens per file for a full
-trace (more for deeply interprocedural code, less for stateless
-utilities), times ~1.3 for iteration rounds.
-Your estimate: N files × ~10k tokens × 1.3 ≈ (compute and show
-here, e.g. "~1M tokens").
+Token cost: HIGH. The pipeline uses ranked passes and scope caps, but
+deep tracing still costs roughly 5k–15k tokens per reviewed file
+(more for deeply interprocedural code, less for stateless utilities),
+times ~1.3 for iteration rounds.
+Your estimate: min(N, 100) reviewed files × ~10k tokens × 1.3 ≈
+(compute and show here, e.g. "~1M tokens").
 
 Git impact: The pipeline edits source files. It does NOT commit,
 push, or amend. If you have uncommitted work, commit or stash first.
@@ -62,7 +63,7 @@ Decision (first match wins):
 
 ## Phase 1 — Scope Enumeration
 
-1a. Read `.logic-lens.yaml` (if present): load `ignore`, `custom_risks`, `severity:`, `fix_all.max_iterations`. Apply `ignore` immediately.
+1a. Read `.logic-lens.yaml` (if present): load only `ignore`, `focus`, `disable`, `custom_risks`, `severity:`, `trace.*`, and `fix_all.max_iterations`. Apply `ignore` immediately.
 
 1b. Detect project type from marker files and derive exclusions:
 - `package.json` → exclude `node_modules/`, `dist/`, `build/`, `.next/`, `.nuxt/`, `coverage/`
@@ -105,7 +106,7 @@ Newly added files are already High. Constraint/behavioral-doc files are Medium b
 
 ## Phase 2 — Health Pass (logic-health)
 
-2a. Apply `logic-health/logic-health-guide.md` methodology to the Phase 1 file list. Output: per-module Logic Score, aggregated findings by L-code, systemic patterns.
+2a. Apply `../logic-health/logic-health-guide.md` methodology to the Phase 1 file list, including its module/function budgets. Output: per-module Logic Score, aggregated findings by L-code, systemic patterns.
 
 2b. Record Phase 2 output for reference. Do NOT write remedies yet — health gives shape, not precision. Precise findings come from Phase 3.
 

@@ -22,13 +22,10 @@ description: >
 
 ## Setup
 
-Read in this order:
-1. `../_shared/common.md` — language rule, Iron Law, Report Template, mode header (§5: before/after Logic Scores + findings-fixed / findings-unresolved), Remedy discipline, `.logic-lens.yaml` matrix.
-2. `../_shared/logic-risks.md` — L1–L9 definitions.
-3. `../_shared/semiformal-guide.md` — tracing methodology.
-4. `../_shared/semiformal-checklist.md` — Premises Construction Checklist.
-5. `../_shared/report-template.md` — Report layout (English + Chinese).
-6. `logic-fix-all-guide.md` — phased pipeline. That guide is long because the pipeline has nine phases; read it end-to-end before starting.
+Use phase-gated lazy loading per `../_shared/common.md` §13:
+1. Before consent, read only `../_shared/common.md` for language, scope routing, fix-all header fields, config fields, and loading budget; then read `logic-fix-all-guide.md` through the phase map and `guide-phases-0-2-consent-scope-health.md` through Phase 0.
+2. After consent, read each phase file only when entering that phase.
+3. Load `../_shared/logic-risks.md`, `../_shared/semiformal-guide.md`, `../_shared/semiformal-checklist.md`, `../_shared/report-template.md`, and the other skill guides on demand when that phase invokes their methodology.
 
 ## Process
 

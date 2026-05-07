@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "content_evals": {
+    "path": "evals/content/v2/evals-v2.json",
+    "cases": 104,
+    "modes": {
+      "logic-review": 36,
+      "logic-explain": 12,
+      "logic-diff": 14,
+      "logic-locate": 16,
+      "logic-health": 13,
+      "logic-fix-all": 13
+    }
+  },
+  "trigger_evals": {
+    "path": "evals/trigger/v2/trigger-evals-<skill>.json",
+    "skills": ["review", "explain", "diff", "locate", "health", "fix-all"],
+    "cases_per_skill": 20,
+    "split": "10 positive / 10 negative near-miss"
+  },
+  "published_runs": [
+    {
+      "id": "v0.6.4-haiku-baseline",
+      "kind": "content-eval",
+      "path": "runs/v0.6.4-haiku-baseline.json",
+      "source_iteration_dir": "skills-workspace/iteration-haiku-baseline-full",
+      "model": "claude-haiku-4-5-20251001",
+      "cases_graded": 79,
+      "overall_pass_rate": 0.38734177215189874,
+      "notes": "Baseline run before the SKILL.md rewrite experiment."
+    },
+    {
+      "id": "v0.6.4-haiku-after-skillmd-rewrite",
+      "kind": "content-eval",
+      "path": "runs/v0.6.4-haiku-after-skillmd-rewrite.json",
+      "source_iteration_dir": "skills-workspace/iteration-haiku-after-fix-full",
+      "model": "claude-haiku-4-5-20251001",
+      "cases_graded": 79,
+      "overall_pass_rate": 0.37679324894514765,
+      "notes": "Same suite after the rewrite experiment; pass rate regressed slightly."
+    },
+    {
+      "id": "v0.6.4-sonnet-eval-9-in-session",
+      "kind": "single-case-sanity",
+      "path": "runs/v0.6.4-sonnet-eval-9-in-session.json",
+      "source_iteration_dir": "skills-workspace/iteration-direct-skill-sonnet",
+      "model": "claude-sonnet-4-6",
+      "cases_graded": 1,
+      "overall_pass_rate": 1.0,
+      "notes": "A/B sanity check for in-session skill invocation."
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 ---
-description: Autonomous audit-and-fix — scan the target, fix every logic issue found (all severities), verify each fix, confirm clean. No user involvement required.
+description: Autonomous audit-and-fix — after consent, scan the target, fix every logic issue found (all severities), verify each fix, and report anything unresolved.
 allowed-tools: Skill, Read, Edit, Write, Bash, Glob, Grep
 ---
 

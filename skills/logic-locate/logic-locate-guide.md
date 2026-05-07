@@ -18,6 +18,14 @@ Start from the closest code entry point to the failure:
 
 Do not start from `main()` — start from the function closest to the failure.
 
+Start inside the **failure cone**:
+- Stack trace frames from application code
+- The failing test and fixtures directly setting up the failing state
+- Local callees reached by the failing path
+- Config/env values read by those frames
+
+Do not inspect unrelated modules, alternative endpoints, or neighboring tests unless the backward trace reaches them.
+
 ## Step 3: Trace Backward from the Failure Point
 
 Working from the failure site, trace backward: "Where did this value/state come from?"
@@ -54,6 +62,8 @@ If the backward trace implicates a callee, trace into it:
 - Does the callee mutate shared state affecting the caller's subsequent behavior?
 
 The fault is often not in the function being looked at — it is in a callee that doesn't behave as assumed (L6), or in a name that resolves differently (L1).
+
+Depth budget: follow the concrete failing path first and stop after the root cause is confirmed. If more than four local calls are required, state the remaining call-chain assumption and downgrade Fault Confidence unless a test or stack trace directly confirms the deeper hop.
 
 ## Step 6: Identify the Root Divergence
 

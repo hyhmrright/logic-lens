@@ -18,27 +18,24 @@ description: >
 
 ## Setup
 
-Read in this order:
-1. `../_shared/common.md` — language rule, Iron Law, Report Template, Logic Score, Remedy discipline.
-2. `../_shared/logic-risks.md` — L1–L9 definitions.
-3. `../_shared/semiformal-guide.md` — tracing methodology.
-4. `../_shared/semiformal-checklist.md` — Premises Construction Checklist.
-5. `../_shared/report-template.md` — Report layout (English + Chinese).
-6. `logic-review-guide.md` — step-by-step review process.
+Use lazy loading per `../_shared/common.md` §13:
+1. Read `../_shared/common.md` only for language, Iron Law, Logic Score, scope management, Remedy discipline, config fields, and loading budget.
+2. Read only the relevant step in `logic-review-guide.md` as you reach it.
+3. Load `../_shared/logic-risks.md`, `../_shared/semiformal-guide.md`, `../_shared/semiformal-checklist.md`, and `../_shared/report-template.md` on demand when the current step needs them.
 
 ## Process
 
 **Step 0. Language + scope routing.** Detect the user's language per `common.md` §1; every label and header below must be in that language. Confirm scope is one file or one function — if the user points at a directory, switch to logic-health; if they describe a confirmed failure, switch to logic-locate; if two versions, logic-diff.
 
-**Step 1. Establish claimed behavior** (guide Step 1) — write one sentence describing what the code is supposed to do.
+**Step 1. Establish claimed behavior + review entry points** (guide Step 1) — write one sentence describing what the code is supposed to do, then select the concrete entry function(s) that will be traced. If a file exceeds `common.md` §9 limits, state the selected subset and why.
 
-**Step 2. Build premises** (guide Step 2) — per the Premises Construction Checklist in `semiformal-checklist.md`.
+**Step 2. Build premises** (guide Step 2) — per the Premises Construction Checklist in `semiformal-checklist.md`; include caller/callee contracts when the reviewed function depends on another local function.
 
-**Step 3. Trace normal path** (guide Step 3) — sequential, interprocedural trace; resolve every name; state every type.
+**Step 3. Build the risk path ledger** (guide Step 3) — enumerate candidate bug paths across L1–L9 before writing findings. Do not stop after the happy path.
 
-**Step 4. Trace edge cases** (guide Step 4) — empty/null/zero, max/min, else/catch branches, concurrent calls.
+**Step 4. Deep-trace selected paths** (guide Step 4) — trace the normal path plus the highest-risk edge paths; resolve every name, state every type, cross callee boundaries, and stop each trace at either a confirmed divergence or a confirmed safe post-condition.
 
-**Step 5. Identify divergences** (guide Step 5) — classify each by L1–L9; assign severity; downgrade to Suggestion when trace is unverified.
+**Step 5. Identify divergences** (guide Step 5) — classify each by L1–L9; assign severity; downgrade or discard when reachability or consequence is unverified.
 
 **Step 6. Apply Iron Law** (guide Step 6) — confirm all findings have Premises → Trace → Divergence complete before Remedy is written; Remedy must be paste-ready per `common.md` §10.
 

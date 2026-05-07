@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Run the content eval cases in evals/v2/evals-v2.json against `claude -p`,
+# Run the content eval cases in evals/content/v2/evals-v2.json against `claude -p`,
 # write each output to skills-workspace/iteration-<TAG>/eval-<id>/output.md,
 # then call grade-iteration.py to produce a pass-rate summary.
 #
@@ -11,9 +11,11 @@
 #   without touching the grader.
 #
 # Cost note:
-#   Each case is one `claude -p` invocation. As of v0.6.2 there are 28 cases.
-#   Sonnet 4.6 default cost is roughly $1-2 per full run; Opus is ~5x. Haiku is
-#   ~10x cheaper but fails format-compliance rules — use only for cost experiments.
+#   Each case is one `claude -p` invocation. The current case count is read from
+#   evals/content/v2/evals-v2.json at runtime, with a fallback to the legacy
+#   evals/v2/evals-v2.json path. Sonnet 4.6 default cost scales with that count;
+#   Opus is ~5x. Haiku is ~10x cheaper but fails format-compliance rules — use
+#   only for cost experiments.
 #
 # Usage:
 #   bash scripts/run-content-evals.sh                      # tag = current git short SHA
@@ -34,7 +36,19 @@
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-EVALS_JSON="$REPO_ROOT/evals/v2/evals-v2.json"
+EVALS_JSON=""
+for candidate in \
+  "$REPO_ROOT/evals/content/v2/evals-v2.json" \
+  "$REPO_ROOT/evals/v2/evals-v2.json"; do
+  if [[ -f "$candidate" ]]; then
+    EVALS_JSON="$candidate"
+    break
+  fi
+done
+if [[ -z "$EVALS_JSON" ]]; then
+  echo "error: eval file not found at evals/content/v2/evals-v2.json or evals/v2/evals-v2.json" >&2
+  exit 1
+fi
 # Content evals require semi-formal format compliance (Premises/Trace/Divergence/
 # Fault Confidence labels). Haiku skips structured output and fails ~60% of rules.
 # Set sonnet as content-eval default BEFORE sourcing _defaults.sh so that haiku
@@ -69,7 +83,7 @@ echo "Parallel:   $PARALLEL"
 # bash 3.2 (macOS default) lacks `mapfile`, so use the portable read-loop.
 CASE_IDS=()
 if [[ "${SMOKE:-0}" == "1" ]]; then
-  # Cheapest broad sanity check: one case per mode (~$0.10, ~30s with PARALLEL=6).
+  # Cheapest broad sanity check: one case per mode.
   CASE_IDS=(1 5 6 7 8 9)
 elif [[ -n "${CASES:-}" ]]; then
   read -ra CASE_IDS <<< "$CASES"

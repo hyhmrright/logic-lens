@@ -12,18 +12,27 @@ Decide which modules to cover and in what order:
 
 For large codebases, state what is and is not covered: "This report covers `auth/`, `payments/`, `api/`. `frontend/` and `tests/` are excluded."
 
+**Sweep budget:**
+- Up to 12 modules: inspect every module at the tiered function budget below.
+- 13-40 modules: inspect all Highest/High modules plus enough Medium modules to reach 12 modules total.
+- More than 40 modules: inspect at most 15 modules in the first pass: all user-flagged modules, all recently changed High modules, then the highest-risk remaining modules by control-flow complexity and external-state access.
+
+If the user explicitly asks for exhaustive coverage, split the report into passes and state the current pass number. Do not silently perform a full shallow scan.
+
 ## Step 2: Run Focused Logic Reviews Per Module
 
-For each module, apply the Logic Review process from `logic-review-guide.md` at a higher level of abstraction:
+For each module, apply the Logic Review process from `../logic-review/logic-review-guide.md` at a higher level of abstraction:
 - Focus on public functions and entry-point logic.
 - Trace most likely execution paths; skip internal helpers unless a trace leads into them. "Internal" = Python `_`-prefixed, Java/Kotlin `private`, Go unexported, or absent from public API docs.
 - Spend more time on modules with complex control flow, many callee dependencies, or recent changes.
 - Apply L1–L9 checklist at the module level for systemic patterns.
 
 **Time allocation:**
-- Small module (<200 lines): full trace of all public functions
-- Medium (200–1000 lines): trace public API + any function with multiple callers
-- Large (>1000 lines): trace public API + top 3 highest-risk functions by control flow complexity
+- Small module (<200 lines): full trace of all public functions, capped at 5 non-trivial functions.
+- Medium (200-1000 lines): trace up to 5 functions: public API first, then functions with multiple callers or external-state access.
+- Large (>1000 lines): trace up to 3 highest-risk public/entry functions by control-flow complexity, external-state access, or recent change.
+
+When a module exceeds its budget, list the untraced public functions in the module's Scope note. A skipped helper can still be traced if a selected public path calls into it.
 
 ## Step 3: Record Findings Per Module
 

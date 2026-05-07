@@ -33,16 +33,16 @@ Shared mutable state is read or written in a **single execution context** in an 
 ---
 
 ## L5 — Control Flow Escape
-An early exit (`return`, `raise`/`throw`, `break`, `continue`, unhandled exception) skips a required operation: resource release, state update, commit, notification.
-**Detect:** (1) List all required post-conditions for the function/block: resources released, state updated, cleanup done. (2) Enumerate every exit point including implicit raises from callees. (3) Verify each exit path meets all post-conditions.
-**Symptom:** File opened but closed only on happy path; transaction committed on success but connection leaked on exception; lock acquired but not released on early return.
+An early exit (`return`, `raise`/`throw`, `break`, `continue`, unhandled exception) skips a required non-lifecycle operation: state update, validation, commit marker, audit event, notification, or invariant restoration. For acquire/use/release imbalance, use L8.
+**Detect:** (1) List all required post-conditions for the function/block: state updated, invariant restored, commit marker written, notification emitted. (2) Enumerate every exit point including implicit raises from callees. (3) Verify each exit path meets all non-lifecycle post-conditions. (4) If the skipped operation is a resource release/rollback/unsubscribe/close, classify as L8 instead.
+**Symptom:** Status flag updated only on the happy path; audit event skipped on exception; validation bypassed by an early `return`; `continue` skips a required accumulator update.
 **Common in:** All languages. Especially code refactored to add early returns, or exception handlers that don't mirror the acquisition path.
 
 ---
 
 ## L6 — Callee Contract Mismatch
 Calling code assumes behavioral guarantees (return value semantics, exception behavior, idempotency, side-effect ordering) that the callee does not actually provide.
-**Detect:** (1) For each external call, state what the caller assumes: return value, exceptions, idempotency. (2) Trace into the callee's implementation (or docs) and verify each assumption. (3) Flag: `None`/`null` returns the caller doesn't check; exceptions the caller doesn't catch; side effects the caller relies on but aren't guaranteed.
+**Detect:** (1) For each local or external call, state what the caller assumes: return value, exceptions, idempotency, side effects, ordering. (2) Trace into the callee's implementation when local, or docs when external, and verify each assumption. (3) Flag: `None`/`null` returns the caller doesn't check; exceptions the caller doesn't catch; side effects the caller relies on but aren't guaranteed.
 **Symptom:** `result = get_user(id)` then `result.name` without checking if `get_user` can return `None`; retry calling a non-idempotent function; assuming sort is stable when it isn't.
 **Common in:** All languages. Especially at API boundaries, ORM interactions, third-party integrations.
 
@@ -85,7 +85,7 @@ Projects define custom codes in `.logic-lens.yaml` using `C1`, `C2`, etc. Treat 
 |---------------------|-----|
 | more than one execution context to manifest | **L7**, not L4 |
 | resource lifecycle imbalance (missing/double release, ownership transfer) | **L8**, not L5 |
-| control-flow exit skipping required code in a single sequential path | **L5** |
+| control-flow exit skipping required non-lifecycle code in a single sequential path | **L5** |
 | sequential aliasing or mutation-during-iteration | **L4** |
 | timezone, DST, locale, or encoding to trigger | **L9**, not L2 or L3 |
 | name resolution to a different definition than expected | **L1** |

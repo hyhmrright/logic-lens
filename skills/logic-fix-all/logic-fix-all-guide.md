@@ -31,20 +31,19 @@ This is a **logic** review, not a syntax/style/lint pass.
 | **3, 4, 5** | `guide-phases-3-5-review-locate-clarify.md` — Per-file Premises→Trace→Divergence (Phase 3); conditional fault localization (Phase 4); conditional path clarification (Phase 5). |
 | **6, 7, 8, 9** | `guide-phases-6-9-fix-iterate-report.md` — Fix queue sorted by severity (Phase 6); apply + verify via logic-diff, revert on regression, retry ≤3× (Phase 7); iteration loop with state tracking (Phase 8); Final Fix Report (Phase 9). |
 
-## Required reading before Phase 0
+## Phase-Gated Reading
 
-Read end-to-end before starting. Later phases reference fields defined in earlier phases (Phase 6 reads severity tags from Phase 3; Phase 8 reads the unresolved-finding signature from Phase 7d).
+Do not read the whole pipeline before the user consents.
 
-**Stage A — shared framework (in order):**
-1. `../_shared/common.md`
-2. `../_shared/logic-risks.md`
-3. `../_shared/semiformal-guide.md` + `../_shared/semiformal-checklist.md`
-4. `../_shared/report-template.md`
+**Before Phase 0:**
+- Read `../_shared/common.md` only for language, scope routing, fix-all header fields, config fields, and loading budget.
+- Read this file through the phase map.
+- Read `guide-phases-0-2-consent-scope-health.md` only through Phase 0 so the consent prompt is accurate.
 
-**Stage B — all three phase files end-to-end (BEFORE Phase 0, not just-in-time):**
-- `guide-phases-0-2-consent-scope-health.md`
-- `guide-phases-3-5-review-locate-clarify.md`
-- `guide-phases-6-9-fix-iterate-report.md`
+**After consent:**
+- Read the active phase section when entering that phase.
+- Load shared files and other skill guides only when the current phase invokes that methodology.
+- Keep a small state record with phase, scanned files, findings, fixes, and unresolved signatures so later phases do not require re-reading prior phase text.
 
 ## Running without git
 

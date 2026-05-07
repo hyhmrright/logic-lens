@@ -41,11 +41,13 @@ If both produce the same result, proceed to Step 4. If they diverge, jump to Ste
 
 ## Step 4: Trace Boundary Cases
 
-For each boundary condition, trace Version A and B separately:
+Rank boundary conditions by how likely they are to expose a behavior change, then trace Version A and B separately for the top scenarios:
 - Empty/null/zero inputs (catches L3 divergences)
 - Maximum values (integer overflow in one version but not the other)
 - Error inputs (which version raises, which returns a default?)
 - First and last elements of collections (off-by-one in one version)
+
+Default budget: trace the common case plus at most three boundary scenarios. Expand only when the user asks for exhaustive comparison, the shared specification names more required cases, or a traced path exposes a new boundary that must be confirmed.
 
 ## Step 5: Identify Semantic Divergences
 

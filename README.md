@@ -54,7 +54,7 @@ Logic-Lens evaluates code across **nine logic risk dimensions** — six derived 
 | 📐 **L2** | Type Contract Breach | A function receives a type it can't correctly handle, through implicit coercion or conditional paths |
 | 🔲 **L3** | Boundary Blindspot | Edge cases not traced: null, empty, zero, max/min bounds, single-element sequences |
 | ⚠️ **L4** | State Mutation Hazard | Sequential aliasing or mutation-during-iteration hazards on a single execution path |
-| 🚪 **L5** | Control Flow Escape | An early exit skips a required operation — cleanup, commit, lock release, notification |
+| 🚪 **L5** | Control Flow Escape | An early exit skips required non-lifecycle work — state update, validation, audit event, notification |
 | 🔗 **L6** | Callee Contract Mismatch | Calling code assumes return value semantics, exception behavior, or idempotency the callee doesn't guarantee |
 | 🧵 **L7** | Concurrency / Async Hazard | Race across an `await` / lock / channel boundary; double-acquire; send-after-cancel; missing happens-before |
 | 🔁 **L8** | Resource Lifecycle Hazard | Acquire/release imbalance — missing release path, double release, ownership transferred without updating release plan |
@@ -85,7 +85,7 @@ Logic-Lens produces:
 
 **Logic Health: 31/100**
 
-*This function contains a callee contract mismatch that causes a silent divide-by-zero risk, a boundary blindspot on empty item lists, and a control flow escape that leaks a database connection on email failure.*
+*This function contains a callee contract mismatch that causes a silent divide-by-zero risk, a boundary blindspot on empty item lists, and a resource lifecycle hazard that leaks a database connection on email failure.*
 
 ### 🔴 L6 — Callee Contract Mismatch: `get_discount` May Return `None`
 **Premises:** `coupon_service.get_discount(code)` is assumed to always return a numeric discount rate between 0 and 1.
@@ -99,7 +99,7 @@ Logic-Lens produces:
 **Divergence:** An order with zero items is silently saved as a $0.00 order and a confirmation email is sent. No business rule validates that an order must contain at least one item.
 **Remedy:** Add `if not items: raise ValueError("Order must contain at least one item")` before the sum. This is a business invariant, not an implementation detail.
 
-### 🟡 L5 — Control Flow Escape: Database Connection Not Released on Email Failure
+### 🟡 L8 — Resource Lifecycle Hazard: Database Connection Not Released on Email Failure
 **Premises:** `db.save_order` and `email_service.send_confirmation` are assumed to both succeed.
 **Trace:** `db.save_order(order)` succeeds → connection kept open → `email_service.send_confirmation(...)` raises `SMTPException` → function exits via uncaught exception.
 **Divergence:** The database connection is never explicitly released. Depending on the ORM's connection pooling strategy, this may exhaust the pool under sustained email failure.
@@ -127,7 +127,7 @@ For Gemini CLI and Codex CLI, see [Installation](#installation) below.
 
 ## Six Skills
 
-Logic-Lens ships six skills: **logic-review** (find behavioral bugs via execution tracing), **logic-explain** (trace what code actually does step by step), **logic-diff** (verify two versions are behaviorally equivalent), **logic-locate** (find the root cause of a failing test or crash), **logic-health** (aggregate logic health dashboard across a codebase), and **logic-fix-all** (autonomous audit-and-fix pipeline — scans the target, applies fixes for every finding, verifies each fix, no user involvement required). See [Usage](#usage) for per-skill commands and [Slash Commands](#slash-commands) for platform-specific syntax.
+Logic-Lens ships six skills: **logic-review** (find behavioral bugs via execution tracing), **logic-explain** (trace what code actually does step by step), **logic-diff** (verify two versions are behaviorally equivalent), **logic-locate** (find the root cause of a failing test or crash), **logic-health** (aggregate logic health dashboard across a codebase), and **logic-fix-all** (autonomous audit-and-fix pipeline — after consent, scans the target, applies fixes for every finding, verifies each fix, and reports anything unresolved). See [Usage](#usage) for per-skill commands and [Slash Commands](#slash-commands) for platform-specific syntax.
 
 ---
 
@@ -234,7 +234,7 @@ cp -r /tmp/logic-lens/skills/* ~/.codex/skills/logic-lens/
 | `/logic-lens:logic-diff` | `/logic-diff` | Semantic equivalence check between two versions |
 | `/logic-lens:logic-locate` | `/logic-locate` | Root cause localization for failing tests or crashes |
 | `/logic-lens:logic-health` | `/logic-health` | Aggregate logic health dashboard for a codebase |
-| `/logic-lens:logic-fix-all` | `/logic-fix-all` | Autonomous audit-and-fix pipeline — finds and fixes every logic issue |
+| `/logic-lens:logic-fix-all` | `/logic-fix-all` | Autonomous audit-and-fix pipeline — asks consent, then fixes and verifies logic issues |
 
 > Short-form commands are auto-installed on first session start by the session-start hook (works on macOS, Linux, and Windows via WSL / Git Bash).
 
@@ -246,7 +246,7 @@ cp -r /tmp/logic-lens/skills/* ~/.codex/skills/logic-lens/
 | `/logic-diff` | Semantic equivalence check between two versions |
 | `/logic-locate` | Root cause localization for failing tests or crashes |
 | `/logic-health` | Aggregate logic health dashboard for a codebase |
-| `/logic-fix-all` | Autonomous audit-and-fix pipeline — finds and fixes every logic issue |
+| `/logic-fix-all` | Autonomous audit-and-fix pipeline — asks consent, then fixes and verifies logic issues |
 
 ### Codex CLI
 | Command | Action |
@@ -256,7 +256,9 @@ cp -r /tmp/logic-lens/skills/* ~/.codex/skills/logic-lens/
 | `$logic-diff` | Semantic equivalence check between two versions |
 | `$logic-locate` | Root cause localization for failing tests or crashes |
 | `$logic-health` | Aggregate logic health dashboard for a codebase |
-| `$logic-fix-all` | Autonomous audit-and-fix pipeline — finds and fixes every logic issue |
+| `$logic-fix-all` | Autonomous audit-and-fix pipeline — asks consent, then fixes and verifies logic issues |
+
+Enter these `$logic-*` invocations inside a Codex session; they are not shell commands.
 
 ---
 
@@ -320,7 +322,7 @@ Runs abbreviated logic reviews across a codebase and produces a weighted Logic H
 $logic-fix-all                      # Codex CLI
 ```
 
-Point it at a directory or file. Logic-Lens sweeps the entire scope, collects all findings at every severity level (L1–L9), applies fixes in priority order, verifies each fix with a semantic diff, and re-confirms the codebase is clean — all without requiring you to read or review any code. The final output is a Fix Log table listing every change made and its verification status.
+Point it at a directory or file. Logic-Lens first asks for consent because this mode is token-intensive and edits files. After consent, it sweeps the scope, collects findings at every severity level (L1–L9), applies fixes in priority order, verifies each fix with a semantic diff, and re-confirms the codebase is clean unless it reaches the configured iteration cap or a design decision is required. The final output is a Fix Log table listing every change made and its verification status.
 
 ---
 
@@ -410,9 +412,9 @@ logic-lens/
 ├── commands/                     # Short-form command wrappers (auto-installed by hook)
 ├── hooks/                        # Session-start hook
 ├── evals/
-│   └── v2/
-│       ├── evals-v2.json         # Content eval cases (28 across all 6 modes)
-│       └── trigger-evals-*.json  # Per-skill trigger eval sets (6 × 20 cases)
+│   ├── content/v2/evals-v2.json  # Content eval cases (current benchmark suite)
+│   └── trigger/v2/trigger-evals-*.json  # Per-skill trigger eval sets (6 × 20 cases)
+├── benchmarks/runs/              # Frozen published benchmark summaries
 ├── scripts/                      # Dev utilities (validate, run-content-evals, grade-iteration)
 └── CONTRIBUTING.md
 ```
@@ -426,7 +428,7 @@ AI-assisted development is making codebases grow faster than human review capaci
 > *"The bearing of a child takes nine months, no matter how many women are assigned."*
 > — Frederick Brooks, *The Mythical Man-Month* (1975)
 
-Adding AI reviewers doesn't fix the problem if they make the same reasoning errors as human reviewers: pattern-matching on surface appearance, anchoring on the happy path, skipping the trace when the code "looks fine." Logic-Lens addresses this at the methodology level — not by prompting the AI to "be more careful," but by structuring the reasoning process so it cannot skip the step where bugs hide.
+Adding AI reviewers doesn't fix the problem if they make the same reasoning errors as human reviewers: pattern-matching on surface appearance, anchoring on the happy path, skipping the trace when the code "looks fine." Logic-Lens addresses this at the methodology level — not by prompting the AI to "be more careful," but by structuring the reasoning process so it cannot skip the step where bugs hide. Published benchmark summaries live in `benchmarks/runs/`.
 
 ---
 
