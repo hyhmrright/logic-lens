@@ -19,13 +19,10 @@ description: >
 
 ## Setup
 
-Read in this order:
-1. `../_shared/common.md` — language rule, Iron Law, Report Template, Fault Confidence rubric (see §5 and §7), Remedy discipline.
-2. `../_shared/logic-risks.md` — L1–L9 definitions (the root fault maps to one).
-3. `../_shared/semiformal-guide.md` — tracing methodology and interprocedural reasoning.
-4. `../_shared/semiformal-checklist.md` — Premises Construction Checklist.
-5. `../_shared/report-template.md` — Report layout (English + Chinese).
-6. `logic-locate-guide.md` — fault-localization process.
+Use lazy loading per `../_shared/common.md` §13:
+1. Read `../_shared/common.md` only for language, Iron Law, Fault Confidence, scope routing, Remedy discipline, config fields, and loading budget.
+2. Read only the relevant step in `logic-locate-guide.md` as you reach it.
+3. Load `../_shared/logic-risks.md`, `../_shared/semiformal-guide.md`, `../_shared/semiformal-checklist.md`, and `../_shared/report-template.md` on demand when the current step needs them.
 
 ## Process
 
@@ -33,7 +30,7 @@ Read in this order:
 
 **Step 1. Understand the failure** (guide Step 1) — observed behavior, expected behavior, reproduction path.
 
-**Step 2. Identify the entry point** (guide Step 2) — failing test, outermost application frame, or request handler — whichever is closest to the failure.
+**Step 2. Identify the entry point** (guide Step 2) — failing test, outermost application frame, or request handler — whichever is closest to the failure. Stay inside the failure cone first: stack frames, failing test fixture, directly called local functions, and config/env values read on that path. Do not scan unrelated modules unless the trace crosses into them.
 
 **Step 3. Trace backward from the failure point** (guide Step 3) — walk each value and state back to its origin, building premises at every hop.
 

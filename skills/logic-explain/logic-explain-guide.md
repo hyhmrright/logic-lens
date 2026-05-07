@@ -32,6 +32,8 @@ Write as a numbered sequence. Goal: a reader who has never seen this code can fo
 - Surprising behavior: go deep into the surprising part, even into library code.
 - Debugging: trace until the unexpected behavior, then explain exactly why it occurs.
 
+Scenario budget: stay on the single input scenario. Mention untaken branches only when they explain why the current path behaves differently than the user expects; do not trace full alternatives.
+
 ## Step 4: Highlight Non-Obvious Behavior
 
 After the trace, explicitly call out anything a reader might not expect:

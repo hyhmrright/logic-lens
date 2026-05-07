@@ -38,7 +38,7 @@ Apply fixes one finding at a time. After each fix: record file path, line range 
 
 7b. When a remedy requires choosing between approaches, match the surrounding code's existing convention (read nearest callers and peer functions). When no convention is discoverable, default to the more defensive option (raise/reject/fail fast).
 
-7c. Apply `logic-diff/logic-diff-guide.md` between pre-fix and post-fix versions. For independent files, verify in parallel; for same-file or cross-dependent fixes, verify one at a time.
+7c. Apply `../logic-diff/logic-diff-guide.md` between pre-fix and post-fix versions. For independent files, verify in parallel; for same-file or cross-dependent fixes, verify one at a time.
 
 **Hard verification gate** before declaring a fix as "pass":
 ```bash

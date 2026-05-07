@@ -42,7 +42,7 @@ logic-lens/
 - `description` must include a "Do NOT trigger for:" clause.
 - `description` should be explicit about trigger phrases — err on the side of triggering.
 - Process section: 5–7 numbered items; each item cites a step in the guide file.
-- Setup section: two fixed parts — (1) read shared files (`common.md`, `logic-risks.md` if the skill produces L-code findings, `semiformal-guide.md` + `semiformal-checklist.md`, and `report-template.md` for skills that emit reports); (2) read the skill's own `*-guide.md`. Do not reorder or omit unless there is a documented reason (e.g., `logic-explain` omits `logic-risks.md` because it produces no L-code findings).
+- Setup section: follow lazy loading from `skills/_shared/common.md` §13. Read only the relevant `common.md` sections and the active guide step upfront; load `logic-risks.md`, `semiformal-guide.md`, `semiformal-checklist.md`, `report-template.md`, and later guide sections on demand. Document any required eager read explicitly.
 
 ### Guide Files
 - Numbered steps (Step 1, Step 2, ...).

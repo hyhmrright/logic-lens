@@ -209,3 +209,22 @@ custom_risks:
     description: "Messages encoded with one protocol version are decoded with another"
     severity: critical   # one of: critical | warning | suggestion
 ```
+
+---
+
+## 13. Loading and Scan Budget
+
+Do not bulk-load the whole framework unless the current step needs it.
+
+**Required upfront for every skill:**
+- `common.md` sections relevant to routing, language, output header, confidence/score, scope, and remedy.
+- The skill's own `SKILL.md`.
+
+**Load on demand:**
+- `logic-risks.md` only when selecting, classifying, or explaining an L-code.
+- `semiformal-guide.md` only for trace mechanics, thresholds, call-chain labels, or interprocedural depth questions.
+- `semiformal-checklist.md` only while constructing premises.
+- `report-template.md` only immediately before rendering the final report.
+- The skill guide section for the active step; avoid reading later guide sections until that step starts.
+
+**Scan budget rule:** prefer complete traces over broad shallow scans. If scope is large, first build a ranked worklist, then trace only the highest-risk slice and state the uncovered remainder in `Scope`. Expand only when the user asks for exhaustive coverage or the current trace requires it.

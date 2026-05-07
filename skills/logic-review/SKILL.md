@@ -18,13 +18,10 @@ description: >
 
 ## Setup
 
-Read in this order:
-1. `../_shared/common.md` — language rule, Iron Law, Report Template, Logic Score, Remedy discipline.
-2. `../_shared/logic-risks.md` — L1–L9 definitions.
-3. `../_shared/semiformal-guide.md` — tracing methodology.
-4. `../_shared/semiformal-checklist.md` — Premises Construction Checklist.
-5. `../_shared/report-template.md` — Report layout (English + Chinese).
-6. `logic-review-guide.md` — step-by-step review process.
+Use lazy loading per `../_shared/common.md` §13:
+1. Read `../_shared/common.md` only for language, Iron Law, Logic Score, scope management, Remedy discipline, config fields, and loading budget.
+2. Read only the relevant step in `logic-review-guide.md` as you reach it.
+3. Load `../_shared/logic-risks.md`, `../_shared/semiformal-guide.md`, `../_shared/semiformal-checklist.md`, and `../_shared/report-template.md` on demand when the current step needs them.
 
 ## Process
 
