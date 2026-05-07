@@ -127,7 +127,7 @@ For Gemini CLI and Codex CLI, see [Installation](#installation) below.
 
 ## Six Skills
 
-Logic-Lens ships six skills: **logic-review** (find behavioral bugs via execution tracing), **logic-explain** (trace what code actually does step by step), **logic-diff** (verify two versions are behaviorally equivalent), **logic-locate** (find the root cause of a failing test or crash), **logic-health** (aggregate logic health dashboard across a codebase), and **logic-fix-all** (autonomous audit-and-fix pipeline — scans the target, applies fixes for every finding, verifies each fix, no user involvement required). See [Usage](#usage) for per-skill commands and [Slash Commands](#slash-commands) for platform-specific syntax.
+Logic-Lens ships six skills: **logic-review** (find behavioral bugs via execution tracing), **logic-explain** (trace what code actually does step by step), **logic-diff** (verify two versions are behaviorally equivalent), **logic-locate** (find the root cause of a failing test or crash), **logic-health** (aggregate logic health dashboard across a codebase), and **logic-fix-all** (autonomous audit-and-fix pipeline — after consent, scans the target, applies fixes for every finding, verifies each fix, and reports anything unresolved). See [Usage](#usage) for per-skill commands and [Slash Commands](#slash-commands) for platform-specific syntax.
 
 ---
 
@@ -234,7 +234,7 @@ cp -r /tmp/logic-lens/skills/* ~/.codex/skills/logic-lens/
 | `/logic-lens:logic-diff` | `/logic-diff` | Semantic equivalence check between two versions |
 | `/logic-lens:logic-locate` | `/logic-locate` | Root cause localization for failing tests or crashes |
 | `/logic-lens:logic-health` | `/logic-health` | Aggregate logic health dashboard for a codebase |
-| `/logic-lens:logic-fix-all` | `/logic-fix-all` | Autonomous audit-and-fix pipeline — finds and fixes every logic issue |
+| `/logic-lens:logic-fix-all` | `/logic-fix-all` | Autonomous audit-and-fix pipeline — asks consent, then fixes and verifies logic issues |
 
 > Short-form commands are auto-installed on first session start by the session-start hook (works on macOS, Linux, and Windows via WSL / Git Bash).
 
@@ -246,7 +246,7 @@ cp -r /tmp/logic-lens/skills/* ~/.codex/skills/logic-lens/
 | `/logic-diff` | Semantic equivalence check between two versions |
 | `/logic-locate` | Root cause localization for failing tests or crashes |
 | `/logic-health` | Aggregate logic health dashboard for a codebase |
-| `/logic-fix-all` | Autonomous audit-and-fix pipeline — finds and fixes every logic issue |
+| `/logic-fix-all` | Autonomous audit-and-fix pipeline — asks consent, then fixes and verifies logic issues |
 
 ### Codex CLI
 | Command | Action |
@@ -256,7 +256,9 @@ cp -r /tmp/logic-lens/skills/* ~/.codex/skills/logic-lens/
 | `$logic-diff` | Semantic equivalence check between two versions |
 | `$logic-locate` | Root cause localization for failing tests or crashes |
 | `$logic-health` | Aggregate logic health dashboard for a codebase |
-| `$logic-fix-all` | Autonomous audit-and-fix pipeline — finds and fixes every logic issue |
+| `$logic-fix-all` | Autonomous audit-and-fix pipeline — asks consent, then fixes and verifies logic issues |
+
+Enter these `$logic-*` invocations inside a Codex session; they are not shell commands.
 
 ---
 
@@ -320,7 +322,7 @@ Runs abbreviated logic reviews across a codebase and produces a weighted Logic H
 $logic-fix-all                      # Codex CLI
 ```
 
-Point it at a directory or file. Logic-Lens sweeps the entire scope, collects all findings at every severity level (L1–L9), applies fixes in priority order, verifies each fix with a semantic diff, and re-confirms the codebase is clean — all without requiring you to read or review any code. The final output is a Fix Log table listing every change made and its verification status.
+Point it at a directory or file. Logic-Lens first asks for consent because this mode is token-intensive and edits files. After consent, it sweeps the scope, collects findings at every severity level (L1–L9), applies fixes in priority order, verifies each fix with a semantic diff, and re-confirms the codebase is clean unless it reaches the configured iteration cap or a design decision is required. The final output is a Fix Log table listing every change made and its verification status.
 
 ---
 

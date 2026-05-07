@@ -30,8 +30,14 @@ set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SKILL_CREATOR_PATH="${SKILL_CREATOR_PATH:-$HOME/.claude/plugins/marketplaces/anthropic-agent-skills/skills/skill-creator}"
 MAX_ITERATIONS="${MAX_ITERATIONS:-5}"
+REPORT="${REPORT:-none}"
 # shellcheck source=_defaults.sh
 source "$(dirname "${BASH_SOURCE[0]}")/_defaults.sh"
+
+if ! [[ "$MAX_ITERATIONS" =~ ^[1-9][0-9]*$ ]]; then
+  echo "ERROR: MAX_ITERATIONS must be a positive integer (got '$MAX_ITERATIONS')." >&2
+  exit 1
+fi
 
 if [[ ! -f "$SKILL_CREATOR_PATH/scripts/run_loop.py" ]]; then
   echo "ERROR: skill-creator run_loop.py not found at $SKILL_CREATOR_PATH/scripts/run_loop.py" >&2
@@ -48,11 +54,13 @@ run_skill() {
     return 0
   fi
   echo "=== logic-${skill} trigger optimization ==="
+  PYTHONPATH="$SKILL_CREATOR_PATH${PYTHONPATH:+:$PYTHONPATH}" \
   python3 "$SKILL_CREATOR_PATH/scripts/run_loop.py" \
     --eval-set "$eval_file" \
     --skill-path "$skill_path" \
     --model "$MODEL" \
     --max-iterations "$MAX_ITERATIONS" \
+    --report "$REPORT" \
     --verbose
   echo
 }

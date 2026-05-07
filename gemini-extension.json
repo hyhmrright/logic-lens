@@ -68,7 +68,7 @@
       },
       {
         "id": "logic-fix-all",
-        "description": "Autonomous audit-and-fix pipeline: finds all logic bugs and fixes them with consent checkpoints",
+        "description": "Autonomous audit-and-fix pipeline: after consent, finds logic bugs, applies fixes, verifies them, and reports unresolved items",
         "path": "commands/logic-fix-all.md"
       }
     ]
