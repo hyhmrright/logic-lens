@@ -31,6 +31,7 @@ For every non-trivial identifier in a function call, attribute access, or expres
 - Is that initialization guaranteed? By whom? Under what conditions might it be absent?
 - For mutable state: what was the prior value, and does this code depend on a specific prior state?
 - For external state (DB, file, network, lock, transaction): is it acquired and in the assumed state?
+- For resource ownership: who must release/rollback/close/unsubscribe, and does ownership transfer to another caller or object?
 
 ---
 
@@ -38,8 +39,8 @@ For every non-trivial identifier in a function call, attribute access, or expres
 
 - **Conditional branches.** For each `if`/`switch`/pattern match: which branch executes for the relevant inputs? Is it provably reachable?
 - **Loops.** How many iterations? What terminates it? Can it run zero times? Unboundedly?
-- **Early exits.** Are there `return`/`raise`/`throw`/`break`/`continue`/unhandled-exception escapes the caller might not anticipate? (L5)
-- **Async ordering.** For async/concurrent code: which `await`/`yield`/channel-send is the happens-before boundary the rest of the trace depends on?
+- **Early exits.** Are there `return`/`raise`/`throw`/`break`/`continue`/unhandled-exception escapes the caller might not anticipate? Do they skip non-lifecycle post-conditions (L5) or resource lifecycle obligations (L8)?
+- **Async ordering.** For async/concurrent code: which `await`/`yield`/channel-send/callback/task-spawn is the happens-before boundary the rest of the trace depends on?
 
 ---
 

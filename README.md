@@ -54,7 +54,7 @@ Logic-Lens evaluates code across **nine logic risk dimensions** — six derived 
 | 📐 **L2** | Type Contract Breach | A function receives a type it can't correctly handle, through implicit coercion or conditional paths |
 | 🔲 **L3** | Boundary Blindspot | Edge cases not traced: null, empty, zero, max/min bounds, single-element sequences |
 | ⚠️ **L4** | State Mutation Hazard | Sequential aliasing or mutation-during-iteration hazards on a single execution path |
-| 🚪 **L5** | Control Flow Escape | An early exit skips a required operation — cleanup, commit, lock release, notification |
+| 🚪 **L5** | Control Flow Escape | An early exit skips required non-lifecycle work — state update, validation, audit event, notification |
 | 🔗 **L6** | Callee Contract Mismatch | Calling code assumes return value semantics, exception behavior, or idempotency the callee doesn't guarantee |
 | 🧵 **L7** | Concurrency / Async Hazard | Race across an `await` / lock / channel boundary; double-acquire; send-after-cancel; missing happens-before |
 | 🔁 **L8** | Resource Lifecycle Hazard | Acquire/release imbalance — missing release path, double release, ownership transferred without updating release plan |
@@ -85,7 +85,7 @@ Logic-Lens produces:
 
 **Logic Health: 31/100**
 
-*This function contains a callee contract mismatch that causes a silent divide-by-zero risk, a boundary blindspot on empty item lists, and a control flow escape that leaks a database connection on email failure.*
+*This function contains a callee contract mismatch that causes a silent divide-by-zero risk, a boundary blindspot on empty item lists, and a resource lifecycle hazard that leaks a database connection on email failure.*
 
 ### 🔴 L6 — Callee Contract Mismatch: `get_discount` May Return `None`
 **Premises:** `coupon_service.get_discount(code)` is assumed to always return a numeric discount rate between 0 and 1.
@@ -99,7 +99,7 @@ Logic-Lens produces:
 **Divergence:** An order with zero items is silently saved as a $0.00 order and a confirmation email is sent. No business rule validates that an order must contain at least one item.
 **Remedy:** Add `if not items: raise ValueError("Order must contain at least one item")` before the sum. This is a business invariant, not an implementation detail.
 
-### 🟡 L5 — Control Flow Escape: Database Connection Not Released on Email Failure
+### 🟡 L8 — Resource Lifecycle Hazard: Database Connection Not Released on Email Failure
 **Premises:** `db.save_order` and `email_service.send_confirmation` are assumed to both succeed.
 **Trace:** `db.save_order(order)` succeeds → connection kept open → `email_service.send_confirmation(...)` raises `SMTPException` → function exits via uncaught exception.
 **Divergence:** The database connection is never explicitly released. Depending on the ORM's connection pooling strategy, this may exhaust the pool under sustained email failure.
