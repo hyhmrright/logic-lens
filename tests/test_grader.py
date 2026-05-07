@@ -27,6 +27,7 @@ _case204_not_ready_leak = _mod._case204_not_ready_leak
 _case208_both_skip_paths = _mod._case208_both_skip_paths
 _CASE_EXTRA_RULES = _mod._CASE_EXTRA_RULES
 EVALS_BY_ID = _mod.EVALS_BY_ID
+rules_for_case = _mod.rules_for_case
 
 
 class TestCountChinese(unittest.TestCase):
@@ -142,7 +143,7 @@ class TestGradeCaseEdgeCases(unittest.TestCase):
         # logic-explain mode should not require four-field labels
         explain_cases = [cid for cid, c in EVALS_BY_ID.items() if c["mode"] == "logic-explain"]
         if not explain_cases:
-            self.skipTest("no logic-explain cases in evals-v2.json")
+            self.skipTest("no logic-explain cases in evals/content/v2/evals-v2.json")
         cid = explain_cases[0]
         with tempfile.TemporaryDirectory() as tmpdir:
             output = Path(tmpdir) / "output.md"
@@ -214,6 +215,23 @@ class TestCaseRulesCompleteness(unittest.TestCase):
                     pred("")  # must not raise on empty string
                 except Exception as e:
                     self.fail(f"case {case_id} predicate '{desc}' raised on empty string: {e}")
+
+    def test_every_eval_case_has_executable_rules(self):
+        for case_id, case in EVALS_BY_ID.items():
+            rules = rules_for_case(case)
+            self.assertGreater(
+                len(rules), 0,
+                f"case {case_id} ({case['name']}) has no executable grading rules",
+            )
+
+    def test_every_eval_case_has_case_specific_rules(self):
+        # Universal format/language rules are not enough to evaluate semantic quality.
+        missing = [
+            f"{case_id} ({case['name']})"
+            for case_id, case in EVALS_BY_ID.items()
+            if not _CASE_EXTRA_RULES.get(case_id)
+        ]
+        self.assertEqual(missing, [], "cases missing case-specific rules: " + ", ".join(missing))
 
 
 if __name__ == "__main__":

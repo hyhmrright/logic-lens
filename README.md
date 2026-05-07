@@ -412,9 +412,9 @@ logic-lens/
 ├── commands/                     # Short-form command wrappers (auto-installed by hook)
 ├── hooks/                        # Session-start hook
 ├── evals/
-│   └── v2/
-│       ├── evals-v2.json         # Content eval cases (28 across all 6 modes)
-│       └── trigger-evals-*.json  # Per-skill trigger eval sets (6 × 20 cases)
+│   ├── content/v2/evals-v2.json  # Content eval cases (current benchmark suite)
+│   └── trigger/v2/trigger-evals-*.json  # Per-skill trigger eval sets (6 × 20 cases)
+├── benchmarks/runs/              # Frozen published benchmark summaries
 ├── scripts/                      # Dev utilities (validate, run-content-evals, grade-iteration)
 └── CONTRIBUTING.md
 ```
@@ -428,7 +428,7 @@ AI-assisted development is making codebases grow faster than human review capaci
 > *"The bearing of a child takes nine months, no matter how many women are assigned."*
 > — Frederick Brooks, *The Mythical Man-Month* (1975)
 
-Adding AI reviewers doesn't fix the problem if they make the same reasoning errors as human reviewers: pattern-matching on surface appearance, anchoring on the happy path, skipping the trace when the code "looks fine." Logic-Lens addresses this at the methodology level — not by prompting the AI to "be more careful," but by structuring the reasoning process so it cannot skip the step where bugs hide.
+Adding AI reviewers doesn't fix the problem if they make the same reasoning errors as human reviewers: pattern-matching on surface appearance, anchoring on the happy path, skipping the trace when the code "looks fine." Logic-Lens addresses this at the methodology level — not by prompting the AI to "be more careful," but by structuring the reasoning process so it cannot skip the step where bugs hide. Published benchmark summaries live in `benchmarks/runs/`.
 
 ---
 

@@ -21,7 +21,7 @@ End-to-end content-eval pipeline. Pairs with `grade-iteration.py` (the rule-base
 The split is intentional — `run-content-evals.sh` is the **runner** (calls Claude, costs tokens, needs the `claude` CLI on PATH); `grade-iteration.py` is the **grader** (pure Python, regex-based, free, can be re-run on existing outputs without re-spending tokens).
 
 ```bash
-# Run all 28 cases against Sonnet 4.6 (default), tag from current git SHA:
+# Run all content eval cases against Sonnet 4.6 (default), tag from current git SHA:
 npm run content-evals       # or: bash scripts/run-content-evals.sh
 
 # Re-run with a custom tag:
@@ -53,7 +53,7 @@ The runner is idempotent — if `output.md` already exists for a case, it skips 
 
 ## `run-trigger-evals.sh`
 
-Drives skill-creator's `run_loop.py` against the six per-skill trigger eval sets in `evals/v2/trigger-evals-<skill>.json` to tune each `SKILL.md` description for higher trigger accuracy. Requires:
+Drives skill-creator's `run_loop.py` against the six per-skill trigger eval sets in `evals/trigger/v2/trigger-evals-<skill>.json` to tune each `SKILL.md` description for higher trigger accuracy. Requires:
 
 - `claude` CLI on PATH
 - the skill-creator plugin (default path `~/.claude/plugins/marketplaces/anthropic-agent-skills/skills/skill-creator`; override via `SKILL_CREATOR_PATH`)
@@ -73,8 +73,8 @@ MAX_ITERATIONS=3 MODEL=claude-opus-4-7 bash scripts/run-trigger-evals.sh review
 REPORT=auto bash scripts/run-trigger-evals.sh review
 ```
 
-Default model is **`claude-sonnet-4-6`** for content-evals (semi-formal format compliance requires it; haiku skips structured output and fails ~60% of rules) and **`claude-haiku-4-5`** for trigger-evals (simple classification, ~$0.01/run). Override either with `MODEL=<id>`.
+Default model is **`claude-sonnet-4-6`** for content-evals (semi-formal format compliance requires it; haiku skips structured output and fails ~60% of rules) and **`claude-haiku-4-5`** for trigger-evals (simple classification, lower-cost). Override either with `MODEL=<id>`.
 
 Each run emits a JSON result with `best_description` selected by held-out test score. Copy it into the corresponding `skills/logic-<skill>/SKILL.md` frontmatter `description:` field to apply. `MAX_ITERATIONS` must be a positive integer. `REPORT` defaults to `none` so the script works in headless CI and Codex sessions; set `REPORT=auto` to use skill-creator's live browser report.
 
-The trigger eval JSON files (20 cases per skill, 10 positive + 10 negative near-miss) live in `evals/v2/trigger-evals-*.json` and were designed to cover scope-routing boundaries (single file → review / directory → health / confirmed failure → locate / two versions → diff / repo-wide → fix-all) and language-specific phrasings.
+The trigger eval JSON files (20 cases per skill, 10 positive + 10 negative near-miss) live in `evals/trigger/v2/trigger-evals-*.json` and were designed to cover scope-routing boundaries (single file → review / directory → health / confirmed failure → locate / two versions → diff / repo-wide → fix-all) and language-specific phrasings.

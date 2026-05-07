@@ -29,8 +29,10 @@ logic-lens/
 ├── hooks/
 │   ├── hooks.json                 ← Claude Code hook registration (uses ${CLAUDE_PLUGIN_ROOT} — portable across platforms)
 │   └── session-start              ← Copies commands/ to ~/.claude/commands/ on session start
-├── evals/v2/evals-v2.json         ← Benchmark test cases (current)
+├── evals/content/v2/evals-v2.json  ← Content benchmark test cases (current)
+├── evals/trigger/v2/               ← Trigger benchmark suites (per skill)
 ├── evals/v1/                      ← Legacy v1 cases (archived for reference)
+├── benchmarks/runs/               ← Frozen published benchmark summaries
 ├── CONTRIBUTING.md                ← Contribution ground rules and versioning policy
 └── AGENTS.md / GEMINI.md          ← Companion guides for Codex and Gemini CLI users
 ```
@@ -81,8 +83,8 @@ See `skills/_shared/common.md` — Iron Law section. That is the canonical defin
 
 ```bash
 npm run validate       # Validate repo structure and metadata consistency (scripts/validate-repo.sh)
-npm run trigger-evals  # Run trigger-eval suites under evals/v2/ (scripts/run-trigger-evals.sh)
-npm run content-evals  # Run evals-v2.json end-to-end through claude -p + grade (scripts/run-content-evals.sh) — costs API tokens
+npm run trigger-evals  # Run trigger-eval suites under evals/trigger/v2/ (scripts/run-trigger-evals.sh)
+npm run content-evals  # Run evals/content/v2/evals-v2.json end-to-end through claude -p + grade (scripts/run-content-evals.sh) — costs API tokens
 ```
 
 Manual one-liners that don't require the scripts:
@@ -130,4 +132,4 @@ The session-start hook copies these from `commands/` to `~/.claude/commands/` au
 4. No change needed in `gemini-extension.json` — Gemini CLI discovers skills from the `skills/` directory automatically.
 5. No change needed in `.codex-plugin/plugin.json` — it points at `skills/` directory and auto-discovers subfolders.
 6. Add the skill name to the `for skill in ...` loop in `hooks/session-start` (search for `for skill in` to find the line).
-7. Add 3–5 eval cases to `evals/v2/evals-v2.json` (or to the appropriate `evals/v2/trigger-evals-*.json` file if the new skill needs trigger evals).
+7. Add 3–5 eval cases to `evals/content/v2/evals-v2.json` (or to the appropriate `evals/trigger/v2/trigger-evals-*.json` file if the new skill needs trigger evals).

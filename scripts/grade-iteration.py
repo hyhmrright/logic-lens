@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Grade iteration-N outputs against the assertion rules in evals-v2.json.
+Grade iteration-N outputs against the assertion rules in evals/content/v2/evals-v2.json.
 
 Usage:
   python3 scripts/grade-iteration.py skills-workspace/iteration-2
@@ -18,7 +18,18 @@ from pathlib import Path
 from typing import Callable
 
 REPO = Path(__file__).resolve().parent.parent
-EVALS = json.load((REPO / "evals/v2/evals-v2.json").open())["evals"]
+_EVALS_CANDIDATES = [
+    REPO / "evals/content/v2/evals-v2.json",
+    REPO / "evals/v2/evals-v2.json",
+]
+for _evals_path in _EVALS_CANDIDATES:
+    if _evals_path.exists():
+        EVALS_SOURCE = _evals_path
+        break
+else:
+    raise FileNotFoundError("could not find evals-v2.json in evals/content/v2 or evals/v2")
+
+EVALS = json.load(EVALS_SOURCE.open())["evals"]
 EVALS_BY_ID = {e["id"]: e for e in EVALS}
 
 CJK = re.compile(r'[一-鿿]')
@@ -195,6 +206,33 @@ _BOTH_VERSIONS_RULE: tuple[str, Callable[[str], bool]] = (
 _DIVERGENT_RULE: tuple[str, Callable[[str], bool]] = (
     "gives Semantically Divergent verdict",
     lambda t: re.search(r'Semantically Divergent|语义分歧|语义.*不等价', t) is not None,
+)
+
+
+# ── Common assertion helpers ──────────────────────────────────────────────────
+
+def _has_logic_score(t: str) -> bool:
+    return re.search(r'Logic Score|逻辑评分', t, re.I) is not None
+
+
+def _has_before_after_scores(t: str) -> bool:
+    return (
+        re.search(r'Logic Score\s*\(before\)|before[:\s]+[0-9]+|改前|修复前', t, re.I) is not None and
+        re.search(r'Logic Score\s*\(after\)|after[:\s]+[0-9]+|改后|修复后', t, re.I) is not None
+    )
+
+
+def _score_improved(t: str) -> bool:
+    return _case227_score_improved(t)
+
+
+_LOGIC_SCORE_RULE: tuple[str, Callable[[str], bool]] = (
+    "has Logic Score", _has_logic_score,
+)
+
+
+_BEFORE_AFTER_SCORE_RULE: tuple[str, Callable[[str], bool]] = (
+    "has before and after Logic Score", _has_before_after_scores,
 )
 
 
@@ -612,6 +650,206 @@ _CASE_EXTRA_RULES: dict[int, list[tuple[str, Callable[[str], bool]]]] = {
             t, re.I) is not None),
         ("score improved after fixes", _case227_score_improved),
     ],
+
+    # ── v0.6.4: additional language coverage cases ───────────────────────────
+    228: [
+        ("identifies L1", lambda t: "L1" in t),
+        ("identifies Ruby constant lookup shadowing stdlib Logger", lambda t: re.search(
+            r'constant.*lookup|Payment::Logger|::Logger|stdlib.*Logger|Logger.*shadow', t, re.I) is not None),
+        ("identifies missing info method / NoMethodError", lambda t: re.search(
+            r'NoMethodError|undefined method.*info|\.info.*(?:missing|not.*defined)', t, re.I) is not None),
+        ("recommends qualified top-level Logger or rename", lambda t: re.search(
+            r'::Logger|top[- ]level.*Logger|rename.*Logger|qualif.*Logger', t, re.I) is not None),
+    ],
+    229: [
+        ("identifies L7", lambda t: "L7" in t),
+        ("identifies non-atomic read-modify-write", lambda t: re.search(
+            r'non.?atomic|read.?modify.?write|lost update|activeRequests\+\+|activeRequests--', t, re.I) is not None),
+        ("connects Dispatchers.Default to real concurrency", lambda t: re.search(
+            r'Dispatchers\.Default|thread pool|multiple coroutines|并发|coroutines.*concurrent', t, re.I) is not None),
+        ("recommends AtomicInteger or Mutex", lambda t: re.search(
+            r'AtomicInteger|incrementAndGet|decrementAndGet|Mutex', t, re.I) is not None),
+    ],
+    230: [
+        ("identifies L8", lambda t: "L8" in t),
+        ("identifies exception path skips fclose", lambda t: re.search(
+            r'fclose|InvalidArgumentException|throw.*(?:skip|before|without).*close|exception.*(?:skip|bypass|without).*fclose',
+            t, re.I | re.S) is not None),
+        ("connects leak to file descriptor exhaustion", lambda t: re.search(
+            r'file descriptor|fd|OS limit|too many open files|descriptor.*exhaust|句柄', t, re.I) is not None),
+        ("recommends try/finally or managed file object", lambda t: re.search(
+            r'try.*finally|finally.*fclose|SplFileObject|generator.*lifecycle', t, re.I | re.S) is not None),
+    ],
+    231: [
+        ("identifies L3", lambda t: "L3" in t),
+        ("identifies size_t unsigned underflow", lambda t: re.search(
+            r'size_t|unsigned.*underflow|underflow.*unsigned|wrap.*(?:SIZE_MAX|max)', t, re.I) is not None),
+        ("identifies i >= 0 is always true for unsigned", lambda t: re.search(
+            r'i\s*>=\s*0|always true|unsigned.*(?:cannot|never).*negative', t, re.I) is not None),
+        ("recommends signed index or reverse iterator", lambda t: re.search(
+            r'signed.*index|int\s+i|reverse iterator|rbegin|rend|std::find_if', t, re.I) is not None),
+    ],
+    232: [
+        ("identifies L1", lambda t: "L1" in t),
+        ("identifies constructor-scoped TAX_RATE not visible to method", lambda t: re.search(
+            r'constructor.*TAX_RATE|TAX_RATE.*constructor|block.?scoped|method.*module.*TAX_RATE|lexical', t, re.I) is not None),
+        ("identifies tax-exempt invoice still returns 108 / uses 0.08", lambda t: re.search(
+            r'108|0\.08|taxExempt.*(?:still|not).*tax|module.?level.*TAX_RATE', t, re.I | re.S) is not None),
+        ("recommends instance field", lambda t: re.search(
+            r'this\.taxRate|instance field|instance property|store.*rate.*this', t, re.I) is not None),
+    ],
+    233: [
+        ("identifies L1", lambda t: "L1" in t),
+        ("identifies import alias shadows builtin len", lambda t: re.search(
+            r'import alias|alias.*len|shadow.*built.?in.*len|builtin.*len.*shadow|universe block', t, re.I) is not None),
+        ("identifies len resolves to package not function", lambda t: re.search(
+            r'len\(words\)|resolves.*package|package.*not.*function|cannot call.*package|len.*constraints', t, re.I) is not None),
+        ("recommends non-conflicting alias", lambda t: re.search(
+            r'constraints\s+"github|non.?conflicting alias|rename.*alias|avoid.*len', t, re.I) is not None),
+    ],
+    234: [
+        ("identifies L9", lambda t: "L9" in t),
+        ("identifies TIMESTAMP without time zone", lambda t: re.search(
+            r'TIMESTAMP(?:\s+WITHOUT\s+TIME\s+ZONE)?|without time zone|no timezone|no time zone', t, re.I) is not None),
+        ("identifies session timezone dependency", lambda t: re.search(
+            r'session.*TimeZone|TimeZone.*session|America/New_York|Europe/London|implicit.*cast', t, re.I) is not None),
+        ("recommends TIMESTAMPTZ / with time zone", lambda t: re.search(
+            r'TIMESTAMPTZ|TIMESTAMP WITH TIME ZONE|with time zone|UTC', t, re.I) is not None),
+    ],
+    235: [
+        ("identifies L9", lambda t: "L9" in t),
+        ("identifies strptime locale-dependent directives", lambda t: re.search(
+            r'strptime|%A|%B|locale.*(?:dependent|sensitive)|process locale', t, re.I) is not None),
+        ("identifies French locale failure", lambda t: re.search(
+            r'fr_FR|French|France|lundi|mars|ValueError|Monday.*March', t, re.I) is not None),
+        ("recommends fixed locale or numeric date parsing", lambda t: re.search(
+            r'setlocale|fixed locale|C locale|en_US|numeric.*(?:date|month)|%m', t, re.I) is not None),
+    ],
+    236: [
+        ("identifies L5", lambda t: "L5" in t),
+        ("identifies || true suppresses migration failure", lambda t: re.search(
+            r'\|\|\s*true|or true|suppress.*failure|exit code.*0|migrate.*(?:fail|failure)', t, re.I | re.S) is not None),
+        ("identifies service restarts after failed migration", lambda t: re.search(
+            r'systemctl restart|restart.*(?:failed|migration)|failed.*migration.*restart', t, re.I | re.S) is not None),
+        ("identifies false success notification", lambda t: re.search(
+            r'Slack|Deploy successful|false.*success|success.*(?:despite|even though).*fail', t, re.I | re.S) is not None),
+        ("recommends explicit exit-code handling", lambda t: re.search(
+            r'MIGRATE_EXIT|\$\?|exit code|if.*migrate|error.*branch|do not.*\|\|\s*true', t, re.I | re.S) is not None),
+    ],
+    237: [
+        ("explains MutexGuard RAII", lambda t: re.search(
+            r'MutexGuard|RAII|guard.*(?:holds|lock)|lock\(\).*guard', t, re.I) is not None),
+        ("identifies guard drop points", lambda t: re.search(
+            r'Drop|goes out of scope|drop.*(?:D|G)|end of.*(?:closure|block)', t, re.I) is not None),
+        ("explains mutual exclusion", lambda t: re.search(
+            r'mutual exclusion|exclusive|one.*(?:thread|block).*at a time|wait.*lock', t, re.I) is not None),
+        ("states final value is 11", lambda t: re.search(r'\b11\b', t) is not None),
+    ],
+    238: [
+        ("explains Elvis null path", lambda t: re.search(
+            r'Elvis|\?:|no-email|null.*return', t, re.I) is not None),
+        ("explains smart cast to non-null String", lambda t: re.search(
+            r'smart.?cast|non.?null(?:able)?|String', t, re.I) is not None),
+        ("identifies three outputs", lambda t: re.search(
+            r'example\.com', t, re.I) is not None and re.search(r'no-email', t, re.I) is not None and re.search(r'malformed', t, re.I) is not None),
+        ("explains missing @ malformed path", lambda t: re.search(
+            r'indexOf\([^)]*@|atIndex.*-1|no @|malformed', t, re.I | re.S) is not None),
+    ],
+    239: [
+        ("explains default evaluated once", lambda t: re.search(
+            r'default.*(?:once|definition time)|definition time|evaluated once|函数定义', t, re.I) is not None),
+        ("explains append mutates in place", lambda t: re.search(
+            r'append|mutat.*in.?place|in.?place.*mutat|原地', t, re.I) is not None),
+        ("identifies result1/result2 share same object", lambda t: re.search(
+            r'result1.*result2.*same|same.*(?:list|object).*result1.*result2|shared default|共享', t, re.I | re.S) is not None),
+        ("identifies result3 independent explicit list", lambda t: re.search(
+            r'result3|explicit list|fastapi|starlette|independent|not.*default', t, re.I | re.S) is not None),
+    ],
+    240: [
+        _BOTH_VERSIONS_RULE,
+        _DIVERGENT_RULE,
+        ("identifies find raises while find_by returns nil", lambda t: re.search(
+            r'find_by.*nil|find.*RecordNotFound|RecordNotFound.*find|find.*raises', t, re.I | re.S) is not None),
+        ("identifies nil email divergence", lambda t: re.search(
+            r'nil.*email|email.*nil|NoMethodError|safe navigation|&\.', t, re.I) is not None),
+        ("identifies no-@ behavior is same", lambda t: re.search(
+            r'no.*@|without.*@|one.?element|full email|same.*(?:case|behavior)', t, re.I | re.S) is not None),
+    ],
+    241: [
+        _BOTH_VERSIONS_RULE,
+        ("gives Semantically Equivalent verdict", _equivalent_verdict),
+        ("explains isset and ?? treat null/missing the same", lambda t: re.search(
+            r'isset|null coalesc|missing.*(?:null|default)|null.*missing|\?\?', t, re.I) is not None),
+        ("explains false/0/empty string are preserved", lambda t: re.search(
+            r'false|0|empty string|\'\'|falsy|not.*empty\(\)', t, re.I) is not None),
+        ("notes PHP 7+ requirement", lambda t: re.search(r'PHP\s*7|7\+', t, re.I) is not None),
+    ],
+    242: [
+        _BOTH_VERSIONS_RULE,
+        _DIVERGENT_RULE,
+        ("identifies TypeError for aware issued_at in Version A", lambda t: re.search(
+            r'TypeError|offset-naive|offset-aware|naive.*aware|aware.*naive', t, re.I) is not None),
+        ("explains Version B assumes UTC for naive issued_at", lambda t: re.search(
+            r'replace\(tzinfo=timezone\.utc\)|assum.*UTC|treat.*naive.*UTC|naive.*UTC', t, re.I) is not None),
+        ("identifies L9 or timezone hazard", lambda t: "L9" in t or re.search(r'timezone|tzinfo|UTC', t, re.I) is not None),
+    ],
+    243: [
+        ("has Module Breakdown", lambda t: re.search(r'Module Breakdown|模块分布|per.?method|method analysis', t, re.I) is not None),
+        _LOGIC_SCORE_BELOW_100_RULE,
+        ("identifies nil items risk", lambda t: re.search(
+            r'order\[:items\].*(?:nil|NoMethodError)|nil.*order\[:items\]|items.*nil', t, re.I | re.S) is not None),
+        ("identifies nil discount risk", lambda t: re.search(
+            r'DISCOUNTS\[code\].*nil|discount.*nil|subtract.*nil|-=.*nil|unknown.*code', t, re.I | re.S) is not None),
+        ("identifies mutation during iteration", lambda t: re.search(
+            r'orders\.delete|mutat.*(?:during|while).*iter|delete.*each|skip.*element', t, re.I) is not None),
+    ],
+    244: [
+        ("has Module Breakdown", lambda t: re.search(r'Module Breakdown|模块分布|per.?method|method analysis', t, re.I) is not None),
+        _LOGIC_SCORE_BELOW_100_RULE,
+        ("identifies missing rollback on execute false", lambda t: re.search(
+            r'rollBack|rollback|execute\(\).*false|false.*(?:without|no).*rollback|transaction.*left', t, re.I | re.S) is not None),
+        ("identifies tmpfile resource leak", lambda t: re.search(
+            r'tmpfile|fclose|resource.*leak|handle.*leak|temporary file', t, re.I) is not None),
+    ],
+    245: [
+        _FAULT_CONFIDENCE_RULE,
+        ("locates force unwrap line/path", lambda t: re.search(
+            r'line\s+1[12]|path!|force.?unwrap|unexpectedly found nil', t, re.I) is not None),
+        ("identifies path returns nil when resource missing", lambda t: re.search(
+            r'path\(forResource|returns?\s+nil|resource.*missing|not in.*bundle', t, re.I | re.S) is not None),
+        ("identifies debug/release bundle discrepancy", lambda t: re.search(
+            r'Debug|Release|build phase|bundle.*(?:missing|present)', t, re.I) is not None),
+        ("identifies L6 contract mismatch", lambda t: "L6" in t or re.search(r'callee.*contract|contract.*mismatch', t, re.I) is not None),
+        ("recommends guard let", lambda t: re.search(r'guard\s+let|if\s+let|optional.*handling', t, re.I) is not None),
+    ],
+    246: [
+        _FAULT_CONFIDENCE_RULE,
+        ("locates || true on pytest pipeline", lambda t: re.search(
+            r'pytest.*\|\s*tee.*\|\|\s*true|\|\|\s*true.*pytest|pipeline.*\|\|\s*true', t, re.I | re.S) is not None),
+        ("explains || true resets exit code", lambda t: re.search(
+            r'exit code.*0|resets?.*exit|converts?.*0|always succeeds|masks?.*failure', t, re.I) is not None),
+        ("identifies L5", lambda t: "L5" in t),
+        ("recommends PIPESTATUS or trap cleanup", lambda t: re.search(
+            r'PIPESTATUS|trap|cleanup|preserve.*exit|capture.*exit', t, re.I) is not None),
+    ],
+    247: [
+        _FIX_LOG_RULE,
+        _BEFORE_AFTER_SCORE_RULE,
+        ("fixes L1 logger shadow", lambda t: re.search(
+            r'::Logger|ReportLogger|rename.*Logger|stdlib.*Logger', t, re.I) is not None),
+        ("fixes L8 file leak", lambda t: re.search(
+            r'File\.open.*do|ensure.*close|file\.close|auto.?close|block form', t, re.I | re.S) is not None),
+        ("score improved after fixes", _score_improved),
+    ],
+    248: [
+        _FIX_LOG_RULE,
+        _BEFORE_AFTER_SCORE_RULE,
+        ("fixes L7 atomic increment", lambda t: re.search(
+            r'AtomicInteger|incrementAndGet|Mutex|atomic.*increment', t, re.I) is not None),
+        ("fixes L8 reader leak", lambda t: re.search(
+            r'\.use\s*\{|use\s*\{|BufferedReader.*use|close\(\)|try.*finally', t, re.I | re.S) is not None),
+        ("score improved after fixes", _score_improved),
+    ],
     # ── No-bug review cases (false-positive suppression tests) ──────────────
     249: [
         ("concludes no logic error (None sentinel correct)", _no_bug_conclusion),
@@ -857,10 +1095,23 @@ _CASE_EXTRA_RULES: dict[int, list[tuple[str, Callable[[str], bool]]]] = {
 
 # ── Generic grader ─────────────────────────────────────────────────────────────
 
+def rules_for_case(case: dict) -> list[tuple[str, Callable[[str], bool]]]:
+    name = case["name"]
+    is_zh_case = name.startswith("zh-")
+
+    rules: list[tuple[str, Callable[[str], bool]]] = []
+    if is_zh_case:
+        rules.append(("output is chinese (>=50 CJK chars, no English section headers)", is_chinese_output))
+    if case["mode"] != "logic-explain":
+        rules.append(_FOUR_FIELD_RULE)
+    rules += _CASE_EXTRA_RULES.get(case["id"], [])
+    return rules
+
+
 def grade_case(case_id: int, output_path: Path) -> dict:
     case = EVALS_BY_ID.get(case_id)
     if not case:
-        return {"eval_id": case_id, "error": "no such case in evals-v2.json"}
+        return {"eval_id": case_id, "error": "no such case in evals/content/v2/evals-v2.json"}
     if not output_path.exists():
         return {
             "eval_id": case_id,
@@ -874,12 +1125,7 @@ def grade_case(case_id: int, output_path: Path) -> dict:
     name = case["name"]
     is_zh_case = name.startswith("zh-")
 
-    rules: list[tuple[str, Callable[[str], bool]]] = []
-    if is_zh_case:
-        rules.append(("output is chinese (>=50 CJK chars, no English section headers)", is_chinese_output))
-    if case["mode"] != "logic-explain":
-        rules.append(_FOUR_FIELD_RULE)
-    rules += _CASE_EXTRA_RULES.get(case_id, [])
+    rules = rules_for_case(case)
 
     expectations = check(text, rules)
     passed = sum(1 for e in expectations if e["passed"])
@@ -905,6 +1151,7 @@ def main(iter_dir: Path):
         m = re.match(r"eval-(\d+)(?:-.*)?$", d.name)
         if m:
             case_ids.append(int(m.group(1)))
+    missing_case_ids = sorted(set(EVALS_BY_ID) - set(case_ids))
 
     results = []
     for cid in case_ids:
@@ -940,8 +1187,13 @@ def main(iter_dir: Path):
     overall_rates = [r["pass_rate"] for r in results if "pass_rate" in r]
 
     summary = {
+        "schema_version": 2,
         "iteration_dir": str(iter_dir.relative_to(REPO)),
         "cases_graded": len(results),
+        "evals_total": len(EVALS_BY_ID),
+        "graded_all_evals": len(missing_case_ids) == 0,
+        "missing_eval_ids": missing_case_ids,
+        "evals_source": str(EVALS_SOURCE.relative_to(REPO)),
         "overall_pass_rate": sum(overall_rates) / len(overall_rates) if overall_rates else 0.0,
         "per_mode": per_mode,
         "chinese_language_pass": f"{zh_lang_pass}/{zh_lang_total}",

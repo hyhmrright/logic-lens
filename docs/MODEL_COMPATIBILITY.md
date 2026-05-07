@@ -14,7 +14,7 @@ Logic-Lens depends on the host model invoking the Skill tool. Trigger reliabilit
 
 ## Evidence
 
-Full benchmark on `evals/v2/evals-v2.json` (79 cases) using `claude-haiku-4-5-20251001` via `claude -p`:
+Full benchmark on `evals/content/v2/evals-v2.json` (104 cases) using `claude-haiku-4-5-20251001` via `claude -p`:
 
 - Overall pass rate: **38.7%**
 - Skill trigger rate (output contains a `Premises:` / `前提：` label): **4/79 ≈ 5%**
@@ -34,7 +34,7 @@ The skill design is sound; the gap is whether the host model decides to invoke i
 
 In `claude -p` one-shot mode the model receives one user message and produces one response. Haiku consistently classifies short "review this code" prompts as ordinary code-Q&A and answers directly, bypassing the `Skill` tool. SKILL.md content (description, body, `_shared/` files) is therefore never loaded. Output reverts to free-form markdown without the `Premises / Trace / Divergence / Remedy` labels and skill-specific headers (`Logic Score`, `Verdict`, `Fault Confidence`, `Fix Log`) that the grader checks for.
 
-This is a property of the model + host combination, not a deficiency of the skill text. Description rewrites that we attempted (broader trigger keywords, imperative wording, inline output schema, body-top cheatsheet — `+205` lines across all six SKILL.md files) produced **−1.05% pass rate** and **trigger 4/79 → 3/79** on a re-run of the full 79-case (v0.6.3 baseline; v0.6.4 expands the suite to 104 cases — re-run pending) benchmark, and were reverted.
+This is a property of the model + host combination, not a deficiency of the skill text. Description rewrites that we attempted (broader trigger keywords, imperative wording, inline output schema, body-top cheatsheet — `+205` lines across all six SKILL.md files) produced **−1.05% pass rate** and **trigger 4/79 → 3/79** on a re-run of the full 79-case baseline; v0.6.4 expands the suite to 104 cases and is tracked separately in `benchmarks/runs/`.
 
 ## Recommendations
 
@@ -56,4 +56,4 @@ MODEL=claude-haiku-4-5-20251001 bash scripts/run-content-evals.sh
 SMOKE=1 bash scripts/run-content-evals.sh
 ```
 
-Per-iteration outputs land under `skills-workspace/iteration-<TAG>/`; `summary.json` aggregates pass rate by mode.
+Per-iteration outputs land under `skills-workspace/iteration-<TAG>/`; `summary.json` aggregates pass rate by mode. Frozen benchmark summaries are published under `benchmarks/runs/`.
