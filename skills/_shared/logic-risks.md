@@ -26,9 +26,9 @@ Logic is correct for typical inputs but does not handle boundary conditions: emp
 
 ## L4 — State Mutation Hazard
 Shared mutable state is read or written in a **single execution context** in an order producing incorrect results. Includes mutations affecting ongoing iterations, aliased references causing unexpected sharing, read-after-side-effect ordering. For multi-context hazards, see L7.
-**Detect:** (1) Identify all mutable state touched: local refs passed by reference, object fields, global state, closure captures. (2) Trace every read and write in execution order. (3) Ask: does any read occur after a write that invalidated its assumption? Do any aliases point to the same mutable object?
-**Symptom:** Collection modified during iteration; variable read after being reset by side effect; alias mutated through one name and observed through another.
-**Common in:** Python (mutable default args, list mutation during `for` loop), JavaScript (closure over `var` loop variable), Go (slice aliasing across `append`), Java (mutating `Collection` while iterating).
+**Detect:** (1) Identify all mutable state touched: local refs passed by reference, object fields, global state, closure captures. (2) Trace every read and write in execution order. (3) Ask: does any read occur after a write that invalidated its assumption? Do any aliases point to the same mutable object? (4) **Aliased-return check:** does the function mutate its input argument AND also return that same reference? If so, callers who write `result = f(x)` discover `x` was also mutated — neither the pure-function contract (`sorted()` returns a new copy) nor the in-place contract (`list.sort()` returns `None`) is satisfied. This dual-contract footgun is L4.
+**Symptom:** Collection modified during iteration; variable read after being reset by side effect; alias mutated through one name and observed through another; function sorts/modifies in-place AND returns the same object.
+**Common in:** Python (mutable default args, list mutation during `for` loop, in-place-sort returning self), JavaScript (closure over `var` loop variable), Go (slice aliasing across `append`), Java (mutating `Collection` while iterating).
 
 ---
 
@@ -84,9 +84,11 @@ Projects define custom codes in `.logic-lens.yaml` using `C1`, `C2`, etc. Treat 
 | If the bug requires | Use |
 |---------------------|-----|
 | more than one execution context to manifest | **L7**, not L4 |
+| lock-acquisition order differs between two functions, deadlock requires concurrent goroutines/threads | **L7**, not L4 |
 | resource lifecycle imbalance (missing/double release, ownership transfer) | **L8**, not L5 |
 | control-flow exit skipping required non-lifecycle code in a single sequential path | **L5** |
 | sequential aliasing or mutation-during-iteration | **L4** |
+| function mutates its argument AND returns the same reference (dual-contract footgun) | **L4** |
 | timezone, DST, locale, or encoding to trigger | **L9**, not L2 or L3 |
 | name resolution to a different definition than expected | **L1** |
 | callee behavior under specific inputs not matching caller's assumption | **L6** |
