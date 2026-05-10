@@ -48,6 +48,19 @@
       "cases_graded": 1,
       "overall_pass_rate": 1.0,
       "notes": "A/B sanity check for in-session skill invocation."
+    },
+    {
+      "id": "v0.6.5-haiku-logic-review",
+      "kind": "content-eval",
+      "path": "runs/v0.6.5-haiku-logic-review.json",
+      "report": "reports/v0.6.5/haiku-logic-review.md",
+      "source_iteration_dir": "skills-workspace/iteration-549719a",
+      "model": "claude-haiku-4-5-20251001",
+      "date": "2026-05-10",
+      "skill_filter": "logic-review",
+      "cases_graded": 36,
+      "overall_pass_rate": 0.4361111111111111,
+      "notes": "logic-review only; 43.6% pass rate. Weakest: L7 concurrency (41%), no-bug false positives. Strongest: L9 timezone (57%), Chinese language 4/4."
     }
   ]
 }
