@@ -97,14 +97,14 @@ For each point where a premise is violated, write a finding using the four-field
 - 🟡 Warning: reachable but only under uncommon inputs or a specific sequence of prior operations.
 - 🟢 Suggestion: requires unusual/currently-impossible conditions, consequence is minor, or one premise is partial.
 
-For Class A candidates: if the trace does not conclusively confirm both reachability and consequence, downgrade to Suggestion with `manual verification recommended` or omit it. A plausible code smell without a concrete execution path is not a logic-review finding.
+For Class A candidates: if the trace does not conclusively confirm consequence (reachability is already self-evident for Class A), downgrade to Suggestion with `manual verification recommended` or omit it. A plausible code smell without a concrete execution path is not a logic-review finding.
 
 **Reachability gate — apply before writing any finding:**
 
 - **Class A:** report at the assigned severity (local code is sufficient evidence).
 - **Class B:** run a reachability probe first:
   1. Search for invariant enforcement — constructor, validator, schema definition, or call sites visible in current scope.
-  2. Enforcement found and airtight → **drop the candidate; do not write a finding.** Optionally record in the report Summary: "Invariant enforced at [location] — no current bug; revisit if callers or schema change."
+  2. Enforcement found and airtight (no code path bypasses it) → **drop the candidate; do not write a finding.** Optionally record in the report Summary: "Invariant enforced at [location] — no current bug; revisit if callers or schema change."
   3. No enforcement found → report at the assigned severity.
   4. Enforcement partial or outside current scope → report at the assigned severity, capped at 🟡 Warning, with `manual verification recommended`.
 
