@@ -53,6 +53,9 @@ Minimum ledger coverage:
 - **Callee paths (L6):** local callees returning null/None/undefined, raising, mutating arguments, or returning a different shape.
 - **Control/resource paths (L5/L8):** every early return, throw/raise, catch/except, break/continue after acquisition or required post-condition.
 - **State/concurrency paths (L4/L7):** mutation during iteration, shared mutable defaults, aliases, closures, await/callback/task boundaries. For L4 also check: does the function mutate its argument AND return it (aliased-return dual contract)? For L7: does the hazard require two concurrent execution contexts — if yes it is L7, not L4 (e.g. lock-order inversion between goroutines is L7 even though it involves mutation).
+  - **L4 aliased-return trap (high priority):** When a function BOTH mutates its input in-place AND returns the same object, this is an L4 finding — not a style issue. The caller may write `result = func(original)` and assume `original` is unchanged. Trace: (a) confirm mutation is in-place (e.g., `list.sort()`, `del arr[i]`, `arr[i], arr[j] = arr[j], arr[i]`); (b) confirm the function returns the SAME object (not a copy); (c) construct a Trigger showing `original` is unexpectedly modified. This is L4, not L3 or L7.
+  - **L7 async interleaving (critical for asyncio/coroutines):** When shared mutable state is accessed across `await`/`yield` boundaries, the bug is L7 even if no threads are involved — asyncio coroutines interleave on a single thread via the event loop. Key indicator: a check-then-act pattern with an `await` between the check and the act. Do NOT classify asyncio interleaving as L4.
+  - **L7 memory model hazards (Java/C++/Go):** For double-checked locking, volatile/atomic, happens-before: always check BOTH (a) the visibility hazard (missing volatile/atomic) AND (b) the initialization-before-publish ordering (is the object fully constructed before other threads can see it?). Two-step trace: step 1 = reordering/visibility, step 2 = consequence of observing partially-constructed object.
 - **Time/locale paths (L9):** naive/aware datetime, DST, locale-sensitive parse/sort/format, implicit encoding.
 
 Discard a candidate only after stating why it is unreachable or irrelevant. Deep-trace the normal path and the highest-risk reachable candidates first.
@@ -86,6 +89,24 @@ Then trace each selected risk path separately:
 - Follow value origin → branch decision → callee behavior → state mutation/output.
 - For loops, trace zero iterations, one iteration, and the iteration where the invariant changes.
 - For async/concurrent code, name the exact boundary where another execution context can observe or mutate state.
+- For **L4 aliased-return mutation**: trace what happens when the caller holds a reference to the input BEFORE the call, calls the function, then uses the original reference. Show that the original was mutated. Example trace:
+  ```
+  1. caller: original = [3, 1, 2]
+  2. caller: result = quicksort(original)
+  3. inside quicksort: arr is the SAME object as original (passed by reference)
+  4. quicksort mutates arr in-place via swaps
+  5. quicksort returns arr — same object
+  6. caller: original is now [1, 2, 3] — mutated without caller's knowledge
+  7. caller: result is original — they are the same object (result is original == True)
+  ```
+- For **L7 memory model**: trace two threads/goroutines/coroutines with numbered interleaving steps:
+  ```
+  T1-step1: thread A checks instance == null → true
+  T1-step2: thread A enters synchronized, creates object
+  T1-step3: JIT reorders: reference published BEFORE constructor completes
+  T2-step1: thread B checks instance == null → false (sees non-null)
+  T2-step2: thread B returns instance — but object.data is still null
+  ```
 - Stop at a confirmed safe post-condition if the candidate is not a bug; do not turn safe paths into Suggestions.
 
 ## Step 5: Identify Divergences
@@ -132,6 +153,8 @@ For each candidate finding that survived Step 5, attempt to **disprove it** from
 - Any question finds **conclusive evidence** (a defense locatable in code) → **withdraw the finding**. Record in Summary: "Candidate [L-code] at [location] withdrawn — defense confirmed at [defense location]."
 - Any question finds **partial evidence** (indirect defense, uncertain coverage) → **downgrade to Suggestion** with `manual verification recommended`.
 - All three questions find **no rebuttal evidence** → **retain at original severity**.
+
+**Async/concurrency protection clause:** For L7 findings involving async interleaving (asyncio, goroutines, coroutines) or memory model hazards (volatile, happens-before), apply stricter rebuttal thresholds — only withdraw if the defense is an **explicit synchronization primitive** (lock, semaphore, atomic, channel, volatile). Do NOT treat the GIL, event loop single-threading, or "unlikely timing" as a defense. The GIL does not prevent asyncio interleaving; single-threaded event loops DO interleave at await points.
 
 **Recording:** Append the rebuttal conclusion to the Trace field:
 - `Rebuttal check: PASSED — no defense mechanism found in scope.`

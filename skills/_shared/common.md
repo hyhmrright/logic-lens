@@ -50,6 +50,12 @@ NEVER emit a Trigger or Remedy before completing Premises → Trace → Divergen
 EVERY finding follows these fields in order: **Premises → Trace → Divergence → Trigger → Remedy**.
 The **Trigger** field (concrete reproducing input) is required for Critical and Warning findings; optional for Suggestions.
 
+**Mandatory field labels:** Each finding MUST use the exact field labels as literal prefixes — `Premises:`, `Trace:`, `Divergence:`, `Trigger:`, `Remedy:` (or their Chinese equivalents `前提：`, `追踪：`, `偏差：`, `触发：`, `修复：`). Free-form prose without these labels is NOT a valid finding. A response that identifies the bug correctly but omits these labels has failed the Iron Law.
+
+**Mandatory L-code:** Every finding title MUST include the L-code (e.g., `**[L4] — ...`). Every finding's Divergence field must name the L-code. An analysis without L-code classification is incomplete.
+
+**Mandatory Logic Score:** Every logic-review output MUST include a `Logic Score: XX/100` line (or `逻辑评分：XX/100`). This is part of the report header, not optional.
+
 Reasoning without an execution trace is guessing. Semi-formal tracing is the evidence.
 
 ---
