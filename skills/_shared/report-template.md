@@ -21,20 +21,22 @@ All skills render output by following this template, applying the language rule 
 
 ### 🔴 Critical
 **[L-code] — [Short descriptive title]**
-Premises:   [what the code assumes]
-Trace:      [step-by-step execution path, interprocedural where needed]
-Divergence: [exact line/expression where the premise breaks; consequence]
-Remedy:     [minimal, paste-ready fix — see common.md §10]
+Premises:      [what the code assumes]
+Trace:         [step-by-step execution path, interprocedural where needed; ends with rebuttal check result]
+Divergence:    [exact line/expression where the premise breaks; consequence]
+Trigger:       [concrete input/state that reproduces the bug — see common.md §2]
+Remedy:        [minimal, paste-ready fix — see common.md §10; ends with dry-run result]
+Verification:  [✅ Execution-verified / ⚠️ Unverified — reason / omitted if Step 8 skipped]
 
 *Cross-file finding (when the fix spans multiple files):*
   Remedy (caller):  <file A> line N — <edit>
   Remedy (callee):  <file B> line M — <edit>
 
 ### 🟡 Warning
-[same four-field structure]
+[same five-field structure + Trigger required]
 
 ### 🟢 Suggestion
-[same four-field structure]
+[same five-field structure; Trigger optional]
 
 ---
 
@@ -52,10 +54,11 @@ Remedy:     [minimal, paste-ready fix — see common.md §10]
 
 ### Primary Fault
 **[L-code] — [Short descriptive title]**
-Premises:   [what the failing path assumes]
-Trace:      [backward trace from symptom, then forward confirmation]
-Divergence: [exact root line/expression where the premise breaks; propagation to symptom]
-Remedy:     [minimal, paste-ready fix — see common.md §10]
+Premises:      [what the failing path assumes]
+Trace:         [backward trace from symptom, then forward confirmation]
+Divergence:    [exact root line/expression where the premise breaks; propagation to symptom]
+Trigger:       [concrete failing input/state]
+Remedy:        [minimal, paste-ready fix — see common.md §10]
 
 ### Contributing Factors
 [Optional short bullets. Omit if none.]
@@ -104,20 +107,22 @@ When the user writes in Chinese (`common.md` §1 detection):
 
 ### 🔴 严重
 **[L-code] — [简短标题]**
-前提：   [代码所做的假设]
-追踪：   [逐步执行路径；涉及跨函数调用时跟进被调方]
-偏差：   [前提被破坏的确切位置（行号/表达式）及后果]
-修复：   [最小、可直接粘贴的修复 — 见 common.md §10]
+前提：      [代码所做的假设]
+追踪：      [逐步执行路径；涉及跨函数调用时跟进被调方；末尾附反驳检查结果]
+偏差：      [前提被破坏的确切位置（行号/表达式）及后果]
+触发：      [能复现 bug 的具体输入/状态 — 见 common.md §2]
+修复：      [最小、可直接粘贴的修复 — 见 common.md §10；末尾附预演结果]
+验证：      [✅ 已执行验证 / ⚠️ 未验证——原因 / 省略（若跳过 Step 8）]
 
 *跨文件发现（修复涉及多个文件时）：*
   修复（调用方）：<文件 A> 第 N 行 — <改动>
   修复（被调方）：<文件 B> 第 M 行 — <改动>
 
 ### 🟡 警告
-[同样的四字段结构]
+[同样的五字段结构 + 触发必填]
 
 ### 🟢 建议
-[同样的四字段结构]
+[同样的五字段结构；触发可选]
 
 ---
 
@@ -135,10 +140,11 @@ When the user writes in Chinese (`common.md` §1 detection):
 
 ### 主要故障
 **[L-code] — [简短标题]**
-前提：   [失败路径所做的假设]
-追踪：   [从症状反向追踪，再正向确认]
-偏差：   [前提被破坏的根因位置（行号/表达式）及其如何传导到症状]
-修复：   [最小、可直接粘贴的修复 — 见 common.md §10]
+前提：      [失败路径所做的假设]
+追踪：      [从症状反向追踪，再正向确认]
+偏差：      [前提被破坏的根因位置（行号/表达式）及其如何传导到症状]
+触发：      [具体失败输入/状态]
+修复：      [最小、可直接粘贴的修复 — 见 common.md §10]
 
 ### 促成因素
 [可选短列表；没有则省略。]
@@ -171,10 +177,11 @@ When the user writes in Chinese (`common.md` §1 detection):
 ## Rules
 
 1. **Language consistency.** All headers, field labels, and narrative use one language end-to-end per `common.md` §1. Never use English headers (`# Findings`) in a Chinese response.
-2. **Four-field discipline.** Every evaluative finding must have all four fields (Premises/Trace/Divergence/Remedy). `logic-explain` produces no evaluative findings. If Trace is incomplete, drop or downgrade to Suggestion with "manual verification needed". No prose findings.
+2. **Five-field discipline.** Every evaluative finding must have all five fields (Premises/Trace/Divergence/Trigger/Remedy). Trigger is required for Critical and Warning; optional for Suggestion. `logic-explain` produces no evaluative findings. If Trace is incomplete, drop or downgrade to Suggestion with "manual verification needed". No prose findings.
 3. **Severity markers.** Use `🔴`/`🟡`/`🟢`. In plain-terminal mode substitute `[CRITICAL]`/`[WARNING]`/`[SUGGESTION]`.
 4. **Skill-specific extensions** (Module Breakdown, Fix Log, Iteration History, etc.) appear **after** Summary, never between Findings and Summary.
 5. **No findings = valid.** Empty Findings + max score is correct. Do not invent speculative findings.
+6. **Verification status.** When Step 8 (Execution Verification Gate) was run, each finding must include a Verification field. When Step 8 was skipped, the Verification field may be omitted.
 
 ---
 

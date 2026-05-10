@@ -35,10 +35,16 @@ Use lazy loading per `../_shared/common.md` §13:
 
 **Step 4. Deep-trace selected paths** (guide Step 4) — trace the normal path plus the highest-risk edge paths; resolve every name, state every type, cross callee boundaries, and stop each trace at either a confirmed divergence or a confirmed safe post-condition.
 
-**Step 5. Identify divergences** (guide Step 5) — classify each by L1–L9; assign severity; apply the reachability gate (Class A reports directly; Class B requires a probe — enforcement found → drop candidate, not found → assigned severity, partial → cap at Warning with `manual verification recommended`).
+**Step 5. Identify divergences** (guide Step 5) — classify each by L1–L9; assign severity; apply the reachability gate (Class A reports directly; Class B requires a probe — enforcement found → drop candidate, not found → assigned severity, partial → cap at Warning with `manual verification recommended`). Apply the correctness parity principle for no-bug scenarios.
 
-**Step 6. Apply Iron Law** (guide Step 6) — confirm all findings have Premises → Trace → Divergence complete before Remedy is written; Remedy must be paste-ready per `common.md` §10.
+**Step 5.5. Adversarial Red Team** (guide Step 5.5) — for each candidate finding, attempt to disprove it by answering three rebuttal questions (premise rebuttal, path rebuttal, consequence rebuttal). Withdraw findings with confirmed defenses; downgrade findings with partial defenses to Suggestion.
+
+**Step 6. Apply Iron Law — Five-Field Discipline** (guide Step 6) — confirm all findings have Premises → Trace → Divergence complete; then write Trigger (concrete reproducing input, required for Critical/Warning) and Remedy (paste-ready per `common.md` §10).
+
+**Step 6.5. Remedy Dry-Run** (guide Step 6.5) — mentally re-trace the Trigger input through the fixed code to confirm: divergence eliminated, no regression introduced, happy path preserved.
 
 **Step 7. Score and output** (guide Step 7) — compute Logic Score per `common.md` §6; render Report Template with localized headers.
+
+**Step 8. Execution Verification Gate** (guide Step 8, optional) — when a runtime is available, generate a minimal reproducer script for each Critical/Warning finding, execute it to confirm the bug exists, apply the Remedy and re-execute to confirm the fix works. Withdraw false positives; mark verified findings as `✅ Execution-verified`.
 
 **Mode line in report:** `Logic Review` (Chinese: `逻辑审查`).

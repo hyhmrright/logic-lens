@@ -5,7 +5,7 @@
 **Rule:** Identify the dominant language of the user's most recent message. Treat as Chinese if ≥ 50% of characters are Chinese Han (not Japanese kana or Korean Hangul — respond in those languages for those scripts). Default to English if ambiguous. All response text MUST use the detected language — including:
 
 - Every section header (`# Findings`, `## Summary`, and every header listed in the map below)
-- Every finding's four field labels (Premises / Trace / Divergence / Remedy)
+- Every finding's field labels (Premises / Trace / Divergence / Trigger / Remedy / Verification)
 - The narrative one-liner under the header, the Summary prose, and any text between findings
 
 **Localized header map (use these exact strings when the user writes in Chinese):**
@@ -33,6 +33,10 @@
 | Semantically Equivalent | 语义等价 |
 | Conditionally Equivalent | 条件等价 |
 | Semantically Divergent | 语义分歧 |
+| Trigger | 触发 |
+| Verification | 验证 |
+| Rebuttal check | 反驳检查 |
+| Dry-run | 预演 |
 
 **Stay in native form regardless of user language:** fenced code blocks, identifier names (`format`, `users.remove(...)`), L-codes (`L1`–`L9`, `C1`, `C2`...), file paths, exception class names, operator symbols.
 
@@ -42,8 +46,9 @@
 
 ## 2. Iron Law
 
-NEVER emit a Remedy before completing Premises → Trace → Divergence for that finding.
-EVERY finding follows these four fields in order: **Premises → Trace → Divergence → Remedy**.
+NEVER emit a Trigger or Remedy before completing Premises → Trace → Divergence for that finding.
+EVERY finding follows these fields in order: **Premises → Trace → Divergence → Trigger → Remedy**.
+The **Trigger** field (concrete reproducing input) is required for Critical and Warning findings; optional for Suggestions.
 
 Reasoning without an execution trace is guessing. Semi-formal tracing is the evidence.
 
@@ -112,7 +117,9 @@ Report Logic Score 100 (or the mode-specific equivalent) and state:
 
 (Chinese: "未发现已确认的逻辑错误；所追踪的全部路径均符合规范。")
 
-Do not invent speculative findings to fill the Findings section. An empty Findings section with a high score is valid and valuable. Minor observations go under Suggestion with a full four-field entry — never as loose prose.
+Do not invent speculative findings to fill the Findings section. An empty Findings section with a high score is valid and valuable. Minor observations go under Suggestion with a full five-field entry — never as loose prose.
+
+**Correctness parity principle:** correctly concluding "no bug" has the same professional value as correctly finding a bug. Do not lower evidence standards to produce findings.
 
 ---
 
