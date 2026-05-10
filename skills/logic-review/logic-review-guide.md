@@ -33,7 +33,17 @@ Before writing any finding, enumerate candidate paths. This prevents the review 
 Create a short internal ledger with one row per path:
 
 ```
-[risk code] [entry point] [input/state condition] [branch/callee/resource involved] [why this path is reachable or not]
+[risk code] [entry point] [input/state condition] [branch/callee/resource involved] [why this path is reachable or not] [Class A | Class B]
+```
+
+Tag each **retained** candidate with a **Reachability Class** (discarded candidates need no tag):
+- **Class A (Self-evident):** triggering condition is visible in local code — e.g., dereference after explicit nil check, index beyond bounds, unchecked type assertion, resource with no release on a visible exit path.
+- **Class B (Invariant-dependent):** triggering condition requires an implicit external assumption to be false — e.g., "all groups always contain at least one alias" or "callers never pass nil here." Requires a reachability probe in Step 5 before reporting.
+
+Example ledger rows:
+```
+L3  parseCSV  empty input  len(rows)==0 guard absent      always reachable from callers  Class A
+L5  filterPkgVulns  all groups ignored  len(newGroups)==0 guard  depends on "vuln always in ≥1 group" invariant  Class B
 ```
 
 Minimum ledger coverage:
@@ -87,7 +97,18 @@ For each point where a premise is violated, write a finding using the four-field
 - 🟡 Warning: reachable but only under uncommon inputs or a specific sequence of prior operations.
 - 🟢 Suggestion: requires unusual/currently-impossible conditions, consequence is minor, or one premise is partial.
 
-If the trace does not conclusively confirm both reachability and consequence, downgrade to Suggestion with `manual verification recommended` or omit it. A plausible code smell without a concrete execution path is not a logic-review finding.
+For Class A candidates: if the trace does not conclusively confirm both reachability and consequence, downgrade to Suggestion with `manual verification recommended` or omit it. A plausible code smell without a concrete execution path is not a logic-review finding.
+
+**Reachability gate — apply before writing any finding:**
+
+- **Class A:** report at the assigned severity (local code is sufficient evidence).
+- **Class B:** run a reachability probe first:
+  1. Search for invariant enforcement — constructor, validator, schema definition, or call sites visible in current scope.
+  2. Enforcement found and airtight → **drop the candidate; do not write a finding.** Optionally record in the report Summary: "Invariant enforced at [location] — no current bug; revisit if callers or schema change."
+  3. No enforcement found → report at the assigned severity.
+  4. Enforcement partial or outside current scope → report at the assigned severity, capped at 🟡 Warning, with `manual verification recommended`.
+
+Record the probe result in the finding's Trace (not Premises) so the reader can verify the class assignment without violating the Premises checklist.
 
 Deduplicate by root cause: if one bad callee contract creates several caller symptoms, report one L6 finding at the callee/caller contract boundary and list representative call sites in the Trace or Remedy.
 
