@@ -79,6 +79,7 @@
       "id": "antigravity-opus4.6-e01490b-claude-sonnet-4-6-logic-review",
       "kind": "content-eval",
       "path": "runs/antigravity-opus4.6-e01490b-claude-sonnet-4-6-logic-review.json",
+      "report": "reports/antigravity-opus4.6/sonnet-logic-review.md",
       "source_iteration_dir": "skills-workspace/iteration-antigravity-sonnet-20260510-2307",
       "model": "claude-sonnet-4-6",
       "branch": "antigravity-opus4.6",
