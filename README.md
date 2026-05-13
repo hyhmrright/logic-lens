@@ -442,13 +442,26 @@ The best contributions right now are new eval test cases, especially interproced
 
 ---
 
-## License
+## Spread the Word
+
+If Logic-Lens saves you from a production incident, let others know!
+- **Share on X (Twitter)**: [Click to tweet](https://twitter.com/intent/tweet?text=I%27m%20using%20Logic-Lens%20to%20catch%20interprocedural%20logic%20bugs%20that%20my%20linter%20misses.%20It%20forces%20LLMs%20to%20write%20execution%20traces%20before%20reviewing.&url=https://github.com/hyhmrright/logic-lens)
+- **Add a Badge**: Show that your repository is logic-reviewed by adding this badge to your README:
+  ```markdown
+  [![Logic-Lens: Audited](https://img.shields.io/badge/Logic--Lens-Audited-blueviolet.svg)](https://github.com/hyhmrright/logic-lens)
+  ```
+
+---
 
 ## Read
 
 - [Why AI Code Review Misses Logic Bugs — And How Structured Execution Tracing Fixes It](https://dev.to/hyhmrright/why-ai-code-review-misses-logic-bugs-and-how-structured-execution-tracing-fixes-it-3n0p) — DEV.to deep-dive on the methodology behind logic-lens
--
-- MIT License — see [LICENSE](LICENSE) for details.
+
+---
+
+## License
+
+MIT License — see [LICENSE](LICENSE) for details.
 
 ---
 
