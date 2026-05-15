@@ -38,10 +38,10 @@ Use lazy loading per `../_shared/common.md` §13:
 
 **Step 4. Trace boundary cases** (guide Step 4) — empty/null/zero, max/min, error inputs, first/last of collections. Start with at most three highest-risk boundary scenarios unless the user asks for exhaustive equivalence or the shared specification requires more.
 
-**Step 5. Identify and classify semantic divergences** (guide Step 5) — each divergence is a finding with Premises → Trace → Divergence → Remedy and an L-code.
+**Step 5. Identify and classify semantic divergences** (guide Step 5) — each divergence is a finding with Premises → Trace → Divergence → Trigger → Remedy and an L-code.
 
 **Step 6. Equivalence verdict** (guide Step 6) — one of: `✅ Semantically Equivalent`, `⚠️ Conditionally Equivalent` (state the condition precisely), `❌ Semantically Divergent`.
 
-**Step 7. Output** (guide Step 7) — Report Template with the Verdict header per `common.md` §5; localize headers if the user wrote in Chinese. **Format is mandatory even for trivially short snippets: every divergence finding MUST use the four labeled fields (Premises / Trace / Divergence / Remedy); never substitute with a plain paragraph or table.**
+**Step 7. Output** (guide Step 7) — Report Template with the Verdict header per `common.md` §5; localize headers if the user wrote in Chinese. **Format is mandatory even for trivially short snippets: every divergence finding MUST use the five labeled fields (Premises / Trace / Divergence / Trigger / Remedy); never substitute with a plain paragraph or table.**
 
 **Mode line in report:** `Semantic Diff` (Chinese: `语义对比`).

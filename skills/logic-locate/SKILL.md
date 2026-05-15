@@ -40,7 +40,7 @@ Use lazy loading per `../_shared/common.md` §13:
 
 **Step 6. Identify the root divergence and classify** (guide Step 6) — state the exact line/expression, the violated premise, the actual behavior, the propagation chain to the symptom; pick the L-code.
 
-**Step 7. Output the focused report** (guide Step 7) — Fault Confidence (High/Medium/Low, per `common.md` §7); Primary Fault (single four-field finding); optionally Contributing Factors; a minimal Remedy per `common.md` §10. **Format is mandatory even for simple one-function bugs: always emit the labeled Premises / Trace / Divergence / Remedy fields and the Fault Confidence line. Never answer with a plain fix suggestion.**
+**Step 7. Output the focused report** (guide Step 7) — Fault Confidence (High/Medium/Low, per `common.md` §7); Primary Fault (single five-field finding); optionally Contributing Factors; a minimal Remedy per `common.md` §10. **Format is mandatory even for simple one-function bugs: always emit the labeled Premises / Trace / Divergence / Trigger / Remedy fields and the Fault Confidence line. Never answer with a plain fix suggestion.**
 
 **Mode line in report:** `Fault Locate` (Chinese: `故障定位`).
 

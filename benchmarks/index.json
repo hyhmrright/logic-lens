@@ -74,6 +74,21 @@
       "cases_graded": 36,
       "overall_pass_rate": 0.5393518518518519,
       "notes": "logic-review only; 53.9% pass rate (+10.3pp vs Haiku). Biggest gains: L8 resource leak (+37.5pp), L3 boundary (+20pp). Persistent weak spots: L4 aliased mutation (0%), L7 concurrency (47.5%)."
+    },
+    {
+      "id": "antigravity-opus4.6-e01490b-claude-sonnet-4-6-logic-review",
+      "kind": "content-eval",
+      "path": "runs/antigravity-opus4.6-e01490b-claude-sonnet-4-6-logic-review.json",
+      "report": "reports/antigravity-opus4.6/sonnet-logic-review.md",
+      "source_iteration_dir": "skills-workspace/iteration-antigravity-sonnet-20260510-2307",
+      "model": "claude-sonnet-4-6",
+      "branch": "antigravity-opus4.6",
+      "commit": "e01490b",
+      "date": "2026-05-10",
+      "skill_filter": "logic-review",
+      "cases_graded": 36,
+      "overall_pass_rate": 0.6740740740740741,
+      "notes": "logic-review after antigravity-opus4.6 三层改进（对抗性自检 + 五字段纪律 + 执行验证闭环 + reachability gate）; 67.4% pass rate (+13.5pp vs v0.6.5 baseline 53.9%). 18/36 cases improved, 4 regressed. Persistent weak spots: L4 aliased mutation (0%), L7 double-checked locking (25%)."
     }
   ]
 }

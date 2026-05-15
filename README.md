@@ -42,7 +42,7 @@
 
 **Code review without a trace is a guess.** Standard review catches style issues and obvious mistakes. Linters catch syntax. But neither catches the class of bugs where code looks correct in isolation, passes all tests, and still ships broken behavior — because the bug only appears when two functions interact in a way neither author anticipated.
 
-**Logic-Lens forces the AI to construct an explicit execution trace** before reaching any conclusion. Every finding comes with a documented Premises → Trace → Divergence → Remedy chain that shows exactly how the reviewer arrived at the finding — not just what it found.
+**Logic-Lens forces the AI to construct an explicit execution trace** before reaching any conclusion. Every finding comes with a documented Premises → Trace → Divergence → Trigger → Remedy chain that shows exactly how the reviewer arrived at the finding — not just what it found.
 
 ## The Nine Logic Risks
 
@@ -153,7 +153,7 @@ The gap isn't what Claude *can* find — it's what it *consistently* finds, with
 |---|:---:|:---:|:---:|:---:|
 | Detects syntax & style issues | — | ✅ | ✅ | ~ |
 | Explicit execution trace per finding | ✅ | ❌ | ❌ | ❌ |
-| Premises → Trace → Divergence → Remedy | ✅ | ❌ | ❌ | ❌ |
+| Premises → Trace → Divergence → Trigger → Remedy | ✅ | ❌ | ❌ | ❌ |
 | Consistent severity-labeled findings | ✅ | ✅ | ~ | ❌ |
 | Interprocedural bug detection | ✅ | ❌ | ~ | ~ |
 | Boundary & null path analysis | ✅ | ~ | ~ | ~ |
@@ -272,7 +272,7 @@ Enter these `$logic-*` invocations inside a Codex session; they are not shell co
 $logic-review                       # Codex CLI
 ```
 
-Paste the code or point the AI at the file. Logic-Lens constructs an explicit execution trace for each suspicious path and reports only findings with a documented Premises → Trace → Divergence → Remedy chain.
+Paste the code or point the AI at the file. Logic-Lens constructs an explicit execution trace for each suspicious path and reports only findings with a documented Premises → Trace → Divergence → Trigger → Remedy chain.
 
 ### Execution Explanation
 
@@ -442,13 +442,26 @@ The best contributions right now are new eval test cases, especially interproced
 
 ---
 
-## License
+## Spread the Word
+
+If Logic-Lens saves you from a production incident, let others know!
+- **Share on X (Twitter)**: [Click to tweet](https://twitter.com/intent/tweet?text=I%27m%20using%20Logic-Lens%20to%20catch%20interprocedural%20logic%20bugs%20that%20my%20linter%20misses.%20It%20forces%20LLMs%20to%20write%20execution%20traces%20before%20reviewing.&url=https://github.com/hyhmrright/logic-lens)
+- **Add a Badge**: Show that your repository is logic-reviewed by adding this badge to your README:
+  ```markdown
+  [![Logic-Lens: Audited](https://img.shields.io/badge/Logic--Lens-Audited-blueviolet.svg)](https://github.com/hyhmrright/logic-lens)
+  ```
+
+---
 
 ## Read
 
 - [Why AI Code Review Misses Logic Bugs — And How Structured Execution Tracing Fixes It](https://dev.to/hyhmrright/why-ai-code-review-misses-logic-bugs-and-how-structured-execution-tracing-fixes-it-3n0p) — DEV.to deep-dive on the methodology behind logic-lens
--
-- MIT License — see [LICENSE](LICENSE) for details.
+
+---
+
+## License
+
+MIT License — see [LICENSE](LICENSE) for details.
 
 ---
 

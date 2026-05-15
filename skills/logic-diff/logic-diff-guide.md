@@ -57,7 +57,7 @@ A semantic divergence is any scenario where A and B produce different behavior. 
 - Behavioral change: both work, but differently — user must decide which is correct
 - Scope expansion: B handles inputs A didn't
 
-For each divergence, write a four-field finding with the L-code that best describes the cause.
+For each divergence, write a five-field finding (Premises → Trace → Divergence → Trigger → Remedy) with the L-code that best describes the cause.
 
 ## Step 6: Classify Equivalence
 

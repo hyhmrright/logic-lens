@@ -53,6 +53,9 @@ Minimum ledger coverage:
 - **Callee paths (L6):** local callees returning null/None/undefined, raising, mutating arguments, or returning a different shape.
 - **Control/resource paths (L5/L8):** every early return, throw/raise, catch/except, break/continue after acquisition or required post-condition.
 - **State/concurrency paths (L4/L7):** mutation during iteration, shared mutable defaults, aliases, closures, await/callback/task boundaries. For L4 also check: does the function mutate its argument AND return it (aliased-return dual contract)? For L7: does the hazard require two concurrent execution contexts — if yes it is L7, not L4 (e.g. lock-order inversion between goroutines is L7 even though it involves mutation).
+  - **L4 aliased-return trap (high priority):** When a function BOTH mutates its input in-place AND returns the same object, this is an L4 finding — not a style issue. The caller may write `result = func(original)` and assume `original` is unchanged. Trace: (a) confirm mutation is in-place (e.g., `list.sort()`, `del arr[i]`, `arr[i], arr[j] = arr[j], arr[i]`); (b) confirm the function returns the SAME object (not a copy); (c) construct a Trigger showing `original` is unexpectedly modified. This is L4, not L3 or L7.
+  - **L7 async interleaving (critical for asyncio/coroutines):** When shared mutable state is accessed across `await`/`yield` boundaries, the bug is L7 even if no threads are involved — asyncio coroutines interleave on a single thread via the event loop. Key indicator: a check-then-act pattern with an `await` between the check and the act. Do NOT classify asyncio interleaving as L4.
+  - **L7 memory model hazards (Java/C++/Go):** For double-checked locking, volatile/atomic, happens-before: always check BOTH (a) the visibility hazard (missing volatile/atomic) AND (b) the initialization-before-publish ordering (is the object fully constructed before other threads can see it?). Two-step trace: step 1 = reordering/visibility, step 2 = consequence of observing partially-constructed object.
 - **Time/locale paths (L9):** naive/aware datetime, DST, locale-sensitive parse/sort/format, implicit encoding.
 
 Discard a candidate only after stating why it is unreachable or irrelevant. Deep-trace the normal path and the highest-risk reachable candidates first.
@@ -86,11 +89,29 @@ Then trace each selected risk path separately:
 - Follow value origin → branch decision → callee behavior → state mutation/output.
 - For loops, trace zero iterations, one iteration, and the iteration where the invariant changes.
 - For async/concurrent code, name the exact boundary where another execution context can observe or mutate state.
+- For **L4 aliased-return mutation**: trace what happens when the caller holds a reference to the input BEFORE the call, calls the function, then uses the original reference. Show that the original was mutated. Example trace:
+  ```
+  1. caller: original = [3, 1, 2]
+  2. caller: result = quicksort(original)
+  3. inside quicksort: arr is the SAME object as original (passed by reference)
+  4. quicksort mutates arr in-place via swaps
+  5. quicksort returns arr — same object
+  6. caller: original is now [1, 2, 3] — mutated without caller's knowledge
+  7. caller: result is original — they are the same object (result is original == True)
+  ```
+- For **L7 memory model**: trace two threads/goroutines/coroutines with numbered interleaving steps:
+  ```
+  T1-step1: thread A checks instance == null → true
+  T1-step2: thread A enters synchronized, creates object
+  T1-step3: JIT reorders: reference published BEFORE constructor completes
+  T2-step1: thread B checks instance == null → false (sees non-null)
+  T2-step2: thread B returns instance — but object.data is still null
+  ```
 - Stop at a confirmed safe post-condition if the candidate is not a bug; do not turn safe paths into Suggestions.
 
 ## Step 5: Identify Divergences
 
-For each point where a premise is violated, write a finding using the four-field format with the L-code that best describes the cause.
+For each point where a premise is violated, write a finding using the five-field format (Premises → Trace → Divergence → Trigger → Remedy) with the L-code that best describes the cause.
 
 **Severity:**
 - 🔴 Critical: causes exception, data corruption, incorrect output, or security-relevant behavior in a reachable path.
@@ -114,14 +135,162 @@ Deduplicate by root cause: if one bad callee contract creates several caller sym
 
 **No-bug discipline:** When the user's question is framed as "does X cause bug Y?" and the trace conclusively shows Y does NOT apply (e.g., `defer` in Go runs on all exit paths so there is no lock leak), write a finding concluding **NO logic error** for Y with Premises → Trace → Divergence showing why. Do not fabricate unrelated findings to appear thorough — that undermines precision and triggers false positives. However, if the Risk Path Ledger from Step 3 surfaced a separate, concrete, reachable bug with a complete trace, report it as an independent finding; a no-bug verdict on Y does not suppress genuine findings on other risks. If the ledger produced no other findings, stop.
 
-## Step 6: Apply Iron Law
+**Correctness parity principle:** Correctly concluding "no bug" is equally valuable as correctly finding a bug. A Logic Score 100 report with "no confirmed logic errors" is a professional, high-value output — not a failure. Do not lower evidence standards to produce findings. If every path in the Risk Path Ledger terminates at a confirmed safe post-condition, output Score 100 immediately. Record each path's safe-termination reason (≥1 sentence) but do NOT wrap safe paths as Suggestion findings.
 
-Premises, Trace, and Divergence must all be complete before writing a Remedy.
+## Step 5.5: Adversarial Red Team
+
+For each candidate finding that survived Step 5, attempt to **disprove it** from the defender's perspective before writing the Remedy. This step reduces false positives by forcing an adversarial check.
+
+**Three Rebuttal Questions** (answer each explicitly — do not skip):
+
+1. **Premise rebuttal:** Does any of my premises rest on an unverified assumption? Could callers guarantee the premise through schema validation, type checking, wrapper functions, middleware, or a constructor that enforces the invariant? Search the current scope for evidence.
+
+2. **Path rebuttal:** Is the trigger path truly reachable in production? Could an upstream guard, configuration flag, middleware filter, type system constraint, or framework convention prevent the input from ever reaching this code path?
+
+3. **Consequence rebuttal:** Even if the divergence exists, is the consequence truly harmful? Could a downstream defense (catch/except, fallback value, retry logic, idempotency guard) neutralize the impact?
+
+**Ruling:**
+- Any question finds **conclusive evidence** (a defense locatable in code) → **withdraw the finding**. Record in Summary: "Candidate [L-code] at [location] withdrawn — defense confirmed at [defense location]."
+- Any question finds **partial evidence** (indirect defense, uncertain coverage) → **downgrade to Suggestion** with `manual verification recommended`.
+- All three questions find **no rebuttal evidence** → **retain at original severity**.
+
+**Async/concurrency protection clause:** For L7 findings involving async interleaving (asyncio, goroutines, coroutines) or memory model hazards (volatile, happens-before), apply stricter rebuttal thresholds — only withdraw if the defense is an **explicit synchronization primitive** (lock, semaphore, atomic, channel, volatile). Do NOT treat the GIL, event loop single-threading, or "unlikely timing" as a defense. The GIL does not prevent asyncio interleaving; single-threaded event loops DO interleave at await points.
+
+**Recording:** Append the rebuttal conclusion to the Trace field:
+- `Rebuttal check: PASSED — no defense mechanism found in scope.`
+- `Rebuttal check: DOWNGRADED — partial defense found at [location].`
+- `Rebuttal check: WITHDRAWN — confirmed defense at [location].`
+
+(Chinese: `反驳检查：已通过——范围内未发现防御机制。` / `反驳检查：已降级——在 [位置] 发现部分防御。` / `反驳检查：已撤回——在 [位置] 确认防御。`)
+
+## Step 6: Apply Iron Law (Five-Field Discipline)
+
+Premises, Trace, and Divergence must all be complete before writing a **Trigger** or **Remedy**.
+
+Every finding follows five fields in order: **Premises → Trace → Divergence → Trigger → Remedy**.
+
+### Trigger field (required for Critical and Warning; optional for Suggestion)
+
+Provide a **concrete input or state** that triggers the bug. The trigger must be specific enough that a developer can paste it into a REPL or test to reproduce.
+
+**Good trigger example:**
+```
+Trigger: remove_inactive([User(active=False), User(active=False), User(active=True)])
+  Expected: returns [User(active=True)]  (1 element)
+  Actual:   returns [User(active=False), User(active=True)]  (2 elements — second inactive user skipped)
+```
+
+**Bad trigger (unacceptable):**
+```
+Trigger: "when passing a list with inactive users"  ← too vague, cannot reproduce
+```
+
+**When a concrete trigger is difficult to construct:**
+- Bug depends on external state (DB, network): describe the minimal triggering condition + mark `manual verification recommended`.
+- Bug involves concurrency/timing: describe the specific thread/coroutine interleaving sequence with numbered steps.
+- Completely unable to construct a trigger: **automatically downgrade to Suggestion**.
+
+### Remedy field
 
 **Good remedy example:** "On line 42, replace `format(self.data.year, '04d')` with `builtins.format(self.data.year, '04d')` to avoid dispatching to the module-level `format()` that expects a datetime object."
+
+## Step 6.5: Remedy Dry-Run Verification
+
+After writing the Remedy, mentally re-execute the Trigger input against the **fixed** code to confirm correctness. This prevents remedies that are ineffective or introduce regressions.
+
+**Procedure (3-step minimum):**
+
+1. **Mentally apply** the Remedy to the original code.
+2. **Re-trace** the Trigger input through the fixed code (≥3 steps).
+3. **Confirm** all three conditions:
+   - (a) The original Divergence no longer occurs.
+   - (b) No new Divergence is introduced by the fix (check boundary conditions of the fix itself).
+   - (c) The happy-path behavior is preserved (the fix does not change correct behavior).
+
+**Outcomes:**
+- (a) fails → Remedy is ineffective. Rewrite before emitting.
+- (b) fails → Remedy introduces a regression. Record the new risk, narrow the fix scope, and rewrite.
+- (c) fails → Remedy is over-scoped. Reduce the fix to the minimal change.
+
+**Recording:** Append to the Remedy field:
+```
+Dry-run: ✅ Trigger input re-traced through fix — divergence eliminated, no regression, happy path preserved.
+```
+(Chinese: `预演：✅ 触发输入已在修复代码中重新追踪——偏差已消除，无回归，正常路径行为保持不变。`)
+
+If dry-run reveals a problem, record the issue and the corrected remedy:
+```
+Dry-run: ⚠️ Initial remedy [description] failed check (b) — [new issue]. Revised remedy applied.
+```
 
 ## Step 7: Compute Score and Output
 
 1. Start at 100. Deduct per confirmed finding (Critical −15, Warning −7, Suggestion −2).
 2. Fill in the Report Template from `report-template.md`.
 3. Summary: most critical finding, recommended next action, whether the logic is safe to ship.
+
+## Step 8: Execution Verification Gate (Optional — when runtime is available)
+
+When the environment supports code execution (CLI with shell access, sandbox, or REPL), apply this step to each **Critical** and **Warning** finding. Skip this step entirely if no runtime is available — mark findings as `unverified — no runtime available` and proceed.
+
+**Prerequisite check:** Detect whether the target language runtime is available (e.g., `python3 --version`, `node --version`, `go version`). If unavailable, skip to output.
+
+### 8a. Generate Minimal Reproducer Script
+
+For each finding, generate a self-contained script based on the Trigger field:
+- Include the reviewed function (or a minimal standalone version).
+- Include the concrete trigger input from the Trigger field.
+- Include an assertion: expected behavior vs. actual behavior.
+- The script must **FAIL** (assertion error or exception) when the bug is present.
+
+**Safety constraints:**
+- The script must contain only pure computation — NO network requests, file writes, database operations, or other side effects.
+- If the function depends on external state, create in-memory mocks/stubs.
+- Execution timeout: 10 seconds maximum.
+
+### 8b. Run Original Code (Confirm Bug Exists)
+
+Execute the reproducer script against the original code.
+- **Script FAILS (assertion error or expected exception):** Bug confirmed. Proceed to 8c.
+- **Script PASSES:** Finding is a **false positive**. Withdraw it, remove from report, and adjust Logic Score.
+- **Script errors unexpectedly (syntax error, import failure):** Script needs fixing. Retry once with corrected script. If still broken, mark `unverified — reproducer generation failed`.
+
+### 8c. Apply Remedy and Re-run (Confirm Fix Works)
+
+Apply the Remedy to the code in the reproducer script, then re-execute.
+- **Script PASSES:** Fix verified. Mark finding as `✅ Execution-verified`.
+- **Script still FAILS:** Remedy is ineffective. Revise and retry (up to 3 attempts). After 3 failures, mark `unverified — remedy needs manual review`.
+- **Script throws NEW exception:** Remedy introduces regression. Revert, mark `⚠️ Remedy caused regression — manual fix recommended`.
+
+### 8d. Update Report
+
+Add verification status to each finding:
+
+```
+Verification: ✅ Execution-verified — reproducer FAIL → applied fix → PASS
+Verification: ⚠️ Unverified — [reason]
+Verification: ❌ False positive withdrawn — reproducer PASS on original code
+```
+
+(Chinese: `验证：✅ 已执行验证——复现脚本 FAIL → 应用修复 → PASS` / `验证：⚠️ 未验证——[原因]` / `验证：❌ 假阳性已撤回——复现脚本在原始代码上 PASS`)
+
+**Example reproducer (Python, L4 mutation-during-iteration):**
+
+```python
+# 最小可复现脚本 — L4: 迭代中修改列表
+class User:
+    def __init__(self, active):
+        self.is_active = active
+
+def remove_inactive(users):
+    for user in users:
+        if not user.is_active:
+            users.remove(user)
+    return users
+
+# 触发输入：两个连续的失效用户
+users = [User(False), User(False), User(True)]
+result = remove_inactive(users)
+assert len(result) == 1, f"Expected 1 active user, got {len(result)}"
+# 预期：AssertionError（bug 存在）
+```
