@@ -111,7 +111,7 @@ Then trace each selected risk path separately:
 
 ## Step 5: Identify Divergences
 
-For each point where a premise is violated, write a finding using the four-field format with the L-code that best describes the cause.
+For each point where a premise is violated, write a finding using the five-field format (Premises → Trace → Divergence → Trigger → Remedy) with the L-code that best describes the cause.
 
 **Severity:**
 - 🔴 Critical: causes exception, data corruption, incorrect output, or security-relevant behavior in a reachable path.

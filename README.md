@@ -42,7 +42,7 @@
 
 **Code review without a trace is a guess.** Standard review catches style issues and obvious mistakes. Linters catch syntax. But neither catches the class of bugs where code looks correct in isolation, passes all tests, and still ships broken behavior — because the bug only appears when two functions interact in a way neither author anticipated.
 
-**Logic-Lens forces the AI to construct an explicit execution trace** before reaching any conclusion. Every finding comes with a documented Premises → Trace → Divergence → Remedy chain that shows exactly how the reviewer arrived at the finding — not just what it found.
+**Logic-Lens forces the AI to construct an explicit execution trace** before reaching any conclusion. Every finding comes with a documented Premises → Trace → Divergence → Trigger → Remedy chain that shows exactly how the reviewer arrived at the finding — not just what it found.
 
 ## The Nine Logic Risks
 
@@ -153,7 +153,7 @@ The gap isn't what Claude *can* find — it's what it *consistently* finds, with
 |---|:---:|:---:|:---:|:---:|
 | Detects syntax & style issues | — | ✅ | ✅ | ~ |
 | Explicit execution trace per finding | ✅ | ❌ | ❌ | ❌ |
-| Premises → Trace → Divergence → Remedy | ✅ | ❌ | ❌ | ❌ |
+| Premises → Trace → Divergence → Trigger → Remedy | ✅ | ❌ | ❌ | ❌ |
 | Consistent severity-labeled findings | ✅ | ✅ | ~ | ❌ |
 | Interprocedural bug detection | ✅ | ❌ | ~ | ~ |
 | Boundary & null path analysis | ✅ | ~ | ~ | ~ |
@@ -272,7 +272,7 @@ Enter these `$logic-*` invocations inside a Codex session; they are not shell co
 $logic-review                       # Codex CLI
 ```
 
-Paste the code or point the AI at the file. Logic-Lens constructs an explicit execution trace for each suspicious path and reports only findings with a documented Premises → Trace → Divergence → Remedy chain.
+Paste the code or point the AI at the file. Logic-Lens constructs an explicit execution trace for each suspicious path and reports only findings with a documented Premises → Trace → Divergence → Trigger → Remedy chain.
 
 ### Execution Explanation
 

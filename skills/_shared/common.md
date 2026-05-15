@@ -38,6 +38,8 @@
 | Rebuttal check | 反驳检查 |
 | Dry-run | 预演 |
 
+*Note: `Rebuttal check` and `Dry-run` are sub-annotations appended within the Trace and Remedy fields respectively — they are not top-level finding fields.*
+
 **Stay in native form regardless of user language:** fenced code blocks, identifier names (`format`, `users.remove(...)`), L-codes (`L1`–`L9`, `C1`, `C2`...), file paths, exception class names, operator symbols.
 
 **Violation check:** if the response is Chinese but a header reads `# Findings`, rewrite before returning.

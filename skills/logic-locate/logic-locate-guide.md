@@ -82,4 +82,4 @@ Contributing Factors: conditions that enabled the fault (not findings themselves
    - **High:** trace fully confirms — Premises→Trace→Divergence form a complete chain from cause to symptom.
    - **Medium:** trace strongly implicates, but one step rests on an unverified assumption.
    - **Low:** plausible fault, but alternative causes cannot be ruled out without execution.
-3. Output: Primary Fault (four-field finding for root cause) + Contributing Factors + Remedy.
+3. Output: Primary Fault (five-field finding for root cause) + Contributing Factors + Remedy.

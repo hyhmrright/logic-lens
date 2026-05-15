@@ -77,7 +77,7 @@ Code makes implicit assumptions about time zones, calendars, locale-dependent or
 ---
 
 ## Custom Risk Codes (Cx)
-Projects define custom codes in `.logic-lens.yaml` using `C1`, `C2`, etc. Treat with the same Premises→Trace→Divergence→Remedy discipline as built-ins. Appear in findings as `[C1]`, `[C2]`, etc.
+Projects define custom codes in `.logic-lens.yaml` using `C1`, `C2`, etc. Treat with the same Premises→Trace→Divergence→Trigger→Remedy discipline as built-ins. Appear in findings as `[C1]`, `[C2]`, etc.
 
 ---
 

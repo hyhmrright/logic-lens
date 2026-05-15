@@ -36,7 +36,7 @@ When a module exceeds its budget, list the untraced public functions in the modu
 
 ## Step 3: Record Findings Per Module
 
-Apply the standard four-field format (Premises→Trace→Divergence→Remedy). Tag each finding with:
+Apply the standard five-field format (Premises→Trace→Divergence→Trigger→Remedy). Tag each finding with:
 - Module path
 - Risk code (L1–L9 or Cx)
 - Severity (Critical / Warning / Suggestion)
