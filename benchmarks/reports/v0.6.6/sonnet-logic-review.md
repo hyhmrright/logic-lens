@@ -75,7 +75,9 @@ v0.6.6 在 antigravity-opus4.6 三层改进的基础上，针对 Sonnet 4.6 benc
 | L9 时区 | 3 | 80.0% | 71.7% | **+8.3%** |
 | no-bug | 6 | 75.0% | 66.7% | **+8.3%** |
 
-> 注：id=280（`therac25-style-race-mode-flag-L7-L4`）同时涉及 L7 和 L4，未计入单一分组以避免重复计数，分组合计 35 个用例。
+> 注 1：id=280（`therac25-style-race-mode-flag-L7-L4`）同时涉及 L7 和 L4，未计入单一分组以避免重复计数，分组合计 35 个用例。
+>
+> 注 2：L8 红色 Delta 主要由 eval-230 单点抽样波动驱动（已 3 次 repro 验证，详见观察 5、6）；L6 红色 Delta 由 eval-101 拖累，未做 repro，按相同噪声模型推断但未实证 — 不宜直接解读为类目级别的真实退步。
 
 ## 关键观察
 
@@ -87,11 +89,13 @@ v0.6.6 在 antigravity-opus4.6 三层改进的基础上，针对 Sonnet 4.6 benc
 
 4. **no-bug 假阳性继续改善**（+8.3pp，66.7%→75%）：`with-statement-no-bug` 50%→75%、`sql-parameterized-no-bug` 50%→75%。Output Skeleton Contract 的 no-bug 占位符 `_No divergence found_` / `_未发现问题_` 显式纳入契约后，模型在零分歧场景下也保留了 `## Findings` 结构。
 
-5. **两个明显回归**值得后续关注：
-   - **eval-280 `therac25-style-race-mode-flag` 100%→25%（-75pp）**：L7+L4 复合 case。logic-risks.md 新加的"primary L-code stays L4"声明可能让模型在双重 risk case 上过度强调 L4 而漏报 L7。下一轮需要把该声明的适用范围收紧到 sort/search routines 这一具体子集。
-   - **eval-230 `php-fopen-resource-leak` 100%→60%（-40pp）**：L8 资源类。原因待进一步实读输出诊断。
+5. **两个表观回归基本是单次抽样噪声**（事后 3 轮 repro 验证）：
+   - **eval-280 `therac25-style-race-mode-flag` 100%→25%（-75pp）**：补跑 3 次得分 3/4、2/4、3/4，加上原 1/4 共 4 次的均值 ≈ 56%。原始 25% 是 unlucky run（模型输出"skill 调用失败"走了裸分析）；antigravity 基线的 100% 同样是单次抽样。两个单次点估计之间的差距大部分来自方差，不是系统性退步。
+   - **eval-230 `php-fopen-resource-leak` 100%→60%（-40pp）**：补跑 3 次得分 3/5、4/5、4/5，4 次均值 ≈ 70%。结论同上：差距主要来自单次噪声 + L-code 误标（模型偶发性把 L8 资源泄漏标为 L6 callee contract）。
    
-6. **L8 资源类整体下降**（-20pp，100%→80%）：被 eval-230 单点拖累；eval-201 仍保持 100%。
+   **方法论结论：** 在本次 2 个 case × 4 次采样（n=8）的小样本下，单次结果与 4 次均值的偏差量级达 ±25pp。这是经验性观察、不是框架级常数；但已足以说明做 case-by-case 改进决策前应取 3+ 次均值，避免追逐单次抽样的噪声。
+
+6. **L8 资源类整体下降**（-20pp，100%→80%）：被 eval-230 单点拖累；eval-201 仍保持 100%。同上，单次抽样噪声为主。
 
 7. **中文支持稳定**：4/4 全过。
 
@@ -99,4 +103,5 @@ v0.6.6 在 antigravity-opus4.6 三层改进的基础上，针对 Sonnet 4.6 benc
 
 - 迭代目录：`skills-workspace/iteration-skeleton-contract-ed85087/`
 - 冻结副本：`benchmarks/runs/v0.6.6-ed85087-claude-sonnet-4-6-logic-review.json`
+- 噪声 repro（用于观察 5）：`skills-workspace/iteration-repro-280-230-run1/`、`run2/`、`run3/`
 - 关键 commits：`ed85087` (Output Skeleton Contract)、`8dd2403` (Step 6 字面标签强化)、`39b192a` (对抗性验证 + 五字段纪律)

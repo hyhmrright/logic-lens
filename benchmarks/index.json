@@ -103,7 +103,7 @@
       "skill_filter": "logic-review",
       "cases_graded": 36,
       "overall_pass_rate": 0.7615740740740741,
-      "notes": "logic-review after Output Skeleton Contract block + L4 quicksort priority note; 76.2% pass rate (+8.8pp vs antigravity-opus4.6, +22.3pp vs v0.6.5 baseline). Breakthroughs: L4 (+33.3pp), L7 (+26.7pp). Regressions to address: eval-280 (L7+L4 composite), eval-230 (L8). See report for details."
+      "notes": "logic-review after Output Skeleton Contract block + L4 quicksort priority note; 76.2% pass rate (+8.8pp vs antigravity-opus4.6, +22.3pp vs v0.6.5 baseline). Breakthroughs: L4 (+33.3pp), L7 (+26.7pp). Apparent regressions on eval-280 / eval-230 ruled noise after 3-run repro (case-level single-run variance ±25pp). See report for details."
     }
   ]
 }
