@@ -16,6 +16,17 @@ description: >
 
 # Logic-Lens — Logic Review
 
+## Output Skeleton Contract
+
+The downstream grader (`scripts/grade-iteration.py`) and other Logic-Lens skills consume this report by substring-matching literal tokens defined in `../_shared/common.md` §1 (header map), §2 (mandatory field labels + Logic Score), and `../_shared/report-template.md` (skeleton). Paraphrasing those tokens — even with a synonym that reads fine to a human — breaks the contract regardless of analysis quality.
+
+**Two failure modes observed in benchmark that deserve specific callout** beyond the general rule:
+
+- **Synonym substitution for field labels whose substituted form omits the required substring** — replacing `Premises` / `前提` with `前置条件构建` / `前置条件` (eval-201), or `Divergence` / `偏差` with `根因` / `核心缺陷` / `结论` (eval-252). Each substitution reads fine to a human and may even appear as a section heading or table column, but the substituted word does NOT contain the required substring, so grader and cross-skill consumers see the document as missing the field entirely. Use the literal token from `common.md` §1; you can still add a descriptive subtitle alongside it.
+- **Demoting a confirmed L-code finding** to `### 附加观察（非 Finding）` / `### Additional observation` — if Premises→Trace→Divergence holds, the finding belongs inside `## Findings` with the five literal fields, even at Suggestion severity. This was a recurring cause of eval-279 (quicksort L4) failing on Sonnet runs.
+
+**No-bug case**: emit `## Findings` followed by the literal placeholder `_No divergence found_` (中文 `_未发现问题_`) so the section is detectable by downstream tooling.
+
 ## Setup
 
 Use lazy loading per `../_shared/common.md` §13:
