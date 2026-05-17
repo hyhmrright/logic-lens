@@ -92,8 +92,8 @@ v0.6.6 在 antigravity-opus4.6 三层改进的基础上，针对 Sonnet 4.6 benc
 5. **两个表观回归基本是单次抽样噪声**（事后 3 轮 repro 验证）：
    - **eval-280 `therac25-style-race-mode-flag` 100%→25%（-75pp）**：补跑 3 次得分 3/4、2/4、3/4，加上原 1/4 共 4 次的均值 ≈ 56%。原始 25% 是 unlucky run（模型输出"skill 调用失败"走了裸分析）；antigravity 基线的 100% 同样是单次抽样。两个单次点估计之间的差距大部分来自方差，不是系统性退步。
    - **eval-230 `php-fopen-resource-leak` 100%→60%（-40pp）**：补跑 3 次得分 3/5、4/5、4/5，4 次均值 ≈ 70%。结论同上：差距主要来自单次噪声 + L-code 误标（模型偶发性把 L8 资源泄漏标为 L6 callee contract）。
-   
-   **方法论结论：** 在本次 2 个 case × 4 次采样（n=8）的小样本下，单次结果与 4 次均值的偏差量级达 ±25pp。这是经验性观察、不是框架级常数；但已足以说明做 case-by-case 改进决策前应取 3+ 次均值，避免追逐单次抽样的噪声。
+
+   **方法论：** case-level 改进/退步决策前应取 3+ 次均值，详见 [`benchmarks/README.md` § Methodology](../../README.md#methodology-multi-run-averaging-for-case-level-decisions)。本节数据（n=8，单次 vs 4 次均值偏差 ±25pp）即为该规则的实证来源。
 
 6. **L8 资源类整体下降**（-20pp，100%→80%）：被 eval-230 单点拖累；eval-201 仍保持 100%。同上，单次抽样噪声为主。
 
