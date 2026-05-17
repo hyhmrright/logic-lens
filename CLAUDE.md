@@ -30,9 +30,16 @@ logic-lens/
 │   ├── hooks.json                 ← Claude Code hook registration (uses ${CLAUDE_PLUGIN_ROOT} — portable across platforms)
 │   └── session-start              ← Copies commands/ to ~/.claude/commands/ on session start
 ├── evals/content/v2/evals-v2.json  ← Content benchmark test cases (current)
-├── evals/trigger/v2/               ← Trigger benchmark suites (per skill)
+├── evals/trigger/v2/               ← Trigger benchmark suites (per skill) — see Gotchas before relying on scores
 ├── evals/v1/                      ← Legacy v1 cases (archived for reference)
-├── benchmarks/runs/               ← Frozen published benchmark summaries
+├── benchmarks/
+│   ├── index.json                  ← Catalog of published runs
+│   ├── reports/                    ← Human-readable markdown reports per version tag
+│   └── runs/                       ← Frozen run summaries (workflow: see `benchmarks/README.md`)
+├── scripts/                       ← Shell scripts invoked by `npm run ...` (validate, trigger-evals, content-evals, grader)
+├── tests/                         ← Python unit tests (currently `test_grader.py` for the eval grader)
+├── docs/                          ← Auxiliary docs (model compatibility, case studies, marketing assets)
+├── skills-workspace/              ← Scratch space for in-progress skill iterations and benchmark probes
 ├── CONTRIBUTING.md                ← Contribution ground rules and versioning policy
 └── AGENTS.md / GEMINI.md          ← Companion guides for Codex and Gemini CLI users
 ```
@@ -83,6 +90,7 @@ See `skills/_shared/common.md` — Iron Law section. That is the canonical defin
 
 ```bash
 npm run validate       # Validate repo structure and metadata consistency (scripts/validate-repo.sh)
+npm run unit-tests     # Run Python unit tests under tests/ (currently grader tests)
 npm run trigger-evals  # Run trigger-eval suites under evals/trigger/v2/ (scripts/run-trigger-evals.sh)
 npm run content-evals  # Run evals/content/v2/evals-v2.json end-to-end through claude -p + grade (scripts/run-content-evals.sh) — costs API tokens
 ```
@@ -99,6 +107,10 @@ ls skills/*/logic-*-guide.md
 # Verify version is consistent across all metadata files
 grep '"version"' package.json .claude-plugin/plugin.json .claude-plugin/marketplace.json .codex-plugin/plugin.json gemini-extension.json
 ```
+
+## Gotchas
+
+- **`npm run trigger-evals` recall is always 0% for Logic-Lens.** The suite delegates to skill-creator's `run_loop.py`, which asks a model (`claude -p`) whether a query *should* trigger a skill — but Logic-Lens skills are dispatched by Claude Code's IDE plugin mechanism, not by model decision, so every positive case scores 0. The suite is still useful for catching `description` regressions on negative (near-miss) cases; verify real triggers by hand in an interactive Claude Code session.
 
 ## First Clone Setup
 
@@ -119,11 +131,6 @@ ls ~/.claude/commands/logic-*.md
 ```
 
 **Platform note:** the hook requires `bash`. On macOS and Linux it is preinstalled. On Windows, Claude Code itself runs under WSL or Git Bash, both of which provide `bash` — no extra install needed. For users installing through the marketplace (`/plugin install`), Claude Code auto-discovers `hooks/hooks.json` and runs the hook on every session — this manual step is only for clone-based development of the plugin itself.
-
-## Commands in This Repo
-
-Claude Code users invoke skills as `/logic-review`, `/logic-explain`, etc.
-The session-start hook copies these from `commands/` to `~/.claude/commands/` automatically.
 
 ## Adding a New Skill
 1. Create `skills/logic-newskill/SKILL.md` following the existing SKILL.md pattern.
