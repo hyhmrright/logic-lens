@@ -88,6 +88,8 @@ See `skills/_shared/common.md` — Iron Law section. That is the canonical defin
 
 ## Development Commands
 
+Logic-Lens has no runtime npm dependencies; `package.json` only declares script entry points. `npm install` is unnecessary for the four commands below.
+
 ```bash
 npm run validate       # Validate repo structure and metadata consistency (scripts/validate-repo.sh)
 npm run unit-tests     # Run Python unit tests under tests/ (currently grader tests)
@@ -104,8 +106,9 @@ grep -l "^name:" skills/*/SKILL.md
 # Verify all guide files are present
 ls skills/*/logic-*-guide.md
 
-# Verify version is consistent across all metadata files
+# Verify version is consistent across all metadata files (5 JSON files + README badge)
 grep '"version"' package.json .claude-plugin/plugin.json .claude-plugin/marketplace.json .codex-plugin/plugin.json gemini-extension.json
+grep -E 'version-[0-9]' README.md
 ```
 
 ## Gotchas
@@ -139,4 +142,4 @@ ls ~/.claude/commands/logic-*.md
 4. No change needed in `gemini-extension.json` — Gemini CLI discovers skills from the `skills/` directory automatically.
 5. No change needed in `.codex-plugin/plugin.json` — it points at `skills/` directory and auto-discovers subfolders.
 6. Add the skill name to the `for skill in ...` loop in `hooks/session-start` (search for `for skill in` to find the line).
-7. Add 3–5 eval cases to `evals/content/v2/evals-v2.json` (or to the appropriate `evals/trigger/v2/trigger-evals-*.json` file if the new skill needs trigger evals).
+7. Add 3–5 eval cases to `evals/content/v2/evals-v2.json`. Optionally add trigger cases to `evals/trigger/v2/trigger-evals-{skill}.json` — but see Gotchas: positive trigger cases always score 0% for Logic-Lens; trigger evals are only useful for catching `description` regressions on negative cases.
