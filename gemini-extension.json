@@ -10,6 +10,7 @@
   },
   "homepage": "https://github.com/hyhmrright/logic-lens",
   "keywords": ["logic", "code-review", "bug-detection", "execution-tracing", "static-analysis"],
+  "contextFileName": "GEMINI.md",
   "engines": {
     "gemini": ">=0.30.0"
   },
