@@ -105,5 +105,21 @@
       "overall_pass_rate": 0.7615740740740741,
       "notes": "logic-review after Output Skeleton Contract block + L4 quicksort priority note; 76.2% pass rate (+8.8pp vs antigravity-opus4.6, +22.3pp vs v0.6.5 baseline). Breakthroughs: L4 (+33.3pp), L7 (+26.7pp). Apparent regressions on eval-280 / eval-230 ruled noise after 3-run repro (case-level single-run variance ±25pp). See report for details."
     }
+  ,
+    {
+      "id": "v0.6.7-58f1be3-claude-sonnet-4-6-logic-review-probe4",
+      "kind": "content-eval-probe",
+      "path": "runs/v0.6.7-58f1be3-claude-sonnet-4-6-logic-review-probe4.json",
+      "report": "reports/v0.6.7/sonnet-logic-review.md",
+      "source_iteration_dir": "skills-workspace/iteration-58f1be3",
+      "model": "claude-sonnet-4-6",
+      "branch": "main",
+      "commit": "58f1be3",
+      "date": "2026-05-18",
+      "skill_filter": "logic-review",
+      "cases_graded": 4,
+      "overall_pass_rate": 0.75,
+      "notes": "4-case targeted probe (eval-208/250/276/280). +43.75pp vs a25b6c7 baseline. Fixes: Multi-finding Divergence discipline, L3 capacity-limit false-positive gate, L7 post-constructor code-structure parsing rule. All 4 cases reached 75%; remaining failures are suspected grader LLM noise — needs 3-run average to confirm."
+    }
   ]
 }
