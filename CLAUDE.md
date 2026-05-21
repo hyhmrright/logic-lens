@@ -97,6 +97,14 @@ npm run trigger-evals  # Run trigger-eval suites under evals/trigger/v2/ (script
 npm run content-evals  # Run evals/content/v2/evals-v2.json end-to-end through claude -p + grade (scripts/run-content-evals.sh) — costs API tokens
 ```
 
+### 单次迭代评分（不跑完整套件）
+
+```bash
+python scripts/grade-iteration.py <iteration-dir>
+# 对 skills-workspace/ 下某次迭代打分，无需触发完整 content-evals
+# 详见 scripts/README.md 获取参数说明
+```
+
 Manual one-liners that don't require the scripts:
 
 ```bash
@@ -113,7 +121,8 @@ grep -E 'version-[0-9]' README.md
 
 ## Gotchas
 
-- **`npm run trigger-evals` recall is always 0% for Logic-Lens.** The suite delegates to skill-creator's `run_loop.py`, which asks a model (`claude -p`) whether a query *should* trigger a skill — but Logic-Lens skills are dispatched by Claude Code's IDE plugin mechanism, not by model decision, so every positive case scores 0. The suite is still useful for catching `description` regressions on negative (near-miss) cases; verify real triggers by hand in an interactive Claude Code session.
+- **`npm run trigger-evals` recall is always 0% for Logic-Lens.** The suite delegates to skill-creator's `run_loop.py`, which asks a model (`claude -p`) whether a query *should* trigger a skill — but Logic-Lens skills are dispatched by Claude Code's IDE plugin mechanism, not by model decision, so every positive case scores 0. The suite is still useful for catching `description` regressions on negative (near-miss) cases; verify real triggers by hand in an interactive Claude Code session. (详细参数说明见 `scripts/README.md`)
+- **`skills-workspace/` 目录结构约定：** 每次迭代建子目录（如 `iteration-a25b6c7/`），完成后在目录内放 `FINAL-REPORT.md`。草稿文件不要散放在根级别。
 
 ## First Clone Setup
 
