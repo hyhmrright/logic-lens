@@ -120,6 +120,36 @@
       "cases_graded": 4,
       "overall_pass_rate": 0.75,
       "notes": "4-case targeted probe (eval-208/250/276/280). +43.75pp vs a25b6c7 baseline. Fixes: Multi-finding Divergence discipline, L3 capacity-limit false-positive gate, L7 post-constructor code-structure parsing rule. All 4 cases reached 75%; remaining failures are suspected grader LLM noise — needs 3-run average to confirm."
+    },
+    {
+      "id": "v0.6.8-3a9ab19-claude-sonnet-4-6-logic-review-run1",
+      "kind": "content-eval",
+      "path": "runs/v0.6.8-3a9ab19-claude-sonnet-4-6-logic-review-run1.json",
+      "report": "reports/v0.6.8/sonnet-logic-review.md",
+      "source_iteration_dir": "skills-workspace/iteration-v0.6.8-full",
+      "model": "claude-sonnet-4-6",
+      "branch": "main",
+      "commit": "3a9ab19",
+      "date": "2026-05-23",
+      "skill_filter": "logic-review",
+      "cases_graded": 36,
+      "overall_pass_rate": 0.7453703703703704,
+      "notes": "v0.6.8 Run1. Divergence 字段正例 + L-code 消歧表扩展。格式合规 47%→67%（+20pp）。整体 74.5%。"
+    },
+    {
+      "id": "v0.6.8-3a9ab19-claude-sonnet-4-6-logic-review-run2",
+      "kind": "content-eval",
+      "path": "runs/v0.6.8-3a9ab19-claude-sonnet-4-6-logic-review-run2.json",
+      "report": "reports/v0.6.8/sonnet-logic-review.md",
+      "source_iteration_dir": "skills-workspace/iteration-v0.6.8-run2",
+      "model": "claude-sonnet-4-6",
+      "branch": "main",
+      "commit": "3a9ab19",
+      "date": "2026-05-23",
+      "skill_filter": "logic-review",
+      "cases_graded": 36,
+      "overall_pass_rate": 0.7740740740740741,
+      "notes": "v0.6.8 Run2. 2-run 均值 75.9%（vs v0.6.6 76.2%，-0.2pp，在统计噪声内）。13 improved / 15 regressed / 8 unchanged。最大提升 eval-280 +62pp，最大降幅 eval-233 -50pp。"
     }
   ]
 }
