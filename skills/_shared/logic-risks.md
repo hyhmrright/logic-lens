@@ -87,19 +87,22 @@ Projects define custom codes in `.logic-lens.yaml` using `C1`, `C2`, etc. Treat 
 
 ## Quick Disambiguation Table
 
-| If the bug requires | Use |
-|---------------------|-----|
-| more than one execution context to manifest | **L7**, not L4 |
-| lock-acquisition order differs between two functions, deadlock requires concurrent goroutines/threads | **L7**, not L4 |
-| resource lifecycle imbalance (missing/double release, ownership transfer) | **L8**, not L5 |
-| control-flow exit skipping required non-lifecycle code in a single sequential path | **L5** |
-| sequential aliasing or mutation-during-iteration | **L4** |
-| function mutates its argument AND returns the same reference (dual-contract footgun) | **L4** |
-| timezone, DST, locale, or encoding to trigger | **L9**, not L2 or L3 |
-| name resolution to a different definition than expected | **L1** |
-| callee behavior under specific inputs not matching caller's assumption | **L6** |
-| lock/mutex acquire-release imbalance under concurrency | **L7 + L8** jointly |
-| exception path bypasses resource cleanup (`fclose`, socket close, `rollback`) | **L8**, not L6 |
-| Go `defer release` placed before any conditional — guarantees all paths covered | **no-bug** |
-| two independent non-atomic flags jointly encoding one logical state, read across threads | **L7** (split-state flag race) |
-| post-constructor initialization called on published reference before completion | **L7** (publish-before-init) |
+| If the bug involves | Use | Common mistake to avoid |
+|---------------------|-----|------------------------|
+| more than one execution context to manifest | **L7** | ❌ L4 (L4 is single-context only) |
+| lock-acquisition order differs between two functions, deadlock requires concurrent goroutines/threads | **L7** | ❌ L4, ❌ L6 |
+| resource lifecycle imbalance (missing/double release, ownership transfer) | **L8** | ❌ L5, ❌ L6 |
+| control-flow exit skipping required non-lifecycle code in a single sequential path (audit log, metric, notification) | **L5** | ❌ L2 (skipping a side-effect is a control-flow escape, not a type issue) |
+| modifying a collection during `for`-loop iteration (elements skipped or crash) | **L4** | ❌ L3 (this is a mutation hazard, not a boundary blindspot) |
+| aliased references causing unexpected sharing in single-context code | **L4** | ❌ L7 (no concurrent context needed) |
+| function mutates its argument AND returns the same reference (dual-contract footgun) | **L4** | ❌ L3 |
+| TypeScript `as` / Java unchecked cast bypassing runtime type safety | **L2** | ❌ L4 (no mutation involved — the issue is a type-system gap) |
+| `.get()` / `.value()` on Optional/Maybe without presence check → throws | **L6** | ❌ L1 (no name shadowing — the issue is a callee-contract violation) |
+| timezone, DST, locale-dependent parsing/sorting, or encoding to trigger | **L9** | ❌ L6, ❌ L2, ❌ L3 |
+| name resolution to a different definition than expected (constant lookup, module shadowing, import aliasing) | **L1** | ❌ L3 (shadowing is about names, not boundaries) |
+| callee behavior under specific inputs not matching caller's assumption | **L6** | |
+| file/connection/handle not released on exception path | **L8** | ❌ L6 (the issue is a broken acquire/release lifecycle) |
+| lock/mutex acquire-release imbalance under concurrency | **L7 + L8** jointly | |
+| Go `defer release` placed before any conditional — guarantees all paths covered | **no-bug** | |
+| two independent non-atomic flags jointly encoding one logical state, read across threads | **L7** (split-state flag race) | ❌ L3 |
+| post-constructor initialization called on published reference before completion | **L7** (publish-before-init) | |
