@@ -97,11 +97,15 @@ Projects define custom codes in `.logic-lens.yaml` using `C1`, `C2`, etc. Treat 
 | aliased references causing unexpected sharing in single-context code | **L4** | ❌ L7 (no concurrent context needed) |
 | function mutates its argument AND returns the same reference (dual-contract footgun) | **L4** | ❌ L3 |
 | TypeScript `as` / Java unchecked cast bypassing runtime type safety | **L2** | ❌ L4 (no mutation involved — the issue is a type-system gap) |
+| implicit type coercion at operator level (`+`/`-`/`*`/`==` string↔number) | **L2** | ❌ L6 (operators are not callees — the issue is a type contract gap at the language level) |
 | `.get()` / `.value()` on Optional/Maybe without presence check → throws | **L6** | ❌ L1 (no name shadowing — the issue is a callee-contract violation) |
 | timezone, DST, locale-dependent parsing/sorting, or encoding to trigger | **L9** | ❌ L6, ❌ L2, ❌ L3 |
+| data type lacking tz/locale metadata (`TIMESTAMP` vs `TIMESTAMPTZ`, naive datetime) | **L9** | ❌ L6 (the root cause is information lost at data-type choice, not callee behavior) |
 | name resolution to a different definition than expected (constant lookup, module shadowing, import aliasing) | **L1** | ❌ L3 (shadowing is about names, not boundaries) |
+| variable scoping: `const`/`let` in constructor not visible to methods, block-scoped variable hiding outer | **L1** | ❌ L4 (no mutable state mutation — the issue is name/scope resolution) |
 | callee behavior under specific inputs not matching caller's assumption | **L6** | |
 | file/connection/handle not released on exception path | **L8** | ❌ L6 (the issue is a broken acquire/release lifecycle) |
+| error code / exit status suppressed (shell or-true, empty `catch`, bare `except`, missing `set -e`) | **L5** | ❌ L7 (single-context error suppression is control flow escape, not concurrency) |
 | lock/mutex acquire-release imbalance under concurrency | **L7 + L8** jointly | |
 | Go `defer release` placed before any conditional — guarantees all paths covered | **no-bug** | |
 | two independent non-atomic flags jointly encoding one logical state, read across threads | **L7** (split-state flag race) | ❌ L3 |
