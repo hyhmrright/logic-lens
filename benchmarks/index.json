@@ -150,6 +150,21 @@
       "cases_graded": 36,
       "overall_pass_rate": 0.7740740740740741,
       "notes": "v0.6.8 Run2. 2-run 均值 75.9%（vs v0.6.6 76.2%，-0.2pp，在统计噪声内）。13 improved / 15 regressed / 8 unchanged。最大提升 eval-280 +62pp，最大降幅 eval-233 -50pp。"
+    },
+    {
+      "id": "v0.6.9-fe9a1aa-claude-sonnet-4-6-logic-review",
+      "kind": "content-eval",
+      "path": "runs/v0.6.9-fe9a1aa-claude-sonnet-4-6-logic-review.json",
+      "report": "reports/v0.6.9/sonnet-logic-review.md",
+      "source_iteration_dir": "skills-workspace/iteration-v0.6.9-fe9a1aa",
+      "model": "claude-sonnet-4-6",
+      "branch": "main",
+      "commit": "fe9a1aa",
+      "date": "2026-05-24",
+      "skill_filter": "logic-review",
+      "cases_graded": 36,
+      "overall_pass_rate": 0.7833333333333333,
+      "notes": "v0.6.9 四组 L-code 消歧规则 + no-bug 五字段模板。78.3%（+2.4pp vs v0.6.8 avg）。L9 +18.3pp, L6 100%, no-bug +8.5pp。13 满分 case。L4/L5 退步疑为单次方差。"
     }
   ]
 }
