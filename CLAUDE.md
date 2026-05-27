@@ -122,7 +122,7 @@ grep -E 'version-[0-9]' README.md
 ## Gotchas
 
 - **`npm run trigger-evals` recall is always 0% for Logic-Lens.** The suite delegates to skill-creator's `run_loop.py`, which asks a model (`claude -p`) whether a query *should* trigger a skill — but Logic-Lens skills are dispatched by Claude Code's IDE plugin mechanism, not by model decision, so every positive case scores 0. The suite is still useful for catching `description` regressions on negative (near-miss) cases; verify real triggers by hand in an interactive Claude Code session. (详细参数说明见 `scripts/README.md`)
-- **`skills-workspace/` 目录结构约定：** 每次迭代建子目录（如 `iteration-a25b6c7/`），完成后在目录内放 `FINAL-REPORT.md`。草稿文件不要散放在根级别。
+- **`skills-workspace/` 目录结构约定：** 每次迭代建子目录（如 `iteration-a25b6c7/`），完成后在目录内放 `FINAL-REPORT.md`。草稿文件不要散放在根级别。根目录下现有少量历史遗留文件（`COMPARISON.md`、`FINAL-REPORT.md` 等）仅供参考，新工作请严格使用子目录。
 
 ## First Clone Setup
 
@@ -150,5 +150,8 @@ ls ~/.claude/commands/logic-*.md
 3. Add a command wrapper to `commands/logic-newskill.md`.
 4. No change needed in `gemini-extension.json` — Gemini CLI discovers skills from the `skills/` directory automatically.
 5. No change needed in `.codex-plugin/plugin.json` — it points at `skills/` directory and auto-discovers subfolders.
-6. Add the skill name to the `for skill in ...` loop in `hooks/session-start` (search for `for skill in` to find the line).
+6. Add the skill name to the `for skill in ...` loop in `hooks/session-start`:
+   ```bash
+   grep -n "for skill in" hooks/session-start
+   ```
 7. Add 3–5 eval cases to `evals/content/v2/evals-v2.json`. Optionally add trigger cases to `evals/trigger/v2/trigger-evals-{skill}.json` — but see Gotchas: positive trigger cases always score 0% for Logic-Lens; trigger evals are only useful for catching `description` regressions on negative cases.
