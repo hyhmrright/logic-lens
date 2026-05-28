@@ -1131,6 +1131,17 @@ def grade_case(case_id: int, output_path: Path) -> dict:
     passed = sum(1 for e in expectations if e["passed"])
     pass_rate = passed / len(expectations) if expectations else 0.0
 
+    # Split format/language vs logic sub-scores so optimization targets the clean
+    # logic signal, not the commingled headline. rules_for_case() prepends the format
+    # rules (chinese-output if zh, then four-field if non-explain) in this fixed order,
+    # so the first n_format expectations are them — slicing by position survives the
+    # description rename that check() applies on predicate error.
+    n_format = (1 if is_zh_case else 0) + (1 if case["mode"] != "logic-explain" else 0)
+    format_exps = expectations[:n_format]
+    logic_exps = expectations[n_format:]
+    format_passed = sum(1 for e in format_exps if e["passed"])
+    logic_passed = sum(1 for e in logic_exps if e["passed"])
+
     return {
         "eval_id": case_id,
         "name": name,
@@ -1142,6 +1153,12 @@ def grade_case(case_id: int, output_path: Path) -> dict:
         "passed": passed,
         "total": len(expectations),
         "pass_rate": pass_rate,
+        "logic_passed": logic_passed,
+        "logic_total": len(logic_exps),
+        "logic_pass_rate": logic_passed / len(logic_exps) if logic_exps else None,
+        "format_passed": format_passed,
+        "format_total": n_format,
+        "format_pass_rate": format_passed / n_format if n_format else None,
     }
 
 
@@ -1185,6 +1202,8 @@ def main(iter_dir: Path):
                         if "chinese" in e["text"].lower())
 
     overall_rates = [r["pass_rate"] for r in results if "pass_rate" in r]
+    logic_rates = [r["logic_pass_rate"] for r in results if r.get("logic_pass_rate") is not None]
+    format_rates = [r["format_pass_rate"] for r in results if r.get("format_pass_rate") is not None]
 
     summary = {
         "schema_version": 2,
@@ -1195,12 +1214,16 @@ def main(iter_dir: Path):
         "missing_eval_ids": missing_case_ids,
         "evals_source": str(EVALS_SOURCE.relative_to(REPO)),
         "overall_pass_rate": sum(overall_rates) / len(overall_rates) if overall_rates else 0.0,
+        "overall_logic_pass_rate": sum(logic_rates) / len(logic_rates) if logic_rates else None,
+        "overall_format_pass_rate": sum(format_rates) / len(format_rates) if format_rates else None,
         "per_mode": per_mode,
         "chinese_language_pass": f"{zh_lang_pass}/{zh_lang_total}",
         "per_case": [
             {"id": r["eval_id"], "name": r["name"], "mode": r["mode"],
              "pass_rate": r.get("pass_rate", 0.0),
-             "passed": r.get("passed", 0), "total": r.get("total", 0)}
+             "passed": r.get("passed", 0), "total": r.get("total", 0),
+             "logic_pass_rate": r.get("logic_pass_rate"),
+             "format_pass_rate": r.get("format_pass_rate")}
             for r in results
         ],
     }
@@ -1218,7 +1241,12 @@ def main(iter_dir: Path):
         rate = f"{r['passed']}/{r['total']}"
         print(f"{r['eval_id']:<6} {r['mode']:<16} {rate:<8} {zh_tag} {r['name']}")
 
+    def _fmt_rate(label: str, value: float | None, n: int) -> str:
+        return f"{label}: {value:.3f} (n={n})" if value is not None else f"{label}: n/a"
+
     print(f"\nOverall pass_rate: {summary['overall_pass_rate']:.3f} (n={len(overall_rates)})")
+    print(_fmt_rate("  logic-only  pass_rate", summary["overall_logic_pass_rate"], len(logic_rates)))
+    print(_fmt_rate("  format-only pass_rate", summary["overall_format_pass_rate"], len(format_rates)))
     print(f"Chinese language assertion: {summary['chinese_language_pass']}")
     print(f"Summary written to: {iter_dir / 'summary.json'}")
 

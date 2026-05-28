@@ -139,6 +139,25 @@ class TestGradeCaseEdgeCases(unittest.TestCase):
             self.assertIn("pass_rate", result)
             self.assertGreater(result["pass_rate"], 0.0)
 
+    def test_logic_format_decomposition(self):
+        # The format/language sub-score must cover exactly the universal rules
+        # (chinese-output for zh- cases, four-field for non-explain), and logic +
+        # format counts must reconstruct the combined total. Guards the positional
+        # n_format slice in grade_case against rules_for_case reordering.
+        with tempfile.TemporaryDirectory() as tmpdir:
+            output = Path(tmpdir) / "output.md"
+            output.write_text("Premises/Trace/Divergence labels and L1 content.", encoding="utf-8")
+            for cid, case in EVALS_BY_ID.items():
+                r = grade_case(cid, output)
+                expected_n_format = ((1 if case["name"].startswith("zh-") else 0)
+                                     + (1 if case["mode"] != "logic-explain" else 0))
+                self.assertEqual(r["format_total"], expected_n_format,
+                                 f"case {cid}: format_total mismatch")
+                self.assertEqual(r["logic_total"] + r["format_total"], r["total"],
+                                 f"case {cid}: logic+format != total")
+                self.assertEqual(r["logic_passed"] + r["format_passed"], r["passed"],
+                                 f"case {cid}: logic+format passed != passed")
+
     def test_grade_case_explain_mode_skips_four_field(self):
         # logic-explain mode should not require four-field labels
         explain_cases = [cid for cid, c in EVALS_BY_ID.items() if c["mode"] == "logic-explain"]
