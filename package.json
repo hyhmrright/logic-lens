@@ -8,6 +8,7 @@
     "validate": "bash scripts/validate-repo.sh",
     "unit-tests": "python3 -m unittest discover tests/",
     "trigger-evals": "bash scripts/run-trigger-evals.sh",
-    "content-evals": "bash scripts/run-content-evals.sh"
+    "content-evals": "bash scripts/run-content-evals.sh",
+    "bump-version": "python3 scripts/bump-version.py"
   }
 }

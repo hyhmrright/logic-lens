@@ -14,3 +14,9 @@ __pycache__/
 
 # Playwright MCP runtime artifacts (logs + page snapshots)
 .playwright-mcp/
+
+# Claude Code local-only config — personal paths + runtime lock.
+# settings.json, skills/, agents/, hooks/ under .claude/ ARE tracked (shared dev tooling).
+.claude/settings.local.json
+.claude/scheduled_tasks.lock
+

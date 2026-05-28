@@ -14,6 +14,16 @@ Checks: required SKILL.md frontmatter in six skills, shared framework files unde
 
 Exit code 0 = release-ready; non-zero = fix before tagging.
 
+## `bump-version.py`
+
+Rewrites the version number in all six places at once (`package.json`, the four plugin manifests, and the `README.md` badge), preserving each file's formatting, then runs `validate-repo.sh` to confirm. Replaces the manual six-file edit documented in CLAUDE.md → Version Sync.
+
+```bash
+npm run bump-version -- 0.7.0       # or: python3 scripts/bump-version.py 0.7.0
+```
+
+Exits with `validate-repo.sh`'s code (0 = consistent). Does **not** touch `CHANGELOG.md` — add the release entry by hand.
+
 ## `run-content-evals.sh`
 
 End-to-end content-eval pipeline. Pairs with `grade-iteration.py` (the rule-based grader): the runner calls Claude and writes outputs; the grader scores them offline against the assertion rules.
