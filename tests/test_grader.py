@@ -28,6 +28,7 @@ _case208_both_skip_paths = _mod._case208_both_skip_paths
 _CASE_EXTRA_RULES = _mod._CASE_EXTRA_RULES
 EVALS_BY_ID = _mod.EVALS_BY_ID
 rules_for_case = _mod.rules_for_case
+format_rules_for_case = _mod.format_rules_for_case
 
 
 class TestCountChinese(unittest.TestCase):
@@ -140,18 +141,21 @@ class TestGradeCaseEdgeCases(unittest.TestCase):
             self.assertGreater(result["pass_rate"], 0.0)
 
     def test_logic_format_decomposition(self):
-        # The format/language sub-score must cover exactly the universal rules
-        # (chinese-output for zh- cases, four-field for non-explain), and logic +
-        # format counts must reconstruct the combined total. Guards the positional
-        # n_format slice in grade_case against rules_for_case reordering.
+        # grade_case slices the format sub-score off the front of expectations by
+        # position. That is only valid if rules_for_case() actually prepends exactly
+        # the format_rules_for_case() rules. Assert that positional contract directly
+        # (against the real rules_for_case output, not a re-derived formula) so a
+        # future reorder is caught, then confirm the split reconstructs the totals.
         with tempfile.TemporaryDirectory() as tmpdir:
             output = Path(tmpdir) / "output.md"
             output.write_text("Premises/Trace/Divergence labels and L1 content.", encoding="utf-8")
             for cid, case in EVALS_BY_ID.items():
+                format_rules = format_rules_for_case(case)
+                n_format = len(format_rules)
+                self.assertEqual(rules_for_case(case)[:n_format], format_rules,
+                                 f"case {cid}: format rules are not the leading rules")
                 r = grade_case(cid, output)
-                expected_n_format = ((1 if case["name"].startswith("zh-") else 0)
-                                     + (1 if case["mode"] != "logic-explain" else 0))
-                self.assertEqual(r["format_total"], expected_n_format,
+                self.assertEqual(r["format_total"], n_format,
                                  f"case {cid}: format_total mismatch")
                 self.assertEqual(r["logic_total"] + r["format_total"], r["total"],
                                  f"case {cid}: logic+format != total")

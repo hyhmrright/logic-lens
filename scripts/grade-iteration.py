@@ -1095,17 +1095,23 @@ _CASE_EXTRA_RULES: dict[int, list[tuple[str, Callable[[str], bool]]]] = {
 
 # ── Generic grader ─────────────────────────────────────────────────────────────
 
-def rules_for_case(case: dict) -> list[tuple[str, Callable[[str], bool]]]:
-    name = case["name"]
-    is_zh_case = name.startswith("zh-")
+def format_rules_for_case(case: dict) -> list[tuple[str, Callable[[str], bool]]]:
+    """Universal format/language rules, in fixed leading order.
 
+    Single source of truth for the format sub-score: rules_for_case() prepends
+    exactly these, and grade_case() derives n_format from len() of this list — so
+    neither side re-derives the count by formula and they cannot drift apart.
+    """
     rules: list[tuple[str, Callable[[str], bool]]] = []
-    if is_zh_case:
+    if case["name"].startswith("zh-"):
         rules.append(("output is chinese (>=50 CJK chars, no English section headers)", is_chinese_output))
     if case["mode"] != "logic-explain":
         rules.append(_FOUR_FIELD_RULE)
-    rules += _CASE_EXTRA_RULES.get(case["id"], [])
     return rules
+
+
+def rules_for_case(case: dict) -> list[tuple[str, Callable[[str], bool]]]:
+    return format_rules_for_case(case) + _CASE_EXTRA_RULES.get(case["id"], [])
 
 
 def grade_case(case_id: int, output_path: Path) -> dict:
@@ -1132,11 +1138,12 @@ def grade_case(case_id: int, output_path: Path) -> dict:
     pass_rate = passed / len(expectations) if expectations else 0.0
 
     # Split format/language vs logic sub-scores so optimization targets the clean
-    # logic signal, not the commingled headline. rules_for_case() prepends the format
-    # rules (chinese-output if zh, then four-field if non-explain) in this fixed order,
-    # so the first n_format expectations are them — slicing by position survives the
-    # description rename that check() applies on predicate error.
-    n_format = (1 if is_zh_case else 0) + (1 if case["mode"] != "logic-explain" else 0)
+    # logic signal, not the commingled headline. rules_for_case() prepends exactly the
+    # format_rules_for_case() rules, so the first n_format expectations are them —
+    # slicing by position (not description match) survives the description rename that
+    # check() applies on predicate error. n_format comes from the single source of
+    # truth, so it cannot drift from what rules_for_case() actually prepended.
+    n_format = len(format_rules_for_case(case))
     format_exps = expectations[:n_format]
     logic_exps = expectations[n_format:]
     format_passed = sum(1 for e in format_exps if e["passed"])
