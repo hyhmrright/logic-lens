@@ -1,0 +1,14 @@
+{
+  "id": "005-leap-year-incomplete-rule",
+  "source": "classic real-world business-logic bug (incomplete Gregorian leap-year rule)",
+  "language": "python",
+  "scope": "is_leap_year()",
+  "expected_bug": {
+    "summary": "Only checks year % 4 == 0. The Gregorian rule also excludes century years not divisible by 400: 1900 and 2100 are NOT leap years but this returns True; 2000 is correct only by luck. Produces a wrong Feb-29 / day-count for those years. A logic-completeness bug, not a type or boundary error.",
+    "l_code_hint": "L5 (control flow / incomplete predicate) or domain-logic",
+    "must_mention": ["100", "400", "century/世纪/百年", "1900 or 2100"]
+  },
+  "fixed_change": "Apply the full rule: year % 4 == 0 and (year % 100 != 0 or year % 400 == 0).",
+  "fixed_should_be_silent": true,
+  "ground_truth_verified_by": "human (Gregorian calendar rule); single-file scope"
+}

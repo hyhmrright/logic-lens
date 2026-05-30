@@ -30,13 +30,14 @@ review() {  # $1 = code file, $2 = output file
   } | claude -p --model "$MODEL" > "$2" 2>>"$OUT/stderr.log"
 }
 
-# Match a Critical/Warning severity ONLY in finding HEADERS (`### ⚠️ 警告`), never in prose.
-# Two false positives this avoids, both hit during bring-up:
+# Judge severity by the TEXT label in the finding HEADER (`### ... 严重/警告/Critical/Warning`),
+# never the emoji and never prose. Three false signals this avoids, all hit during bring-up:
 #   1. a ✅/no-bug Remedy dry-run line "✅ 偏差消除" — a naive ✅ grep reads it as "no bug"
-#   2. a no-bug finding whose Trace *mentions* the word "警告"/"warning" — a whole-file grep
-#      reads the mention as a reported Warning
-# 💡 Suggestion headers are intentionally NOT blockers: correct code can still have edges.
-BLOCKER_HEADER_RE='^#{2,4}[[:space:]].*(🔴|⚠️|🟡|Critical|Warning|严重|警告)'
+#   2. a no-bug finding whose Trace *mentions* "警告"/"warning" — a whole-file grep misreads it
+#   3. the skill uses 🟡 for BOTH 警告(Warning) and 建议(Suggestion) — an emoji match flags a
+#      🟡-建议 Suggestion as a blocker. Only 严重/Critical and 警告/Warning are blockers;
+#      建议/Suggestion (💡 or 🟡) on correct code is acceptable.
+BLOCKER_HEADER_RE='^###[[:space:]].*(Critical|Warning|严重|警告)'
 
 detect_signal() {  # buggy output should carry a Critical/Warning finding
   grep -qE "$BLOCKER_HEADER_RE" "$1" && echo "DETECT ✓" || echo "miss ✗"

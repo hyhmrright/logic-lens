@@ -1,0 +1,15 @@
+{
+  "id": "006-redos-catastrophic-backtracking",
+  "source": "classic real-world security bug (ReDoS — catastrophic regex backtracking)",
+  "language": "javascript",
+  "scope": "isValidList()",
+  "expected_bug": {
+    "summary": "The regex /^(\\w+,?\\s*)*$/ has a nested quantifier over overlapping classes (\\w+ inside an outer *). On an input of many word chars followed by one char that prevents matching $ (e.g. 'aaaa...!'), the engine backtracks exponentially — a ~30-char malicious string can hang the thread for seconds (ReDoS / denial of service on untrusted input).",
+    "l_code_hint": "non-standard for L1–L9 — closest to a resource/availability hazard; a likely MISS for execution-tracing if it only reasons about correctness, not regex backtracking complexity",
+    "must_mention": ["backtrack/回溯", "ReDoS / catastrophic / 指数 / exponential", "denial of service / 性能 / hang"]
+  },
+  "fixed_change": "Rewrite as /^\\w+(,\\s*\\w+)*$/ — each word matched once, no overlapping nested quantifier, linear time.",
+  "fixed_should_be_silent": true,
+  "ground_truth_verified_by": "human (regex backtracking analysis); single-file scope",
+  "note": "Deliberately a probe where logic-review MIGHT under-report: ReDoS is a complexity property, not a wrong-value divergence, so semi-formal execution tracing may not surface it. A miss here is a real, informative finding about the skill's blind spots — not a probe defect."
+}
