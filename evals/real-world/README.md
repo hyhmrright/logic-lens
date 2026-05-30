@@ -18,6 +18,13 @@ with a verified ground truth, in two versions:
 The buggy/fixed pair is the key idea (mirrors a real bug-fix commit): a skill that "finds bugs"
 by always reporting *something* fails the `fixed` half. Detection without precision is noise.
 
+**Decoy probes** (`meta.json` → `"decoy": true`) carry only a `fixed.*` — correct code that
+*resembles* a textbook bug (e.g. a shared mutable cache that looks like the mutable-default
+footgun, or a Go 1.22+ loop-variable capture that is no longer a race). They test precision
+under pressure: the skill should stay **SILENT**. A Critical/Warning on a decoy is a false
+positive — the most important failure mode for real use. `meta.json` records `why_suspicious`,
+`why_actually_correct`, and `fails_if`.
+
 ## Why this is NOT auto-scored
 
 Real code is too varied for the brittle string assertions `grade-iteration.py` uses. The runner
