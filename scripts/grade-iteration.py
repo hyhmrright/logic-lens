@@ -1257,9 +1257,17 @@ def main(iter_dir: Path):
     def _fmt_rate(label: str, value: float | None, n: int) -> str:
         return f"{label}: {value:.3f} (n={n})" if value is not None else f"{label}: n/a"
 
-    print(f"\nOverall pass_rate: {summary['overall_pass_rate']:.3f} (n={len(overall_rates)})")
-    print(_fmt_rate("  logic-only    pass_rate", summary["overall_logic_pass_rate"], len(logic_rates)))
-    print(_fmt_rate("  contract-only pass_rate", summary["overall_format_pass_rate"], len(format_rates)))
+    # Logic is the headline: it measures the skill's actual reasoning / bug-detection
+    # ability. overall and contract are auxiliary — contract is a binary, high-variance
+    # Iron Law compliance gate orthogonal to reasoning, and it carries ~25% of overall's
+    # weight, so overall must NOT be read as a reasoning-quality trend. See
+    # docs/superpowers/specs/2026-05-30-contract-self-check-design.md.
+    print(f"\n── Skill 推理能力（主指标，评判 skill 效果只看这个）──")
+    print(_fmt_rate("  logic pass_rate", summary["overall_logic_pass_rate"], len(logic_rates)))
+    print(f"── 辅助指标（含噪声，勿用于推理能力趋势）──")
+    print(_fmt_rate("  overall  pass_rate", summary["overall_pass_rate"], len(overall_rates)))
+    print(_fmt_rate("  contract pass_rate", summary["overall_format_pass_rate"], len(format_rates)))
+    print(f"    └ contract = Iron Law 合规闸门：二值/单跑高方差，非推理质量")
     print(f"Chinese language assertion: {summary['chinese_language_pass']}")
     print(f"Summary written to: {iter_dir / 'summary.json'}")
 

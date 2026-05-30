@@ -33,6 +33,14 @@ Per-case pass rates are noisy. In the v0.6.6 noise study (2 cases × 4 samples, 
 
 Reports may cite this section instead of re-deriving the rule.
 
+## Metric Hierarchy: the logic sub-score is the headline
+
+The grader splits each case into a **logic** sub-score (reasoning / bug-detection — did the skill find the bug, classify the L-code, recommend a fix) and a **contract** sub-score (Iron Law compliance — does the report carry the literal `Premises:` / `Trace:` / `Divergence:` field labels + correct output language). These are orthogonal axes.
+
+- **Judge skill effectiveness by the logic sub-score only.** It is the clean signal of reasoning ability.
+- **`overall_pass_rate` mixes both** (contract assertions are ~25% of total assertions), so contract noise alone can swing overall by ~25pp with reasoning unchanged. Treat overall as a combined record, **not** a reasoning-quality trend.
+- **The contract sub-score is a binary, high-variance compliance gate** (non-`zh-` cases have a single contract rule → per-case contract is 0% or 100%). Useful as a floor check; do not chase it as an optimization target. Changing format rules to lift it has repeatedly net-regressed — see `docs/superpowers/specs/2026-05-30-contract-self-check-design.md`.
+
 ## index.json Field Reference
 
 Required fields for every `published_runs` entry: `id`, `kind`, `path`, `model`, `cases_graded`, `overall_pass_rate`, `notes`.
