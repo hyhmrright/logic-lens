@@ -1,6 +1,9 @@
 # Local eval-runner outputs — created by scripts/run-content-evals.sh
 skills-workspace/
 
+# Real-world probe run outputs — created by evals/real-world/run-real-world.sh
+evals/real-world/runs/
+
 # Python bytecode (grade-iteration.py + future helpers)
 __pycache__/
 *.pyc
