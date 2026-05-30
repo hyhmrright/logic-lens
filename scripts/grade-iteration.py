@@ -1096,11 +1096,17 @@ _CASE_EXTRA_RULES: dict[int, list[tuple[str, Callable[[str], bool]]]] = {
 # ── Generic grader ─────────────────────────────────────────────────────────────
 
 def format_rules_for_case(case: dict) -> list[tuple[str, Callable[[str], bool]]]:
-    """Universal format/language rules, in fixed leading order.
+    """Universal contract-compliance / language rules, in fixed leading order.
 
-    Single source of truth for the format sub-score: rules_for_case() prepends
-    exactly these, and grade_case() derives n_format from len() of this list — so
-    neither side re-derives the count by formula and they cannot drift apart.
+    These measure Iron Law CONTRACT compliance — does the report carry the literal
+    Premises/Trace/Divergence field labels (+ correct output language) that the whole
+    Logic-Lens skill suite and downstream consumers rely on. This is NOT about code
+    formatting; the historical `format_*` JSON keys are kept only for backward
+    compatibility (human-facing output labels this the "contract" sub-score).
+
+    Single source of truth for the contract (`format_*`) sub-score: rules_for_case()
+    prepends exactly these, and grade_case() derives n_format from len() of this list —
+    so neither side re-derives the count by formula and they cannot drift apart.
     """
     rules: list[tuple[str, Callable[[str], bool]]] = []
     if case["name"].startswith("zh-"):
@@ -1252,8 +1258,8 @@ def main(iter_dir: Path):
         return f"{label}: {value:.3f} (n={n})" if value is not None else f"{label}: n/a"
 
     print(f"\nOverall pass_rate: {summary['overall_pass_rate']:.3f} (n={len(overall_rates)})")
-    print(_fmt_rate("  logic-only  pass_rate", summary["overall_logic_pass_rate"], len(logic_rates)))
-    print(_fmt_rate("  format-only pass_rate", summary["overall_format_pass_rate"], len(format_rates)))
+    print(_fmt_rate("  logic-only    pass_rate", summary["overall_logic_pass_rate"], len(logic_rates)))
+    print(_fmt_rate("  contract-only pass_rate", summary["overall_format_pass_rate"], len(format_rates)))
     print(f"Chinese language assertion: {summary['chinese_language_pass']}")
     print(f"Summary written to: {iter_dir / 'summary.json'}")
 
