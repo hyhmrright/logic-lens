@@ -155,3 +155,14 @@ ls ~/.claude/commands/logic-*.md
    grep -n "for skill in" hooks/session-start
    ```
 7. Add 3–5 eval cases to `evals/content/v2/evals-v2.json`. Optionally add trigger cases to `evals/trigger/v2/trigger-evals-{skill}.json` — but see Gotchas: positive trigger cases always score 0% for Logic-Lens; trigger evals are only useful for catching `description` regressions on negative cases.
+
+## 하네스: Logic-Lens Skill Iteration
+
+**目标:** 把"改 SKILL.md → 同步缓存 → 跑 eval → 诊断 → 验证净收益"的迭代闭环固化为可复用的 agent 团队，避免每次手动踩坑（尤其缓存同步）。
+
+**触发:** 想**提升某个 logic-* skill 的 eval 分数 / 修复失败的 eval 模式**时，使用 `iterate-skill` 编排技能（它会按需调度 `eval-failure-analyzer` / `skill-editor` / `iteration-guard` 三个 agent 与 `sync-skill-cache` / `run-iteration-eval` 两个支撑技能）。单次提问、发版（用 `bump-version`）、新建 skill（用 `new-skill`）不触发本闭环。改完任何 `skills/**` 后跑 eval 前，**必须**先经 `sync-skill-cache` 同步缓存。
+
+**变更 이력:**
+| 날짜 | 변경 내용 | 대상 | 사유 |
+|------|----------|------|------|
+| 2026-06-01 | 初始构成：迭代闭环 harness（编排技能 iterate-skill + skill-editor/iteration-guard 两个新 agent + sync-skill-cache/run-iteration-eval 两个支撑技能；复用已有 eval-failure-analyzer/bump-version/new-skill） | 全体 | 把 skill 迭代主线工作固化为 agent 团队 |
