@@ -20,6 +20,8 @@ description: >
 
 The downstream grader (`scripts/grade-iteration.py`) and other Logic-Lens skills consume this report by substring-matching literal tokens defined in `../_shared/common.md` §1 (header map), §2 (mandatory field labels + Logic Score), and `../_shared/report-template.md` (skeleton). Paraphrasing those tokens — even with a synonym that reads fine to a human — breaks the contract regardless of analysis quality.
 
+**Language selects the token set, not the structure.** The two templates below are the same contract in two languages. Emitting English labels into a Chinese report is as much a contract breach as paraphrasing them — it violates `common.md` §1 (HIGHEST PRIORITY) and fails grading identically. Detect the user's language first, then fill the skeleton with that language's column from the §1 header map.
+
 **Three failure modes observed in benchmark that deserve specific callout** beyond the general rule:
 
 - **Synonym substitution for field labels whose substituted form omits the required substring** — replacing `Premises` / `前提` with `前置条件构建` / `前置条件` (eval-201), or `Divergence` / `偏差` with `根因` / `核心缺陷` / `结论` (eval-252). Each substitution reads fine to a human and may even appear as a section heading or table column, but the substituted word does NOT contain the required substring, so grader and cross-skill consumers see the document as missing the field entirely. Use the literal token from `common.md` §1; you can still add a descriptive subtitle alongside it.
@@ -40,16 +42,18 @@ Remedy: Replace loop body with `return [u for u in users if u.is_active]`. Dry-r
 
 Each finding block MUST contain all five literal labels (`Premises:` / `Trace:` / `Divergence:` / `Trigger:` / `Remedy:` or `前提：` / `追踪：` / `偏差：` / `触发：` / `修复：`) as line-starting prefixes. Section headers (`### Premises`, `## Execution Trace`) do NOT satisfy this requirement — the labels must appear inside the finding block.
 
-**No-bug case**: emit `## Findings` with a finding block that uses all five field labels, with `Divergence: None — [why the premise holds]`. This format is REQUIRED — it satisfies both grading and auditing. Example:
+**No-bug case**: emit `## Findings` with a finding block that uses all five field labels, with `Divergence: None — [why the premise holds]`. This format is REQUIRED — it satisfies both grading and auditing.
+
+The example below is deliberately shown **in Chinese** to make the localized token set concrete — it is the exact same skeleton as the English template above. For an English-language review, use the English labels; the structure does not change.
 
 ```
-### ✅ No Bug
-**[No Bug] — defer guarantees unlock on all exit paths**
-Premises: `mu.Lock()` acquired at line 12; `defer mu.Unlock()` placed at line 13 (before any conditional branch or early return).
-Trace: [1] `defer` registered immediately after `Lock()`. [2] Go spec guarantees deferred calls execute on ALL function exit paths (return, panic, early return). [3] No conditional branch between Lock and defer registration.
-Divergence: None — `defer mu.Unlock()` placed unconditionally after acquire guarantees release on every exit path; no lock leak possible.
-Trigger: N/A (no bug to reproduce).
-Remedy: N/A (code is correct as written).
+### ✅ 无 Bug
+**[无 Bug] — defer 保证所有退出路径都会解锁**
+前提：`mu.Lock()` 在第 12 行获取；`defer mu.Unlock()` 位于第 13 行（在任何条件分支或提前返回之前）。
+追踪：[1] `defer` 在 `Lock()` 之后立即注册。[2] Go 规范保证 deferred 调用在所有函数退出路径上执行（return、panic、提前返回）。[3] Lock 与 defer 注册之间无条件分支。
+偏差：无——`defer mu.Unlock()` 无条件置于加锁之后，保证每条退出路径都会释放，不存在锁泄漏。
+触发：N/A（无 bug 可复现）。
+修复：N/A（代码本身正确）。
 ```
 
 ## Setup
@@ -87,8 +91,8 @@ Use lazy loading per `../_shared/common.md` §13:
 
 **Step 6.5. Remedy Dry-Run** (guide Step 6.5) — mentally re-trace the Trigger input through the fixed code to confirm: divergence eliminated, no regression introduced, happy path preserved.
 
-**Step 7. Score and output** (guide Step 7) — compute Logic Score per `common.md` §6 and emit it as the literal line `**Logic Score:** XX/100` (中文 `**逻辑评分：** XX/100`) directly under `**Scope:**` — this exact token (not "Score: XX", not "Quality: XX") is required for both grader recognition and cross-skill consumption. Then render the rest of the Report Template with localized headers.
+**Step 7. Score and output** (guide Step 7) — **run Step 8 first whenever a runtime is available**; it withdraws false positives and so changes the score. Compute Logic Score per `common.md` §6 over the findings that survive verification, and emit it as the literal line `**Logic Score:** XX/100` (中文 `**逻辑评分：** XX/100`) directly under `**Scope:**` — this exact token (not "Score: XX", not "Quality: XX") is required for both grader recognition and cross-skill consumption. Then render the rest of the Report Template with localized headers.
 
-**Step 8. Execution Verification Gate** (guide Step 8, optional) — when a runtime is available, generate a minimal reproducer script for each Critical/Warning finding, execute it to confirm the bug exists, apply the Remedy and re-execute to confirm the fix works. Withdraw false positives; mark verified findings as `✅ Execution-verified`.
+**Step 8. Execution Verification Gate** (guide Step 8) — **required for every Critical and Warning finding whenever a runtime for the target language is available**; it is the only step that can contradict the analysis, so a confident trace is never a reason to skip it. Generate a minimal reproducer from the Trigger field, execute it against the original code, then apply the Remedy and re-execute. Withdraw findings whose reproducer passes on the original code — they are false positives. Mark survivors `✅ Execution-verified`; when no runtime exists mark `⚠️ Unverified — no runtime available` (中文 `⚠️ 未验证——无可用运行时`).
 
 **Mode line in report:** `Logic Review` (Chinese: `逻辑审查`).

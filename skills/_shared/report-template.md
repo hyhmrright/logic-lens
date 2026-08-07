@@ -181,7 +181,7 @@ When the user writes in Chinese (`common.md` §1 detection):
 3. **Severity markers.** Use `🔴`/`🟡`/`🟢`. In plain-terminal mode substitute `[CRITICAL]`/`[WARNING]`/`[SUGGESTION]`.
 4. **Skill-specific extensions** (Module Breakdown, Fix Log, Iteration History, etc.) appear **after** Summary, never between Findings and Summary.
 5. **No findings = valid.** Empty Findings + max score is correct. Do not invent speculative findings.
-6. **Verification status.** When Step 8 (Execution Verification Gate) was run, each finding must include a Verification field. When Step 8 was skipped, the Verification field may be omitted.
+6. **Verification status.** Applies only to skills that run an Execution Verification Gate — currently `logic-review` (its Step 8) and `logic-fix-all` (via Phase 3). For those, every Critical and Warning finding carries a Verification field: `✅ Execution-verified` normally, or `⚠️ Unverified — no runtime available` (中文 `⚠️ 未验证——无可用运行时`) when no runtime for the target language exists. Suggestions may omit it. Skills without that gate (`logic-health`, `logic-locate`, `logic-diff`, `logic-explain`) omit the field entirely — never synthesize a verification claim that no execution backs.
 
 ---
 

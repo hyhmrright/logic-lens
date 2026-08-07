@@ -225,15 +225,17 @@ Dry-run: ⚠️ Initial remedy [description] failed check (b) — [new issue]. R
 
 ## Step 7: Compute Score and Output
 
-1. Start at 100. Deduct per confirmed finding (Critical −15, Warning −7, Suggestion −2).
+**Ordering:** when a runtime is available, complete Step 8 before rendering output — verification withdraws false positives and therefore changes both the finding set and the score. Produce one final report, never a draft that Step 8 then edits.
+
+1. Start at 100. Deduct per confirmed finding (Critical −15, Warning −7, Suggestion −2). Count only findings that survived Step 5.5 and, where it ran, Step 8.
 2. Fill in the Report Template from `report-template.md`.
 3. Summary: most critical finding, recommended next action, whether the logic is safe to ship.
 
-## Step 8: Execution Verification Gate (Optional — when runtime is available)
+## Step 8: Execution Verification Gate (Required when a runtime is available)
 
-When the environment supports code execution (CLI with shell access, sandbox, or REPL), apply this step to each **Critical** and **Warning** finding. Skip this step entirely if no runtime is available — mark findings as `unverified — no runtime available` and proceed.
+Apply this step to every **Critical** and **Warning** finding. It is not optional: Steps 1–6 are all reasoning, and reasoning cannot falsify itself — a wrong trace and a right trace feel identical from the inside. Executing a reproducer is the only step in this skill that can return an answer the analysis did not already believe.
 
-**Prerequisite check:** Detect whether the target language runtime is available (e.g., `python3 --version`, `node --version`, `go version`). If unavailable, skip to output.
+**Prerequisite check:** Detect whether the target language runtime is available (e.g., `python3 --version`, `node --version`, `go version`). Only if it is unavailable, skip the step, mark each affected finding `⚠️ Unverified — no runtime available` (中文 `⚠️ 未验证——无可用运行时`), and proceed to output. A confident trace is not a substitute for a runtime and is never a reason to skip.
 
 ### 8a. Generate Minimal Reproducer Script
 
@@ -269,10 +271,11 @@ Add verification status to each finding:
 ```
 Verification: ✅ Execution-verified — reproducer FAIL → applied fix → PASS
 Verification: ⚠️ Unverified — [reason]
-Verification: ❌ False positive withdrawn — reproducer PASS on original code
 ```
 
-(Chinese: `验证：✅ 已执行验证——复现脚本 FAIL → 应用修复 → PASS` / `验证：⚠️ 未验证——[原因]` / `验证：❌ 假阳性已撤回——复现脚本在原始代码上 PASS`)
+(Chinese: `验证：✅ 已执行验证——复现脚本 FAIL → 应用修复 → PASS` / `验证：⚠️ 未验证——[原因]`)
+
+Findings withdrawn by 8b are removed from `## Findings` entirely, so they carry no Verification field. Record them once in Summary instead, matching the Step 5.5 withdrawal convention: "Candidate [L-code] at [location] withdrawn — reproducer passed on original code." (中文 `候选 [L-code]（位于 [位置]）已撤回——复现脚本在原始代码上通过。`)
 
 **Example reproducer (Python, L4 mutation-during-iteration):**
 

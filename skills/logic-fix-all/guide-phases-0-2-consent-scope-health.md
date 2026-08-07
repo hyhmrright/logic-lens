@@ -29,9 +29,19 @@ Skills:   logic-health → logic-review → logic-locate → logic-explain
 Token cost: HIGH. The pipeline uses ranked passes and scope caps, but
 deep tracing still costs roughly 5k–15k tokens per reviewed file
 (more for deeply interprocedural code, less for stateless utilities),
-times ~1.3 for iteration rounds.
-Your estimate: min(N, 100) reviewed files × ~10k tokens × 1.3 ≈
-(compute and show here, e.g. "~1M tokens").
+times ~1.3 for iteration rounds, times ~1.2 for the execution
+verification gate (Phase 3 runs a reproducer for each Critical and
+Warning finding before any fix is applied — this is what prevents
+edits based on false positives).
+Your estimate: min(N, 100) reviewed files × ~10k tokens × 1.3 × 1.2 ≈
+(compute and show here, e.g. "~1.2M tokens").
+
+Code execution: To avoid editing code based on a false positive, the
+pipeline runs a generated reproducer script for each Critical and
+Warning finding. These scripts are pure computation only — no network,
+no file writes, no database access, 10s timeout — and run against a
+minimal standalone copy of the reviewed function, not your live
+system. Skipped entirely if no runtime for the target language exists.
 
 Git impact: The pipeline edits source files. It does NOT commit,
 push, or amend. If you have uncommitted work, commit or stash first.
