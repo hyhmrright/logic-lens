@@ -8,6 +8,20 @@ the tool it shaped.
 
 ## Semi-Formal Execution Tracing
 
+**Agentic Code Reasoning**
+Ugare, S. & Chandra, S. (2026). arXiv:2603.01896.
+https://arxiv.org/abs/2603.01896
+
+The direct source of Logic-Lens's methodology. Reports that models using structured
+(semi-formal) reasoning reach 87–93% accuracy on code-semantics tasks versus 76–78% for
+unstructured chain-of-thought, with the largest gains on interprocedural bugs. Two things carry
+over almost verbatim: the requirement to state premises *before* tracing (the Iron Law), and the
+six-dimension risk decomposition that becomes L1–L6 in `logic-risks.md`. L7–L9 are Logic-Lens
+additions covering hazards outside the paper's single-process scope — concurrency, resource
+lifecycle, and time/locale.
+
+---
+
 **Abstract Interpretation: A Unified Lattice Model for Static Analysis of Programs
 by Construction or Approximation of Fixpoints**
 Cousot, P. & Cousot, R. (1977). *Proceedings of the 4th ACM Symposium on Principles
@@ -141,7 +155,7 @@ https://arxiv.org/abs/2201.11903
 Demonstrates that prompting LLMs to produce intermediate reasoning steps
 ("chain-of-thought") substantially improves accuracy on multi-step reasoning tasks.
 Logic-Lens's semi-formal tracing methodology is structurally equivalent to
-chain-of-thought: the Premises → Trace → Divergence → Remedy sequence forces the
+chain-of-thought: the Premises → Trace → Divergence → Trigger → Remedy sequence forces the
 model to externalize its reasoning at each step, making it auditable and
 substantially reducing hallucinated findings. The Iron Law ("NEVER emit a Remedy
 before completing Premises → Trace → Divergence") is a direct operationalization of

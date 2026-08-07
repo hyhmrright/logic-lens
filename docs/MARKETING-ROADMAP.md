@@ -1,6 +1,11 @@
 # Logic-Lens Outreach Roadmap
 
-**Goal**: grow from 2 GitHub stars + 1 solo maintainer to a community of users, contributors, and third-party marketplace listings. Target: 100 stars and inclusion in 3+ Claude plugin marketplaces by end of Q2.
+**Goal**: grow from a solo-maintained repo to a community of users, contributors, and third-party
+marketplace listings. Target: inclusion in 3+ Claude plugin marketplaces, plus at least one
+public case study.
+
+> Star and fork counts are live in the README badges — this file does not track them, so it does
+> not go stale on numbers.
 
 ## Layer 1 — Repo infrastructure (done in v0.4.3)
 
@@ -17,14 +22,20 @@ Research + submit Logic-Lens to third-party Claude plugin marketplaces. Most acc
 
 ### Known marketplaces to submit to
 
+Verified 2026-04-25 — full research in `docs/announcement/marketplace-research-summary.md`.
+
 | Marketplace | Submission method | Priority |
 |---|---|---|
-| `hesreallyhim/awesome-claude-code` | PR add entry to README table | P0 (highest traffic) |
-| `davila7/claude-code-plugin-marketplace` | PR add entry to marketplace.json | P0 |
-| `claude-plugins` community hubs | various — TBD | P1 |
-| Anthropic's official plugin directory | Wait for public submission flow (currently invite-only) | P2 |
+| `hesreallyhim/awesome-claude-code` | **Browser issue form only** — `gh` CLI submissions are banned | P0 (highest traffic) |
+| `obra/superpowers-marketplace` | PR adding a JSON entry to `.claude-plugin/marketplace.json` | P1 |
+| `helloianneo/awesome-claude-code-skills` | PR adding one README table row | P2 |
+| Anthropic's official plugin directory | Wait for public submission flow (currently invite-only) | P3 |
 
-Template PR body: see `docs/announcement/marketplace-submission.md`.
+⚠️ `davila7/claude-code-plugin-marketplace` and `Pi-Cla/awesome-claude-code-skills` were in an
+earlier draft of this plan and **do not exist**. The three above are the verified substitutes.
+
+Per-marketplace drafts: `docs/announcement/marketplace-pr-*.md`. Generic template:
+`docs/announcement/marketplace-submission.md`.
 
 ### Steps for each marketplace PR
 
@@ -47,8 +58,8 @@ Template PR body: see `docs/announcement/marketplace-submission.md`.
 - Be present in comments for at least 4 hours afterwards.
 
 ### Dev.to / Hashnode
-- Long-form article with v0.4.0 case study. 1,500-2,500 words with code examples.
-- Draft: `docs/announcement/devto-blog.md`.
+- ✅ Published: ["Why AI Code Review Misses Logic Bugs — And How Structured Execution Tracing Fixes It"](https://dev.to/hyhmrright/why-ai-code-review-misses-logic-bugs-and-how-structured-execution-tracing-fixes-it-3n0p)
+- Next: a case-study article built on `docs/case-studies/01-checkout-module/blog-post.md`.
 
 ### Twitter/X
 - Thread of 6–8 tweets. Draft: `docs/announcement/twitter-thread.md`.
@@ -66,7 +77,7 @@ Template PR body: see `docs/announcement/marketplace-submission.md`.
 
 - **Case studies**: use `/logic-health` on popular open-source repos, publish findings (responsibly, with coordinated disclosure for any real bugs).
 - **Screen recordings**: 3-minute demos of each skill, posted to YouTube and embedded in README.
-- **Benchmark posts**: quarterly "how has Logic-Lens evolved?" data posts using `iteration-N/summary.json`.
+- **Benchmark posts**: quarterly "how has Logic-Lens evolved?" data posts using the frozen runs in `benchmarks/runs/` and their reports in `benchmarks/reports/`.
 - **Guest contributions**: propose case-study articles to AI/programming newsletters.
 
 ## Tracking

@@ -61,6 +61,39 @@ The runner is idempotent — if `output.md` already exists for a case, it skips 
 
 `skills-workspace/` is gitignored; don't commit run outputs.
 
+## `grade-iteration.py`
+
+The offline grader. Pure Python, regex-based, free — it re-scores an existing iteration directory
+without spending a token, so you can iterate on assertion rules against outputs you already paid for.
+
+```bash
+python3 scripts/grade-iteration.py skills-workspace/iteration-<TAG>
+```
+
+One positional argument: the iteration directory. It reads every `eval-<id>/output.md`, writes an
+`eval-<id>/grading.json` per case, and aggregates `summary.json`.
+
+Each case is scored on two orthogonal axes:
+
+- **logic** — did the skill find the bug, classify the L-code, and propose a fix? This is the
+  headline metric for skill effectiveness.
+- **contract** — does the report carry the literal Iron Law field labels and the correct output
+  language? A binary, high-variance compliance gate. (The JSON keys are still named `format_*`
+  for backward compatibility.)
+
+`overall_pass_rate` mixes both. See `benchmarks/README.md` → "Metric Hierarchy" before drawing
+conclusions from it.
+
+**The grader is ground truth.** Never relax a rule to make a run pass — that destroys the only
+signal you have.
+
+## `_defaults.sh`
+
+Sourced by both eval runners. Holds the two-tier model default: `claude-haiku-4-5` for
+trigger-evals (cheap yes/no classification), `claude-sonnet-4-6` for content-evals (which
+pre-sets `MODEL` before sourcing, because semi-formal format compliance requires it). Override
+either with `MODEL=<id>`.
+
 ## `run-trigger-evals.sh`
 
 Drives skill-creator's `run_loop.py` against the six per-skill trigger eval sets in `evals/trigger/v2/trigger-evals-<skill>.json` to tune each `SKILL.md` description for higher trigger accuracy. Requires:

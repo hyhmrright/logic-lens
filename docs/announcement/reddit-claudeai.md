@@ -31,7 +31,7 @@ Most AI review tools pattern-match. They'll catch `null` dereferences and obviou
 - Race conditions with non-atomic increments
 - Mutations during iteration (tests pass if the mutation skips only consecutive elements)
 
-Logic-Lens enforces **Premises → Trace → Divergence → Remedy** on every finding. No finding without an explicit chain. No "add validation" hand-waves — remedies are paste-ready code.
+Logic-Lens enforces **Premises → Trace → Divergence → Trigger → Remedy** on every finding. No finding without an explicit chain. No "add validation" hand-waves — remedies are paste-ready code.
 
 ## Verification
 

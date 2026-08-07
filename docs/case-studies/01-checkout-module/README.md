@@ -1,6 +1,9 @@
 # Case Study 01 — Checkout Module
 
-A synthetic but realistic Python checkout service used to demonstrate Logic-Lens `/logic-health` across all six L-code risk classes.
+A synthetic but realistic Python checkout service used to demonstrate Logic-Lens `/logic-health`.
+It embeds one canonical bug for each of **L1–L6** — the six single-process risk classes. L7–L9
+(concurrency, resource lifecycle, time/locale) are out of scope for this case study; they are
+covered in `evals/content/v2/evals-v2.json`.
 
 ## Contents
 
@@ -27,7 +30,7 @@ With Logic-Lens v0.5.0+ installed in Claude Code:
 
 Expected result: Logic Score 52/100, 2 Critical, 4 Warning, Module Breakdown table matching `logic-health-report.md`.
 
-## Risk Coverage
+## Risk Coverage (L1–L6)
 
 | Risk Code | Module | Severity |
 |-----------|--------|----------|

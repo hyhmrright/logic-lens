@@ -9,7 +9,7 @@ Shipping Logic-Lens v0.4.2 🚀
 
 6 Claude Code skills that find logic bugs your linter (and tests) miss — via semi-formal execution tracing, not pattern-matching.
 
-Every finding = Premises → Trace → Divergence → Remedy. No handwaving.
+Every finding = Premises → Trace → Divergence → Trigger → Remedy. No handwaving.
 
 https://github.com/hyhmrright/logic-lens
 

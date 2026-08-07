@@ -20,8 +20,8 @@ Scope:    ENTIRE repository, not just recent commits or staged changes.
 Estimated files to scan: ~N
 
 Method:   Semi-formal execution tracing — Premises → Trace →
-          Divergence → Remedy. This is a LOGIC review, not a
-          syntax/style/lint pass.
+          Divergence → Trigger → Remedy. This is a LOGIC review,
+          not a syntax/style/lint pass.
 
 Skills:   logic-health → logic-review → logic-locate → logic-explain
           → logic-diff, iterated until clean.

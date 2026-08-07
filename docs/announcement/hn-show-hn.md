@@ -16,7 +16,7 @@ that pass lint, pass type-check, pass your unit tests, but still blow up
 at the first unexpected input.
 
 Instead of pattern-matching like most AI review tools do, it runs a
-semi-formal execution trace: Premises → Trace → Divergence → Remedy.
+semi-formal execution trace: Premises → Trace → Divergence → Trigger → Remedy.
 Every finding has an explicit chain from "what the code assumed" to
 "where reality broke the assumption" to a paste-ready fix.
 

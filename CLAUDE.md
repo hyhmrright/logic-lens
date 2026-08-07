@@ -29,17 +29,22 @@ logic-lens/
 ├── hooks/
 │   ├── hooks.json                 ← Claude Code hook registration (uses ${CLAUDE_PLUGIN_ROOT} — portable across platforms)
 │   └── session-start              ← Copies commands/ to ~/.claude/commands/ on session start
-├── evals/content/v2/evals-v2.json  ← Content benchmark test cases (current)
-├── evals/trigger/v2/               ← Trigger benchmark suites (per skill) — see Gotchas before relying on scores
-├── evals/v1/                      ← Legacy v1 cases (archived for reference)
+├── evals/
+│   ├── content/v2/evals-v2.json    ← Content benchmark test cases (104, current)
+│   ├── trigger/v2/                 ← Trigger benchmark suites (per skill) — see Gotchas before relying on scores
+│   ├── real-world/                 ← Real-code probes: second verification line, incl. decoy probes
+│   └── v1/                         ← Legacy v1 cases (archived for reference)
 ├── benchmarks/
 │   ├── index.json                  ← Catalog of published runs
 │   ├── reports/                    ← Human-readable markdown reports per version tag
 │   └── runs/                       ← Frozen run summaries (workflow: see `benchmarks/README.md`)
 ├── scripts/                       ← Shell scripts invoked by `npm run ...` (validate, trigger-evals, content-evals, grader)
 ├── tests/                         ← Python unit tests (currently `test_grader.py` for the eval grader)
-├── docs/                          ← Auxiliary docs (model compatibility, case studies, marketing assets)
-├── skills-workspace/              ← Scratch space for in-progress skill iterations and benchmark probes
+├── docs/                          ← Auxiliary docs (model compatibility, research references, case studies, marketing assets)
+├── .claude/                       ← Repo-local dev harness (see "Harness" below)
+│   ├── agents/                     ← eval-failure-analyzer, skill-editor, iteration-guard
+│   └── skills/                     ← iterate-skill, sync-skill-cache, run-iteration-eval, bump-version, new-skill
+├── skills-workspace/              ← Scratch space for in-progress skill iterations and benchmark probes (gitignored)
 ├── CONTRIBUTING.md                ← Contribution ground rules and versioning policy
 └── AGENTS.md / GEMINI.md          ← Companion guides for Codex and Gemini CLI users
 ```
@@ -67,13 +72,16 @@ logic-lens/
 `.logic-lens.yaml` schema: see `skills/_shared/common.md` — `custom_risks` is a list of records with `code`, `name`, `description`, and `severity` fields.
 
 ### Version Sync
-`package.json` is the source of truth for the version number. When bumping version, update:
-1. `package.json` → `version`
-2. `.claude-plugin/plugin.json` → `version`
-3. `.claude-plugin/marketplace.json` → `version`
-4. `.codex-plugin/plugin.json` → `version`
-5. `gemini-extension.json` → `version`
-6. `README.md` → version badge
+`package.json` is the source of truth for the version number. Use the script — it rewrites all
+six places at once and then runs `validate-repo.sh` to confirm:
+
+```bash
+npm run bump-version -- 0.7.0
+```
+
+The six places it touches: `package.json`, `.claude-plugin/plugin.json`,
+`.claude-plugin/marketplace.json`, `.codex-plugin/plugin.json`, `gemini-extension.json`, and the
+`README.md` version badge. `CHANGELOG.md` is **not** touched — add the release entry by hand.
 
 ### Iron Law
 See `skills/_shared/common.md` — Iron Law section. That is the canonical definition; do not duplicate or paraphrase it here.
@@ -88,13 +96,14 @@ See `skills/_shared/common.md` — Iron Law section. That is the canonical defin
 
 ## Development Commands
 
-Logic-Lens has no runtime npm dependencies; `package.json` only declares script entry points. `npm install` is unnecessary for the four commands below.
+Logic-Lens has no runtime npm dependencies; `package.json` only declares script entry points. `npm install` is unnecessary.
 
 ```bash
 npm run validate       # Validate repo structure and metadata consistency (scripts/validate-repo.sh)
 npm run unit-tests     # Run Python unit tests under tests/ (currently grader tests)
 npm run trigger-evals  # Run trigger-eval suites under evals/trigger/v2/ (scripts/run-trigger-evals.sh)
 npm run content-evals  # Run evals/content/v2/evals-v2.json end-to-end through claude -p + grade (scripts/run-content-evals.sh) — costs API tokens
+npm run bump-version -- 0.7.0   # Sync the version across all six manifests, then validate
 ```
 
 ### 单次迭代评分（不跑完整套件）
@@ -156,13 +165,15 @@ ls ~/.claude/commands/logic-*.md
    ```
 7. Add 3–5 eval cases to `evals/content/v2/evals-v2.json`. Optionally add trigger cases to `evals/trigger/v2/trigger-evals-{skill}.json` — but see Gotchas: positive trigger cases always score 0% for Logic-Lens; trigger evals are only useful for catching `description` regressions on negative cases.
 
-## 하네스: Logic-Lens Skill Iteration
+## Harness：Logic-Lens Skill 迭代闭环
 
 **目标:** 把"改 SKILL.md → 同步缓存 → 跑 eval → 诊断 → 验证净收益"的迭代闭环固化为可复用的 agent 团队，避免每次手动踩坑（尤其缓存同步）。
 
 **触发:** 想**提升某个 logic-* skill 的 eval 分数 / 修复失败的 eval 模式**时，使用 `iterate-skill` 编排技能（它会按需调度 `eval-failure-analyzer` / `skill-editor` / `iteration-guard` 三个 agent 与 `sync-skill-cache` / `run-iteration-eval` 两个支撑技能）。单次提问、发版（用 `bump-version`）、新建 skill（用 `new-skill`）不触发本闭环。改完任何 `skills/**` 后跑 eval 前，**必须**先经 `sync-skill-cache` 同步缓存。
 
-**变更 이력:**
-| 날짜 | 변경 내용 | 대상 | 사유 |
+**组件位置:** agent 在 `.claude/agents/`，支撑技能在 `.claude/skills/`。
+
+**变更历史:**
+| 日期 | 变更内容 | 对象 | 原因 |
 |------|----------|------|------|
 | 2026-06-01 | 初始构成：迭代闭环 harness（编排技能 iterate-skill + skill-editor/iteration-guard 两个新 agent + sync-skill-cache/run-iteration-eval 两个支撑技能；复用已有 eval-failure-analyzer/bump-version/new-skill） | 全体 | 把 skill 迭代主线工作固化为 agent 团队 |

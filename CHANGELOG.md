@@ -4,6 +4,94 @@ All notable changes to Logic-Lens are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 Versions follow [SemVer](https://semver.org/).
 
+> Benchmark numbers below refer to the `logic-review` subset (36 cases) of
+> `evals/content/v2/evals-v2.json` on `claude-sonnet-4-6`, unless stated otherwise.
+> Frozen run summaries live in `benchmarks/runs/`; the catalog is `benchmarks/index.json`.
+>
+> Note: `v0.6.8` never shipped as a version number — it exists only as a benchmark
+> label for the runs between v0.6.7 and v0.6.9.
+
+## [0.6.10] — 2026-05-30
+
+### Changed — scoring vocabulary: the logic sub-score is the headline metric
+
+The grader has always split each case into a reasoning sub-score and an Iron-Law-compliance
+sub-score, but the docs treated `overall_pass_rate` as the primary number. That conflated two
+orthogonal axes: contract assertions are ~25% of total assertions, so compliance noise alone
+could swing overall by ~25pp with reasoning quality unchanged.
+
+- The compliance sub-score is now labeled **contract** in human-facing output (the `format_*`
+  JSON keys are kept for backward compatibility).
+- `benchmarks/README.md` gains a "Metric Hierarchy" section: judge skill effectiveness by the
+  logic sub-score; treat overall as a combined record, not a reasoning trend; treat contract as
+  a binary floor check, not an optimization target.
+
+### Reverted — Step 7.5 Contract Self-Check
+
+A pre-finalization self-check step was added to `logic-review` and then reverted. The mechanism
+worked when it fired (7/7 cases corrected their field labels) but compliance was only 19% — the
+model routinely skipped the prose step, producing a net **−11.5pp** regression. Design notes and
+the post-mortem are in `docs/superpowers/specs/2026-05-30-contract-self-check-design.md`.
+
+### Added — second verification line
+
+- `evals/real-world/` — a probe set of real code (not benchmark fixtures) with a runner
+  (`run-real-world.sh`), including deliberate decoy probes that check the skill does *not*
+  fabricate findings on correct code.
+
+## [0.6.9] — 2026-05-24
+
+### Fixed — `logic-review` classification accuracy (78.3%, +2.4pp vs v0.6.8 avg)
+
+- Four groups of L-code disambiguation rules, targeting the pairs the benchmark showed being
+  confused most often.
+- A five-field template for the no-bug case, so clean code produces a structured "nothing found"
+  report instead of free-form prose that the contract rules reject.
+
+Run: `benchmarks/runs/v0.6.9-fe9a1aa-claude-sonnet-4-6-logic-review.json`.
+
+## [0.6.7] — 2026-05-17
+
+### Fixed
+
+- Four classes of analysis failure surfaced by eval-208 / 250 / 276 (`58f1be3`), verified by a
+  4-case targeted probe at 75% (+43.75pp vs the a25b6c7 baseline on the same four cases).
+- `gemini-extension.json` — added the `contextFileName` field required by geminicli.com's
+  listing spec.
+
+### Added
+
+- `benchmarks/README.md` — "Multi-Run Averaging" methodology as a single source. Empirically,
+  single-run case-level deltas ranged **±25pp** from the 4-run mean, so case-level conclusions
+  require at least 3 runs before they may be back-propagated into a SKILL.md change.
+
+## [0.6.6] — 2026-05-10
+
+### Added — Output Skeleton Contract (76.2%, +8.8pp — new high at the time)
+
+- An explicit output-skeleton block in `logic-review/SKILL.md`, plus an L4 quicksort
+  counter-example. Targeted at the compliance failures that dominated the preceding 67.2% run.
+- A reachability gate, so findings on unreachable paths are not reported as live bugs.
+
+### Changed
+
+- The Iron Law field sequence was unified from four fields to **five** across the whole project
+  (Premises → Trace → Divergence → Trigger → Remedy).
+
+## [0.6.5] — 2026-05-07
+
+### Changed — eval suite restructure
+
+- `evals/v2/` split into `evals/content/v2/evals-v2.json` (content cases) and
+  `evals/trigger/v2/trigger-evals-<skill>.json` (trigger suites). All references updated.
+- Skill loading reworked for lazy loading per `_shared/common.md` §13 — skills read only the
+  sections they need upfront.
+
+### Added — first published Sonnet/Haiku baselines
+
+- `benchmarks/reports/v0.6.5/{haiku,sonnet}-logic-review.md` and the matching frozen runs.
+  logic-review: Haiku 43.6%, Sonnet 53.9% (+10.3pp). Weakest dimension: L7 concurrency.
+
 ## [0.6.4] — 2026-05-03
 
 ### Added — benchmark expansion (79 → 104 cases, +25)
@@ -28,9 +116,11 @@ Two waves of new eval cases bring the suite from 79 to 104, with mode coverage n
 ### Added — model compatibility evidence
 
 - `docs/MODEL_COMPATIBILITY.md` — recommended model + mode matrix backed by a 79-case Haiku benchmark. Headline: `claude-haiku-4-5` in `claude -p` mode triggers logic-lens skills only ~5 % of the time and answers most prompts directly without invoking the skill — overall pass rate 38.7 %. Sonnet (the default in `scripts/run-content-evals.sh`) and in-session interactive Claude Code remain the recommended targets.
-- `docs/benchmarks/v0.6.4-haiku-baseline.json` — full per-mode summary for the 79-case Haiku run (overall pass 0.387, skill trigger 4 / 79).
-- `docs/benchmarks/v0.6.4-haiku-after-skillmd-rewrite.json` — second 79-case Haiku run after a SKILL.md rewrite experiment (description tightening + body-top "Quick Output Schema" cheatsheet, +205 lines across all six SKILL.md files). Pass rate 0.377 (−1.05 pp), trigger 3 / 79 (−1). Confirms editing SKILL.md alone does not move the needle when the host model is not invoking the skill — the rewrite was reverted before tagging this release.
-- `docs/benchmarks/v0.6.4-sonnet-eval-9-in-session.json` — single-case A/B sanity check: the same `logic-fix-all` case scored 4 / 4 (100 %) when Sonnet invoked the skill in-session vs 2 / 4 (Haiku baseline) and 1 / 4 (Haiku after SKILL.md rewrite) under `claude -p`. Skill design is sound; trigger reliability is the ceiling.
+- `v0.6.4-haiku-baseline.json` — full per-mode summary for the 79-case Haiku run (overall pass 0.387, skill trigger 4 / 79).
+- `v0.6.4-haiku-after-skillmd-rewrite.json` — second 79-case Haiku run after a SKILL.md rewrite experiment (description tightening + body-top "Quick Output Schema" cheatsheet, +205 lines across all six SKILL.md files). Pass rate 0.377 (−1.05 pp), trigger 3 / 79 (−1). Confirms editing SKILL.md alone does not move the needle when the host model is not invoking the skill — the rewrite was reverted before tagging this release.
+- `v0.6.4-sonnet-eval-9-in-session.json` — single-case A/B sanity check: the same `logic-fix-all` case scored 4 / 4 (100 %) when Sonnet invoked the skill in-session vs 2 / 4 (Haiku baseline) and 1 / 4 (Haiku after SKILL.md rewrite) under `claude -p`. Skill design is sound; trigger reliability is the ceiling.
+
+  *(These three were originally written to `docs/benchmarks/`; they now live in `benchmarks/runs/`.)*
 
 ### Changed
 

@@ -24,7 +24,7 @@
   <img src="https://img.shields.io/badge/Claude_Code-Plugin-blueviolet.svg" alt="Claude Code Plugin">
   <img src="https://img.shields.io/badge/Codex_CLI-Skill-orange.svg" alt="Codex CLI Skill">
   <img src="https://img.shields.io/badge/Gemini_CLI-Extension-4285F4.svg" alt="Gemini CLI Extension">
-  <img src="https://img.shields.io/badge/verification-58%2F58%20assertions-brightgreen.svg" alt="Verified 58/58">
+  <img src="https://img.shields.io/badge/eval%20suite-104%20cases-brightgreen.svg" alt="104 eval cases">
 </p>
 <p align="center">
   <a href="https://github.com/hyhmrright/logic-lens/stargazers"><img src="https://img.shields.io/github/stars/hyhmrright/logic-lens?style=social" alt="GitHub Stars"></a>
@@ -91,18 +91,21 @@ Logic-Lens produces:
 **Premises:** `coupon_service.get_discount(code)` is assumed to always return a numeric discount rate between 0 and 1.
 **Trace:** `discount_code` is truthy → `get_discount(discount_code)` is called → result assigned to `discount` → `total * (1 - discount)` is evaluated.
 **Divergence:** `get_discount` returns `None` for expired or invalid codes (documented in its docstring). When `discount` is `None`, `1 - None` raises `TypeError`. The call reaches `db.save_order` only on the happy path; a bad coupon code aborts the function without saving.
+**Trigger:** `process_order(1, [{'price': 10, 'qty': 1}], discount_code='EXPIRED2024')` → `TypeError: unsupported operand type(s) for -: 'int' and 'NoneType'`; order never saved.
 **Remedy:** Check `if discount is not None:` before applying. Alternatively, have `get_discount` raise a typed exception (`InvalidCouponError`) that the caller can handle explicitly.
 
 ### 🔴 L3 — Boundary Blindspot: Empty `items` List
 **Premises:** `items` is assumed to contain at least one element.
 **Trace:** `sum(item['price'] * item['qty'] for item in items)` → returns `0` for empty list → `total = 0` → `order['total'] = 0` → saved and confirmed.
 **Divergence:** An order with zero items is silently saved as a $0.00 order and a confirmation email is sent. No business rule validates that an order must contain at least one item.
+**Trigger:** `process_order(1, [])` → expected a rejection; actual: order persisted with `total = 0` and a confirmation email dispatched.
 **Remedy:** Add `if not items: raise ValueError("Order must contain at least one item")` before the sum. This is a business invariant, not an implementation detail.
 
 ### 🟡 L8 — Resource Lifecycle Hazard: Database Connection Not Released on Email Failure
 **Premises:** `db.save_order` and `email_service.send_confirmation` are assumed to both succeed.
 **Trace:** `db.save_order(order)` succeeds → connection kept open → `email_service.send_confirmation(...)` raises `SMTPException` → function exits via uncaught exception.
 **Divergence:** The database connection is never explicitly released. Depending on the ORM's connection pooling strategy, this may exhaust the pool under sustained email failure.
+**Trigger:** Stub `email_service.send_confirmation` to raise `SMTPException`, then call `process_order` once per pool slot — the pool is exhausted and the next call blocks on checkout.
 **Remedy:** Wrap `email_service.send_confirmation` in a `try/finally` block, or separate the email send into an async queue so order persistence is not coupled to email delivery.
 
 *(+ 2 more findings)*
@@ -133,19 +136,35 @@ Logic-Lens ships six skills: **logic-review** (find behavioral bugs via executio
 
 ## Benchmark
 
-Tested across 3 real-world bug scenarios (interprocedural, boundary, state mutation):
+Logic-Lens is scored against `evals/content/v2/evals-v2.json` — **104 cases** across the six
+skills, spanning 12+ languages, with cases modeled on Defects4J, QuixBugs, the Therac-25 and
+Ariane 5 inquiries, and Lu et al.'s concurrency-bug study. Every run is graded offline by a
+rule-based grader (`scripts/grade-iteration.py`), not by an LLM judge.
 
-| Criterion | Logic-Lens | Claude alone |
-|-----------|:----------:|:------------:|
-| Explicit Premises stated before finding | ✅ 100% | ❌ 0% |
-| Step-by-step execution trace provided | ✅ 100% | ❌ 0% |
-| Exact divergence point identified | ✅ 100% | ❌ 0% |
-| Risk codes (L1–L9) labeled per finding | ✅ 100% | ❌ 0% |
-| Detects interprocedural bugs | ✅ 100% | ✅ 68% |
-| Detects boundary blindspots | ✅ 100% | ✅ 71% |
-| **Overall pass rate** | **91%** | **19%** |
+Published `logic-review` runs (36-case subset, `claude-sonnet-4-6`):
 
-The gap isn't what Claude *can* find — it's what it *consistently* finds, with a traceable reasoning chain that shows its work every time.
+| Version | Overall pass rate | What changed |
+|---------|:-----------------:|--------------|
+| v0.6.5 | 53.9% | First published Sonnet baseline |
+| v0.6.6 | 76.2% | Output Skeleton Contract + reachability gate |
+| v0.6.9 | **78.3%** | Four L-code disambiguation rule groups + no-bug template |
+
+Every frozen run summary is in `benchmarks/runs/`, cataloged by `benchmarks/index.json`, with
+human-readable reports under `benchmarks/reports/`. Reproduce any of them with
+`npm run content-evals`.
+
+**How to read these numbers.** The grader splits each case into a **logic** sub-score (did it
+find the bug and classify the risk correctly?) and a **contract** sub-score (does the report
+carry the literal Iron Law field labels?). `overall_pass_rate` mixes both, and contract
+assertions are ~25% of the total — so overall is a combined record, not a pure measure of
+reasoning quality. See `benchmarks/README.md` for the metric hierarchy and the multi-run
+averaging rule (single-run case-level deltas have been observed to swing ±25pp).
+
+**What is not measured here.** There is no published head-to-head against unassisted Claude in
+this repo; the version-over-version numbers above are the honest claim. Results also depend
+heavily on the host model actually invoking the skill — see
+[docs/MODEL_COMPATIBILITY.md](docs/MODEL_COMPATIBILITY.md), where Haiku in `claude -p` mode
+scores 38.7% almost entirely because it answers directly without loading the skill.
 
 ## How It Compares
 
@@ -226,101 +245,49 @@ cp -r /tmp/logic-lens/skills/* ~/.codex/skills/logic-lens/
 
 ## Slash Commands
 
-### Claude Code
-| Command | Short Form | Action |
-|---------|------------|--------|
-| `/logic-lens:logic-review` | `/logic-review` | Code logic review via execution tracing |
-| `/logic-lens:logic-explain` | `/logic-explain` | Step-by-step execution explanation |
-| `/logic-lens:logic-diff` | `/logic-diff` | Semantic equivalence check between two versions |
-| `/logic-lens:logic-locate` | `/logic-locate` | Root cause localization for failing tests or crashes |
-| `/logic-lens:logic-health` | `/logic-health` | Aggregate logic health dashboard for a codebase |
-| `/logic-lens:logic-fix-all` | `/logic-fix-all` | Autonomous audit-and-fix pipeline — asks consent, then fixes and verifies logic issues |
+The same six skills, invoked with each platform's prefix:
 
-> Short-form commands are auto-installed on first session start by the session-start hook (works on macOS, Linux, and Windows via WSL / Git Bash).
+| Skill | Claude Code | Gemini CLI | Codex CLI | Action |
+|-------|-------------|------------|-----------|--------|
+| review | `/logic-review` | `/logic-review` | `$logic-review` | Code logic review via execution tracing |
+| explain | `/logic-explain` | `/logic-explain` | `$logic-explain` | Step-by-step execution explanation |
+| diff | `/logic-diff` | `/logic-diff` | `$logic-diff` | Semantic equivalence check between two versions |
+| locate | `/logic-locate` | `/logic-locate` | `$logic-locate` | Root cause localization for failing tests or crashes |
+| health | `/logic-health` | `/logic-health` | `$logic-health` | Aggregate logic health dashboard for a codebase |
+| fix-all | `/logic-fix-all` | `/logic-fix-all` | `$logic-fix-all` | Autonomous audit-and-fix — asks consent, then fixes and verifies |
 
-### Gemini CLI
-| Command | Action |
-|---------|--------|
-| `/logic-review` | Code logic review via execution tracing |
-| `/logic-explain` | Step-by-step execution explanation |
-| `/logic-diff` | Semantic equivalence check between two versions |
-| `/logic-locate` | Root cause localization for failing tests or crashes |
-| `/logic-health` | Aggregate logic health dashboard for a codebase |
-| `/logic-fix-all` | Autonomous audit-and-fix pipeline — asks consent, then fixes and verifies logic issues |
-
-### Codex CLI
-| Command | Action |
-|---------|--------|
-| `$logic-review` | Code logic review via execution tracing |
-| `$logic-explain` | Step-by-step execution explanation |
-| `$logic-diff` | Semantic equivalence check between two versions |
-| `$logic-locate` | Root cause localization for failing tests or crashes |
-| `$logic-health` | Aggregate logic health dashboard for a codebase |
-| `$logic-fix-all` | Autonomous audit-and-fix pipeline — asks consent, then fixes and verifies logic issues |
-
-Enter these `$logic-*` invocations inside a Codex session; they are not shell commands.
+- **Claude Code** also accepts the fully-qualified form `/logic-lens:logic-review`. The short forms
+  are auto-installed on first session start by the session-start hook (macOS, Linux, and Windows
+  via WSL / Git Bash).
+- **Codex CLI**: enter `$logic-*` inside a Codex session — these are not shell commands.
 
 ---
 
 ## Usage
 
-### Code Logic Review
+Invocation syntax is in [Slash Commands](#slash-commands) above. What each skill does with your input:
 
-```
-/logic-review                       # Claude Code (short form) / Gemini CLI
-/logic-lens:logic-review            # Claude Code (full form)
-$logic-review                       # Codex CLI
-```
+### `logic-review` — Code Logic Review
 
 Paste the code or point the AI at the file. Logic-Lens constructs an explicit execution trace for each suspicious path and reports only findings with a documented Premises → Trace → Divergence → Trigger → Remedy chain.
 
-### Execution Explanation
-
-```
-/logic-explain                      # Claude Code (short form) / Gemini CLI
-/logic-lens:logic-explain           # Claude Code (full form)
-$logic-explain                      # Codex CLI
-```
+### `logic-explain` — Execution Explanation
 
 Ask "what does this code actually do?" and get a step-by-step trace that crosses function boundaries, rather than a natural-language summary of what the code appears to do.
 
-### Semantic Diff
-
-```
-/logic-diff                         # Claude Code (short form) / Gemini CLI
-/logic-lens:logic-diff              # Claude Code (full form)
-$logic-diff                         # Codex CLI
-```
+### `logic-diff` — Semantic Diff
 
 Paste two versions of a function. Logic-Lens traces both and reports whether they are behaviorally equivalent — and if not, exactly which execution path produces a different outcome.
 
-### Fault Localization
-
-```
-/logic-locate                       # Claude Code (short form) / Gemini CLI
-/logic-lens:logic-locate            # Claude Code (full form)
-$logic-locate                       # Codex CLI
-```
+### `logic-locate` — Fault Localization
 
 Paste a failing test, stack trace, or bug report alongside the relevant code. Logic-Lens traces backward from the failure to identify the exact divergence point — distinguishing root cause from symptom.
 
-### Logic Health Dashboard
-
-```
-/logic-health                       # Claude Code (short form) / Gemini CLI
-/logic-lens:logic-health            # Claude Code (full form)
-$logic-health                       # Codex CLI
-```
+### `logic-health` — Logic Health Dashboard
 
 Runs abbreviated logic reviews across a codebase and produces a weighted Logic Health Score (0–100) broken down by risk dimension. Use before a release, during an audit, or when onboarding onto an unfamiliar codebase.
 
-### Autonomous Audit-and-Fix
-
-```
-/logic-fix-all                      # Claude Code (short form) / Gemini CLI
-/logic-lens:logic-fix-all           # Claude Code (full form)
-$logic-fix-all                      # Codex CLI
-```
+### `logic-fix-all` — Autonomous Audit-and-Fix
 
 Point it at a directory or file. Logic-Lens first asks for consent because this mode is token-intensive and edits files. After consent, it sweeps the scope, collects findings at every severity level (L1–L9), applies fixes in priority order, verifies each fix with a semantic diff, and re-confirms the codebase is clean unless it reaches the configured iteration cap or a design decision is required. The final output is a Fix Log table listing every change made and its verification status.
 
@@ -378,9 +345,12 @@ The discipline enforced per finding:
 1. **Premises** — State every assumption about name resolution, types, and preconditions
 2. **Trace** — Follow the actual execution path step by step, crossing function boundaries
 3. **Divergence** — Identify the exact point where a premise breaks and what follows
-4. **Remedy** — Prescribe a fix that addresses the divergence, not just its symptom
+4. **Trigger** — Give a concrete input that reproduces it, specific enough to paste into a REPL
+5. **Remedy** — Prescribe a fix that addresses the divergence, not just its symptom
 
-No finding is reported without all four sections. This is the **Iron Law** of Logic-Lens.
+No Trigger or Remedy may be written before Premises → Trace → Divergence is complete. This is
+the **Iron Law** of Logic-Lens. (Trigger is required for Critical and Warning findings, optional
+for Suggestions.)
 
 ---
 
@@ -412,10 +382,17 @@ logic-lens/
 ├── commands/                     # Short-form command wrappers (auto-installed by hook)
 ├── hooks/                        # Session-start hook
 ├── evals/
-│   ├── content/v2/evals-v2.json  # Content eval cases (current benchmark suite)
-│   └── trigger/v2/trigger-evals-*.json  # Per-skill trigger eval sets (6 × 20 cases)
-├── benchmarks/runs/              # Frozen published benchmark summaries
+│   ├── content/v2/evals-v2.json  # Content eval cases (104 cases — the benchmark suite)
+│   ├── trigger/v2/trigger-evals-*.json  # Per-skill trigger eval sets (6 × 20 cases)
+│   ├── real-world/               # Real-code probes — second verification line, incl. decoys
+│   └── v1/                       # Legacy v1 cases, archived
+├── benchmarks/
+│   ├── index.json                # Catalog of published runs
+│   ├── runs/                     # Frozen run summaries (JSON)
+│   └── reports/                  # Human-readable reports, per version tag
 ├── scripts/                      # Dev utilities (validate, run-content-evals, grade-iteration)
+├── tests/                        # Python unit tests for the grader
+├── docs/                         # Model compatibility, research references, case studies
 └── CONTRIBUTING.md
 ```
 

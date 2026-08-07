@@ -8,14 +8,17 @@
 benchmarks/
 ├── index.json           # catalog of known benchmark artifacts
 ├── reports/             # human-readable markdown reports, grouped by version tag
-│   └── v0.6.5/
-│       └── haiku-logic-review.md
-└── runs/
-    ├── v0.6.4-haiku-baseline.json
-    ├── v0.6.4-haiku-after-skillmd-rewrite.json
-    ├── v0.6.4-sonnet-eval-9-in-session.json
-    └── v0.6.5-haiku-logic-review.json
+│   ├── v0.6.5/{haiku,sonnet}-logic-review.md
+│   ├── v0.6.6/sonnet-logic-review.md
+│   ├── v0.6.7/sonnet-logic-review.md
+│   ├── v0.6.8/sonnet-logic-review.md
+│   ├── v0.6.9/sonnet-logic-review.md
+│   └── antigravity-opus4.6/sonnet-logic-review.md
+└── runs/                # frozen JSON summaries, one per published run
+    └── <version>-<sha>-<model>-<scope>.json
 ```
+
+`index.json` is the authoritative list — `ls runs/` and the catalog should always agree.
 
 ## Notes
 

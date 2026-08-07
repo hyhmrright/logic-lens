@@ -38,8 +38,12 @@ New skills (beyond the six built-in skills) require:
 1. A SKILL.md with a clear "Do NOT trigger for:" clause.
 2. A guide file with numbered steps explaining the *why* behind each step.
 3. A command wrapper in `commands/`.
-4. Registration in `gemini-extension.json`.
-5. At least 3 eval cases.
+4. The skill name added to the `for skill in ...` loop in `hooks/session-start`.
+5. At least 3 eval cases in `evals/content/v2/evals-v2.json`.
+
+No registration is needed in `gemini-extension.json` or `.codex-plugin/plugin.json` — both
+discover skills by scanning the `skills/` directory. See CLAUDE.md → "Adding a New Skill" for
+the full checklist.
 
 ## Eval Cases
 
@@ -50,5 +54,20 @@ correct Logic-Lens analysis would find — not what the correct fix is. Trigger 
 
 ## Version Bumping
 
-Bump version in `package.json` first. Then sync all metadata files (see CLAUDE.md for the list).
+Run `npm run bump-version -- <x.y.z>` — it rewrites all six manifests and the README badge at
+once, then validates consistency. Add the `CHANGELOG.md` entry by hand; the script does not
+touch it.
+
 Use semantic versioning: patch for guide improvements, minor for new skills or risk codes, major for methodology changes.
+
+## Before You Open a PR
+
+```bash
+npm run validate     # structure + version consistency, offline
+npm run unit-tests   # grader tests
+```
+
+Changes to `skills/**` also need eval evidence — a content-eval run showing the change is net
+positive, not just plausible. Single-run case-level deltas are noisy (±25pp observed); see
+`benchmarks/README.md` for the multi-run averaging rule. **Never relax a grader rule to make a
+case pass.**
