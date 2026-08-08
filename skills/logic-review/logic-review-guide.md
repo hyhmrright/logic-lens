@@ -275,7 +275,7 @@ Verification: ⚠️ Unverified — [reason]
 
 (Chinese: `验证：✅ 已执行验证——复现脚本 FAIL → 应用修复 → PASS` / `验证：⚠️ 未验证——[原因]`)
 
-Findings withdrawn by 8b are removed from `## Findings` entirely, so they carry no Verification field. Record them once in Summary instead, matching the Step 5.5 withdrawal convention: "Candidate [L-code] at [location] withdrawn — reproducer passed on original code." (中文 `候选 [L-code]（位于 [位置]）已撤回——复现脚本在原始代码上通过。`)
+Findings withdrawn by 8b are removed from `## Findings` (中文 `## 发现`) entirely, so they carry no Verification field. Record them once in Summary instead, matching the Step 5.5 withdrawal convention: "Candidate [L-code] at [location] withdrawn — reproducer passed on original code." (中文 `候选 [L-code]（位于 [位置]）已撤回——复现脚本在原始代码上通过。`)
 
 **Example reproducer (Python, L4 mutation-during-iteration):**
 
