@@ -26,7 +26,10 @@ if [[ ! -d "$CACHE_DIR" ]]; then
   echo "error: plugin cache for version $VERSION not found at:" >&2
   echo "  $CACHE_DIR" >&2
   echo "Available versions:" >&2
-  find "$CACHE_BASE" -mindepth 1 -maxdepth 1 2>/dev/null | sed 's|.*/|  |' >&2 || echo "  (none — is the plugin installed?)" >&2
+  # `|| true` keeps set -e from killing the script when CACHE_BASE is missing;
+  # an empty result must still fall back, so test the string rather than $?.
+  versions=$(find "$CACHE_BASE" -mindepth 1 -maxdepth 1 2>/dev/null | sed 's|.*/|  |' | sort || true)
+  echo "${versions:-  (none — is the plugin installed?)}" >&2
   echo "If package.json version was just bumped, reinstall/refresh the plugin so the cache dir exists." >&2
   exit 1
 fi
