@@ -6,13 +6,21 @@ on:
   pull_request:
 
 jobs:
+  # NOTE: job id `check` is the status-check context required by main's branch
+  # protection. Renaming it silently disables the merge gate — update the
+  # protection rule first if it ever has to change.
   check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
       - uses: actions/setup-python@v5
         with:
           python-version: "3.x"
+      - name: Lint shell scripts
+        run: npm run lint-shell
       - name: Validate repo structure and version consistency
         run: npm run validate
       - name: Run grader unit tests

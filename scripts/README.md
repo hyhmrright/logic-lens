@@ -10,9 +10,23 @@ Structural + metadata sanity check. Fast and offline — suitable for CI.
 bash scripts/validate-repo.sh
 ```
 
-Checks: required SKILL.md frontmatter in six skills, shared framework files under `_shared/`, per-skill guide files, `logic-fix-all` phase files, version consistency across `package.json` / `.claude-plugin/plugin.json` / `.claude-plugin/marketplace.json` / `.codex-plugin/plugin.json` / `gemini-extension.json` / README badge.
+Checks: required SKILL.md frontmatter in six skills, shared framework files under `_shared/`, per-skill guide files, `logic-fix-all` phase files, that every tracked `*.json` file parses, version consistency across `package.json` / `.claude-plugin/plugin.json` / `.claude-plugin/marketplace.json` / `.codex-plugin/plugin.json` / `gemini-extension.json` / README badge.
 
 Exit code 0 = release-ready; non-zero = fix before tagging.
+
+## `lint-shell.sh`
+
+Runs shellcheck over every tracked shell script. Probe fixtures under
+`evals/real-world/probes/` are excluded — they are deliberately buggy test data.
+
+```bash
+npm run lint-shell                  # or: bash scripts/lint-shell.sh
+```
+
+Fails if the script list comes back empty (not a git checkout, or a broken pathspec),
+so a silently-skipped lint cannot pass as green. Prints the shellcheck version it used:
+GitHub's ubuntu runner ships 0.9.0 while Homebrew is newer, so a local/CI divergence is
+expected to be explained by that line.
 
 ## `bump-version.py`
 

@@ -1,0 +1,9 @@
+version: 2
+updates:
+  # Logic-Lens has no runtime npm or pip dependencies; the only versioned
+  # third-party code in the repo is the GitHub Actions used by CI.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5

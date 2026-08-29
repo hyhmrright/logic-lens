@@ -9,18 +9,39 @@ cd "$REPO_ROOT"
 fail=0
 check() { if eval "$2"; then echo "  ok  $1"; else echo "  FAIL  $1"; fail=1; fi; }
 
-echo "[1/4] Required skill directories and frontmatter"
+json_parses() {
+  git ls-files '*.json' | python3 -c '
+import json, sys
+ok, seen = True, 0
+for line in sys.stdin:
+    f = line.strip()
+    seen += 1
+    try:
+        with open(f) as fh:
+            json.load(fh)
+    except Exception as exc:
+        print(f"        {f}: {exc}", file=sys.stderr)
+        ok = False
+if seen == 0:
+    # An empty list means the pathspec broke, not that the repo is clean.
+    print("        no tracked JSON files found", file=sys.stderr)
+    ok = False
+sys.exit(0 if ok else 1)
+'
+}
+
+echo "[1/6] Required skill directories and frontmatter"
 for skill in review explain diff locate health fix-all; do
   check "skills/logic-${skill}/SKILL.md exists with name: field" \
     '[[ -f "skills/logic-'"$skill"'/SKILL.md" ]] && grep -q "^name:" "skills/logic-'"$skill"'/SKILL.md"'
 done
 
-echo "[2/4] Shared framework files"
+echo "[2/6] Shared framework files"
 for f in common.md logic-risks.md semiformal-guide.md semiformal-checklist.md report-template.md; do
   check "skills/_shared/$f exists" '[[ -f "skills/_shared/'"$f"'" ]]'
 done
 
-echo "[3/4] Guide files"
+echo "[3/6] Guide files"
 for skill in review explain diff locate health fix-all; do
   check "skills/logic-${skill}/logic-${skill}-guide.md exists" \
     '[[ -f "skills/logic-'"$skill"'/logic-'"$skill"'-guide.md" ]]'
@@ -28,7 +49,7 @@ done
 check "skills/logic-fix-all phase files present" \
   '[[ -f "skills/logic-fix-all/guide-phases-0-2-consent-scope-health.md" && -f "skills/logic-fix-all/guide-phases-3-5-review-locate-clarify.md" && -f "skills/logic-fix-all/guide-phases-6-9-fix-iterate-report.md" ]]'
 
-echo "[4/5] Benchmark layout"
+echo "[4/6] Benchmark layout"
 check "evals/content/v2/evals-v2.json exists" '[[ -f "evals/content/v2/evals-v2.json" ]]'
 for skill in review explain diff locate health fix-all; do
   check "evals/trigger/v2/trigger-evals-${skill}.json exists" \
@@ -39,7 +60,10 @@ for f in benchmarks/runs/v0.6.4-haiku-baseline.json benchmarks/runs/v0.6.4-haiku
   check "$f exists" "[[ -f '$f' ]]"
 done
 
-echo "[5/5] Version consistency"
+echo "[5/6] JSON integrity"
+check "all $(git ls-files '*.json' | wc -l | tr -d ' ') tracked JSON files parse" json_parses
+
+echo "[6/6] Version consistency"
 pkg_ver=$(grep -o '"version"[[:space:]]*:[[:space:]]*"[^"]*"' package.json | head -1 | sed 's/.*"\([^"]*\)"$/\1/')
 check "package.json version non-empty" "[[ -n '$pkg_ver' ]]"
 for mf in .claude-plugin/plugin.json .claude-plugin/marketplace.json .codex-plugin/plugin.json gemini-extension.json; do

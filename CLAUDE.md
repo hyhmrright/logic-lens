@@ -38,7 +38,7 @@ logic-lens/
 │   ├── index.json                  ← Catalog of published runs
 │   ├── reports/                    ← Human-readable markdown reports per version tag
 │   └── runs/                       ← Frozen run summaries (workflow: see `benchmarks/README.md`)
-├── scripts/                       ← Shell scripts invoked by `npm run ...` (validate, trigger-evals, content-evals, grader)
+├── scripts/                       ← Shell scripts invoked by `npm run ...` (validate, lint-shell, trigger-evals, content-evals, grader)
 ├── tests/                         ← Python unit tests (currently `test_grader.py` for the eval grader)
 ├── docs/                          ← Auxiliary docs (model compatibility, research references, case studies, marketing assets)
 ├── .claude/                       ← Repo-local dev harness (see "Harness" below)
@@ -99,7 +99,8 @@ See `skills/_shared/common.md` — Iron Law section. That is the canonical defin
 Logic-Lens has no runtime npm dependencies; `package.json` only declares script entry points. `npm install` is unnecessary.
 
 ```bash
-npm run validate       # Validate repo structure and metadata consistency (scripts/validate-repo.sh)
+npm run validate       # Validate repo structure, JSON integrity, and metadata consistency (scripts/validate-repo.sh)
+npm run lint-shell     # shellcheck every tracked shell script (scripts/lint-shell.sh)
 npm run unit-tests     # Run Python unit tests under tests/ (currently grader tests)
 npm run trigger-evals  # Run trigger-eval suites under evals/trigger/v2/ (scripts/run-trigger-evals.sh)
 npm run content-evals  # Run evals/content/v2/evals-v2.json end-to-end through claude -p + grade (scripts/run-content-evals.sh) — costs API tokens
