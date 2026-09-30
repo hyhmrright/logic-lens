@@ -49,7 +49,11 @@ the full checklist.
 
 Eval cases in `evals/content/v2/evals-v2.json` must include code snippets that a reviewer could
 evaluate without running the code. The `expected_output` should describe what a
-correct Logic-Lens analysis would find — not what the correct fix is. Trigger evals
+correct Logic-Lens analysis would find — not what the correct fix is. Every case except
+`logic-explain` also sets `expects_defect` (`true` = the code has a bug / the diff versions
+diverge; `false` = clean code / equivalent versions). The grader's conclusion gate zeroes the
+case's logic sub-score when the report's stated conclusion contradicts it, so keyword matches
+cannot rescue a wrong answer. Trigger evals
 (per-skill activation tests) live in `evals/trigger/v2/trigger-evals-*.json`.
 
 ## Version Bumping

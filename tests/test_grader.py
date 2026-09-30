@@ -257,5 +257,91 @@ class TestCaseRulesCompleteness(unittest.TestCase):
         self.assertEqual(missing, [], "cases missing case-specific rules: " + ", ".join(missing))
 
 
+# Headers that contradict / match each case's expected conclusion, keyed by (is_diff, expects_defect).
+_WRONG_HEADER = {
+    (True, True): "**Verdict:** ✅ Semantically Equivalent",
+    (True, False): "**Verdict:** ❌ Semantically Divergent",
+    (False, True): "**Logic Score:** 100/100\n\n> No bugs found.",
+    (False, False): "**Logic Score:** 40/100\n\n### 🔴 Critical\n**[L1] — bogus**",
+}
+_RIGHT_HEADER = {
+    (True, True): "**Verdict:** ❌ Semantically Divergent",
+    (True, False): "**Verdict:** ✅ Semantically Equivalent",
+    (False, True): "**Logic Score:** 60/100\n\n> One Critical defect.",
+    (False, False): "**Logic Score:** 100/100\n\n> No bugs found.",
+}
+
+
+class TestConclusionGate(unittest.TestCase):
+    def _grade(self, case: dict, header: str) -> dict:
+        # Keyword salad: the expected answer's own vocabulary plus the prompt's code.
+        text = f"{header}\n\n{case['expected_output']}\n\n{case['prompt']}"
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d) / "output.md"
+            p.write_text(text, encoding="utf-8")
+            return grade_case(case["id"], p)
+
+    def _gated_cases(self):
+        return [c for c in EVALS_BY_ID.values() if "expects_defect" in c]
+
+    def test_expects_defect_present_exactly_on_evaluative_modes(self):
+        for case_id, case in EVALS_BY_ID.items():
+            if case["mode"] == "logic-explain":
+                self.assertNotIn("expects_defect", case, f"case {case_id}")
+            else:
+                self.assertIsInstance(case.get("expects_defect"), bool, f"case {case_id} needs expects_defect")
+
+    def test_wrong_conclusion_zeroes_logic_for_every_case(self):
+        for case in self._gated_cases():
+            key = (case["mode"] == "logic-diff", case["expects_defect"])
+            r = self._grade(case, _WRONG_HEADER[key])
+            self.assertFalse(r["conclusion_gate"]["passed"], f"case {case['id']} gate missed wrong conclusion")
+            self.assertEqual(r["logic_passed"], 0, f"case {case['id']} scored logic despite wrong conclusion")
+
+    def test_right_conclusion_passes_gate_for_every_case(self):
+        for case in self._gated_cases():
+            key = (case["mode"] == "logic-diff", case["expects_defect"])
+            r = self._grade(case, _RIGHT_HEADER[key])
+            self.assertTrue(r["conclusion_gate"]["passed"], f"case {case['id']} gate rejected right conclusion")
+
+    def test_explain_cases_have_no_gate(self):
+        case = next(c for c in EVALS_BY_ID.values() if c["mode"] == "logic-explain")
+        self.assertIsNone(self._grade(case, "")["conclusion_gate"])
+
+    def test_header_score_is_authoritative_over_scoped_clean_prose(self):
+        # Real defect reports say "未发现并发问题" about one dimension; score 72 still means defects.
+        t = "**逻辑评分：** 72/100\n\n## 总结\n\n共发现 2 项问题。本次审查未发现并发问题。"
+        self.assertFalse(_mod._claims_clean(t))
+
+    def test_clean_prose_decides_without_score(self):
+        self.assertTrue(_mod._claims_clean("> No confirmed logic bugs found."))
+        self.assertFalse(_mod._claims_clean("> No other bugs found beyond F1."))
+
+    def test_non_critical_severity_words_are_not_critical(self):
+        self.assertFalse(_mod._has_critical_finding("### F2 — L3 更新语义错误（低严重度）"))
+        self.assertFalse(_mod._has_critical_finding("#### [L2] 游标资源泄漏 — **中等严重**"))
+        self.assertFalse(_mod._has_critical_finding("The critical section guarded by mu (L7 check) is fine."))
+        self.assertTrue(_mod._has_critical_finding("### 🔴 Critical\n**[L1] — shadowed format**"))
+
+    def test_negated_critical_line_is_not_a_finding(self):
+        self.assertFalse(_mod._has_critical_finding("No Critical issues; the L8 lock-leak concern is unfounded."))
+
+    def test_not_divergent_is_not_divergent(self):
+        self.assertEqual(_mod._diff_verdict("**Verdict:** ✅ Semantically Equivalent — not divergent"), "equivalent")
+
+    def test_analysis_title_above_verdict_keeps_header_region(self):
+        # A report titled "## 语义等价性分析" still has its verdict read from the line below.
+        self.assertEqual(_mod._diff_verdict("## 语义等价性分析\n\n**结论：两者语义不等价。**"), "divergent")
+
+    def test_repl_transcript_is_not_a_verdict_quote(self):
+        self.assertEqual(_mod._conclusion_lines(">>> 1.0 - 0.9 == 0.1\nFalse"), [])
+
+    def test_diff_qualified_equivalence_is_conditional(self):
+        self.assertEqual(_mod._diff_verdict("**结论**：如果数据只含纯 ASCII，两版本等价；否则不同。"), "conditional")
+        self.assertEqual(_mod._diff_verdict("**结论：不完全等价——存在一个可观测的行为差异。**"), "conditional")
+        self.assertEqual(_mod._diff_verdict("**Verdict:** ✅ Semantically Equivalent"), "equivalent")
+        self.assertIsNone(_mod._diff_verdict("no header verdict here"))
+
+
 if __name__ == "__main__":
     unittest.main()

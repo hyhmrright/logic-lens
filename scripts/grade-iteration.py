@@ -231,6 +231,124 @@ _LOGIC_SCORE_RULE: tuple[str, Callable[[str], bool]] = (
 )
 
 
+# ── Conclusion gate ────────────────────────────────────────────────────────────
+# Keyword rules alone reward a report that names the right concepts but reaches the
+# wrong conclusion ("no bugs here — L1 shadow, module-level format..." scored 100%).
+# The gate compares the report's *stated* conclusion with the case's `expects_defect`
+# polarity, and when it fails every logic rule of the case is failed: right vocabulary
+# + wrong answer = 0. It fails only on an explicit contradicting claim in a conclusion
+# position (header score, header verdict line, Summary opening, Critical finding) —
+# never on missing structure, which the contract sub-score already measures. Real
+# reports format findings too variously for "has a finding block" to be a safe signal.
+
+_HEADER_SCORE_RE = re.compile(
+    r'(?:Logic Score|逻辑评分)[^0-9\n]{0,25}(\d{1,3})\s*/\s*(100|10)\b', re.I)
+_VERDICT_LABEL_RE = re.compile(
+    r'^[>\s*#]*(?:Verdict|Conclusion|结论|判定|总评)\s*(?:\*\*)?\s*[:：]', re.I)
+_SUMMARY_HEADING_RE = re.compile(r'^#{1,4}\s*(?:Summary|总结)\s*$', re.I)
+# Header ends at the first Findings/Summary section. Not at "analysis"/"trace" headings:
+# reports often open with a title like "## 语义等价性分析" that sits *above* the verdict.
+_SECTION_START_RE = re.compile(r'^#{1,4}\s*(?:Findings?|发现|Summary|总结)\b', re.I)
+# "no bugs found" — but not "no other/further bugs", which real defect reports say.
+_CLEAN_CLAIM_RE = re.compile(
+    r'\bno\s+(?!other\b|further\b|additional\b|more\b)(?:confirmed\s+|significant\s+)?'
+    r'(?:logic\s+)?(?:bugs?|errors?|issues?|defects?|findings?)\b'
+    r'|\bcode\s+is\s+correct|(?:未发现|没有发现|没有)(?:任何)?(?:已确认的?)?(?:逻辑)?(?:问题|错误|缺陷|bug)', re.I)
+_RISK_CODE_RE = re.compile(r'\b(?:L[1-9]|C\d{1,2})\b')
+# Not "critical section", nor 严重 inside 低严重度 / 中等严重 / 严重性.
+_CRITICAL_RE = re.compile(r'🔴|\bCritical\b(?!\s+section)|\[CRITICAL\]|(?<![低中等较不])严重(?![度性程])', re.I)
+_NEGATION_RE = re.compile(r'\bno\b|\bnone\b|\bnot\b|没有|无(?:严重|发现)', re.I)
+_DIVERGENT_RE = re.compile(
+    r'❌|(?<!not )(?<!non-)\bdivergent\b|语义分歧|不等价|NOT\s+(?:semantically\s+)?equivalent', re.I)
+_CONDITIONAL_RE = re.compile(
+    r'⚠️|Conditionally\s+Equivalent|条件等价|不完全等价|partially|\bbut\b|however|except|\bonly\b|\bif\b|otherwise'
+    r'|但|差异|如果|否则|仅', re.I)
+_EQUIVALENT_RE = re.compile(r'✅|equivalent|等价', re.I)
+
+
+def _header_region(t: str) -> list[str]:
+    """Lines before the first Findings / trace section — where header score and verdict live."""
+    lines = t.splitlines()
+    for i, line in enumerate(lines):
+        if _SECTION_START_RE.match(line.strip()):
+            return lines[:i]
+    return lines[:30]
+
+
+def _header_score(t: str) -> int | None:
+    """Header Logic Score normalised to /100 (fix-all: the 'before' score)."""
+    for line in _header_region(t):
+        m = _HEADER_SCORE_RE.search(line)
+        if m:
+            return int(m.group(1)) * (10 if m.group(2) == "10" else 1)
+    return None
+
+
+def _conclusion_lines(t: str) -> list[str]:
+    """Header verdict lines ('> ...' or 'Verdict:/结论：') plus the Summary's first paragraph."""
+    lines = [l for l in _header_region(t)  # '>>>' is a REPL transcript, not a verdict quote
+             if (l.lstrip().startswith(">") and not l.lstrip().startswith(">>>"))
+             or _VERDICT_LABEL_RE.match(l.strip())]
+    all_lines = t.splitlines()
+    for i, line in enumerate(all_lines):
+        if _SUMMARY_HEADING_RE.match(line.strip()):
+            para = next((l for l in all_lines[i + 1:] if l.strip()), "")
+            lines.append(para)
+            break
+    return lines
+
+
+def _has_critical_finding(t: str) -> bool:
+    """A Critical-severity marker on a line that also names a risk code, or the line after.
+    Negated lines ("No Critical issues; the L8 concern is unfounded") don't count."""
+    lines = t.splitlines()
+    return any(_CRITICAL_RE.search(l) and not _NEGATION_RE.search(l)
+               and _RISK_CODE_RE.search(l + " ".join(lines[i + 1:i + 2]))
+               for i, l in enumerate(lines))
+
+
+def _diff_verdict(t: str) -> str | None:
+    """'divergent' / 'conditional' / 'equivalent' from the header verdict line, else None."""
+    lines = _conclusion_lines(t)
+    if not lines:
+        return None
+    for label, pat in (("divergent", _DIVERGENT_RE), ("conditional", _CONDITIONAL_RE),
+                       ("equivalent", _EQUIVALENT_RE)):
+        if pat.search(lines[0]):
+            return label
+    return None
+
+
+def _claims_clean(t: str) -> bool:
+    """Explicit 'no defect' conclusion. A header score is authoritative (clean iff 100);
+    without one, a clean verdict/summary claim decides. Prose alone would misfire on
+    scoped claims like "本次审查未发现并发问题" inside a report that has findings."""
+    score = _header_score(t)
+    if score is not None:
+        return score == 100
+    return any(_CLEAN_CLAIM_RE.search(l) for l in _conclusion_lines(t))
+
+
+def _claims_defect(t: str) -> bool:
+    """Explicit 'defect' conclusion: header score below 80, or a Critical risk-coded finding."""
+    score = _header_score(t)
+    return (score is not None and score < 80) or _has_critical_finding(t)
+
+
+def conclusion_rule_for_case(case: dict) -> tuple[str, Callable[[str], bool]] | None:
+    """Gate rule from the case's `expects_defect` polarity; None for descriptive logic-explain."""
+    if "expects_defect" not in case:
+        return None
+    if case["mode"] == "logic-diff":
+        if case["expects_defect"]:
+            return ("conclusion: does not claim semantic equivalence",
+                    lambda t: _diff_verdict(t) != "equivalent")
+        return ("conclusion: does not claim divergence", lambda t: _diff_verdict(t) != "divergent")
+    if case["expects_defect"]:
+        return ("conclusion: does not claim the code is clean", lambda t: not _claims_clean(t))
+    return ("conclusion: does not claim a significant defect", lambda t: not _claims_defect(t))
+
+
 _BEFORE_AFTER_SCORE_RULE: tuple[str, Callable[[str], bool]] = (
     "has before and after Logic Score", _has_before_after_scores,
 )
@@ -1140,6 +1258,16 @@ def grade_case(case_id: int, output_path: Path) -> dict:
     rules = rules_for_case(case)
 
     expectations = check(text, rules)
+    n_format = len(format_rules_for_case(case))
+    # The gate is a multiplier, not a scored rule: a correct conclusion leaves the logic
+    # sub-score exactly as before (comparable with older runs); a wrong one zeroes it.
+    gate_rule = conclusion_rule_for_case(case)
+    gate = check(text, [gate_rule])[0] if gate_rule else None
+    if gate and not gate["passed"]:
+        for e in expectations[n_format:]:
+            if e["passed"]:
+                e["passed"] = False
+                e["text"] += " [gated: wrong conclusion]"
     passed = sum(1 for e in expectations if e["passed"])
     pass_rate = passed / len(expectations) if expectations else 0.0
 
@@ -1149,7 +1277,6 @@ def grade_case(case_id: int, output_path: Path) -> dict:
     # slicing by position (not description match) survives the description rename that
     # check() applies on predicate error. n_format comes from the single source of
     # truth, so it cannot drift from what rules_for_case() actually prepended.
-    n_format = len(format_rules_for_case(case))
     format_exps = expectations[:n_format]
     logic_exps = expectations[n_format:]
     format_passed = sum(1 for e in format_exps if e["passed"])
@@ -1172,6 +1299,7 @@ def grade_case(case_id: int, output_path: Path) -> dict:
         "format_passed": format_passed,
         "format_total": n_format,
         "format_pass_rate": format_passed / n_format if n_format else None,
+        "conclusion_gate": gate,
     }
 
 
@@ -1214,12 +1342,14 @@ def main(iter_dir: Path):
     zh_lang_total = sum(1 for r in zh_results for e in r.get("expectations", [])
                         if "chinese" in e["text"].lower())
 
+    gate_failed_ids = [r["eval_id"] for r in results
+                       if r.get("conclusion_gate") and not r["conclusion_gate"]["passed"]]
     overall_rates = [r["pass_rate"] for r in results if "pass_rate" in r]
     logic_rates = [r["logic_pass_rate"] for r in results if r.get("logic_pass_rate") is not None]
     format_rates = [r["format_pass_rate"] for r in results if r.get("format_pass_rate") is not None]
 
     summary = {
-        "schema_version": 2,
+        "schema_version": 3,
         "iteration_dir": str(iter_dir.relative_to(REPO)),
         "cases_graded": len(results),
         "evals_total": len(EVALS_BY_ID),
@@ -1231,6 +1361,7 @@ def main(iter_dir: Path):
         "overall_format_pass_rate": sum(format_rates) / len(format_rates) if format_rates else None,
         "per_mode": per_mode,
         "chinese_language_pass": f"{zh_lang_pass}/{zh_lang_total}",
+        "conclusion_gate_failed_ids": gate_failed_ids,
         "per_case": [
             {"id": r["eval_id"], "name": r["name"], "mode": r["mode"],
              "pass_rate": r.get("pass_rate", 0.0),
@@ -1269,6 +1400,7 @@ def main(iter_dir: Path):
     print(_fmt_rate("  contract pass_rate", summary["overall_format_pass_rate"], len(format_rates)))
     print(f"    └ contract = Iron Law 合规闸门：二值/单跑高方差，非推理质量")
     print(f"Chinese language assertion: {summary['chinese_language_pass']}")
+    print(f"Conclusion gate failures (logic zeroed): {gate_failed_ids or 'none'}")
     print(f"Summary written to: {iter_dir / 'summary.json'}")
 
 

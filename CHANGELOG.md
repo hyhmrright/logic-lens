@@ -11,6 +11,21 @@ Versions follow [SemVer](https://semver.org/).
 > Note: `v0.6.8` never shipped as a version number — it exists only as a benchmark
 > label for the runs between v0.6.7 and v0.6.9.
 
+## [Unreleased]
+
+### Fixed — grader: a wrong conclusion no longer scores on keywords
+
+Case rules only checked vocabulary, so a report reaching the *wrong* conclusion while naming the
+expected concepts ("no bugs — L1 shadow, module-level format…") still scored: an adversarial
+salad of each case's expected answer under a contradicting header averaged **90.4%** logic, 66/92
+cases perfect. Each evaluative case now carries `expects_defect`, and a conclusion gate reads the
+report's stated conclusion (header score, header verdict line, Summary opening, Critical
+finding); when it contradicts the expectation the case's logic sub-score is zeroed. The same
+salad now scores **0%**. The gate is a multiplier, not an extra rule, so correct-conclusion
+scores are unchanged and stay comparable with earlier runs. Re-grading history: v0.6.8 runs
+unchanged; v0.6.9 logic 84.6% → 82.8% (eval-249 scored clean code 65/100). `summary.json` is now
+`schema_version: 3` with `conclusion_gate_failed_ids`.
+
 ## [0.6.10] — 2026-05-30
 
 ### Changed — scoring vocabulary: the logic sub-score is the headline metric

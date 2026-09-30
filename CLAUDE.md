@@ -164,7 +164,7 @@ ls ~/.claude/commands/logic-*.md
    ```bash
    grep -n "for skill in" hooks/session-start
    ```
-7. Add 3–5 eval cases to `evals/content/v2/evals-v2.json`. Optionally add trigger cases to `evals/trigger/v2/trigger-evals-{skill}.json` — but see Gotchas: positive trigger cases always score 0% for Logic-Lens; trigger evals are only useful for catching `description` regressions on negative cases.
+7. Add 3–5 eval cases to `evals/content/v2/evals-v2.json` (non-explain cases need `expects_defect` — see CONTRIBUTING.md "Eval Cases"; the unit tests enforce it). Optionally add trigger cases to `evals/trigger/v2/trigger-evals-{skill}.json` — but see Gotchas: positive trigger cases always score 0% for Logic-Lens; trigger evals are only useful for catching `description` regressions on negative cases.
 
 ## Harness：Logic-Lens Skill 迭代闭环
 
