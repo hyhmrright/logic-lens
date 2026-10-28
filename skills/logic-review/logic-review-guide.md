@@ -23,7 +23,7 @@ and eventual visibility. Specify the observable violation, not just "this looks 
 An in-place API returning its input is legal unless an actual contract or caller
 requires independent state; mutation alone is not an L4 finding.
 
-## Step 2: Map the Dependency Slice
+## Step 2: Map Behavior Boundaries
 
 The named file/function is the target; evidence may live elsewhere. Start from an
 entry point and follow both directions:
@@ -33,6 +33,19 @@ entry point and follow both directions:
   runtime/library versions, callbacks, or dispatch.
 - Where state is owned, persisted, invalidated, cached, retried, and consumed.
 - Which callers depend on return values, exceptions, mutations, or ordering.
+
+Before deep investigation, sketch the important obligations in the target:
+
+```
+promise/source | producer → representation → consumer | alternate route/state | observable mismatch
+```
+
+This is a discovery map, not an output table requirement. Look for the same promise
+implemented in different entries or stages: where is a default attached, a value
+normalized, a capability recognized, or state made visible? A shared helper protects
+only routes that actually traverse it. Follow information lost or reinterpreted at
+each boundary, including wrappers, callbacks, metadata, units, and retained state.
+Do not equate different routes unless the contract requires their equivalence.
 
 Prioritize paths by impact and unresolved contract boundaries, including internal
 helpers when they own those boundaries. Do not automatically downgrade a finding
@@ -55,6 +68,22 @@ and operations could violate it. Explore both ordinary and exceptional paths:
 - Cancel/delete/update followed by stale callbacks, reads, or cached results.
 - Failures before and after an external effect; cleanup and compensation across exits.
 - Concurrent interleavings, ownership transfer, restart/reload, and serialization round trips.
+
+Turn a promising boundary into a **paired counterexample**: hold the required
+behavior constant and vary one supported representation, entry point, partition,
+or prior state. Compare a direct value with an adapter; one batch with equivalent
+chunks; a fresh object with a reused one; or a value before and after a supported
+round trip. Select pairs from the actual API contract, not assumed universal laws.
+Use valid but unusual implementations of a documented interface: does dispatch
+check the capability the consumer needs, or a narrower proxy for it?
+
+Predict both outcomes before the next tool call. If two plausible explanations
+remain, test the smallest input or sequence that separates them. Import real code
+for cheap local probes when permitted; otherwise trace both routes to their first
+observable difference. A failed import is setup evidence, not a behavior result.
+Do not keep rereading already established facts: identify the specific unknown
+that another read would answer, or switch hypothesis. Reserve budget for exploring
+uncovered obligations before polishing findings or remedies.
 
 Choose relevant scenarios; do not mechanically expand every combination. Use L1–L9
 from `logic-risks.md` as a coverage backstop after generating hypotheses, and defer
@@ -102,12 +131,24 @@ visibility. Single-threaded execution alone does not prevent interleaving at awa
 confinement or immutability may be valid defenses without a lock. Attempt a specified
 schedule rather than treating a lucky stress-test pass as disproof.
 
+Report the **smallest supported violation**. If A → B is established but B → C
+is uncertain, evaluate B against its own contract. A wrong returned value, missing
+required metadata, or callback observing invalid state can be a complete defect
+without proving a later crash, hang, or data loss. State only the established
+consequence and keep the escalation conditional. Conversely, an internal difference
+without an evidenced observable obligation is still a lead. Conflicting contract
+sources require resolution; paired outputs alone do not prove which is correct.
+
 Keep **impact**, **confidence**, and **status** independent. Missing context does not
 make data loss minor. Partial defenses create further checks, not automatic severity
 demotion. Only confirmed defects enter Findings; incomplete high-impact leads stay
 visible as unresolved investigations, with the missing evidence named.
 
 ## Step 5: Verify with Faithful, Bounded Experiments
+
+Experiments can generate hypotheses as well as verify them. Prefer an early
+cheap probe over more reading when its result would change the next investigation
+step. Avoid running a checklist of probes unrelated to the target obligations.
 
 For every Critical/Warning candidate, attempt an appropriate experiment if the
 runtime, dependencies, and permitted isolated environment are available. A runtime

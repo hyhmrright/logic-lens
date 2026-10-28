@@ -29,17 +29,19 @@ confirmed causes, and `report-template.md` only when rendering output.
 1. **Establish behavior** (guide Step 1). Separate observed code facts, required
    behavior with its source, and unverified assumptions. Read actual callers and
    tests; do not use names or the current implementation as the sole correctness oracle.
-2. **Map the dependency slice** (guide Step 2). Follow inputs, transformations,
-   state owners, configuration, and consumers across files. Bound cost by questions
-   answered, preserving unresolved dependencies when the budget expires.
-3. **Generate failure hypotheses** (guide Step 3). Start from violated invariants
-   and operation sequences, then use L1–L9 as a backstop. Maintain a compact ledger
-   with evidence, missing facts, and the next discriminating check.
+2. **Map behavior boundaries** (guide Step 2). Connect each important promise to
+   its producer, representations, alternate supported entries, and first consumer.
+   Follow dependencies to answer specific questions; preserve uncovered routes.
+3. **Search for distinguishing counterexamples** (guide Step 3). Compare supported
+   representations, routes, and operation sequences against the same obligation.
+   Choose a small experiment or read whose outcomes separate competing explanations.
+   Keep a hypothesis ledger; use L1–L9 as a backstop.
 4. **Trace and challenge** (guide Step 4). Trace concrete values and observable
    consequences; search for defenses covering that exact path. Keep impact,
    confidence, and investigation status separate. Partial defenses require investigation.
-5. **Verify experimentally** (guide Step 5). For Critical/Warning candidates, attempt
-   bounded experiments against real code when feasible. An experiment that fails
+5. **Probe early and verify** (guide Step 5). Use bounded real-code experiments
+   during discovery when they resolve uncertainty; do not wait for a finished proof.
+   For Critical/Warning candidates, attempt verification when feasible. A failure
    to reproduce is inconclusive unless it supplies a valid counterexample to the
    finding. Record runtime, setup, assertion source, and fidelity limitations.
 6. **Prepare findings and remedies** (guide Step 6). Deduplicate by root cause,
