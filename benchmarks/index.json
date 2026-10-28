@@ -195,6 +195,18 @@
       "reviews": 35,
       "status": "incomplete",
       "qualified_release": false
+    },
+    {
+      "id": "codex-discovery-v2-checkpoint-2026-10-28-62",
+      "path": "runs/codex-discovery-v2-checkpoint-2026-10-28-62.json",
+      "report": "reports/codex-discovery-v2-checkpoint-2026-10-28-62/REPORT.md",
+      "model": "gpt-6.1-sol",
+      "provider": "codex",
+      "unique_cases": 4,
+      "planned_reviews": 72,
+      "reviews": 62,
+      "status": "incomplete",
+      "qualified_release": false
     }
   ]
 }

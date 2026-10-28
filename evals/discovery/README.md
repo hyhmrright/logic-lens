@@ -153,3 +153,10 @@ a failed row automatically moves its old logs to `failed-attempts/ID-attemptN` b
 starting the new attempt. Do not delete failures or treat unfilled rows as clean reviews.
 The [revision-2 partial record](../../benchmarks/reports/codex-discovery-v2-partial-2026-10-28/REPORT.md)
 is explicitly incomplete because of model capacity errors and timeouts.
+
+The [62-report recovery checkpoint](../../benchmarks/reports/codex-discovery-v2-checkpoint-2026-10-28-62/REPORT.md)
+preserves later progress without replacing the original partial artifact. All 72
+trials have been attempted; ten remain undelivered. The candidate can reach at most
+10 target detections versus plain Codex's completed 9, so the preregistered +3
+improvement threshold is already unreachable. Missing reports remain missing,
+not scored as misses. Continue the frozen plan for delivery and cost accounting.

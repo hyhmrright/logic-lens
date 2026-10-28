@@ -9,6 +9,34 @@ NAME = 'codex-discovery-v2-partial-2026-10-28'
 
 
 class FrozenDiscoveryV2(unittest.TestCase):
+    def test_recovery_checkpoint_preserves_reports_and_honest_missingness_bounds(self):
+        name = 'codex-discovery-v2-checkpoint-2026-10-28-62'
+        data = json.loads((ROOT / 'benchmarks/runs' / f'{name}.json').read_text())
+        self.assertEqual(data['status'], 'incomplete')
+        rows = data['runs']
+        self.assertEqual(len(rows), 62)
+        self.assertEqual(len({r['run_id'] for r in rows}), 62)
+        self.assertEqual(len(data['failed_attempts']), 14)
+        for row in rows:
+            self.assertEqual(hashlib.sha256((ROOT / 'benchmarks' / row['report']).read_bytes()).hexdigest(),
+                             row['published_report_sha256'])
+            self.assertTrue(set(row['judgment']['confirmed_additional']) <= set(data['additional_checks']))
+            self.assertFalse(set(row['judgment']['confirmed_additional']) & set(data['unestablished_probe_oracles']))
+        buggy = [r for r in rows if r['variant'] == 'buggy']
+        plain = [r for r in buggy if r['arm'] == 'plain']
+        candidate = [r for r in buggy if r['arm'] == 'candidate']
+        self.assertEqual(len(plain), 12)
+        plain_hits = sum(r['judgment']['target_detected'] for r in plain)
+        candidate_max = sum(r['judgment']['target_detected'] for r in candidate) + 12 - len(candidate)
+        self.assertLess(candidate_max - plain_hits, data['success_criteria']['minimum_extra_target_detections'])
+        self.assertFalse(data['success_criteria']['passed'])
+        report_root = ROOT / 'benchmarks/reports' / name
+        for field, filename in [('target_probe_source_sha256', 'probes_v2.py'),
+                                ('additional_probe_source_sha256', 'additional_probes_v2.py')]:
+            self.assertEqual(data[field], hashlib.sha256((report_root / 'evaluator' / filename).read_bytes()).hexdigest())
+        for variant in ('buggy', 'fixed'):
+            self.assertNotEqual(data['additional_checks']['dateutil-ordinal-space'][variant]['returncode'], 0)
+
     def test_partial_matrix_cannot_be_mistaken_for_completed_improvement(self):
         data = json.loads((ROOT / 'benchmarks/runs' / f'{NAME}.json').read_text())
         self.assertEqual(data['status'], 'incomplete')
