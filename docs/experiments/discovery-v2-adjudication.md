@@ -42,6 +42,14 @@ claims; these are judgments by the implementing assistant, not independent label
   Several intersection classes share implementation causes; one finding can describe
   several classes. These counts must not be presented as independent root causes,
   exhaustive recall, or a substitute for the preregistered target endpoint.
+- **Compact ordinal dates with spaces:** existing ordinal fixtures establish both
+  compact and extended ordinal representations, and the constructor documents any
+  single date/time separator by default. `2017123 1230` must therefore agree with
+  `2017-123 1230` (May 3 at 12:30). Both frozen source variants instead return
+  December 3 at 23:00 for the compact form: the common parser consumes the ordinal's
+  final digit plus space as a day, and the wrapper skips the first hour digit.
+  This is a confirmed additional valid-input defect, distinct from midnight rollover.
+  The report's explicitly unresolved numeric-separator ambiguity is not counted.
 
 `additional_probes_v2.py` contains real-source assertions for established behavior
 classes and a separately marked diagnostic with an unestablished classification

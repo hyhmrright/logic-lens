@@ -7,6 +7,7 @@ import subprocess
 UNESTABLISHED = {'semver-minor-graduation'}
 
 CHECKS = {
+    'dateutil-ordinal-space': ('dateutil-midnight', "from dateutil.parser import isoparse\nfrom datetime import datetime\na=isoparse('2017123 1230');b=isoparse('2017-123 1230')\nassert b==datetime(2017,5,3,12,30)\nassert a==b, (a,b)"),
     'semver-intersection-prerelease': ('semver-build', "const R=require('./classes/range'),a=require('node:assert/strict');a.equal(new R('*').intersects(new R('1.2.3-alpha')),false);"),
     'semver-intersection-prerelease-gap': ('semver-build', "const R=require('./classes/range'),a=require('node:assert/strict');a.equal(new R('>1.0.0-alpha',{includePrerelease:true}).intersects(new R('<1.0.0-alpha.0',{includePrerelease:true}),{includePrerelease:true}),false);"),
     'semver-intersection-witness': ('semver-build', "const R=require('./classes/range'),a=require('node:assert/strict');const x=new R('>=1.2.3-alpha <2.0.0'),y=new R('1.2.3-beta');a.equal(x.test('1.2.3-beta')&&y.test('1.2.3-beta'),true);a.equal(x.intersects(y),true);"),
