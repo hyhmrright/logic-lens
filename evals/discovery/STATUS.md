@@ -15,6 +15,12 @@ All 14 failed attempts are preserved; 59 deliveries succeeded first try and 13 a
 retry. Dollar cost and part of failed-call usage remain unknown. No missing reports
 remain. The automatic recovery task is finished; no candidate promotion follows.
 
+Revision 3 is an unqualified compact candidate, with an
+[offline audit](../../docs/experiments/discovery-v3-development-audit.md) and an
+[approval-gated preregistration draft](../../docs/experiments/discovery-v3-preregistration.md).
+No new model experiment is authorized or executed. Development behavior checks and
+fresh-case comparisons each require a new user approval; no automatic recovery is active.
+
 The following earlier pilot remains development evidence:
 
 Codex completed the 72-review, four-case paired pilot (three arms, both source

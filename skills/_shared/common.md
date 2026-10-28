@@ -184,7 +184,7 @@ When responding in Chinese, translate all user-visible text in the block: use `[
 
 - **Git unavailable:** skip git-based scope detection, ask the user for the target, proceed.
 - **Emoji disabled / plain terminal:** replace severity emojis with text markers — `[CRITICAL]`, `[WARNING]`, `[SUGGESTION]`. Keep L-codes as-is.
-- **No tests / no docs:** state the absence in premises, infer intent from function/variable names, flag the doc gap as a Suggestion.
+- **No tests / no docs:** state the absence in premises. For logic-review, names are hypothesis cues, not a sufficient contract oracle; keep unsupported behavior unresolved. Other modes must disclose any inferred intent.
 
 ---
 

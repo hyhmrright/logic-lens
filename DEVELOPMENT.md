@@ -73,3 +73,15 @@ New skills need a guide, eval cases and portable bundle registration in
 `scripts/skill_bundle.py`; native host registrations/wrappers are optional and must
 be kept accurate if supplied. New risk codes require a non-overlapping definition,
 tracing methodology, examples in two languages, severity rationale and eval cases.
+
+## Current experiment authorization
+
+The completed v2 comparison is immutable. Revision 3 is a development candidate,
+not a qualified release. The user has limited tokens and explicitly requires approval
+before **any new model-backed experiment**, including development-set diagnostics,
+smoke/content/trigger evals, retries and fresh-case comparisons. Offline validation,
+bundling and existing-evidence analysis are authorized. Present the frozen revision,
+run count, provider/model, budgets and known/unknown cost estimate before requesting
+approval. A passing development gate does not authorize the next stage. Do not create
+a model-running heartbeat or CI experiment. See
+`docs/experiments/discovery-v3-preregistration.md` for proposed stages.

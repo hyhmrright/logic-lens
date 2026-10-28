@@ -26,31 +26,22 @@ confirmed causes, and `report-template.md` only when rendering output.
 
 ## Process
 
-1. **Establish behavior** (guide Step 1). Separate observed code facts, required
-   behavior with its source, and unverified assumptions. Read actual callers and
-   tests; do not use names or the current implementation as the sole correctness oracle.
-2. **Map behavior boundaries** (guide Step 2). Connect each important promise to
-   its producer, representations, alternate supported entries, and first consumer.
-   Follow dependencies to answer specific questions; preserve uncovered routes.
-3. **Search for distinguishing counterexamples** (guide Step 3). Compare supported
-   representations, routes, and operation sequences against the same obligation.
-   Choose a small experiment or read whose outcomes separate competing explanations.
-   Keep a hypothesis ledger; use L1–L9 as a backstop.
-4. **Trace and challenge** (guide Step 4). Trace concrete values and observable
-   consequences; search for defenses covering that exact path. Keep impact,
-   confidence, and investigation status separate. Partial defenses require investigation.
-5. **Probe early and verify** (guide Step 5). Use bounded real-code experiments
-   during discovery when they resolve uncertainty; do not wait for a finished proof.
-   For Critical/Warning candidates, attempt verification when feasible. A failure
-   to reproduce is inconclusive unless it supplies a valid counterexample to the
-   finding. Record runtime, setup, assertion source, and fidelity limitations.
-6. **Prepare findings and remedies** (guide Step 6). Deduplicate by root cause,
-   assign L-codes and severity to supported defects, and verify the proposed remedy
-   without changing the user's files during a read-only review.
-7. **Report once** (guide Step 7). Preserve the five literal Iron Law fields and
-   localized template. Scope includes traced paths and omissions; append unresolved
-   investigations after Summary. A score describes confirmed findings within that
-   scope, never probability of correctness or permission to ship.
+1. **Establish an obligation** (guide Step 1). Separate facts, sourced requirements
+   and unknowns. Read supporting evidence to resolve a behavioral question.
+2. **Select transformations** (guide Step 2). Follow actual inputs/state to observable
+   consumers. Choose a small ranked set of supported invariants to investigate.
+3. **Run distinguishing checks** (guide Step 3). Derive valid paired inputs or
+   sequences from implementation boundaries. Record what each check resolves and
+   return to important uncovered obligations after finding a defect.
+4. **Challenge the violation** (guide Step 4). Establish reachability, exact-path
+   defenses and the smallest observable consequence; preserve unresolved leads.
+5. **Preserve probe evidence** (guide Step 5). Probe real code during discovery when
+   feasible. Record oracle, runtime, result and limitations. Defer implementation
+   and broad remedy regression to a separately requested fix task.
+6. **Prepare findings** (guide Step 6). Deduplicate causes, classify confirmed defects
+   and give a minimal concrete remedy with its verification limits.
+7. **Report once** (guide Step 7). Use shared localized Iron Law fields and scope/score
+   rules. Expose uncovered obligations without treating them as confirmed defects.
 
 **Mode line:** `Logic Review` (Chinese: `逻辑审查`). Route whole-directory requests
 to logic-health; supporting caller/callee/configuration files remain available to review.
