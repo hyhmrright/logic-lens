@@ -121,6 +121,13 @@ skill and 7/12 for the candidate. The candidate did not establish superiority ov
 plain Codex. The report discloses additional findings, resource use, adjudication
 and sample limitations. Add `--plain` to the review command for the direct-model control.
 
+The [completed revision-2 comparison](benchmarks/reports/codex-discovery-v2-final-2026-10-28/REPORT.md)
+used four newly selected historical defects and a candidate frozen before inspecting
+their fixes. All three arms tied at 9/12 target detections across 72 delivered reviews.
+The revised skill produced fewer unsupported assertions under author adjudication,
+but more output and longer observed durations. Bug-discovery superiority remains
+unproven; no release promotion follows.
+
 Historical Claude benchmark records remain in [benchmarks/](benchmarks/README.md)
 with their original model/version provenance. They do not establish Codex performance,
 head-to-head benefit, or effectiveness of the experimental candidate. Do not infer

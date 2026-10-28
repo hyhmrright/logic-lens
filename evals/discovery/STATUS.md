@@ -1,6 +1,21 @@
 # Experiment status — 2026-10-28
 
-**Decision: portable execution works; candidate detection superiority is not established.**
+**Decision: portable execution works; both completed comparisons fail to establish
+candidate detection superiority.**
+
+The [final revision-2 comparison](../../benchmarks/reports/codex-discovery-v2-final-2026-10-28/REPORT.md)
+completed 72/72 reviews on four new historical dateutil/node-semver defects after
+freezing candidate 32151b0. Plain, previous skill and revised skill each detected
+9/12 targets. The long-build-identifier target was missed in every arm and repeat.
+The revised skill's 0 versus plain's 15 unsupported assertions suggests more careful
+contract handling under author adjudication, without increased target discovery.
+Accepted output was 1.76 times plain; observed median duration was 1.51 times plain,
+with changed concurrency and service conditions precluding a controlled speed claim.
+All 14 failed attempts are preserved; 59 deliveries succeeded first try and 13 after
+retry. Dollar cost and part of failed-call usage remain unknown. No missing reports
+remain. The automatic recovery task is finished; no candidate promotion follows.
+
+The following earlier pilot remains development evidence:
 
 Codex completed the 72-review, four-case paired pilot (three arms, both source
 variants, three repetitions). Exact known-regression confirmations: plain 7/12,

@@ -207,6 +207,18 @@
       "reviews": 62,
       "status": "incomplete",
       "qualified_release": false
+    },
+    {
+      "id": "codex-discovery-v2-final-2026-10-28",
+      "path": "runs/codex-discovery-v2-final-2026-10-28.json",
+      "report": "reports/codex-discovery-v2-final-2026-10-28/REPORT.md",
+      "model": "gpt-6.1-sol",
+      "provider": "codex",
+      "unique_cases": 4,
+      "planned_reviews": 72,
+      "reviews": 72,
+      "status": "complete",
+      "qualified_release": false
     }
   ]
 }

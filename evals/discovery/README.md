@@ -155,8 +155,8 @@ The [revision-2 partial record](../../benchmarks/reports/codex-discovery-v2-part
 is explicitly incomplete because of model capacity errors and timeouts.
 
 The [62-report recovery checkpoint](../../benchmarks/reports/codex-discovery-v2-checkpoint-2026-10-28-62/REPORT.md)
-preserves later progress without replacing the original partial artifact. All 72
-trials have been attempted; ten remain undelivered. The candidate can reach at most
-10 target detections versus plain Codex's completed 9, so the preregistered +3
-improvement threshold is already unreachable. Missing reports remain missing,
-not scored as misses. Continue the frozen plan for delivery and cost accounting.
+preserves the intermediate evidence. The [final 72-report record](../../benchmarks/reports/codex-discovery-v2-final-2026-10-28/REPORT.md)
+now resolves every missing delivery without changing the frozen plan. All three arms
+tie at 9/12 target detections; the preregistered improvement criterion fails. All 14
+failed attempts are retained, including two with known terminal token usage. The
+35-report partial and 62-report checkpoint remain immutable.
