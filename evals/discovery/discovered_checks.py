@@ -8,6 +8,7 @@ import importlib
 import os
 from pathlib import Path
 import sys
+sys.dont_write_bytecode = True
 from unittest.mock import patch
 
 
@@ -15,7 +16,14 @@ def check(name, workspace):
     sys.path[:0]=[str(workspace/'src'),str(workspace)]
     h=importlib.import_module('requests' if name.startswith('requests-') else 'httpx')
     assert Path(h.__file__).resolve().is_relative_to(workspace.resolve())
-    if name=='requests-sized-iterable':
+    if name=='requests-buffer-length':
+        view=memoryview(b'abcd').cast('H')
+        request=h.Request('POST','http://example.org/',data=view).prepare()
+        assert int(request.headers['Content-Length'])==view.nbytes,dict(request.headers)
+    elif name=='requests-ignored-json':
+        request=h.Request('POST','http://example.org/',files={'f':('a.txt',b'ok')},json={'n':float('nan')}).prepare()
+        assert b'ok' in request.body
+    elif name=='requests-sized-iterable':
         from collections import deque
         request=h.Request('POST','http://example.org/',data=deque([b'ab',b'cd'])).prepare()
         actual=len(b''.join(request.body))

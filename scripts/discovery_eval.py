@@ -8,6 +8,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import io
+import os
 import json
 import random
 import subprocess
@@ -264,9 +265,9 @@ def main():
     prep.add_argument('--repeats', type=int, default=3)
     prep.add_argument('--seed', type=int, default=17)
     prep.add_argument('--model', required=True)
-    prep.add_argument('--provider', choices=['codex', 'command'], default='codex')
-    prep.add_argument('--adapter', type=Path, help='JSON argv adapter for provider=command')
-    prep.add_argument('--effort', default='high')
+    prep.add_argument('--provider', choices=['codex', 'command'], default=os.getenv('PROVIDER','codex'))
+    prep.add_argument('--adapter', type=Path, default=os.getenv('ADAPTER'), help='JSON argv adapter for provider=command')
+    prep.add_argument('--effort', default=os.getenv('EFFORT','high'))
     prep.add_argument('--timeout', type=int, default=300)
     call = sub.add_parser('run')
     call.add_argument('--out', type=Path, required=True)

@@ -2,6 +2,7 @@
 """Run any Logic-Lens skill through Codex or a normalized command adapter."""
 import argparse
 import json
+import os
 from pathlib import Path
 import sys
 
@@ -11,15 +12,15 @@ from skill_bundle import SKILLS, snapshot
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--provider', choices=['codex', 'command'], default='codex')
-    p.add_argument('--model', default='gpt-6.1-sol')
-    p.add_argument('--effort', default='high')
+    p.add_argument('--provider', choices=['codex', 'command'], default=os.getenv('PROVIDER','codex'))
+    p.add_argument('--model', default=os.getenv('MODEL','gpt-6.1-sol'))
+    p.add_argument('--effort', default=os.getenv('EFFORT','high'))
     p.add_argument('--skill', choices=SKILLS, default='review')
     p.add_argument('--plain', action='store_true', help='No skill instructions')
     p.add_argument('--workspace', type=Path, required=True)
     p.add_argument('--out', type=Path, required=True)
     p.add_argument('--prompt', type=Path, help='UTF-8 request file; stdin otherwise')
-    p.add_argument('--adapter', type=Path)
+    p.add_argument('--adapter', type=Path, default=os.getenv('ADAPTER'))
     p.add_argument('--timeout', type=int, default=360)
     args = p.parse_args()
     if args.timeout <= 0:

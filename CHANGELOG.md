@@ -22,8 +22,9 @@ Versions follow [SemVer](https://semver.org/).
   and bounded concurrent evaluation with failure handling.
 - Moved maintained developer instructions to DEVELOPMENT.md and documented tested
   Codex execution separately from portable use in other coding assistants.
-- A same-model three-arm Codex discovery pilot is in progress; results will be
-  reported with target recall, additional validated discoveries and limitations.
+- Completed a 72-review Codex pilot: plain/prior/candidate confirmed 7/6/7 of
+  12 exact known-regression trials. No candidate superiority claim; per-run reports,
+  instructions, resource counters, additional probes and limitations are frozen.
 
 ### Experimental — repository-context bug discovery (not release-qualified)
 

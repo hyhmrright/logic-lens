@@ -1,39 +1,42 @@
 # Experiment status — 2026-10-28
 
-**Decision: candidate remains experimental; Codex comparison in progress.**
+**Decision: portable execution works; candidate detection superiority is not established.**
 
-The maintained workflow now runs through Codex or a generic command adapter. Claude
-is not required. An offline Markdown pack exports all six skills for other hosts;
-see `docs/TOOL_COMPATIBILITY.md` for tested execution versus portable packaging.
+Codex completed the 72-review, four-case paired pilot (three arms, both source
+variants, three repetitions). Exact known-regression confirmations: plain 7/12,
+prior skill 6/12, candidate 7/12. Additional validated behavior classes: 16 / 15 / 16.
+Accepted-run median seconds: 107 / 168 / 171. The candidate ties the plain-model
+primary result with higher observed resource use. This is not a general gain claim.
 
-The corpus contains 20 pinned historical source pairs. Nineteen target failures
-were inspected on actual source and passed after the implementation-only repair;
-one Windows-only pair is blocked. Runtime/version details remain in `catalog.json`.
-These are public development cases, not an independent holdout.
+See [the full report](../../benchmarks/reports/codex-discovery-2026-10-28/REPORT.md)
+and [frozen per-run evidence](../../benchmarks/runs/codex-discovery-2026-10-28.json).
+All 72 reports and exact instruction snapshots are committed. Adjudication was by
+the implementing Codex assistant, unblinded; independent human validation remains
+outstanding. The strict wrapper-specific target and exploratory related-family
+interpretation are both disclosed. Unestablished contracts are kept separate from
+confirmed and disproved claims. The 23 additional evaluator checks and all 72
+prepared source hashes were rechecked; no model responses were promoted solely
+because they contained labels or keywords.
 
-The formal Codex pilot uses four cases (httpx-03/httpx-10/requests-02/requests-06),
-both variants, three arms and three repetitions: 72 reviews, gpt-6.1-sol, high effort,
-read-only shell, no web, isolated home/source, 360-second per-call timeout. All arms
-receive the same 10-tool-call/1600-word soft budget. Dollar cost is unknown; actual
-CLI token usage is retained. The prior skill is frozen at the catalog's baseline SHA.
+The original 20-pair corpus remains available: 19 target pairs locally verified,
+one Windows-only pair blocked. The model pilot used four cases, not all 20. These
+public development cases are not a prospective holdout. Three initial instrumentation
+calls and four recovered-stream archival failures were excluded; accepted replacements
+and overhead are documented. The corrected parser accepts a successful terminal turn
+following transient errors and preserves source-integrity evidence before parsing.
 
-An initial three-call instrumentation trial completed model responses but hit a
-runner reload/import error before post-run integrity checks. Those raw outputs
-are retained for debugging and excluded from the formal pilot. They are not misses
-or success evidence. The formal runner no longer reloads the driver from disk.
+The two-case Codex content smoke completed using the unchanged grader: logic 33.3%,
+overall 50%, contract 100%. That is not a complete content-suite result or a prior-skill
+comparison. Eval-1's unspecified suffix contract is documented in ORACLE_DISPUTES.md;
+its original failing score was preserved rather than fixing the oracle to lift it.
 
-Additional discoveries are being adjudicated against real historical source rather
-than treating the repaired target files as completely bug-free. Evaluator-only
-`discovered_checks.py` provides separate checks for selected additional behaviors;
-it is never supplied to the reviewing model. A failed behavior assertion still needs
-a supported requirement and a traceback at the predicted consequence.
+Maintained execution now uses Codex or a generic command adapter. No Claude account,
+CLI or plugin cache is required. All six skills export as a portable Markdown pack;
+other coding tools' native execution is not claimed without host-specific validation.
+See [tool compatibility](../../docs/TOOL_COMPATIBILITY.md).
 
-No effectiveness claim follows from an in-progress run. Final root-cause judgments,
-per-case repeated metrics, tool/token/resource data and limitations will be frozen
-when this matrix completes. Adjudication by the implementing assistant must be
-labeled as such, not presented as independent human validation.
-
-Remaining release gates include prospective unseen projects/families, independent
-adjudication, untouched content-regression checks, and a separate execution-capable
-integration protocol. This four-case development pilot cannot establish universal
-bug recall or native activation reliability across coding tools.
+No release/version bump or candidate promotion follows from this pilot. Next gates:
+prospective unseen repositories/defect families, independent adjudication, a separate
+execution-capable protocol, and broader unchanged content regression checks. Focus a
+future ablation on boundary-contract consequences and wrapper/interface probes;
+keep this measured candidate frozen rather than tuning it against the same reports.

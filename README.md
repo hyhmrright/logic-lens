@@ -115,6 +115,12 @@ from source, removing the old plugin-cache dependency. For discovery preparation
 repeated comparisons, costs, caveats and outstanding release gates, read
 [the discovery protocol](evals/discovery/README.md) and [experiment status](evals/discovery/STATUS.md).
 
+A [72-review Codex development pilot](benchmarks/reports/codex-discovery-2026-10-28/REPORT.md)
+found 7/12 exact known-regression confirmations for plain Codex, 6/12 for the prior
+skill and 7/12 for the candidate. The candidate did not establish superiority over
+plain Codex. The report discloses additional findings, resource use, adjudication
+and sample limitations. Add `--plain` to the review command for the direct-model control.
+
 Historical Claude benchmark records remain in [benchmarks/](benchmarks/README.md)
 with their original model/version provenance. They do not establish Codex performance,
 head-to-head benefit, or effectiveness of the experimental candidate. Do not infer

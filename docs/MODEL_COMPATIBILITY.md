@@ -21,3 +21,8 @@ A literal report label is not evidence of skill activation. Description routing 
 not editor-native activation. CLI process success is not evidence of correct reasoning.
 Use same-provider/model paired runs to compare skill changes; cross-model comparisons
 are separate studies. Record model, effort, tool policy, versions, usage and limitations.
+
+Measured Codex evidence: [2026-10-28 pilot](../benchmarks/reports/codex-discovery-2026-10-28/REPORT.md),
+CLI 0.164.0, gpt-6.1-sol, high effort, four development cases, 72 paired reviews.
+Candidate exact-regression confirmations tied plain Codex (7/12); no superiority
+claim is supported. This tests explicit delivery, not native activation.
