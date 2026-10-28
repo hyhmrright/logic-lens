@@ -71,7 +71,11 @@ npm run validate     # structure + version consistency, offline
 npm run unit-tests   # grader tests
 ```
 
-Changes to `skills/**` also need eval evidence — a content-eval run showing the change is net
+Changes to `skills/**` also need same-provider/model eval evidence — a content-eval run showing the change is net
 positive, not just plausible. Single-run case-level deltas are noisy (±25pp observed); see
 `benchmarks/README.md` for the multi-run averaging rule. **Never relax a grader rule to make a
 case pass.**
+
+Active evaluation uses compiled source snapshots through Codex or a command adapter;
+no Claude account or plugin-cache synchronization is required. Read DEVELOPMENT.md
+and docs/TOOL_COMPATIBILITY.md before adding host-specific behavior.

@@ -6,9 +6,12 @@ import json
 from pathlib import Path
 import subprocess
 import tempfile
+import sys
 import unittest
 
 ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / 'scripts'))
+from llm_runner import parse_codex, parse_command, parallel_map
 SPEC = importlib.util.spec_from_file_location('discovery_eval', ROOT / 'scripts/discovery_eval.py')
 discovery = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(discovery)
@@ -76,24 +79,37 @@ class TestBlindSnapshots(unittest.TestCase):
 
 
 class TestActualRunEvidence(unittest.TestCase):
-    def test_extracts_tool_calls_and_actual_usage(self):
-        events = [dict(type='assistant', message=dict(content=[
-            dict(type='tool_use', name='Read', input={'file_path':'api.py'})])),
-            dict(type='result', subtype='success', result='No bug found',
-                 usage={'input_tokens':50}, total_cost_usd=0.1)]
-        result, calls = discovery.parse_events('\n'.join(map(json.dumps, events)))
-        self.assertEqual(calls, ['Read'])
+    def test_extracts_codex_tool_calls_and_actual_usage(self):
+        events = [dict(type='item.completed', item=dict(type='command_execution', command='cat api.py', status='completed')),
+                  dict(type='item.completed', item=dict(type='agent_message', text='Reviewed')),
+                  dict(type='turn.completed', usage={'input_tokens':50})]
+        result = parse_codex('\n'.join(map(json.dumps, events)))
+        self.assertEqual(result['tools_used'][0]['command'], 'cat api.py')
         self.assertEqual(result['usage']['input_tokens'], 50)
-        # Report text contains no Iron Law labels; delivery evidence is independent.
+        self.assertIsNone(result['cost_usd'])
 
     def test_failed_or_empty_terminal_event_is_not_a_completed_review(self):
-        for event in [dict(type='system'),
-                      dict(type='result', subtype='error_max_budget_usd', result='partial'),
-                      dict(type='result', subtype='success', is_error=True, result='auth error'),
-                      dict(type='result', subtype='success', result='')]:
-            with self.subTest(event=event), self.assertRaises(ValueError):
-                discovery.parse_events(json.dumps(event))
+        for events in [[dict(type='turn.failed', error={'message':'auth error'})],
+                       [dict(type='turn.completed')],
+                       [dict(type='item.completed',item={'type':'agent_message','text':'partial'})]]:
+            with self.subTest(events=events), self.assertRaises(ValueError):
+                parse_codex('\n'.join(map(json.dumps,events)))
 
+    def test_normalized_command_adapter_checks_terminal_evidence(self):
+        result = parse_command(json.dumps(dict(type='result',status='success',report='Checked', usage={'input_tokens':1})))
+        self.assertEqual(result['report'], 'Checked')
+        for text in ['plain text', json.dumps(dict(type='result',status='error',report='failed'))]:
+            with self.subTest(text=text), self.assertRaises(ValueError):
+                parse_command(text)
+
+    def test_parallel_failure_does_not_dispatch_the_entire_paid_suite(self):
+        started = []
+        def fail(item):
+            started.append(item)
+            raise ValueError('failed')
+        with self.assertRaises(ValueError):
+            parallel_map(fail, list(range(100)), jobs=2)
+        self.assertLessEqual(len(started), 2)
 
     def test_run_rejects_mutated_source_and_records_success_without_model_calls(self):
         for mutate in (False, True):
@@ -110,13 +126,13 @@ class TestActualRunEvidence(unittest.TestCase):
                     model='fake', effort='high', budget_usd=1, timeout_seconds=5,
                     runs=[dict(run_id='opaque', arm='plain', target_paths=['api.py'],
                                workspace_sha256=discovery.tree_digest(work))]))
-                fake = out / 'fake-claude'
+                fake = out / 'fake-codex'
                 fake.write_text('#!/usr/bin/env python3\nimport json, pathlib\n' +
                     ("pathlib.Path('api.py').write_text('changed')\n" if mutate else '') +
-                    "print(json.dumps(dict(type='system',subtype='init',tools=['Read'])))\n" +
-                    "print(json.dumps(dict(type='result',subtype='success',result='reviewed',total_cost_usd=0)))\n")
+                    "print(json.dumps(dict(type='item.completed',item=dict(type='agent_message',text='reviewed'))))\n" +
+                    "print(json.dumps(dict(type='turn.completed',usage=dict(input_tokens=1))))\n")
                 fake.chmod(0o755)
-                args = argparse.Namespace(out=out, claude=str(fake), limit=1)
+                args = argparse.Namespace(out=out, binary=str(fake), limit=1, jobs=1)
                 if mutate:
                     with self.assertRaises(ValueError):
                         discovery.run(args)
@@ -126,7 +142,7 @@ class TestActualRunEvidence(unittest.TestCase):
                     discovery.run(args)
                     result = discovery.read_json(out / 'results/opaque/result.json')
                     self.assertEqual(result['instruction_sha256'], hashes['plain'])
-                    self.assertEqual(result['available_tools'], ['Read'])
+                    self.assertEqual(result['capability'], 'read-only-shell')
 
 
 class TestHumanAdjudication(unittest.TestCase):

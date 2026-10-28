@@ -1,155 +1,119 @@
-# Repository discovery experiment (not a release benchmark)
+# Repository discovery experiment
 
-This experiment asks whether the candidate review process finds historical defects
-with repository context, compared with a plain model and the prior skill. It does
-not replace the existing 104-case content regression suite or change its grader.
-The candidate must not be released on offline checks alone.
+Compare plain model / frozen prior skill / candidate skill on the same historical
+source snapshots, using Codex by default or a generic command adapter. No Claude
+account, plugin cache or model SDK is required. The old 104-case content suite and
+grader remain separate and unchanged.
 
-## Corpus and limits
+## Corpus and validity
 
-`catalog.json` pins 20 historical fixes and their first parents: 10 HTTPX, 10 Requests.
-Each entry cites an upstream commit, source files, expected behavior, and changed
-regression-test paths where present. These are real upstream defects, not generated
-fixtures. `oracles.py` contains evaluator-only probes adapted from those sources.
-HTTPX probe adaptations are under BSD-3-Clause (`LICENSE.httpx`); Requests probe
-adaptations are under Apache-2.0 (`LICENSE.requests`). Upstream copyright notices
-and licenses are preserved in those files. No upstream repository code is vendored.
+`catalog.json` pins 20 upstream fixes and first parents (HTTPX and Requests), target
+files, expected behavior, source-only repair overlays and test provenance. The model
+never receives the catalog, fix commit, answer or new regression tests. Parent tests,
+docs and configuration remain identical in both variants, including any pre-existing
+incorrect expectations. Snapshot exports remove history, symlinks and agent controls.
+The runner copies the source to an opaque temporary directory outside this repository.
 
-All seeds were visible while designing this experiment; they are **development
-cases**, not an independent held-out validation set. Historical public code may
-also be in model training data. Add prospective cases from other repositories and
-reserve whole projects/defect families before tuning further. Both sources are
-Python HTTP clients, so this corpus cannot establish cross-language/business-domain
-coverage. Results must be reported per project/family, not just as a single total.
+All seeds were visible during development; this is **targeted discovery on a public
+development corpus**, not independent prospective validation or unbounded-repository
+recall. Both projects are Python HTTP clients. Public-history memorization remains
+possible. Repair removes the target defect, not necessarily other legitimate bugs.
+Adjudicate unrelated findings individually rather than assuming repaired files are clean.
 
-The model is given a target file plus the pre-fix repository context. This measures
-**targeted discovery**, not recall from an unbounded full-repository audit. Repaired
-snapshots overlay only the changed implementation files on the original parent;
-parent tests, docs and configuration remain identical (including any pre-existing
-incorrect expectations), preventing future tests and
-release notes from leaking the answer. The model receives no issue, patch, fix SHA,
-expected behavior, variant label, or catalog. Git history, project agent instructions,
-hooks and symlinks are removed. Files receive opaque workspace names.
-
-The three arms receive the same prompt, source variant, tools, model, effort and
-per-call budget. Baseline instructions are pinned at `baseline_skill_commit`;
-candidate instructions are captured at prepare time. Skills plus relevant shared
-resources are explicitly included in the system prompt, identically for both skill
-arms. This deliberately tests **instruction effectiveness with guaranteed delivery**,
-not automatic skill discovery, progressive-loading reliability or plugin dispatch.
-`plain` receives no skill instructions. Delivery hashes are not proof of compliance.
-
-The initial model protocol is **read-only** (`Read`, `Glob`, `Grep`), including for
-all arms. Runtime verification is independently performed by the evaluator, not
-claimed as a model capability. Integration-capable review needs a separate protocol
-using a disposable container with appropriately isolated execution, and must not be
-mixed into this baseline. Claude `--bare --restricted` removes ambient settings,
-hooks, plugin loading, memory and external MCP servers; the CLI's file-tool scope
-restrictions enforce workspace reads. Inspect `events.jsonl` for actual tool use and the init event's available tools; CLI versions may expose a different read-tool set. A comparison is invalid if actual tool availability differs between arms.
-Do not add outside directories or enable command tools to work around a failed run.
-
-## Verify the ground truth first (no model calls)
-
-Clone sources to an ignored workspace (full history required for the pinned parents):
+## Verify the target defects without model calls
 
 ```bash
 git clone --filter=blob:none --no-checkout https://github.com/encode/httpx.git skills-workspace/discovery-sources/httpx
 git clone --filter=blob:none --no-checkout https://github.com/psf/requests.git skills-workspace/discovery-sources/requests
 python3.11 -m venv skills-workspace/discovery-venv
 skills-workspace/discovery-venv/bin/pip install -r evals/discovery/requirements.txt
-python3 scripts/verify_discovery.py \
-  --sources skills-workspace/discovery-sources \
-  --python skills-workspace/discovery-venv/bin/python \
-  --out skills-workspace/discovery-oracles
+python3 scripts/logic_lens.py verify --sources skills-workspace/discovery-sources \
+  --python skills-workspace/discovery-venv/bin/python --out skills-workspace/discovery-oracles
 ```
 
-Use Python 3.11 for historical HTTPX; the requests-01 wrapper/protocol defect is
-version-dependent (not reproduced on 3.11, reproduced on 3.15). Run that case in a
-separate compatible environment via `--cases requests-01`.
+Evaluator-only `oracles.py` imports actual exported code, verifies module provenance,
+and runs each probe in a fresh bounded subprocess. Inspect the failure location, not
+just the exit code: setup/import failures do not verify a bug. The catalog records
+19 inspected failure→pass pairs. requests-01 reproduces on Python 3.15 but not 3.11;
+use a separate environment for that case. requests-07 needs Windows and is blocked.
+Environment snapshots and oracle hashes are recorded. HTTPX/Requests probe adaptations
+retain BSD-3-Clause/Apache-2.0 attribution in `LICENSE.httpx` and `LICENSE.requests`.
 
-Each probe imports the actual exported project, checks module provenance, and runs
-in a fresh subprocess with a 10-second timeout. `environment.txt` records installed
-dependencies. **Nonzero → zero alone is insufficient**: inspect the failing traceback
-against the stated defect before marking the pair verified. Setup/import failures
-are blockers, not detections. requests-07 requires Windows; never count a platform
-skip as a passing pair. Probes use temporary files/in-process transports rather than
-production services. Some internal transport stubs deliberately inject failures;
-interpret them as boundary-level checks, not end-to-end network proofs.
-
-## Prepare and run
-
-After edits, perform the repository's cache-sync gate before any content evals:
+## Prepare and run with Codex
 
 ```bash
-bash .claude/skills/sync-skill-cache/scripts/sync-cache.sh
+python3 scripts/logic_lens.py discovery prepare \
+  --sources skills-workspace/discovery-sources --out skills-workspace/discovery-run \
+  --cases httpx-03 httpx-10 requests-02 requests-06 --repeats 3 \
+  --provider codex --model gpt-6.1-sol --effort high --timeout 360
+python3 scripts/logic_lens.py discovery run \
+  --out skills-workspace/discovery-run --jobs 4
 ```
 
-Discovery runs themselves use immutable explicit instruction snapshots, not the cache.
-Prepare is offline once source objects are available; partial Git clones may fetch
-missing objects. The full default matrix is **360 calls** (20 × 2 variants × 3 arms ×
-3 repeats). Start with two cases and inspect the plan before running a full matrix:
+This four-case matrix contains 72 reviews: 4 cases × 2 variants × 3 arms × 3 repeats.
+Omit `--cases` for 360 calls over all 20 cases. Start small. `--limit N` on run bounds
+additional calls; timeout/concurrency are bounded and failures stop further dispatch.
+In-flight calls may finish. A timeout kills the process group on Unix and preserves
+partial logs. There is no enforced Codex dollar cap; token counts are recorded and
+dollar cost remains null when unknown. Do not interpret old `budget_usd` metadata
+as a real spend limit. Raw artifacts stay under ignored `skills-workspace/`.
 
-```bash
-python3 scripts/discovery_eval.py prepare \
-  --sources skills-workspace/discovery-sources \
-  --out skills-workspace/discovery-smoke \
-  --cases httpx-09 requests-06 --repeats 1 \
-  --model claude-sonnet-4-6 --effort high --budget 1
-python3 scripts/discovery_eval.py run --out skills-workspace/discovery-smoke --limit 1
-```
+A new output directory freezes each candidate's instructions, model, provider, effort,
+source hashes, randomization seed and timeout. Preparation does not call a model.
+Runs are resumable only for this exact plan; never overwrite a candidate's snapshots.
+Baseline instructions come from `baseline_skill_commit`, not installed skills.
+Both skill arms receive compiled instructions through the same stdin channel; plain
+receives none. This measures instruction effectiveness with explicit delivery, not
+native activation or progressive-loading reliability.
 
-Use a new output directory for each candidate; prepare refuses overwrites. Repeat
-with `--repeats 3` for comparisons. The run order is randomized with a saved seed.
-Each call has a saved budget and timeout, and failures stop the run; complete outputs
-are resumable, failed outputs never count as reviews. `--limit` bounds the number
-of additional calls. The current `--bare` Claude CLI requires API/provider credentials;
-interactive account login alone may not supply bare-mode authentication. Do not
-store credentials in any run artifact or repo file.
+Codex uses a temporary home with only an auth symlink, ignores ambient configuration,
+rules, saved skills and parent project controls, and runs with a read-only shell and
+no web search. See [tool compatibility](../../docs/TOOL_COMPATIBILITY.md) for the
+precise isolation limitations. The common request asks for at most 10 tool calls and
+1600 report words; these are soft investigation limits, not enforced token caps.
+Actual commands, terminal status and token usage are recorded from JSONL events.
 
-`plan.json` stores private arm/polarity metadata, revision and instruction hashes.
-`events.jsonl` stores actual tool calls and the CLI's terminal usage/cost result;
-`report.md` is the review text. Hash drift invalidates a run. Source workspaces must
-remain unchanged. Keep all artifacts under ignored `skills-workspace/`.
+For another CLI, select `--provider command --adapter /path/adapter.json` at prepare
+time, then keep that provider/adapter/model fixed across the three arms. The generic
+adapter's tool/isolation claims need separate validation; do not mix providers in one
+comparison. Integration-capable evaluation needs a separate isolated protocol.
 
-## Adjudication and release gate
+## Adjudicate root causes, not report tokens
 
-Have a reviewer read randomized reports against the upstream evidence, initially
-without the arm label. Match the **root cause and consequence**, not keywords,
-L-code spelling, field labels or any-finding detection. Adjudicate other discoveries
-separately: a repaired snapshot may contain unrelated real defects. A claimed target
-defect on the repaired variant counts as a false positive if the repair actually
-removes it. Mere correct-code silence does not establish discovery ability.
-
-Create a JSON object keyed by opaque run ID, with every completed review covered:
+Read randomized reports against real source and oracle evidence. A finding must name
+the actual cause and observable consequence; L-code/label/keyword matches alone do
+not count. Valid unrelated discoveries are not false positives. Distinguish asserted
+defects from explicitly unresolved leads. For each run, record:
 
 ```json
 {
-  "<run_id>": {
+  "<opaque-run-id>": {
     "target_detected": true,
     "false_positive_count": 0,
-    "rationale": "Matched the target root cause and its observable consequence."
+    "rationale": "Actual root cause and consequence matched against source evidence."
   }
 }
 ```
 
-On buggy variants, `target_detected` means the actual target was correctly found;
-on repaired variants it is normally false. Count invalid claims in
-`false_positive_count`, not valid unrelated findings. Keep miss-stage notes alongside
-the rationale: context / hypothesis / contract / reachability / verification /
-reporting / environment. Do not supply these answers to the reviewing model.
+On repaired variants `target_detected` is normally false. A false claim about the
+repaired target belongs in `false_positive_count`. Record optional miss-stage notes
+(context/hypothesis/contract/reachability/verification/reporting/environment), and
+state whether adjudication was independent human review or assistant review with
+access to answers. Neither is an automatic model-judged or regex-derived truth.
 
 ```bash
-python3 scripts/discovery_eval.py summarize \
-  --out skills-workspace/discovery-smoke --judgments /path/to/judgments.json
+python3 scripts/logic_lens.py discovery summarize \
+  --out skills-workspace/discovery-run --judgments /path/judgments.json
 ```
 
-The summary reports target recall, false positives per adjudicated review, cost,
-and completed/adjudicated denominators separately. Completed-run costs exclude
-failed attempts, which may still be billable; failures are listed explicitly. Missing results are `null`, not
-0% accuracy. Partial or unmatched arm results cannot establish improvement. Before
-shipping, require the same cases and at least three paired repeats for each arm,
-inspect per-case variance and project/family slices, and evaluate a prospective
-held-out set. Predeclare an acceptable false-positive/cost budget before looking at
-results. Also run the unchanged content regression suite; record oracle disputes
-(such as existing eval-279's assumption that mutate-and-return is intrinsically a
-bug) separately rather than editing old assertions to lift the candidate score.
+Summaries separate denominators, target recall and false positives. Missing results
+are null, not 0% accuracy. Costs cover completed calls only; failed attempts may be
+billable. Inspect per-case repeated results and actual tool/usage evidence before
+any conclusion. A partial/mismatched comparison cannot qualify a release.
+
+Release gates: repeated same-provider gains without increased false positives,
+reasonable resource use, untouched content-regression assertions, prospective unseen
+projects/families and independent validation. Operational criteria do not by themselves
+establish statistical significance. Existing oracle disputes such as eval-279 must be
+reported, not silently rewritten to lift a score. Current results and caveats belong
+in `STATUS.md`; cross-provider historical numbers are not a direct baseline.
