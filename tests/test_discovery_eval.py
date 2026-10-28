@@ -176,6 +176,18 @@ class TestHumanAdjudication(unittest.TestCase):
         self.assertEqual(arm['false_positives_per_review'], 2)
         self.assertEqual(arm['adjudicated'], 1)
 
+    def test_additional_root_causes_are_deduplicated_across_variants(self):
+        judgments = {r['run_id']:dict(target_detected=r['variant']=='buggy',
+            false_positive_count=0, confirmed_additional=['independent-root'],
+            unsupported_claims=[], rationale='Source and actual implementation probe checked')
+            for r in self.plan['runs']}
+        summary=discovery.summarize(self.plan,self.results,judgments)
+        arm=summary['arms']['candidate']
+        self.assertEqual(arm['unique_additional_defects'],['independent-root'])
+        self.assertEqual(arm['case_breakdown']['sample-01'],dict(detected=1,trials=1))
+        self.assertIsNone(arm['token_usage']['input_tokens'])
+        self.assertEqual(arm['unsupported_claims'],0)
+
     def test_no_judgments_for_missing_or_unknown_runs(self):
         for key in ('unknown', 'candidate-buggy'):
             with self.subTest(key=key), self.assertRaises(ValueError):

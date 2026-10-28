@@ -25,6 +25,7 @@ def run_content(args):
     adapter = json.loads(args.adapter.read_text()) if args.adapter else None
     instructions = {s:snapshot(s) for s in SKILLS}
     config = dict(provider=args.provider, model=args.model, effort=args.effort,
+                  case_source_sha256=hashlib.sha256((ROOT/'evals/content/v2/evals-v2.json').read_bytes()).hexdigest(),
                   instruction_sha256={s:hashlib.sha256(t.encode()).hexdigest() for s,t in instructions.items()},
                   adapter=adapter)
     manifest = args.out/'run.json'

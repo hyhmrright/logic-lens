@@ -14,6 +14,7 @@ import subprocess
 import tarfile
 import time
 import uuid
+import statistics
 from llm_runner import execute, tree_digest, parallel_map
 from pathlib import Path
 
@@ -181,7 +182,7 @@ def run(args):
 
 
 def summarize(plan, results, judgments):
-    """Only human-adjudicated, completed runs contribute to accuracy metrics."""
+    """Only source-adjudicated, completed runs contribute to accuracy metrics."""
     run_map = {r['run_id']: r for r in plan['runs']}
     if set(judgments) - run_map.keys():
         raise ValueError('judgment references unknown run')
@@ -194,6 +195,9 @@ def summarize(plan, results, judgments):
             raise ValueError('false_positive_count must be a nonnegative integer')
         if not isinstance(j.get('rationale'), str) or not j['rationale'].strip():
             raise ValueError('adjudication rationale is required')
+        for name in ('confirmed_additional', 'unsupported_claims'):
+            if name in j and (not isinstance(j[name], list) or not all(isinstance(x,str) and x for x in j[name])):
+                raise ValueError(f'{name} must be a list of nonempty identifiers')
     arms = {}
     for arm in ARMS:
         planned = [r for r in plan['runs'] if r['arm'] == arm]
@@ -203,7 +207,25 @@ def summarize(plan, results, judgments):
         recall = (sum(judgments[r['run_id']]['target_detected'] for r in buggy) / len(buggy)
                   if buggy else None)
         costs = [results[r['run_id']].get('total_cost_usd') for r in completed]
-        arms[arm] = dict(planned=len(planned), completed=len(completed),
+        times = [results[r['run_id']].get('elapsed_seconds') for r in completed]
+        tokens = {}
+        for key in ('input_tokens', 'cached_input_tokens', 'output_tokens'):
+            values = [(results[r['run_id']].get('usage') or {}).get(key) for r in completed]
+            tokens[key] = sum(values) if values and all(v is not None for v in values) else None
+        case_breakdown = {}
+        for row in buggy:
+            entry = case_breakdown.setdefault(row['case_id'], dict(detected=0, trials=0))
+            entry['trials'] += 1
+            entry['detected'] += judgments[row['run_id']]['target_detected']
+        additional_known = bool(judged) and all('confirmed_additional' in judgments[r['run_id']] for r in judged)
+        additional = sorted({key for r in judged for key in judgments[r['run_id']].get('confirmed_additional',[])})
+        unsupported_known = bool(judged) and all('unsupported_claims' in judgments[r['run_id']] for r in judged)
+        arms[arm] = dict(case_breakdown=case_breakdown,
+                         token_usage=tokens,
+                         median_seconds=statistics.median(times) if times and all(t is not None for t in times) else None,
+                         unique_additional_defects=additional if additional_known else None,
+                         unsupported_claims=sum(len(judgments[r['run_id']]['unsupported_claims']) for r in judged) if unsupported_known else None,
+                         planned=len(planned), completed=len(completed),
                          adjudicated=len(judged), buggy_adjudicated=len(buggy),
                          target_recall=recall,
                          false_positives_per_review=(sum(judgments[r['run_id']]['false_positive_count']

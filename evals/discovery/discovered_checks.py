@@ -12,10 +12,45 @@ from unittest.mock import patch
 
 
 def check(name, workspace):
-    sys.path.insert(0,str(workspace))
-    h=importlib.import_module('httpx')
+    sys.path[:0]=[str(workspace/'src'),str(workspace)]
+    h=importlib.import_module('requests' if name.startswith('requests-') else 'httpx')
     assert Path(h.__file__).resolve().is_relative_to(workspace.resolve())
-    if name=='blank-query':
+    if name=='requests-auth-empty-body':
+        def empty(request):request.body=b'';return request
+        request=h.Request('POST','http://example.org/',data=b'abc',auth=empty).prepare()
+        assert request.headers.get('Content-Length')=='0',dict(request.headers)
+    elif name=='requests-response-next':
+        import pickle
+        response=h.Response();response._content=b'ok';response._content_consumed=True
+        assert response.next is None
+        assert pickle.loads(pickle.dumps(response)).next is None
+    elif name=='requests-json-state':
+        import pickle
+        request=h.Request('GET','http://example.org/').prepare()
+        response=h.Response();response.request=request;response.status_code=502
+        error=h.exceptions.JSONDecodeError('bad','x',0,response=response)
+        restored=pickle.loads(pickle.dumps(error))
+        assert restored.response is not None and restored.request is not None
+    elif name=='requests-lines':
+        response=h.Response();response._content=b'a\r\nb\r\n';response._content_consumed=True
+        assert list(response.iter_lines(chunk_size=2))==[b'a',b'b']
+    elif name=='requests-framing':
+        request=h.Request('POST','http://example.org/',data=(part for part in [b'abc']),headers={'Content-Length':'3'}).prepare()
+        assert not ('Content-Length' in request.headers and 'Transfer-Encoding' in request.headers),dict(request.headers)
+    elif name=='requests-readable-rewind':
+        import io
+        class Readable:
+            def __init__(self):self.buffer=io.BytesIO(b'test')
+            def read(self,*a):return self.buffer.read(*a)
+            def tell(self):return self.buffer.tell()
+            def seek(self,*a):return self.buffer.seek(*a)
+        request=h.Request('POST','http://example.org/start',data=Readable()).prepare()
+        request.body.read()
+        response=h.Response();response.status_code=307;response.url=request.url;response.request=request
+        response.headers['Location']='/finish';response._content=b''
+        redirected=next(h.Session().resolve_redirects(response,request,yield_requests=True))
+        assert redirected.body.tell()==0,redirected.body.tell()
+    elif name=='blank-query':
         assert str(h.QueryParams('a='))=='a=', 'blank query value was dropped'
     elif name=='idna-port':
         url=h.URL('https://中国.icom.museum/').copy_with(port=8443)
@@ -24,6 +59,37 @@ def check(name, workspace):
         a,b=h.QueryParams('a=1&b=2'),h.QueryParams('b=2&a=1')
         assert a==b
         assert hash(a)==hash(b), 'equal query params have unequal hashes'
+    elif name=='header-encoding-cache':
+        headers=h.Headers({'x':'old'})
+        headers.update([(b'x',b'\xc3\xa9')])
+        assert headers['x']=='é'
+    elif name=='credential-slash':
+        url=h.URL('https://example.org/').copy_with(username='a/b')
+        assert url.host=='example.org' and url.username=='a/b',str(url)
+    elif name=='idna-subdomain':
+        assert h.URL('https://www.xn--fiqs8s.icom.museum/').host=='www.中国.icom.museum'
+    elif name=='stale-encoding':
+        response=h.Response(200,headers={'Content-Type':'text/plain; charset=utf-8'},content=b'\xff')
+        old=response.text
+        response.encoding='latin-1'
+        assert response.text=='ÿ',(old,response.text,list(response.iter_text()))
+    elif name=='base-query':
+        with h.Client(base_url='https://example.org/api?token=abc',trust_env=False) as client:
+            request=client.build_request('GET','users')
+            assert request.url.path=='/api/users',str(request.url)
+    elif name=='password-log':
+        import logging
+        messages=[]
+        class Capture(logging.Handler):
+            def emit(self,record):messages.append(record.getMessage())
+        logger=logging.getLogger('httpx');handler=Capture();old=logger.level
+        logger.addHandler(handler);logger.setLevel(logging.INFO)
+        try:
+            with h.Client(transport=h.MockTransport(lambda request:h.Response(200)),trust_env=False) as client:
+                client.get('http://alice:secret@example.org/')
+        finally:
+            logger.removeHandler(handler);logger.setLevel(old)
+        assert not any('secret' in message for message in messages),messages
     elif name=='asgi-env':
         async def app(scope,receive,send):pass
         async def inspect():
