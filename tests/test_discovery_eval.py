@@ -146,6 +146,40 @@ class TestActualRunEvidence(unittest.TestCase):
 
 
 class TestProtocolIsolation(unittest.TestCase):
+    def test_retry_archives_failure_and_run_selection_keeps_plan_intact(self):
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory() as temp:
+            out = Path(temp)
+            (out / 'plain.txt').write_text('')
+            rows = []
+            for run_id in ('retry', 'later'):
+                work = out / 'workspaces' / run_id
+                work.mkdir(parents=True)
+                (work / 'api.py').write_text('value = 0')
+                rows.append(dict(run_id=run_id, arm='plain', target_paths=['api.py'],
+                                 workspace_sha256=discovery.tree_digest(work)))
+            plan = dict(instruction_sha256={'plain':hashlib.sha256(b'').hexdigest()},
+                        model='fake', effort='high', timeout_seconds=5, runs=rows)
+            discovery.write_json(out / 'plan.json', plan)
+            failed = out / 'results' / 'retry'
+            failed.mkdir(parents=True)
+            discovery.write_json(failed / 'failure.json', {'error': 'capacity'})
+            (failed / 'events.jsonl').write_text('original failure evidence')
+            args = argparse.Namespace(out=out, jobs=1, limit=None, run_id=['retry'])
+            with patch.object(discovery, 'execute', return_value={'report':'ok', 'cost_usd':None}) as execute:
+                discovery.run(args)
+            self.assertEqual(execute.call_count, 1)
+            archived = out / 'failed-attempts/retry-attempt1'
+            self.assertEqual((archived / 'events.jsonl').read_text(), 'original failure evidence')
+            self.assertTrue((archived / 'failure.json').exists())
+            self.assertTrue((failed / 'result.json').exists())
+            self.assertFalse((out / 'results/later').exists())
+            self.assertEqual(discovery.read_json(out / 'plan.json'), plan)
+            args.run_id = ['unknown']
+            with patch.object(discovery, 'execute') as execute:
+                with self.assertRaises(ValueError): discovery.run(args)
+            execute.assert_not_called()
+
     def test_skipping_failed_rows_never_fabricates_completion(self):
         from unittest.mock import patch
         with tempfile.TemporaryDirectory() as temp:

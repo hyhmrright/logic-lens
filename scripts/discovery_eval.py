@@ -142,7 +142,11 @@ def run(args):
             raise ValueError(f'instruction drift: {arm}')
     provider = plan.get('provider', 'codex')
     adapter = plan.get('adapter')
+    selected_ids = set(getattr(args, 'run_id', None) or [])
+    if selected_ids - {r['run_id'] for r in plan['runs']}:
+        raise ValueError('unknown run ID')
     pending = [r for r in plan['runs']
+               if not selected_ids or r['run_id'] in selected_ids
                if not (out / 'results' / r['run_id'] / 'result.json').exists()
                and not (getattr(args, 'skip_failed', False) and
                         (out / 'results' / r['run_id'] / 'failure.json').exists())]
@@ -151,10 +155,22 @@ def run(args):
 
     def one(item):
         artifacts = out / 'results' / item['run_id']
-        artifacts.mkdir(parents=True, exist_ok=True)
         work = out / 'workspaces' / item['run_id']
         if tree_digest(work) != item['workspace_sha256']:
             raise ValueError(f"workspace drift: {item['run_id']}")
+        if (artifacts / 'failure.json').exists():
+            attempts = out / 'failed-attempts'
+            attempts.mkdir(exist_ok=True)
+            attempt = 1
+            while (attempts / f"{item['run_id']}-attempt{attempt}").exists():
+                attempt += 1
+            archived = attempts / f"{item['run_id']}-attempt{attempt}"
+            artifacts.rename(archived)
+            write_json(archived / 'attempt.json', dict(run_id=item['run_id'],
+                reason='Preserved failed attempt before retry under the same frozen plan',
+                instruction_sha256=plan['instruction_sha256'][item['arm']],
+                workspace_sha256=item['workspace_sha256']))
+        artifacts.mkdir(parents=True, exist_ok=True)
         prompt = ('Review the behavior of ' + ', '.join(item['target_paths']) +
                   '. Find concrete bugs and investigate supporting files as needed. '
                   'State the actual expected/observed consequence and evidence for each '
@@ -286,6 +302,7 @@ def main():
     call.add_argument('--binary', help='Override the selected provider executable')
     call.add_argument('--jobs', type=int, default=1)
     call.add_argument('--limit', type=int)
+    call.add_argument('--run-id', action='append', help='Select a frozen trial ID; repeat for multiple IDs')
     call.add_argument('--skip-failed', action='store_true',
                       help='Leave failed rows unfilled and run other pending rows; summary stays incomplete')
     rep = sub.add_parser('summarize')

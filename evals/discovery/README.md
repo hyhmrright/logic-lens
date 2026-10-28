@@ -117,3 +117,39 @@ projects/families and independent validation. Operational criteria do not by the
 establish statistical significance. Existing oracle disputes such as eval-279 must be
 reported, not silently rewritten to lift a score. Current results and caveats belong
 in `STATUS.md`; cross-provider historical numbers are not a direct baseline.
+
+## Frozen revision-2 validation
+
+The [revision-2 preregistration](../../docs/experiments/discovery-v2-preregistration.md)
+uses a candidate frozen before new dateutil/node-semver cases were inspected.
+`catalog-v2.json` records semantic matching obligations and one pre-run exclusion.
+`probes_v2.py` contains evaluator-only assertions against the real exported modules.
+All four targets were inspected as behavior failure → success pairs; these are
+not replacement cases for the old content grader.
+
+```bash
+git clone --filter=blob:none --no-checkout https://github.com/dateutil/dateutil.git skills-workspace/discovery-sources/dateutil
+git clone --filter=blob:none --no-checkout https://github.com/npm/node-semver.git skills-workspace/discovery-sources/node-semver
+# Use a Python 3.11 virtual environment with six==1.17.0; Node.js is also required.
+python3 scripts/logic_lens.py discovery prepare --catalog evals/discovery/catalog-v2.json \
+  --sources skills-workspace/discovery-sources --out skills-workspace/discovery-v2 \
+  --repeats 3 --provider codex --model gpt-6.1-sol --effort high --timeout 360
+python3 scripts/logic_lens.py discovery run --out skills-workspace/discovery-v2 --jobs 4
+```
+
+For reproduction on another machine, make a copy of the catalog and set its
+`protocol.runtime_note` to the available Python interpreter/dependency path before
+preparation; keep this identical across arms. The published catalog preserves the
+exact runtime note used in the recorded experiment. The original plan schema without
+`protocol.local_probes` retains its previous prompt. Revision 2 explicitly permits
+pure local probes on every arm, so cross-experiment rate changes are not attributable
+solely to the skill. Python bytecode writes are disabled. No target assertion or
+future regression test is installed in the reviewer workspace.
+
+For recovery, `run --skip-failed` leaves failed rows untouched while completing
+unattempted rows; the summary stays incomplete. `run --run-id OPAQUE_ID --limit 1`
+selects an existing frozen trial without changing its plan or instructions. Retrying
+a failed row automatically moves its old logs to `failed-attempts/ID-attemptN` before
+starting the new attempt. Do not delete failures or treat unfilled rows as clean reviews.
+The [revision-2 partial record](../../benchmarks/reports/codex-discovery-v2-partial-2026-10-28/REPORT.md)
+is explicitly incomplete because of model capacity errors and timeouts.

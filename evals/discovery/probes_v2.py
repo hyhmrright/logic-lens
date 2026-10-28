@@ -28,6 +28,9 @@ def probe(case, workspace, python):
                 "a.equal(r.range,'4.17.0');a.equal(r.test('4.17.0'),true);")
     else:
         raise ValueError(case)
+    if case.startswith('dateutil-'):
+        code = ('import dateutil\nfrom pathlib import Path\n'
+                'assert Path(dateutil.__file__).resolve().is_relative_to(Path.cwd().resolve())\n' + code)
     env = dict(os.environ, PYTHONDONTWRITEBYTECODE='1',
                PYTHONPATH=str(workspace / 'src') + os.pathsep + str(workspace))
     cmd = [python, '-c', code] if case.startswith('dateutil-') else ['node', '-e', code]
