@@ -113,17 +113,17 @@ logic-health weights per-module scores by `line_count / total_lines_reviewed` �
 | **Medium** | Chain is strong but one step rests on an unverified assumption (library behavior, external config) | logic-locate Fault Confidence; findings needing manual check |
 | **Low** | Plausible fault; alternative causes cannot be ruled out without executing the code | logic-locate Fault Confidence; must carry "manual verification recommended" |
 
-Low-confidence findings in logic-review / logic-health are automatically downgraded to Suggestion severity.
+Low-confidence findings in logic-health are downgraded to Suggestion severity. In logic-review, keep impact, confidence, and investigation status separate per its guide: incomplete candidates remain unresolved investigations, not confirmed findings or automatic fix candidates.
 
 ---
 
 ## 8. When No Bugs Are Found
 
-Report Logic Score 100 (or the mode-specific equivalent) and state:
+Report Logic Score 100 (or the mode-specific equivalent) and state the scoped conclusion below. For logic-review, also disclose unresolved investigations and clarify that the score measures confirmed findings in inspected paths, not probability of correctness:
 
-> "No confirmed logic bugs found. All traced paths behave as specified."
+> "No confirmed logic bugs found in the inspected paths."
 
-(Chinese: "未发现已确认的逻辑错误；所追踪的全部路径均符合规范。")
+(Chinese: "所检查的路径中未发现已确认的逻辑错误。")
 
 Do not invent speculative findings to fill the Findings section. An empty Findings section with a high score is valid and valuable. Minor observations go under Suggestion with a full five-field entry — never as loose prose.
 
@@ -132,6 +132,8 @@ Do not invent speculative findings to fill the Findings section. An empty Findin
 ---
 
 ## 9. Scope Management
+
+The target bounds what is reviewed, not which supporting caller/callee/configuration files may be read. For logic-review use its dependency-slice guide: the following size limits are an initial worklist budget, not a hard stop on evidence gathering.
 
 If the target exceeds ~150 lines or 5 non-trivial functions, do not scan shallowly. A deep trace of 3 functions beats pattern-matching across 30. Priority:
 

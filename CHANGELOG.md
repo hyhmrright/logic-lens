@@ -13,6 +13,21 @@ Versions follow [SemVer](https://semver.org/).
 
 ## [Unreleased]
 
+### Experimental — repository-context bug discovery (not release-qualified)
+
+- Candidate `logic-review` workflow investigates sourced behavioral invariants,
+  caller/callee/state dependencies, operation sequences and unresolved evidence
+  before rendering findings. Partial defenses or a non-reproducing experiment
+  no longer automatically dismiss a candidate.
+- Corrected the shared L4 definition: mutating an input and returning it is a
+  defect only when an actual contract or caller expectation is violated.
+- Added a separate 20-case upstream discovery corpus, evaluator-only probes, and
+  plain/baseline/candidate runner with explicit instruction snapshots, source
+  hashes, tool events and human adjudication. Existing content assertions and
+  grader are unchanged.
+- No release/version bump or effectiveness claim until model comparisons and
+  prospective held-out validation pass; see `evals/discovery/README.md`.
+
 ### Fixed — grader: a wrong conclusion no longer scores on keywords
 
 Case rules only checked vocabulary, so a report reaching the *wrong* conclusion while naming the

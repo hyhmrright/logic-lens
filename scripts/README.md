@@ -135,3 +135,14 @@ Default model is **`claude-sonnet-4-6`** for content-evals (semi-formal format c
 Each run emits a JSON result with `best_description` selected by held-out test score. Copy it into the corresponding `skills/logic-<skill>/SKILL.md` frontmatter `description:` field to apply. `MAX_ITERATIONS` must be a positive integer. `REPORT` defaults to `none` so the script works in headless CI and Codex sessions; set `REPORT=auto` to use skill-creator's live browser report.
 
 The trigger eval JSON files (20 cases per skill, 10 positive + 10 negative near-miss) live in `evals/trigger/v2/trigger-evals-*.json` and were designed to cover scope-routing boundaries (single file → review / directory → health / confirmed failure → locate / two versions → diff / repo-wide → fix-all) and language-specific phrasings.
+
+## Repository discovery experiment
+
+`discovery_eval.py` prepares opaque historical source pairs, snapshots baseline and
+candidate instructions, runs plain/baseline/candidate read-only reviews with bounded
+cost and recorded tool events, and summarizes human-adjudicated outcomes.
+`verify_discovery.py` checks the target defects using evaluator-only regression
+probes against real source imports. Both are separate from the existing grader.
+See [the experiment protocol](../evals/discovery/README.md) before spending tokens;
+the full default matrix is 360 model calls. This is an experimental development
+corpus, not evidence of an improvement or an independent held-out benchmark.

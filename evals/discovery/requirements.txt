@@ -1,0 +1,15 @@
+# Python 3.11 shared probe environment; historical projects may need separate pinned envs.
+# verify_discovery.py records pip freeze. Do not infer native-version compatibility.
+httpcore==0.17.3
+anyio==3.7.1
+h11==0.14.0
+rfc3986==2.0.0
+idna==3.20
+sniffio==1.3.1
+certifi==2026.10.23
+chardet==7.7.0
+charset_normalizer==3.5.2
+urllib3==1.26.20
+zstandard==0.25.0
+socksio==1.0.0
+typing_extensions==4.16.0
