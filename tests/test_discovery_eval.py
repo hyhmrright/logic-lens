@@ -146,6 +146,24 @@ class TestActualRunEvidence(unittest.TestCase):
 
 
 class TestProtocolIsolation(unittest.TestCase):
+    def test_skipping_failed_rows_never_fabricates_completion(self):
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory() as temp:
+            out = Path(temp)
+            (out / 'plain.txt').write_text('')
+            failed = out / 'results' / 'failed'
+            failed.mkdir(parents=True)
+            discovery.write_json(failed / 'failure.json', {'error': 'provider capacity'})
+            row = dict(run_id='failed', arm='plain', case_id='example', variant='buggy')
+            discovery.write_json(out / 'plan.json', dict(
+                instruction_sha256={'plain': hashlib.sha256(b'').hexdigest()}, runs=[row]))
+            with patch.object(discovery, 'execute') as execute:
+                discovery.run(argparse.Namespace(out=out, jobs=1, limit=None, skip_failed=True))
+            execute.assert_not_called()
+            self.assertFalse((failed / 'result.json').exists())
+            self.assertTrue((failed / 'failure.json').exists())
+            self.assertEqual(discovery.summarize({'runs':[row]}, {}, {})['status'], 'incomplete')
+
     def test_local_probe_permission_is_plan_scoped_and_identical_across_arms(self):
         from unittest.mock import patch
         for enabled in (False, True):

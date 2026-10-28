@@ -143,7 +143,9 @@ def run(args):
     provider = plan.get('provider', 'codex')
     adapter = plan.get('adapter')
     pending = [r for r in plan['runs']
-               if not (out / 'results' / r['run_id'] / 'result.json').exists()]
+               if not (out / 'results' / r['run_id'] / 'result.json').exists()
+               and not (getattr(args, 'skip_failed', False) and
+                        (out / 'results' / r['run_id'] / 'failure.json').exists())]
     if args.limit is not None:
         pending = pending[:args.limit]
 
@@ -284,6 +286,8 @@ def main():
     call.add_argument('--binary', help='Override the selected provider executable')
     call.add_argument('--jobs', type=int, default=1)
     call.add_argument('--limit', type=int)
+    call.add_argument('--skip-failed', action='store_true',
+                      help='Leave failed rows unfilled and run other pending rows; summary stays incomplete')
     rep = sub.add_parser('summarize')
     rep.add_argument('--out', type=Path, required=True)
     rep.add_argument('--judgments', type=Path)
