@@ -15,7 +15,17 @@ def check(name, workspace):
     sys.path[:0]=[str(workspace/'src'),str(workspace)]
     h=importlib.import_module('requests' if name.startswith('requests-') else 'httpx')
     assert Path(h.__file__).resolve().is_relative_to(workspace.resolve())
-    if name=='requests-auth-empty-body':
+    if name=='requests-sized-iterable':
+        from collections import deque
+        request=h.Request('POST','http://example.org/',data=deque([b'ab',b'cd'])).prepare()
+        actual=len(b''.join(request.body))
+        assert 'Content-Length' not in request.headers or int(request.headers['Content-Length'])==actual,dict(request.headers)
+    elif name=='requests-zero-chunk':
+        import io
+        raw=h.Response();raw.raw=io.BytesIO(b'abc')
+        cached=h.Response();cached._content=b'abc';cached._content_consumed=True
+        assert list(raw.iter_content(0))==list(cached.iter_content(0))
+    elif name=='requests-auth-empty-body':
         def empty(request):request.body=b'';return request
         request=h.Request('POST','http://example.org/',data=b'abc',auth=empty).prepare()
         assert request.headers.get('Content-Length')=='0',dict(request.headers)
@@ -59,6 +69,10 @@ def check(name, workspace):
         a,b=h.QueryParams('a=1&b=2'),h.QueryParams('b=2&a=1')
         assert a==b
         assert hash(a)==hash(b), 'equal query params have unequal hashes'
+    elif name=='relative-absolute-join':
+        from urllib.parse import urljoin
+        actual=h.URL('/base').join('https://other.example/x')
+        assert str(actual)==urljoin('/base','https://other.example/x'),str(actual)
     elif name=='header-encoding-cache':
         headers=h.Headers({'x':'old'})
         headers.update([(b'x',b'\xc3\xa9')])

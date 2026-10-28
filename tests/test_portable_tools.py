@@ -54,6 +54,13 @@ class PortableTools(unittest.TestCase):
                 dict(type='turn.completed',usage=dict(input_tokens=10,output_tokens=2))]
         self.assertEqual(parse_codex('\n'.join(map(json.dumps,events)))['report'],'Final evidence')
 
+    def test_recovered_codex_stream_error_does_not_override_successful_terminal_state(self):
+        events=[dict(type='error',message='Reconnecting after transient disconnect'),
+                dict(type='item.completed',item=dict(type='agent_message',text='Finished')),
+                dict(type='turn.completed',usage=dict(input_tokens=1))]
+        self.assertEqual(parse_codex('\n'.join(map(json.dumps,events)))['report'],'Finished')
+        with self.assertRaises(ValueError):parse_codex(json.dumps(events[0]))
+
     def test_generic_command_receives_literal_prompt_and_opaque_workspace(self):
         with tempfile.TemporaryDirectory() as temp:
             root=Path(temp); source=root/'source'; source.mkdir()

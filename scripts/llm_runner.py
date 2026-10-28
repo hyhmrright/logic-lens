@@ -75,8 +75,8 @@ def copy_workspace(source, destination):
 
 def parse_codex(raw):
     events = [json.loads(line) for line in raw.splitlines() if line.strip()]
-    if any(e.get('type') in ('turn.failed', 'error') for e in events):
-        errors = [e for e in events if e.get('type') in ('turn.failed', 'error')]
+    if any(e.get('type') == 'turn.failed' for e in events):
+        errors = [e for e in events if e.get('type') == 'turn.failed']
         raise ValueError(f'Codex failed: {errors[-1]}')
     terminal = [e for e in events if e.get('type') == 'turn.completed']
     if len(terminal) != 1:
@@ -175,11 +175,15 @@ def execute(*, provider, workspace, prompt, instructions, model, effort, timeout
         stdout = artifacts / 'events.jsonl'
         stderr = artifacts / 'stderr.txt'
         (artifacts / 'request.txt').write_text(text)
-        code = bounded_process(command, text, work, env, timeout, stdout, stderr)
+        try:
+            code = bounded_process(command, text, work, env, timeout, stdout, stderr)
+        finally:
+            final_digest = tree_digest(work)
+            (artifacts / 'integrity.json').write_text(json.dumps(dict(before=initial_digest, after=final_digest, unchanged=initial_digest == final_digest)))
         if code:
             raise ValueError(f'{provider} exited {code}; inspect events.jsonl and stderr.txt')
         result = parser(stdout.read_text())
-        if tree_digest(work) != initial_digest:
+        if final_digest != initial_digest:
             raise ValueError('Reviewer modified the read-only source snapshot')
         result.update(provider=provider, model=model, effort=effort,
                       elapsed_seconds=time.monotonic()-started,

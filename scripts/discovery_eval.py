@@ -124,7 +124,7 @@ def prepare(args):
     write_json(out / 'plan.json', dict(schema_version=2, seed=args.seed,
                provider=getattr(args, 'provider', 'codex'),
                adapter=read_json(args.adapter) if getattr(args, 'adapter', None) else None,
-               model=args.model, effort=args.effort, budget_usd=args.budget,
+               model=args.model, effort=args.effort,
                timeout_seconds=args.timeout, instruction_sha256=instructions,
                catalog_sha256=hashlib.sha256(Path(args.catalog).read_bytes()).hexdigest(),
                baseline_skill_commit=catalog['baseline_skill_commit'],
@@ -267,7 +267,6 @@ def main():
     prep.add_argument('--provider', choices=['codex', 'command'], default='codex')
     prep.add_argument('--adapter', type=Path, help='JSON argv adapter for provider=command')
     prep.add_argument('--effort', default='high')
-    prep.add_argument('--budget', type=float, default=1.0)
     prep.add_argument('--timeout', type=int, default=300)
     call = sub.add_parser('run')
     call.add_argument('--out', type=Path, required=True)
@@ -278,8 +277,8 @@ def main():
     rep.add_argument('--out', type=Path, required=True)
     rep.add_argument('--judgments', type=Path)
     args = p.parse_args()
-    if args.action == 'prepare' and (args.repeats < 1 or args.budget <= 0 or args.timeout < 1):
-        p.error('repeats, budget and timeout must be positive')
+    if args.action == 'prepare' and (args.repeats < 1 or args.timeout < 1):
+        p.error('repeats and timeout must be positive')
     if args.action == 'prepare' and args.provider == 'command' and not args.adapter:
         p.error('--provider command requires --adapter')
     if args.action == 'run' and args.jobs < 1:
