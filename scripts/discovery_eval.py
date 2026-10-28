@@ -127,6 +127,7 @@ def prepare(args):
                adapter=read_json(args.adapter) if getattr(args, 'adapter', None) else None,
                model=args.model, effort=args.effort,
                timeout_seconds=args.timeout, instruction_sha256=instructions,
+               protocol=catalog.get('protocol', {}),
                catalog_sha256=hashlib.sha256(Path(args.catalog).read_bytes()).hexdigest(),
                baseline_skill_commit=catalog['baseline_skill_commit'],
                tools=['read-only-shell'] if getattr(args, 'provider', 'codex') == 'codex' else ['adapter-defined'], runs=plan))
@@ -160,6 +161,15 @@ def run(args):
                   'this read-only discovery protocol; disclose verification limitations. '
                   'Investigation budget: at most 10 shell/tool calls; prioritize targeted reads. '
                   'Keep the final report under 1600 words and distinguish defects from open leads.')
+        if plan.get('protocol', {}).get('local_probes'):
+            prompt = prompt.replace(
+                'Runtime integration tests are outside this read-only discovery protocol; disclose verification limitations.',
+                'Local in-memory probes of the actual implementation are permitted. '
+                'Do not install dependencies, write files, or run service/integration tests. '
+                'For Python use PYTHONDONTWRITEBYTECODE=1. Disclose verification limitations.')
+            runtime = plan['protocol'].get('runtime_note', '')
+            if runtime:
+                prompt += ' Available runtime: ' + runtime
         started = time.monotonic()
         try:
             result = execute(provider=provider, workspace=work, prompt=prompt,

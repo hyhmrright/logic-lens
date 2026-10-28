@@ -145,6 +145,37 @@ class TestActualRunEvidence(unittest.TestCase):
                     self.assertEqual(result['capability'], 'read-only-shell')
 
 
+class TestProtocolIsolation(unittest.TestCase):
+    def test_local_probe_permission_is_plan_scoped_and_identical_across_arms(self):
+        from unittest.mock import patch
+        for enabled in (False, True):
+            with self.subTest(enabled=enabled), tempfile.TemporaryDirectory() as temp:
+                out = Path(temp)
+                hashes = {}
+                rows = []
+                for arm in discovery.ARMS:
+                    (out / f'{arm}.txt').write_text(arm)
+                    hashes[arm] = hashlib.sha256(arm.encode()).hexdigest()
+                    work = out / 'workspaces' / arm
+                    work.mkdir(parents=True)
+                    (work / 'api.py').write_text('value = 0')
+                    rows.append(dict(run_id=arm, arm=arm, target_paths=['api.py'],
+                                     workspace_sha256=discovery.tree_digest(work)))
+                discovery.write_json(out / 'plan.json', dict(instruction_sha256=hashes,
+                    model='fake', effort='high', timeout_seconds=5,
+                    protocol={'local_probes': True, 'runtime_note': 'test-runtime'} if enabled else {},
+                    runs=rows))
+                prompts = []
+                def fake(**kw):
+                    prompts.append(kw['prompt'])
+                    return dict(report='report', cost_usd=None)
+                with patch.object(discovery, 'execute', side_effect=fake):
+                    discovery.run(argparse.Namespace(out=out, jobs=1, limit=None))
+                self.assertEqual(len(set(prompts)), 1)
+                self.assertEqual('test-runtime' in prompts[0], enabled)
+                self.assertEqual('Local in-memory probes' in prompts[0], enabled)
+
+
 class TestHumanAdjudication(unittest.TestCase):
     def setUp(self):
         self.plan = {'runs':[dict(run_id=f'{arm}-{variant}', arm=arm, variant=variant,
