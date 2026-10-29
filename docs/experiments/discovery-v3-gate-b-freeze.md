@@ -14,7 +14,7 @@ retry, no new-case evaluation. This authorizes Gate B only, not Gate C.
 - Existing source snapshots copied with exact tree-hash equality; original probe
   permissions and Python/Node runtime protocol retained. No evaluator evidence in reviewer prompts.
 - Runner-native resource order is the original discovery runner order, unchanged
-  across both arms; its SHA differs from the portable compiler's resource order.
+  across both arms. The candidate SHA also matches the portable compiled snapshot.
 - Planning estimate about 3.5 million cumulative input+output tokens, including
   cached input; 4.5 million allowance is an estimate, not a hard cap. Fees and
   subscription quota consumption are unknown. Failures can consume tokens.
@@ -24,3 +24,12 @@ retry, no new-case evaluation. This authorizes Gate B only, not Gate C.
   source-backed manual behavior judgments, including missingness and limitations.
 
 This records execution authorization, not a claim of diagnostic improvement.
+
+## First execution checkpoint
+
+The first trial received an explicit model-capacity rejection; no report or terminal
+usage was returned. One dispatch failed, seven remain unattempted, and there were no
+retries. Dispatch stopped; Gate B is unassessed. See the
+[immutable checkpoint](../../benchmarks/reports/codex-discovery-v3-gate-b-capacity-2026-10-29/REPORT.md).
+No background continuation or new-case evaluation was started. A later continuation
+requires explicit user instruction. The original plan hash and candidate are unchanged.
