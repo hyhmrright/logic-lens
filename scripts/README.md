@@ -67,3 +67,12 @@ candidates, finite inverse-boundary domains and selection reasons. It never invo
 a model or runs a subject. See [schema and limitations](../docs/CONSTRAINT_PLAN.md)
 and `examples/constraint-plan/relations.json`. Kept in draft PR #16, not the default
 review skill or proof of improved bug discovery.
+
+### Offline Python fact audit (experimental)
+
+`python3 scripts/logic_lens.py facts --spec CHECK.json --workspace SOURCE --out NEW.json`
+independently interprets a restricted Python AST on a bounded integer window and
+compares declared coefficients, representation units and consumer-reaching routes.
+It preserves unknown/unsupported results and never imports/executes the subject or
+calls a model. See [protocol and limits](../docs/PYTHON_FACTS.md). This is a new opt-in
+offline tool, not a formal skill change or general Python verifier.

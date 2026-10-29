@@ -1,0 +1,246 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-29",
+  "kind": "offline-synthetic-source-fact-audit",
+  "new_tests": 16,
+  "total_tests": 127,
+  "independent_synthetic_input_executions": 52,
+  "model_calls": 0,
+  "evaluation_tokens": 0,
+  "chat_implementation_usage_included": false,
+  "formal_skills_changed": false,
+  "main_merged": false,
+  "scope": "every exact integer in explicit finite window; supported AST only",
+  "differences": {
+    "wrong_scale": {
+      "status": "mismatch",
+      "checks": {
+        "scale": {
+          "status": "mismatch",
+          "witness": {
+            "input": 1,
+            "observed": 5,
+            "declared_quantity": 3
+          },
+          "comparison": "source-derived affine coefficient, not regression fitting"
+        },
+        "offset": {
+          "status": "matched_in_scope",
+          "witness": null,
+          "comparison": "source-derived affine coefficient, not regression fitting"
+        },
+        "output_unit": {
+          "status": "matched_in_scope",
+          "observed": [
+            "byte"
+          ]
+        },
+        "route": {
+          "status": "matched_in_scope",
+          "omitted_reachable": [],
+          "falsely_reachable": []
+        },
+        "bound": {
+          "status": "matched_in_scope",
+          "observed": 17
+        },
+        "input_business_unit": {
+          "status": "unknown",
+          "reason": "no business-unit inference"
+        }
+      }
+    },
+    "wrong_offset": {
+      "status": "mismatch",
+      "checks": {
+        "scale": {
+          "status": "matched_in_scope",
+          "witness": null,
+          "comparison": "source-derived affine coefficient, not regression fitting"
+        },
+        "offset": {
+          "status": "mismatch",
+          "witness": {
+            "input": 0,
+            "observed": 2,
+            "declared_quantity": 1
+          },
+          "comparison": "source-derived affine coefficient, not regression fitting"
+        },
+        "output_unit": {
+          "status": "matched_in_scope",
+          "observed": [
+            "byte"
+          ]
+        },
+        "route": {
+          "status": "matched_in_scope",
+          "omitted_reachable": [],
+          "falsely_reachable": []
+        },
+        "bound": {
+          "status": "matched_in_scope",
+          "observed": 17
+        },
+        "input_business_unit": {
+          "status": "unknown",
+          "reason": "no business-unit inference"
+        }
+      }
+    },
+    "wrong_representation_unit": {
+      "status": "mismatch",
+      "checks": {
+        "scale": {
+          "status": "matched_in_scope",
+          "witness": null,
+          "comparison": "source-derived affine coefficient, not regression fitting"
+        },
+        "offset": {
+          "status": "matched_in_scope",
+          "witness": null,
+          "comparison": "source-derived affine coefficient, not regression fitting"
+        },
+        "output_unit": {
+          "status": "mismatch",
+          "observed": [
+            "byte"
+          ]
+        },
+        "route": {
+          "status": "matched_in_scope",
+          "omitted_reachable": [],
+          "falsely_reachable": []
+        },
+        "bound": {
+          "status": "matched_in_scope",
+          "observed": 17
+        },
+        "input_business_unit": {
+          "status": "unknown",
+          "reason": "no business-unit inference"
+        }
+      }
+    },
+    "business_unit": {
+      "status": "checked_with_unknowns",
+      "checks": {
+        "scale": {
+          "status": "matched_in_scope",
+          "witness": null,
+          "comparison": "source-derived affine coefficient, not regression fitting"
+        },
+        "offset": {
+          "status": "matched_in_scope",
+          "witness": null,
+          "comparison": "source-derived affine coefficient, not regression fitting"
+        },
+        "output_unit": {
+          "status": "unknown",
+          "reason": "business/unknown unit cannot be established by code"
+        },
+        "route": {
+          "status": "matched_in_scope",
+          "omitted_reachable": [],
+          "falsely_reachable": []
+        },
+        "bound": {
+          "status": "matched_in_scope",
+          "observed": 17
+        },
+        "input_business_unit": {
+          "status": "unknown",
+          "reason": "no business-unit inference"
+        }
+      }
+    },
+    "route_too_broad": {
+      "status": "mismatch",
+      "checks": {
+        "scale": {
+          "status": "matched_in_scope",
+          "witness": null,
+          "comparison": "source-derived affine coefficient, not regression fitting"
+        },
+        "offset": {
+          "status": "matched_in_scope",
+          "witness": null,
+          "comparison": "source-derived affine coefficient, not regression fitting"
+        },
+        "output_unit": {
+          "status": "matched_in_scope",
+          "observed": [
+            "byte"
+          ]
+        },
+        "route": {
+          "status": "mismatch",
+          "omitted_reachable": [],
+          "falsely_reachable": [
+            [
+              6,
+              10
+            ]
+          ]
+        },
+        "bound": {
+          "status": "matched_in_scope",
+          "observed": 17
+        },
+        "input_business_unit": {
+          "status": "unknown",
+          "reason": "no business-unit inference"
+        }
+      }
+    },
+    "route_too_narrow": {
+      "status": "mismatch",
+      "checks": {
+        "scale": {
+          "status": "matched_in_scope",
+          "witness": null,
+          "comparison": "source-derived affine coefficient, not regression fitting"
+        },
+        "offset": {
+          "status": "matched_in_scope",
+          "witness": null,
+          "comparison": "source-derived affine coefficient, not regression fitting"
+        },
+        "output_unit": {
+          "status": "matched_in_scope",
+          "observed": [
+            "byte"
+          ]
+        },
+        "route": {
+          "status": "mismatch",
+          "omitted_reachable": [
+            [
+              4,
+              5
+            ]
+          ],
+          "falsely_reachable": []
+        },
+        "bound": {
+          "status": "matched_in_scope",
+          "observed": 17
+        },
+        "input_business_unit": {
+          "status": "unknown",
+          "reason": "no business-unit inference"
+        }
+      }
+    }
+  },
+  "sha256": {
+    "scripts/python_facts.py": "35c3ad5bb7cf0e471cba6be4919bb0c3a0f117044af7024fe06520fbfb92b6e6",
+    "scripts/logic_lens.py": "0d7bc02a483e2449bbc448bfbd7692de25350876f08250e1a6dc79c196ab0b37",
+    "tests/test_python_facts.py": "c954daad1c83874d646a4b1183412cc465516ff0947922778f58d6e30e65ca38",
+    "examples/constraint-plan/workspace/pipeline.py": "5baafb9692c834f96afb86afce8fb593f4396480f4877ce118a4ff08cda65402",
+    "examples/python-facts/check.json": "189863814c1d3980a924319bd64b28dd699802d7be4ba722fad04b2b8312df3c",
+    "examples/python-facts/expected-audit.json": "a45068c0e5be7e754f34c7da003b6027dd66ec5df8e1da7dee52c03f6459c862",
+    "docs/PYTHON_FACTS.md": "1fb1bbade62c99f24d76234be7412e69111aa67644a042c50161a902acacc23f",
+    "docs/experiments/python-facts-offline.md": "6d0dcf4e957db1342e4acd0db8fb7db07becbd32c27f75b7c07343a1bd7b4c78"
+  }
+}

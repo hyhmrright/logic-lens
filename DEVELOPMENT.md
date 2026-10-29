@@ -22,6 +22,8 @@ Claude is not required for development, testing, installation or evaluation.
   `docs/PROPERTY_SEARCH.md`. No model calls; not a default review step.
 - `scripts/constraint_plan.py`: optional offline relation/property/domain planner;
   see `docs/CONSTRAINT_PLAN.md`. Manual declarations, no model calls.
+- `scripts/python_facts.py`: restricted offline Python source/declaration audit;
+  see `docs/PYTHON_FACTS.md`. No model calls or subject execution.
 - `tests/`: offline unit/integration tests for grading and runner integrity.
 - `skills-workspace/`: ignored source clones, isolated environments and paid-run artifacts.
 - `.codex-plugin/`, `gemini-extension.json`: optional native distribution metadata.
