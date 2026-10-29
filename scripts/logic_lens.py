@@ -7,7 +7,8 @@ import sys
 
 COMMANDS = {'review':'run_review.py', 'bundle':'skill_bundle.py',
             'eval':'run_evals.py', 'discovery':'discovery_eval.py',
-            'verify':'verify_discovery.py', 'doctor':'doctor.py'}
+            'verify':'verify_discovery.py', 'doctor':'doctor.py',
+            'search':'property_search.py'}
 
 
 def main():

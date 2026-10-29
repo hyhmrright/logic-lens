@@ -10,6 +10,7 @@ python3 scripts/logic_lens.py bundle --help
 python3 scripts/logic_lens.py eval --help
 python3 scripts/logic_lens.py discovery --help
 python3 scripts/logic_lens.py verify --help
+python3 scripts/logic_lens.py search --help
 ```
 
 - `run_review.py`: read-only review/explain/diff/locate/health; writes reports and raw events.
@@ -20,6 +21,8 @@ python3 scripts/logic_lens.py verify --help
 - `run_evals.py routing`: evaluate description routing, separately from native activation.
 - `discovery_eval.py`: freeze plain/prior/candidate plans, run repository-context reviews, summarize adjudications.
 - `verify_discovery.py`: independently verify target source pairs using evaluator-only probes.
+- `property_search.py`: experimental finite local property search, no model calls;
+  [protocol and limitations](../docs/PROPERTY_SEARCH.md).
 - `run_probes.py`: run legacy real-code probes through the same provider interface.
 - `grade-iteration.py`: existing offline keyword/contract regression grader; not a discovery oracle.
 - `bump-version.py`: synchronize six version locations and validate; add CHANGELOG manually.

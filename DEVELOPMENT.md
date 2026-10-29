@@ -18,6 +18,8 @@ Claude is not required for development, testing, installation or evaluation.
 - `evals/trigger/v2/`: description-routing inputs; host-native activation is a separate question.
 - `evals/discovery/`: pinned historical source pairs, independent oracles, comparison protocol.
 - `benchmarks/`: frozen historical summaries/reports. Preserve model/provider provenance.
+- `scripts/property_search.py`: optional experimental finite property search; see
+  `docs/PROPERTY_SEARCH.md`. No model calls; not a default review step.
 - `tests/`: offline unit/integration tests for grading and runner integrity.
 - `skills-workspace/`: ignored source clones, isolated environments and paid-run artifacts.
 - `.codex-plugin/`, `gemini-extension.json`: optional native distribution metadata.
@@ -76,7 +78,8 @@ tracing methodology, examples in two languages, severity rationale and eval case
 
 ## Current experiment authorization
 
-The completed v2 comparison is immutable. Revision 3 remains in draft PR #16 as a development candidate,
+The completed v2 comparison and later frozen diagnostics are immutable. Experimental
+skill revisions and the optional property-search prototype remain in draft PR #16,
 not a qualified release or the main branch default. The user has limited tokens and explicitly requires approval
 before **any new model-backed experiment**, including development-set diagnostics,
 smoke/content/trigger evals, retries and fresh-case comparisons. Offline validation,
