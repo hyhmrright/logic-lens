@@ -66,6 +66,11 @@ repository-context discovery and compact review candidates remain in draft PR #1
 they are not installed by this branch. Frozen benchmark instructions describe the
 versions actually evaluated, independently of the current default skill files.
 
+The opt-in [offline path explorer](docs/PATH_EXPLORATION.md) inventories Python
+entries and exact test evidence, then plans bounded cross-call branch exploration.
+It remains an experimental static tool in draft #16; it does not execute real targets
+or establish public contracts automatically.
+
 Every confirmed finding follows the Iron Law:
 
 **Premises → Trace → Divergence → Trigger → Remedy**

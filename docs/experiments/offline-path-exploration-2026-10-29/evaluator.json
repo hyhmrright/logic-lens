@@ -1,0 +1,4151 @@
+[
+  {
+    "entry": "hidden",
+    "input": 0,
+    "outcome": "returned",
+    "value": 2,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 0
+          }
+        ]
+      },
+      {
+        "function": "_hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 2
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "hidden",
+    "input": 1,
+    "outcome": "returned",
+    "value": 5,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 1
+          }
+        ]
+      },
+      {
+        "function": "_hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 5
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "hidden",
+    "input": 2,
+    "outcome": "returned",
+    "value": 8,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 2
+          }
+        ]
+      },
+      {
+        "function": "_hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 8
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "hidden",
+    "input": 3,
+    "outcome": "returned",
+    "value": 11,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 3
+          }
+        ]
+      },
+      {
+        "function": "_hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 11
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "hidden",
+    "input": 4,
+    "outcome": "returned",
+    "value": 14,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 4
+          }
+        ]
+      },
+      {
+        "function": "_hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 14
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "hidden",
+    "input": 5,
+    "outcome": "returned",
+    "value": 17,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 5
+          }
+        ]
+      },
+      {
+        "function": "_hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 17
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "hidden",
+    "input": 6,
+    "outcome": "returned",
+    "value": 20,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 6
+          }
+        ]
+      },
+      {
+        "function": "_hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 20
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "hidden",
+    "input": 7,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        true
+      ]
+    ],
+    "calls": [
+      {
+        "function": "hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 7
+          }
+        ]
+      },
+      {
+        "function": "_hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 23
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "hidden",
+    "input": 8,
+    "outcome": "returned",
+    "value": 26,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 8
+          }
+        ]
+      },
+      {
+        "function": "_hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 26
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "hidden",
+    "input": 9,
+    "outcome": "returned",
+    "value": 29,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 9
+          }
+        ]
+      },
+      {
+        "function": "_hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 29
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "hidden",
+    "input": 10,
+    "outcome": "returned",
+    "value": 32,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 10
+          }
+        ]
+      },
+      {
+        "function": "_hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 32
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "hidden",
+    "input": 11,
+    "outcome": "returned",
+    "value": 35,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 11
+          }
+        ]
+      },
+      {
+        "function": "_hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 35
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "hidden",
+    "input": 12,
+    "outcome": "returned",
+    "value": 38,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 12
+          }
+        ]
+      },
+      {
+        "function": "_hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 38
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "hidden",
+    "input": 13,
+    "outcome": "returned",
+    "value": 41,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 13
+          }
+        ]
+      },
+      {
+        "function": "_hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 41
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "hidden",
+    "input": 14,
+    "outcome": "returned",
+    "value": 44,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 14
+          }
+        ]
+      },
+      {
+        "function": "_hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 44
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "hidden",
+    "input": 15,
+    "outcome": "returned",
+    "value": 47,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 15
+          }
+        ]
+      },
+      {
+        "function": "_hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 47
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "converted",
+    "input": 0,
+    "outcome": "returned",
+    "value": 2,
+    "trace": [
+      [
+        "_route",
+        16,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "converted",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 0
+          }
+        ]
+      },
+      {
+        "function": "_route",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 2
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "converted",
+    "input": 1,
+    "outcome": "returned",
+    "value": 5,
+    "trace": [
+      [
+        "_route",
+        16,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "converted",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 1
+          }
+        ]
+      },
+      {
+        "function": "_route",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 5
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "converted",
+    "input": 2,
+    "outcome": "returned",
+    "value": 8,
+    "trace": [
+      [
+        "_route",
+        16,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "converted",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 2
+          }
+        ]
+      },
+      {
+        "function": "_route",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 8
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "converted",
+    "input": 3,
+    "outcome": "returned",
+    "value": 11,
+    "trace": [
+      [
+        "_route",
+        16,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "converted",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 3
+          }
+        ]
+      },
+      {
+        "function": "_route",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 11
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "converted",
+    "input": 4,
+    "outcome": "returned",
+    "value": 14,
+    "trace": [
+      [
+        "_route",
+        16,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "converted",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 4
+          }
+        ]
+      },
+      {
+        "function": "_route",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 14
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "converted",
+    "input": 5,
+    "outcome": "returned",
+    "value": 17,
+    "trace": [
+      [
+        "_route",
+        16,
+        true
+      ],
+      [
+        "_route",
+        17,
+        true
+      ],
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "converted",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 5
+          }
+        ]
+      },
+      {
+        "function": "_route",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 17
+          }
+        ]
+      },
+      {
+        "function": "_hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 17
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "converted",
+    "input": 6,
+    "outcome": "returned",
+    "value": 20,
+    "trace": [
+      [
+        "_route",
+        16,
+        true
+      ],
+      [
+        "_route",
+        17,
+        true
+      ],
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "converted",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 6
+          }
+        ]
+      },
+      {
+        "function": "_route",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 20
+          }
+        ]
+      },
+      {
+        "function": "_hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 20
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "converted",
+    "input": 7,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "_route",
+        16,
+        true
+      ],
+      [
+        "_route",
+        17,
+        true
+      ],
+      [
+        "_hidden",
+        6,
+        true
+      ]
+    ],
+    "calls": [
+      {
+        "function": "converted",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 7
+          }
+        ]
+      },
+      {
+        "function": "_route",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 23
+          }
+        ]
+      },
+      {
+        "function": "_hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 23
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "converted",
+    "input": 8,
+    "outcome": "returned",
+    "value": 26,
+    "trace": [
+      [
+        "_route",
+        16,
+        true
+      ],
+      [
+        "_route",
+        17,
+        true
+      ],
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "converted",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 8
+          }
+        ]
+      },
+      {
+        "function": "_route",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 26
+          }
+        ]
+      },
+      {
+        "function": "_hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 26
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "converted",
+    "input": 9,
+    "outcome": "returned",
+    "value": 29,
+    "trace": [
+      [
+        "_route",
+        16,
+        true
+      ],
+      [
+        "_route",
+        17,
+        true
+      ],
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "converted",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 9
+          }
+        ]
+      },
+      {
+        "function": "_route",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 29
+          }
+        ]
+      },
+      {
+        "function": "_hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 29
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "converted",
+    "input": 10,
+    "outcome": "returned",
+    "value": 32,
+    "trace": [
+      [
+        "_route",
+        16,
+        true
+      ],
+      [
+        "_route",
+        17,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "converted",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 10
+          }
+        ]
+      },
+      {
+        "function": "_route",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 32
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "converted",
+    "input": 11,
+    "outcome": "returned",
+    "value": 35,
+    "trace": [
+      [
+        "_route",
+        16,
+        true
+      ],
+      [
+        "_route",
+        17,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "converted",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 11
+          }
+        ]
+      },
+      {
+        "function": "_route",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 35
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "converted",
+    "input": 12,
+    "outcome": "returned",
+    "value": 38,
+    "trace": [
+      [
+        "_route",
+        16,
+        true
+      ],
+      [
+        "_route",
+        17,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "converted",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 12
+          }
+        ]
+      },
+      {
+        "function": "_route",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 38
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "converted",
+    "input": 13,
+    "outcome": "returned",
+    "value": 41,
+    "trace": [
+      [
+        "_route",
+        16,
+        true
+      ],
+      [
+        "_route",
+        17,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "converted",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 13
+          }
+        ]
+      },
+      {
+        "function": "_route",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 41
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "converted",
+    "input": 14,
+    "outcome": "returned",
+    "value": 44,
+    "trace": [
+      [
+        "_route",
+        16,
+        true
+      ],
+      [
+        "_route",
+        17,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "converted",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 14
+          }
+        ]
+      },
+      {
+        "function": "_route",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 44
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "converted",
+    "input": 15,
+    "outcome": "returned",
+    "value": 47,
+    "trace": [
+      [
+        "_route",
+        16,
+        true
+      ],
+      [
+        "_route",
+        17,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "converted",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 15
+          }
+        ]
+      },
+      {
+        "function": "_route",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 47
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "multiple",
+    "input": 0,
+    "outcome": "returned",
+    "value": 0,
+    "trace": [
+      [
+        "multiple",
+        33,
+        true
+      ],
+      [
+        "_sink",
+        27,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "multiple",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 0
+          }
+        ]
+      },
+      {
+        "function": "_sink",
+        "arguments": [
+          {
+            "type": "byte",
+            "length": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "multiple",
+    "input": 1,
+    "outcome": "returned",
+    "value": 1,
+    "trace": [
+      [
+        "multiple",
+        33,
+        true
+      ],
+      [
+        "_sink",
+        27,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "multiple",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 1
+          }
+        ]
+      },
+      {
+        "function": "_sink",
+        "arguments": [
+          {
+            "type": "byte",
+            "length": 1
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "multiple",
+    "input": 2,
+    "outcome": "returned",
+    "value": 2,
+    "trace": [
+      [
+        "multiple",
+        33,
+        true
+      ],
+      [
+        "_sink",
+        27,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "multiple",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 2
+          }
+        ]
+      },
+      {
+        "function": "_sink",
+        "arguments": [
+          {
+            "type": "byte",
+            "length": 2
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "multiple",
+    "input": 3,
+    "outcome": "returned",
+    "value": 3,
+    "trace": [
+      [
+        "multiple",
+        33,
+        true
+      ],
+      [
+        "_sink",
+        27,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "multiple",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 3
+          }
+        ]
+      },
+      {
+        "function": "_sink",
+        "arguments": [
+          {
+            "type": "byte",
+            "length": 3
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "multiple",
+    "input": 4,
+    "outcome": "returned",
+    "value": 4,
+    "trace": [
+      [
+        "multiple",
+        33,
+        true
+      ],
+      [
+        "_sink",
+        27,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "multiple",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 4
+          }
+        ]
+      },
+      {
+        "function": "_sink",
+        "arguments": [
+          {
+            "type": "byte",
+            "length": 4
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "multiple",
+    "input": 5,
+    "outcome": "returned",
+    "value": 10,
+    "trace": [
+      [
+        "multiple",
+        33,
+        false
+      ],
+      [
+        "_sink",
+        27,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "multiple",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 5
+          }
+        ]
+      },
+      {
+        "function": "_sink",
+        "arguments": [
+          {
+            "type": "byte",
+            "length": 10
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "multiple",
+    "input": 6,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "multiple",
+        33,
+        false
+      ],
+      [
+        "_sink",
+        27,
+        true
+      ]
+    ],
+    "calls": [
+      {
+        "function": "multiple",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 6
+          }
+        ]
+      },
+      {
+        "function": "_sink",
+        "arguments": [
+          {
+            "type": "byte",
+            "length": 12
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "multiple",
+    "input": 7,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "multiple",
+        33,
+        false
+      ],
+      [
+        "_sink",
+        27,
+        true
+      ]
+    ],
+    "calls": [
+      {
+        "function": "multiple",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 7
+          }
+        ]
+      },
+      {
+        "function": "_sink",
+        "arguments": [
+          {
+            "type": "byte",
+            "length": 14
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "multiple",
+    "input": 8,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "multiple",
+        33,
+        false
+      ],
+      [
+        "_sink",
+        27,
+        true
+      ]
+    ],
+    "calls": [
+      {
+        "function": "multiple",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 8
+          }
+        ]
+      },
+      {
+        "function": "_sink",
+        "arguments": [
+          {
+            "type": "byte",
+            "length": 16
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "multiple",
+    "input": 9,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "multiple",
+        33,
+        false
+      ],
+      [
+        "_sink",
+        27,
+        true
+      ]
+    ],
+    "calls": [
+      {
+        "function": "multiple",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 9
+          }
+        ]
+      },
+      {
+        "function": "_sink",
+        "arguments": [
+          {
+            "type": "byte",
+            "length": 18
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "multiple",
+    "input": 10,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "multiple",
+        33,
+        false
+      ],
+      [
+        "_sink",
+        27,
+        true
+      ]
+    ],
+    "calls": [
+      {
+        "function": "multiple",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 10
+          }
+        ]
+      },
+      {
+        "function": "_sink",
+        "arguments": [
+          {
+            "type": "byte",
+            "length": 20
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "multiple",
+    "input": 11,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "multiple",
+        33,
+        false
+      ],
+      [
+        "_sink",
+        27,
+        true
+      ]
+    ],
+    "calls": [
+      {
+        "function": "multiple",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 11
+          }
+        ]
+      },
+      {
+        "function": "_sink",
+        "arguments": [
+          {
+            "type": "byte",
+            "length": 22
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "multiple",
+    "input": 12,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "multiple",
+        33,
+        false
+      ],
+      [
+        "_sink",
+        27,
+        true
+      ]
+    ],
+    "calls": [
+      {
+        "function": "multiple",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 12
+          }
+        ]
+      },
+      {
+        "function": "_sink",
+        "arguments": [
+          {
+            "type": "byte",
+            "length": 24
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "multiple",
+    "input": 13,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "multiple",
+        33,
+        false
+      ],
+      [
+        "_sink",
+        27,
+        true
+      ]
+    ],
+    "calls": [
+      {
+        "function": "multiple",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 13
+          }
+        ]
+      },
+      {
+        "function": "_sink",
+        "arguments": [
+          {
+            "type": "byte",
+            "length": 26
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "multiple",
+    "input": 14,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "multiple",
+        33,
+        false
+      ],
+      [
+        "_sink",
+        27,
+        true
+      ]
+    ],
+    "calls": [
+      {
+        "function": "multiple",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 14
+          }
+        ]
+      },
+      {
+        "function": "_sink",
+        "arguments": [
+          {
+            "type": "byte",
+            "length": 28
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "multiple",
+    "input": 15,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "multiple",
+        33,
+        false
+      ],
+      [
+        "_sink",
+        27,
+        true
+      ]
+    ],
+    "calls": [
+      {
+        "function": "multiple",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 15
+          }
+        ]
+      },
+      {
+        "function": "_sink",
+        "arguments": [
+          {
+            "type": "byte",
+            "length": 30
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "alternate",
+    "input": 0,
+    "outcome": "returned",
+    "value": 0,
+    "trace": [
+      [
+        "alternate",
+        39,
+        false
+      ],
+      [
+        "_sink",
+        27,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "alternate",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 0
+          }
+        ]
+      },
+      {
+        "function": "_sink",
+        "arguments": [
+          {
+            "type": "byte",
+            "length": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "alternate",
+    "input": 1,
+    "outcome": "returned",
+    "value": 1,
+    "trace": [
+      [
+        "alternate",
+        39,
+        false
+      ],
+      [
+        "_sink",
+        27,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "alternate",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 1
+          }
+        ]
+      },
+      {
+        "function": "_sink",
+        "arguments": [
+          {
+            "type": "byte",
+            "length": 1
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "alternate",
+    "input": 2,
+    "outcome": "returned",
+    "value": 2,
+    "trace": [
+      [
+        "alternate",
+        39,
+        false
+      ],
+      [
+        "_sink",
+        27,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "alternate",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 2
+          }
+        ]
+      },
+      {
+        "function": "_sink",
+        "arguments": [
+          {
+            "type": "byte",
+            "length": 2
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "alternate",
+    "input": 3,
+    "outcome": "returned",
+    "value": 3,
+    "trace": [
+      [
+        "alternate",
+        39,
+        false
+      ],
+      [
+        "_sink",
+        27,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "alternate",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 3
+          }
+        ]
+      },
+      {
+        "function": "_sink",
+        "arguments": [
+          {
+            "type": "byte",
+            "length": 3
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "alternate",
+    "input": 4,
+    "outcome": "returned",
+    "value": 4,
+    "trace": [
+      [
+        "alternate",
+        39,
+        false
+      ],
+      [
+        "_sink",
+        27,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "alternate",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 4
+          }
+        ]
+      },
+      {
+        "function": "_sink",
+        "arguments": [
+          {
+            "type": "byte",
+            "length": 4
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "alternate",
+    "input": 5,
+    "outcome": "returned",
+    "value": 5,
+    "trace": [
+      [
+        "alternate",
+        39,
+        false
+      ],
+      [
+        "_sink",
+        27,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "alternate",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 5
+          }
+        ]
+      },
+      {
+        "function": "_sink",
+        "arguments": [
+          {
+            "type": "byte",
+            "length": 5
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "alternate",
+    "input": 6,
+    "outcome": "returned",
+    "value": 6,
+    "trace": [
+      [
+        "alternate",
+        39,
+        true
+      ]
+    ],
+    "calls": [
+      {
+        "function": "alternate",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 6
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "alternate",
+    "input": 7,
+    "outcome": "returned",
+    "value": 7,
+    "trace": [
+      [
+        "alternate",
+        39,
+        true
+      ]
+    ],
+    "calls": [
+      {
+        "function": "alternate",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 7
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "alternate",
+    "input": 8,
+    "outcome": "returned",
+    "value": 8,
+    "trace": [
+      [
+        "alternate",
+        39,
+        true
+      ]
+    ],
+    "calls": [
+      {
+        "function": "alternate",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 8
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "alternate",
+    "input": 9,
+    "outcome": "returned",
+    "value": 9,
+    "trace": [
+      [
+        "alternate",
+        39,
+        true
+      ]
+    ],
+    "calls": [
+      {
+        "function": "alternate",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 9
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "alternate",
+    "input": 10,
+    "outcome": "returned",
+    "value": 10,
+    "trace": [
+      [
+        "alternate",
+        39,
+        true
+      ]
+    ],
+    "calls": [
+      {
+        "function": "alternate",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 10
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "alternate",
+    "input": 11,
+    "outcome": "returned",
+    "value": 11,
+    "trace": [
+      [
+        "alternate",
+        39,
+        true
+      ]
+    ],
+    "calls": [
+      {
+        "function": "alternate",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 11
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "alternate",
+    "input": 12,
+    "outcome": "returned",
+    "value": 12,
+    "trace": [
+      [
+        "alternate",
+        39,
+        true
+      ]
+    ],
+    "calls": [
+      {
+        "function": "alternate",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 12
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "alternate",
+    "input": 13,
+    "outcome": "returned",
+    "value": 13,
+    "trace": [
+      [
+        "alternate",
+        39,
+        true
+      ]
+    ],
+    "calls": [
+      {
+        "function": "alternate",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 13
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "alternate",
+    "input": 14,
+    "outcome": "returned",
+    "value": 14,
+    "trace": [
+      [
+        "alternate",
+        39,
+        true
+      ]
+    ],
+    "calls": [
+      {
+        "function": "alternate",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 14
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "alternate",
+    "input": 15,
+    "outcome": "returned",
+    "value": 15,
+    "trace": [
+      [
+        "alternate",
+        39,
+        true
+      ]
+    ],
+    "calls": [
+      {
+        "function": "alternate",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 15
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "permitted",
+    "input": 0,
+    "outcome": "returned",
+    "value": 0,
+    "trace": [
+      [
+        "_sink",
+        27,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "permitted",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 0
+          }
+        ]
+      },
+      {
+        "function": "_sink",
+        "arguments": [
+          {
+            "type": "byte",
+            "length": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "permitted",
+    "input": 1,
+    "outcome": "returned",
+    "value": 2,
+    "trace": [
+      [
+        "_sink",
+        27,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "permitted",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 1
+          }
+        ]
+      },
+      {
+        "function": "_sink",
+        "arguments": [
+          {
+            "type": "byte",
+            "length": 2
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "permitted",
+    "input": 2,
+    "outcome": "returned",
+    "value": 4,
+    "trace": [
+      [
+        "_sink",
+        27,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "permitted",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 2
+          }
+        ]
+      },
+      {
+        "function": "_sink",
+        "arguments": [
+          {
+            "type": "byte",
+            "length": 4
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "permitted",
+    "input": 3,
+    "outcome": "returned",
+    "value": 6,
+    "trace": [
+      [
+        "_sink",
+        27,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "permitted",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 3
+          }
+        ]
+      },
+      {
+        "function": "_sink",
+        "arguments": [
+          {
+            "type": "byte",
+            "length": 6
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "permitted",
+    "input": 4,
+    "outcome": "returned",
+    "value": 8,
+    "trace": [
+      [
+        "_sink",
+        27,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "permitted",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 4
+          }
+        ]
+      },
+      {
+        "function": "_sink",
+        "arguments": [
+          {
+            "type": "byte",
+            "length": 8
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "permitted",
+    "input": 5,
+    "outcome": "returned",
+    "value": 10,
+    "trace": [
+      [
+        "_sink",
+        27,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "permitted",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 5
+          }
+        ]
+      },
+      {
+        "function": "_sink",
+        "arguments": [
+          {
+            "type": "byte",
+            "length": 10
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "permitted",
+    "input": 6,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "_sink",
+        27,
+        true
+      ]
+    ],
+    "calls": [
+      {
+        "function": "permitted",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 6
+          }
+        ]
+      },
+      {
+        "function": "_sink",
+        "arguments": [
+          {
+            "type": "byte",
+            "length": 12
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "permitted",
+    "input": 7,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "_sink",
+        27,
+        true
+      ]
+    ],
+    "calls": [
+      {
+        "function": "permitted",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 7
+          }
+        ]
+      },
+      {
+        "function": "_sink",
+        "arguments": [
+          {
+            "type": "byte",
+            "length": 14
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "permitted",
+    "input": 8,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "_sink",
+        27,
+        true
+      ]
+    ],
+    "calls": [
+      {
+        "function": "permitted",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 8
+          }
+        ]
+      },
+      {
+        "function": "_sink",
+        "arguments": [
+          {
+            "type": "byte",
+            "length": 16
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "permitted",
+    "input": 9,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "_sink",
+        27,
+        true
+      ]
+    ],
+    "calls": [
+      {
+        "function": "permitted",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 9
+          }
+        ]
+      },
+      {
+        "function": "_sink",
+        "arguments": [
+          {
+            "type": "byte",
+            "length": 18
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "permitted",
+    "input": 10,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "_sink",
+        27,
+        true
+      ]
+    ],
+    "calls": [
+      {
+        "function": "permitted",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 10
+          }
+        ]
+      },
+      {
+        "function": "_sink",
+        "arguments": [
+          {
+            "type": "byte",
+            "length": 20
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "permitted",
+    "input": 11,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "_sink",
+        27,
+        true
+      ]
+    ],
+    "calls": [
+      {
+        "function": "permitted",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 11
+          }
+        ]
+      },
+      {
+        "function": "_sink",
+        "arguments": [
+          {
+            "type": "byte",
+            "length": 22
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "permitted",
+    "input": 12,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "_sink",
+        27,
+        true
+      ]
+    ],
+    "calls": [
+      {
+        "function": "permitted",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 12
+          }
+        ]
+      },
+      {
+        "function": "_sink",
+        "arguments": [
+          {
+            "type": "byte",
+            "length": 24
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "permitted",
+    "input": 13,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "_sink",
+        27,
+        true
+      ]
+    ],
+    "calls": [
+      {
+        "function": "permitted",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 13
+          }
+        ]
+      },
+      {
+        "function": "_sink",
+        "arguments": [
+          {
+            "type": "byte",
+            "length": 26
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "permitted",
+    "input": 14,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "_sink",
+        27,
+        true
+      ]
+    ],
+    "calls": [
+      {
+        "function": "permitted",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 14
+          }
+        ]
+      },
+      {
+        "function": "_sink",
+        "arguments": [
+          {
+            "type": "byte",
+            "length": 28
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "permitted",
+    "input": 15,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "_sink",
+        27,
+        true
+      ]
+    ],
+    "calls": [
+      {
+        "function": "permitted",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 15
+          }
+        ]
+      },
+      {
+        "function": "_sink",
+        "arguments": [
+          {
+            "type": "byte",
+            "length": 30
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "conflicting",
+    "input": 0,
+    "outcome": "returned",
+    "value": 0,
+    "trace": [],
+    "calls": [
+      {
+        "function": "conflicting",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "conflicting",
+    "input": 1,
+    "outcome": "returned",
+    "value": 1,
+    "trace": [],
+    "calls": [
+      {
+        "function": "conflicting",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 1
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "conflicting",
+    "input": 2,
+    "outcome": "returned",
+    "value": 2,
+    "trace": [],
+    "calls": [
+      {
+        "function": "conflicting",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 2
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "conflicting",
+    "input": 3,
+    "outcome": "returned",
+    "value": 3,
+    "trace": [],
+    "calls": [
+      {
+        "function": "conflicting",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 3
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "conflicting",
+    "input": 4,
+    "outcome": "returned",
+    "value": 4,
+    "trace": [],
+    "calls": [
+      {
+        "function": "conflicting",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 4
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "conflicting",
+    "input": 5,
+    "outcome": "returned",
+    "value": 5,
+    "trace": [],
+    "calls": [
+      {
+        "function": "conflicting",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 5
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "conflicting",
+    "input": 6,
+    "outcome": "returned",
+    "value": 6,
+    "trace": [],
+    "calls": [
+      {
+        "function": "conflicting",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 6
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "conflicting",
+    "input": 7,
+    "outcome": "returned",
+    "value": 7,
+    "trace": [],
+    "calls": [
+      {
+        "function": "conflicting",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 7
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "conflicting",
+    "input": 8,
+    "outcome": "returned",
+    "value": 8,
+    "trace": [],
+    "calls": [
+      {
+        "function": "conflicting",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 8
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "conflicting",
+    "input": 9,
+    "outcome": "returned",
+    "value": 9,
+    "trace": [],
+    "calls": [
+      {
+        "function": "conflicting",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 9
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "conflicting",
+    "input": 10,
+    "outcome": "returned",
+    "value": 10,
+    "trace": [],
+    "calls": [
+      {
+        "function": "conflicting",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 10
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "conflicting",
+    "input": 11,
+    "outcome": "returned",
+    "value": 11,
+    "trace": [],
+    "calls": [
+      {
+        "function": "conflicting",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 11
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "conflicting",
+    "input": 12,
+    "outcome": "returned",
+    "value": 12,
+    "trace": [],
+    "calls": [
+      {
+        "function": "conflicting",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 12
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "conflicting",
+    "input": 13,
+    "outcome": "returned",
+    "value": 13,
+    "trace": [],
+    "calls": [
+      {
+        "function": "conflicting",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 13
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "conflicting",
+    "input": 14,
+    "outcome": "returned",
+    "value": 14,
+    "trace": [],
+    "calls": [
+      {
+        "function": "conflicting",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 14
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "conflicting",
+    "input": 15,
+    "outcome": "returned",
+    "value": 15,
+    "trace": [],
+    "calls": [
+      {
+        "function": "conflicting",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 15
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "impossible",
+    "input": 0,
+    "outcome": "returned",
+    "value": 0,
+    "trace": [
+      [
+        "impossible",
+        53,
+        true
+      ],
+      [
+        "impossible",
+        54,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "impossible",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "impossible",
+    "input": 1,
+    "outcome": "returned",
+    "value": 1,
+    "trace": [
+      [
+        "impossible",
+        53,
+        true
+      ],
+      [
+        "impossible",
+        54,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "impossible",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 1
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "impossible",
+    "input": 2,
+    "outcome": "returned",
+    "value": 2,
+    "trace": [
+      [
+        "impossible",
+        53,
+        true
+      ],
+      [
+        "impossible",
+        54,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "impossible",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 2
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "impossible",
+    "input": 3,
+    "outcome": "returned",
+    "value": 3,
+    "trace": [
+      [
+        "impossible",
+        53,
+        true
+      ],
+      [
+        "impossible",
+        54,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "impossible",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 3
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "impossible",
+    "input": 4,
+    "outcome": "returned",
+    "value": 4,
+    "trace": [
+      [
+        "impossible",
+        53,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "impossible",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 4
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "impossible",
+    "input": 5,
+    "outcome": "returned",
+    "value": 5,
+    "trace": [
+      [
+        "impossible",
+        53,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "impossible",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 5
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "impossible",
+    "input": 6,
+    "outcome": "returned",
+    "value": 6,
+    "trace": [
+      [
+        "impossible",
+        53,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "impossible",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 6
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "impossible",
+    "input": 7,
+    "outcome": "returned",
+    "value": 7,
+    "trace": [
+      [
+        "impossible",
+        53,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "impossible",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 7
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "impossible",
+    "input": 8,
+    "outcome": "returned",
+    "value": 8,
+    "trace": [
+      [
+        "impossible",
+        53,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "impossible",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 8
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "impossible",
+    "input": 9,
+    "outcome": "returned",
+    "value": 9,
+    "trace": [
+      [
+        "impossible",
+        53,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "impossible",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 9
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "impossible",
+    "input": 10,
+    "outcome": "returned",
+    "value": 10,
+    "trace": [
+      [
+        "impossible",
+        53,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "impossible",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 10
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "impossible",
+    "input": 11,
+    "outcome": "returned",
+    "value": 11,
+    "trace": [
+      [
+        "impossible",
+        53,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "impossible",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 11
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "impossible",
+    "input": 12,
+    "outcome": "returned",
+    "value": 12,
+    "trace": [
+      [
+        "impossible",
+        53,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "impossible",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 12
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "impossible",
+    "input": 13,
+    "outcome": "returned",
+    "value": 13,
+    "trace": [
+      [
+        "impossible",
+        53,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "impossible",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 13
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "impossible",
+    "input": 14,
+    "outcome": "returned",
+    "value": 14,
+    "trace": [
+      [
+        "impossible",
+        53,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "impossible",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 14
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "impossible",
+    "input": 15,
+    "outcome": "returned",
+    "value": 15,
+    "trace": [
+      [
+        "impossible",
+        53,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "impossible",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 15
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "dynamic",
+    "input": 0,
+    "outcome": "returned",
+    "value": 2,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "dynamic",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 0
+          }
+        ]
+      },
+      {
+        "function": "hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 0
+          }
+        ]
+      },
+      {
+        "function": "_hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 2
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "dynamic",
+    "input": 1,
+    "outcome": "returned",
+    "value": 5,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "dynamic",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 1
+          }
+        ]
+      },
+      {
+        "function": "hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 1
+          }
+        ]
+      },
+      {
+        "function": "_hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 5
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "dynamic",
+    "input": 2,
+    "outcome": "returned",
+    "value": 8,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "dynamic",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 2
+          }
+        ]
+      },
+      {
+        "function": "hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 2
+          }
+        ]
+      },
+      {
+        "function": "_hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 8
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "dynamic",
+    "input": 3,
+    "outcome": "returned",
+    "value": 11,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "dynamic",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 3
+          }
+        ]
+      },
+      {
+        "function": "hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 3
+          }
+        ]
+      },
+      {
+        "function": "_hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 11
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "dynamic",
+    "input": 4,
+    "outcome": "returned",
+    "value": 14,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "dynamic",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 4
+          }
+        ]
+      },
+      {
+        "function": "hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 4
+          }
+        ]
+      },
+      {
+        "function": "_hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 14
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "dynamic",
+    "input": 5,
+    "outcome": "returned",
+    "value": 17,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "dynamic",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 5
+          }
+        ]
+      },
+      {
+        "function": "hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 5
+          }
+        ]
+      },
+      {
+        "function": "_hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 17
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "dynamic",
+    "input": 6,
+    "outcome": "returned",
+    "value": 20,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "dynamic",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 6
+          }
+        ]
+      },
+      {
+        "function": "hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 6
+          }
+        ]
+      },
+      {
+        "function": "_hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 20
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "dynamic",
+    "input": 7,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        true
+      ]
+    ],
+    "calls": [
+      {
+        "function": "dynamic",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 7
+          }
+        ]
+      },
+      {
+        "function": "hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 7
+          }
+        ]
+      },
+      {
+        "function": "_hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 23
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "dynamic",
+    "input": 8,
+    "outcome": "returned",
+    "value": 26,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "dynamic",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 8
+          }
+        ]
+      },
+      {
+        "function": "hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 8
+          }
+        ]
+      },
+      {
+        "function": "_hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 26
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "dynamic",
+    "input": 9,
+    "outcome": "returned",
+    "value": 29,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "dynamic",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 9
+          }
+        ]
+      },
+      {
+        "function": "hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 9
+          }
+        ]
+      },
+      {
+        "function": "_hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 29
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "dynamic",
+    "input": 10,
+    "outcome": "returned",
+    "value": 32,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "dynamic",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 10
+          }
+        ]
+      },
+      {
+        "function": "hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 10
+          }
+        ]
+      },
+      {
+        "function": "_hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 32
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "dynamic",
+    "input": 11,
+    "outcome": "returned",
+    "value": 35,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "dynamic",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 11
+          }
+        ]
+      },
+      {
+        "function": "hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 11
+          }
+        ]
+      },
+      {
+        "function": "_hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 35
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "dynamic",
+    "input": 12,
+    "outcome": "returned",
+    "value": 38,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "dynamic",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 12
+          }
+        ]
+      },
+      {
+        "function": "hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 12
+          }
+        ]
+      },
+      {
+        "function": "_hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 38
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "dynamic",
+    "input": 13,
+    "outcome": "returned",
+    "value": 41,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "dynamic",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 13
+          }
+        ]
+      },
+      {
+        "function": "hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 13
+          }
+        ]
+      },
+      {
+        "function": "_hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 41
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "dynamic",
+    "input": 14,
+    "outcome": "returned",
+    "value": 44,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "dynamic",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 14
+          }
+        ]
+      },
+      {
+        "function": "hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 14
+          }
+        ]
+      },
+      {
+        "function": "_hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 44
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entry": "dynamic",
+    "input": 15,
+    "outcome": "returned",
+    "value": 47,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ],
+    "calls": [
+      {
+        "function": "dynamic",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 15
+          }
+        ]
+      },
+      {
+        "function": "hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 15
+          }
+        ]
+      },
+      {
+        "function": "_hidden",
+        "arguments": [
+          {
+            "type": "integer",
+            "value": 47
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -26,6 +26,8 @@ Claude is not required for development, testing, installation or evaluation.
   see `docs/PYTHON_FACTS.md`. No model calls or subject execution.
 - `scripts/investigation.py`: experimental offline relation discovery/selection loop;
   `docs/INVESTIGATION.md`. Execution opt-in for trusted synthetic fixtures only.
+- `scripts/path_exploration.py`: opt-in static entry/evidence and cross-call path
+  exploration; `docs/PATH_EXPLORATION.md`. No subject execution or model calls.
 - `tests/`: offline unit/integration tests for grading and runner integrity.
 - `skills-workspace/`: ignored source clones, isolated environments and paid-run artifacts.
 - `.codex-plugin/`, `gemini-extension.json`: optional native distribution metadata.

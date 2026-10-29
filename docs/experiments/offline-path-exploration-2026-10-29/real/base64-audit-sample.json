@@ -1,0 +1,275 @@
+[
+  {
+    "category": "public_inventory",
+    "record": {
+      "name": "b64encode",
+      "line": 49,
+      "end": 67,
+      "sources": [
+        "public_definition",
+        "literal_export"
+      ],
+      "evidence": [],
+      "calls": [
+        {
+          "line": 67,
+          "end": 67,
+          "expression": "binascii.b2a_base64",
+          "target": null,
+          "resolution": "unresolved"
+        },
+        {
+          "line": 65,
+          "end": 66,
+          "expression": "binascii.b2a_base64",
+          "target": null,
+          "resolution": "unresolved"
+        },
+        {
+          "line": 62,
+          "end": 62,
+          "expression": "len",
+          "target": "len",
+          "resolution": "builtin"
+        },
+        {
+          "line": 63,
+          "end": 63,
+          "expression": "ValueError",
+          "target": "ValueError",
+          "resolution": "builtin"
+        }
+      ],
+      "conflicts": []
+    }
+  },
+  {
+    "category": "public_inventory",
+    "record": {
+      "name": "main",
+      "line": 463,
+      "end": 494,
+      "sources": [
+        "public_definition"
+      ],
+      "evidence": [],
+      "calls": [
+        {
+          "line": 471,
+          "end": 471,
+          "expression": "getopt.getopt",
+          "target": null,
+          "resolution": "unresolved"
+        },
+        {
+          "line": 487,
+          "end": 487,
+          "expression": "sys.stdin.isatty",
+          "target": null,
+          "resolution": "unresolved"
+        },
+        {
+          "line": 494,
+          "end": 494,
+          "expression": "func",
+          "target": "func",
+          "resolution": "unresolved"
+        },
+        {
+          "line": 474,
+          "end": 474,
+          "expression": "print",
+          "target": "print",
+          "resolution": "unresolved"
+        },
+        {
+          "line": 475,
+          "end": 475,
+          "expression": "print",
+          "target": "print",
+          "resolution": "unresolved"
+        },
+        {
+          "line": 476,
+          "end": 476,
+          "expression": "sys.exit",
+          "target": null,
+          "resolution": "unresolved"
+        },
+        {
+          "line": 482,
+          "end": 482,
+          "expression": "print",
+          "target": "print",
+          "resolution": "unresolved"
+        },
+        {
+          "line": 484,
+          "end": 484,
+          "expression": "open",
+          "target": "open",
+          "resolution": "unresolved"
+        },
+        {
+          "line": 485,
+          "end": 485,
+          "expression": "func",
+          "target": "func",
+          "resolution": "unresolved"
+        },
+        {
+          "line": 490,
+          "end": 490,
+          "expression": "sys.stdin.buffer.read",
+          "target": null,
+          "resolution": "unresolved"
+        },
+        {
+          "line": 491,
+          "end": 491,
+          "expression": "io.BytesIO",
+          "target": null,
+          "resolution": "unresolved"
+        }
+      ],
+      "conflicts": []
+    }
+  },
+  {
+    "category": "partial_unsupported",
+    "record": {
+      "entry": "decodebytes",
+      "status": "partial_unsupported",
+      "observations": [
+        {
+          "input": 0,
+          "outcome": "unsupported",
+          "value": {
+            "type": "NoneType",
+            "value": null
+          },
+          "trace": [],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "decodebytes",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 0,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": "unsupported statement: Expr",
+          "task": {
+            "input": 0,
+            "queue": "explore",
+            "reason": "window seed; validity unknown"
+          }
+        },
+        {
+          "input": 1,
+          "outcome": "unsupported",
+          "value": {
+            "type": "NoneType",
+            "value": null
+          },
+          "trace": [],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "decodebytes",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 1,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": "unsupported statement: Expr",
+          "task": {
+            "input": 1,
+            "queue": "explore",
+            "reason": "window seed; validity unknown"
+          }
+        },
+        {
+          "input": 100,
+          "outcome": "unsupported",
+          "value": {
+            "type": "NoneType",
+            "value": null
+          },
+          "trace": [],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "decodebytes",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 100,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": "unsupported statement: Expr",
+          "task": {
+            "input": 100,
+            "queue": "explore",
+            "reason": "window seed; validity unknown"
+          }
+        }
+      ],
+      "pending": [],
+      "infeasible": [],
+      "dropped_tasks": 0,
+      "conflicts": [],
+      "checks": []
+    }
+  },
+  {
+    "category": "unsupported",
+    "record": {
+      "entry": "a85decode",
+      "status": "unsupported",
+      "observations": [],
+      "pending": [],
+      "infeasible": [],
+      "dropped_tasks": 0,
+      "conflicts": [],
+      "reason": "unsupported function definition/signature"
+    }
+  },
+  {
+    "category": "unresolved_call",
+    "record": {
+      "entry": "b64encode",
+      "line": 67,
+      "end": 67,
+      "expression": "binascii.b2a_base64",
+      "target": null,
+      "resolution": "unresolved"
+    }
+  }
+]

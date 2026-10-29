@@ -1,0 +1,3046 @@
+{
+  "schema_version": 1,
+  "source_sha256": "93319e370390777e2b0a14dcb02b53d61e1bc83719c088e760eb5ab74eafa978",
+  "tests_sha256": "b112b3c06d757cb77ad9e74c20050a0c6619781b849166616fcc3108c75b2c3e",
+  "inventory": {
+    "entries": [
+      {
+        "name": "b64encode",
+        "line": 49,
+        "end": 67,
+        "sources": [
+          "public_definition",
+          "literal_export"
+        ],
+        "evidence": [],
+        "calls": [
+          {
+            "line": 67,
+            "end": 67,
+            "expression": "binascii.b2a_base64",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 65,
+            "end": 66,
+            "expression": "binascii.b2a_base64",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 62,
+            "end": 62,
+            "expression": "len",
+            "target": "len",
+            "resolution": "builtin"
+          },
+          {
+            "line": 63,
+            "end": 63,
+            "expression": "ValueError",
+            "target": "ValueError",
+            "resolution": "builtin"
+          }
+        ],
+        "conflicts": []
+      },
+      {
+        "name": "b64decode",
+        "line": 70,
+        "end": 132,
+        "sources": [
+          "public_definition",
+          "literal_export"
+        ],
+        "evidence": [],
+        "calls": [
+          {
+            "line": 95,
+            "end": 95,
+            "expression": "_bytes_from_decode_data",
+            "target": "_bytes_from_decode_data",
+            "resolution": "local"
+          },
+          {
+            "line": 117,
+            "end": 119,
+            "expression": "binascii.a2b_base64",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 100,
+            "end": 100,
+            "expression": "_bytes_from_decode_data",
+            "target": "_bytes_from_decode_data",
+            "resolution": "local"
+          },
+          {
+            "line": 101,
+            "end": 101,
+            "expression": "len",
+            "target": "len",
+            "resolution": "builtin"
+          },
+          {
+            "line": 102,
+            "end": 102,
+            "expression": "ValueError",
+            "target": "ValueError",
+            "resolution": "builtin"
+          },
+          {
+            "line": 108,
+            "end": 108,
+            "expression": "s.translate",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 111,
+            "end": 114,
+            "expression": "binascii.a2b_base64",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 123,
+            "end": 126,
+            "expression": "warnings.warn",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 128,
+            "end": 131,
+            "expression": "warnings.warn",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 108,
+            "end": 108,
+            "expression": "bytes.maketrans",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 123,
+            "end": 123,
+            "expression": "chr",
+            "target": "chr",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 128,
+            "end": 128,
+            "expression": "chr",
+            "target": "chr",
+            "resolution": "unresolved"
+          }
+        ],
+        "conflicts": []
+      },
+      {
+        "name": "standard_b64encode",
+        "line": 135,
+        "end": 140,
+        "sources": [
+          "public_definition",
+          "literal_export"
+        ],
+        "evidence": [],
+        "calls": [
+          {
+            "line": 140,
+            "end": 140,
+            "expression": "b64encode",
+            "target": "b64encode",
+            "resolution": "local"
+          }
+        ],
+        "conflicts": []
+      },
+      {
+        "name": "standard_b64decode",
+        "line": 142,
+        "end": 150,
+        "sources": [
+          "public_definition",
+          "literal_export"
+        ],
+        "evidence": [],
+        "calls": [
+          {
+            "line": 150,
+            "end": 150,
+            "expression": "b64decode",
+            "target": "b64decode",
+            "resolution": "local"
+          }
+        ],
+        "conflicts": []
+      },
+      {
+        "name": "urlsafe_b64encode",
+        "line": 155,
+        "end": 165,
+        "sources": [
+          "public_definition",
+          "literal_export"
+        ],
+        "evidence": [],
+        "calls": [
+          {
+            "line": 164,
+            "end": 165,
+            "expression": "binascii.b2a_base64",
+            "target": null,
+            "resolution": "unresolved"
+          }
+        ],
+        "conflicts": []
+      },
+      {
+        "name": "urlsafe_b64decode",
+        "line": 167,
+        "end": 193,
+        "sources": [
+          "public_definition",
+          "literal_export"
+        ],
+        "evidence": [],
+        "calls": [
+          {
+            "line": 180,
+            "end": 180,
+            "expression": "_bytes_from_decode_data",
+            "target": "_bytes_from_decode_data",
+            "resolution": "local"
+          },
+          {
+            "line": 186,
+            "end": 186,
+            "expression": "s.translate",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 187,
+            "end": 187,
+            "expression": "binascii.a2b_base64",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 190,
+            "end": 192,
+            "expression": "warnings.warn",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 190,
+            "end": 190,
+            "expression": "chr",
+            "target": "chr",
+            "resolution": "unresolved"
+          }
+        ],
+        "conflicts": []
+      },
+      {
+        "name": "b32encode",
+        "line": 231,
+        "end": 232,
+        "sources": [
+          "public_definition",
+          "literal_export"
+        ],
+        "evidence": [],
+        "calls": [
+          {
+            "line": 232,
+            "end": 232,
+            "expression": "binascii.b2a_base32",
+            "target": null,
+            "resolution": "unresolved"
+          }
+        ],
+        "conflicts": []
+      },
+      {
+        "name": "b32decode",
+        "line": 235,
+        "end": 247,
+        "sources": [
+          "public_definition",
+          "literal_export"
+        ],
+        "evidence": [],
+        "calls": [
+          {
+            "line": 237,
+            "end": 237,
+            "expression": "_bytes_from_decode_data",
+            "target": "_bytes_from_decode_data",
+            "resolution": "local"
+          },
+          {
+            "line": 246,
+            "end": 247,
+            "expression": "binascii.a2b_base32",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 242,
+            "end": 242,
+            "expression": "_bytes_from_decode_data",
+            "target": "_bytes_from_decode_data",
+            "resolution": "local"
+          },
+          {
+            "line": 243,
+            "end": 243,
+            "expression": "s.translate",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 245,
+            "end": 245,
+            "expression": "s.upper",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 243,
+            "end": 243,
+            "expression": "bytes.maketrans",
+            "target": null,
+            "resolution": "unresolved"
+          }
+        ],
+        "conflicts": []
+      },
+      {
+        "name": "b32hexencode",
+        "line": 251,
+        "end": 253,
+        "sources": [
+          "public_definition",
+          "literal_export"
+        ],
+        "evidence": [],
+        "calls": [
+          {
+            "line": 252,
+            "end": 253,
+            "expression": "binascii.b2a_base32",
+            "target": null,
+            "resolution": "unresolved"
+          }
+        ],
+        "conflicts": []
+      },
+      {
+        "name": "b32hexdecode",
+        "line": 256,
+        "end": 264,
+        "sources": [
+          "public_definition",
+          "literal_export"
+        ],
+        "evidence": [],
+        "calls": [
+          {
+            "line": 258,
+            "end": 258,
+            "expression": "_bytes_from_decode_data",
+            "target": "_bytes_from_decode_data",
+            "resolution": "local"
+          },
+          {
+            "line": 262,
+            "end": 264,
+            "expression": "binascii.a2b_base32",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 261,
+            "end": 261,
+            "expression": "s.upper",
+            "target": null,
+            "resolution": "unresolved"
+          }
+        ],
+        "conflicts": []
+      },
+      {
+        "name": "b16encode",
+        "line": 272,
+        "end": 284,
+        "sources": [
+          "public_definition",
+          "literal_export"
+        ],
+        "evidence": [],
+        "calls": [
+          {
+            "line": 284,
+            "end": 284,
+            "expression": "binascii.hexlify(s, bytes_per_sep=-(wrapcol // 2), sep=b'\\n').upper",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 279,
+            "end": 279,
+            "expression": "binascii.hexlify(s).upper",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 281,
+            "end": 281,
+            "expression": "ValueError",
+            "target": "ValueError",
+            "resolution": "builtin"
+          },
+          {
+            "line": 284,
+            "end": 284,
+            "expression": "binascii.hexlify",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 279,
+            "end": 279,
+            "expression": "binascii.hexlify",
+            "target": null,
+            "resolution": "unresolved"
+          }
+        ],
+        "conflicts": []
+      },
+      {
+        "name": "b16decode",
+        "line": 287,
+        "end": 308,
+        "sources": [
+          "public_definition",
+          "literal_export"
+        ],
+        "evidence": [],
+        "calls": [
+          {
+            "line": 308,
+            "end": 308,
+            "expression": "binascii.unhexlify",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 301,
+            "end": 301,
+            "expression": "_bytes_from_decode_data",
+            "target": "_bytes_from_decode_data",
+            "resolution": "local"
+          },
+          {
+            "line": 307,
+            "end": 307,
+            "expression": "s.translate",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 302,
+            "end": 302,
+            "expression": "isinstance",
+            "target": "isinstance",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 303,
+            "end": 303,
+            "expression": "bytes",
+            "target": "bytes",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 303,
+            "end": 303,
+            "expression": "memoryview",
+            "target": "memoryview",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 306,
+            "end": 306,
+            "expression": "binascii.Error",
+            "target": null,
+            "resolution": "unresolved"
+          }
+        ],
+        "conflicts": []
+      },
+      {
+        "name": "a85encode",
+        "line": 313,
+        "end": 334,
+        "sources": [
+          "public_definition",
+          "literal_export"
+        ],
+        "evidence": [],
+        "calls": [
+          {
+            "line": 333,
+            "end": 334,
+            "expression": "binascii.b2a_ascii85",
+            "target": null,
+            "resolution": "unresolved"
+          }
+        ],
+        "conflicts": []
+      },
+      {
+        "name": "a85decode",
+        "line": 336,
+        "end": 359,
+        "sources": [
+          "public_definition",
+          "literal_export"
+        ],
+        "evidence": [],
+        "calls": [
+          {
+            "line": 357,
+            "end": 359,
+            "expression": "binascii.a2b_ascii85",
+            "target": null,
+            "resolution": "unresolved"
+          }
+        ],
+        "conflicts": []
+      },
+      {
+        "name": "b85encode",
+        "line": 361,
+        "end": 372,
+        "sources": [
+          "public_definition",
+          "literal_export"
+        ],
+        "evidence": [],
+        "calls": [
+          {
+            "line": 372,
+            "end": 372,
+            "expression": "binascii.b2a_base85",
+            "target": null,
+            "resolution": "unresolved"
+          }
+        ],
+        "conflicts": []
+      },
+      {
+        "name": "b85decode",
+        "line": 374,
+        "end": 382,
+        "sources": [
+          "public_definition",
+          "literal_export"
+        ],
+        "evidence": [],
+        "calls": [
+          {
+            "line": 381,
+            "end": 382,
+            "expression": "binascii.a2b_base85",
+            "target": null,
+            "resolution": "unresolved"
+          }
+        ],
+        "conflicts": []
+      },
+      {
+        "name": "z85encode",
+        "line": 384,
+        "end": 396,
+        "sources": [
+          "public_definition",
+          "literal_export"
+        ],
+        "evidence": [],
+        "calls": [
+          {
+            "line": 395,
+            "end": 396,
+            "expression": "binascii.b2a_base85",
+            "target": null,
+            "resolution": "unresolved"
+          }
+        ],
+        "conflicts": []
+      },
+      {
+        "name": "z85decode",
+        "line": 398,
+        "end": 406,
+        "sources": [
+          "public_definition",
+          "literal_export"
+        ],
+        "evidence": [],
+        "calls": [
+          {
+            "line": 405,
+            "end": 406,
+            "expression": "binascii.a2b_base85",
+            "target": null,
+            "resolution": "unresolved"
+          }
+        ],
+        "conflicts": []
+      },
+      {
+        "name": "encode",
+        "line": 415,
+        "end": 421,
+        "sources": [
+          "public_definition",
+          "literal_export"
+        ],
+        "evidence": [],
+        "calls": [
+          {
+            "line": 417,
+            "end": 417,
+            "expression": "input.read",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 420,
+            "end": 420,
+            "expression": "binascii.b2a_base64",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 421,
+            "end": 421,
+            "expression": "output.write",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 418,
+            "end": 418,
+            "expression": "len",
+            "target": "len",
+            "resolution": "builtin"
+          },
+          {
+            "line": 418,
+            "end": 418,
+            "expression": "input.read",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 418,
+            "end": 418,
+            "expression": "len",
+            "target": "len",
+            "resolution": "builtin"
+          }
+        ],
+        "conflicts": []
+      },
+      {
+        "name": "decode",
+        "line": 424,
+        "end": 428,
+        "sources": [
+          "public_definition",
+          "literal_export"
+        ],
+        "evidence": [],
+        "calls": [
+          {
+            "line": 426,
+            "end": 426,
+            "expression": "input.readline",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 427,
+            "end": 427,
+            "expression": "binascii.a2b_base64",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 428,
+            "end": 428,
+            "expression": "output.write",
+            "target": null,
+            "resolution": "unresolved"
+          }
+        ],
+        "conflicts": []
+      },
+      {
+        "name": "encodebytes",
+        "line": 446,
+        "end": 453,
+        "sources": [
+          "public_definition",
+          "literal_export"
+        ],
+        "evidence": [],
+        "calls": [
+          {
+            "line": 449,
+            "end": 449,
+            "expression": "_input_type_check",
+            "target": "_input_type_check",
+            "resolution": "local"
+          },
+          {
+            "line": 450,
+            "end": 450,
+            "expression": "binascii.b2a_base64",
+            "target": null,
+            "resolution": "unresolved"
+          }
+        ],
+        "conflicts": []
+      },
+      {
+        "name": "decodebytes",
+        "line": 456,
+        "end": 459,
+        "sources": [
+          "public_definition",
+          "literal_export"
+        ],
+        "evidence": [],
+        "calls": [
+          {
+            "line": 458,
+            "end": 458,
+            "expression": "_input_type_check",
+            "target": "_input_type_check",
+            "resolution": "local"
+          },
+          {
+            "line": 459,
+            "end": 459,
+            "expression": "binascii.a2b_base64",
+            "target": null,
+            "resolution": "unresolved"
+          }
+        ],
+        "conflicts": []
+      },
+      {
+        "name": "main",
+        "line": 463,
+        "end": 494,
+        "sources": [
+          "public_definition"
+        ],
+        "evidence": [],
+        "calls": [
+          {
+            "line": 471,
+            "end": 471,
+            "expression": "getopt.getopt",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 487,
+            "end": 487,
+            "expression": "sys.stdin.isatty",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 494,
+            "end": 494,
+            "expression": "func",
+            "target": "func",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 474,
+            "end": 474,
+            "expression": "print",
+            "target": "print",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 475,
+            "end": 475,
+            "expression": "print",
+            "target": "print",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 476,
+            "end": 476,
+            "expression": "sys.exit",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 482,
+            "end": 482,
+            "expression": "print",
+            "target": "print",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 484,
+            "end": 484,
+            "expression": "open",
+            "target": "open",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 485,
+            "end": 485,
+            "expression": "func",
+            "target": "func",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 490,
+            "end": 490,
+            "expression": "sys.stdin.buffer.read",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 491,
+            "end": 491,
+            "expression": "io.BytesIO",
+            "target": null,
+            "resolution": "unresolved"
+          }
+        ],
+        "conflicts": []
+      }
+    ],
+    "internal_functions": [
+      "_bytes_from_decode_data",
+      "_input_type_check"
+    ],
+    "unknown": [
+      {
+        "line": 78,
+        "end": 78,
+        "entry": "encodebytes",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 79,
+        "end": 79,
+        "entry": "decodebytes",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 89,
+        "end": 89,
+        "entry": "encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 103,
+        "end": 103,
+        "entry": "decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 116,
+        "end": 116,
+        "entry": "encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 119,
+        "end": 119,
+        "entry": "decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 453,
+        "end": 453,
+        "entry": "b64decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 455,
+        "end": 455,
+        "entry": "b64decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 457,
+        "end": 457,
+        "entry": "b64decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 463,
+        "end": 463,
+        "entry": "b64decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 465,
+        "end": 465,
+        "entry": "b64decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 467,
+        "end": 467,
+        "entry": "b64decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 469,
+        "end": 469,
+        "entry": "b64decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 471,
+        "end": 471,
+        "entry": "b64decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 473,
+        "end": 473,
+        "entry": "b64decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 507,
+        "end": 507,
+        "entry": "b64encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 508,
+        "end": 509,
+        "entry": "b64decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 515,
+        "end": 515,
+        "entry": "standard_b64encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 516,
+        "end": 516,
+        "entry": "standard_b64decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 522,
+        "end": 522,
+        "entry": "urlsafe_b64encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 523,
+        "end": 523,
+        "entry": "urlsafe_b64decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 705,
+        "end": 705,
+        "entry": "b32encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 706,
+        "end": 706,
+        "entry": "b32decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 841,
+        "end": 841,
+        "entry": "b32hexencode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 842,
+        "end": 842,
+        "entry": "b32hexdecode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 903,
+        "end": 903,
+        "entry": "b16encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 904,
+        "end": 904,
+        "entry": "b16decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1244,
+        "end": 1244,
+        "entry": "a85decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1327,
+        "end": 1330,
+        "entry": "a85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1342,
+        "end": 1342,
+        "entry": "a85decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1353,
+        "end": 1353,
+        "entry": "b85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1356,
+        "end": 1356,
+        "entry": "b85decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 35,
+        "end": 35,
+        "entry": "encodebytes",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 36,
+        "end": 36,
+        "entry": "encodebytes",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 37,
+        "end": 37,
+        "entry": "encodebytes",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 38,
+        "end": 38,
+        "entry": "encodebytes",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 39,
+        "end": 39,
+        "entry": "encodebytes",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 40,
+        "end": 42,
+        "entry": "encodebytes",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 46,
+        "end": 46,
+        "entry": "encodebytes",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 49,
+        "end": 49,
+        "entry": "encodebytes",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 50,
+        "end": 50,
+        "entry": "encodebytes",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 51,
+        "end": 51,
+        "entry": "encodebytes",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 56,
+        "end": 56,
+        "entry": "decodebytes",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 57,
+        "end": 57,
+        "entry": "decodebytes",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 58,
+        "end": 58,
+        "entry": "decodebytes",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 59,
+        "end": 59,
+        "entry": "decodebytes",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 60,
+        "end": 62,
+        "entry": "decodebytes",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 66,
+        "end": 66,
+        "entry": "decodebytes",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 67,
+        "end": 67,
+        "entry": "decodebytes",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 70,
+        "end": 70,
+        "entry": "decodebytes",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 71,
+        "end": 71,
+        "entry": "decodebytes",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 72,
+        "end": 72,
+        "entry": "decodebytes",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 164,
+        "end": 164,
+        "entry": "b64encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 165,
+        "end": 165,
+        "entry": "b64encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 166,
+        "end": 166,
+        "entry": "b64encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 167,
+        "end": 167,
+        "entry": "b64encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 168,
+        "end": 168,
+        "entry": "b64encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 169,
+        "end": 169,
+        "entry": "b64encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 170,
+        "end": 172,
+        "entry": "b64encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 178,
+        "end": 178,
+        "entry": "b64encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 179,
+        "end": 179,
+        "entry": "b64encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 181,
+        "end": 181,
+        "entry": "b64encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 183,
+        "end": 183,
+        "entry": "b64encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 190,
+        "end": 190,
+        "entry": "standard_b64encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 191,
+        "end": 191,
+        "entry": "standard_b64encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 192,
+        "end": 192,
+        "entry": "standard_b64encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 193,
+        "end": 193,
+        "entry": "standard_b64encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 194,
+        "end": 194,
+        "entry": "standard_b64encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 195,
+        "end": 197,
+        "entry": "standard_b64encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 206,
+        "end": 206,
+        "entry": "urlsafe_b64encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 257,
+        "end": 257,
+        "entry": "b64encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 258,
+        "end": 258,
+        "entry": "b64encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 259,
+        "end": 259,
+        "entry": "b64encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 320,
+        "end": 320,
+        "entry": "b64decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 321,
+        "end": 321,
+        "entry": "b64decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 322,
+        "end": 322,
+        "entry": "b64decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 323,
+        "end": 323,
+        "entry": "b64decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 324,
+        "end": 324,
+        "entry": "b64decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 325,
+        "end": 325,
+        "entry": "b64decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 423,
+        "end": 423,
+        "entry": "b64decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 434,
+        "end": 434,
+        "entry": "b64decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 439,
+        "end": 439,
+        "entry": "b64decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 444,
+        "end": 444,
+        "entry": "b64decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 449,
+        "end": 449,
+        "entry": "b64decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 460,
+        "end": 460,
+        "entry": "b64decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 462,
+        "end": 462,
+        "entry": "b64decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 487,
+        "end": 487,
+        "entry": "b64decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 528,
+        "end": 528,
+        "entry": "b32encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 529,
+        "end": 529,
+        "entry": "b32encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 530,
+        "end": 530,
+        "entry": "b32encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 531,
+        "end": 531,
+        "entry": "b32encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 532,
+        "end": 532,
+        "entry": "b32encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 533,
+        "end": 533,
+        "entry": "b32encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 534,
+        "end": 534,
+        "entry": "b32encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 552,
+        "end": 552,
+        "entry": "b32encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 553,
+        "end": 553,
+        "entry": "b32encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 554,
+        "end": 554,
+        "entry": "b32encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 602,
+        "end": 602,
+        "entry": "b32decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 603,
+        "end": 603,
+        "entry": "b32decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 604,
+        "end": 604,
+        "entry": "b32decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 605,
+        "end": 605,
+        "entry": "b32decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 613,
+        "end": 613,
+        "entry": "b32decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 658,
+        "end": 658,
+        "entry": "b32decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 659,
+        "end": 659,
+        "entry": "b32decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 660,
+        "end": 660,
+        "entry": "b32decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 661,
+        "end": 661,
+        "entry": "b32decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 662,
+        "end": 662,
+        "entry": "b32decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 663,
+        "end": 663,
+        "entry": "b32decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 664,
+        "end": 664,
+        "entry": "b32decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 665,
+        "end": 665,
+        "entry": "b32decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 666,
+        "end": 666,
+        "entry": "b32decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 667,
+        "end": 667,
+        "entry": "b32decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 668,
+        "end": 668,
+        "entry": "b32decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 670,
+        "end": 670,
+        "entry": "b32decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 672,
+        "end": 672,
+        "entry": "b32decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 674,
+        "end": 674,
+        "entry": "b32decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 675,
+        "end": 675,
+        "entry": "b32decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 677,
+        "end": 677,
+        "entry": "b32decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 734,
+        "end": 734,
+        "entry": "b32hexencode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 735,
+        "end": 735,
+        "entry": "b32hexencode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 736,
+        "end": 736,
+        "entry": "b32hexencode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 800,
+        "end": 800,
+        "entry": "b32hexdecode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 801,
+        "end": 801,
+        "entry": "b32hexdecode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 802,
+        "end": 802,
+        "entry": "b32hexdecode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 803,
+        "end": 803,
+        "entry": "b32hexdecode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 804,
+        "end": 804,
+        "entry": "b32hexdecode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 805,
+        "end": 805,
+        "entry": "b32hexdecode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 806,
+        "end": 806,
+        "entry": "b32hexdecode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 807,
+        "end": 807,
+        "entry": "b32hexdecode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 808,
+        "end": 808,
+        "entry": "b32hexdecode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 809,
+        "end": 809,
+        "entry": "b32hexdecode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 810,
+        "end": 810,
+        "entry": "b32hexdecode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 811,
+        "end": 811,
+        "entry": "b32hexdecode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 813,
+        "end": 813,
+        "entry": "b32hexdecode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 815,
+        "end": 816,
+        "entry": "b32hexdecode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 847,
+        "end": 847,
+        "entry": "b16encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 848,
+        "end": 848,
+        "entry": "b16encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 858,
+        "end": 858,
+        "entry": "b16encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 859,
+        "end": 859,
+        "entry": "b16encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 860,
+        "end": 860,
+        "entry": "b16encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 864,
+        "end": 864,
+        "entry": "b16decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 865,
+        "end": 865,
+        "entry": "b16decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 866,
+        "end": 866,
+        "entry": "b16decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 867,
+        "end": 867,
+        "entry": "b16decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 872,
+        "end": 872,
+        "entry": "b16decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 873,
+        "end": 873,
+        "entry": "b16decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 878,
+        "end": 878,
+        "entry": "b16decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 880,
+        "end": 880,
+        "entry": "b16decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 882,
+        "end": 882,
+        "entry": "b16decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 892,
+        "end": 892,
+        "entry": "b16decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 893,
+        "end": 893,
+        "entry": "b16decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 894,
+        "end": 894,
+        "entry": "b16decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 895,
+        "end": 895,
+        "entry": "b16decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 945,
+        "end": 945,
+        "entry": "a85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 946,
+        "end": 946,
+        "entry": "a85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 947,
+        "end": 947,
+        "entry": "a85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 948,
+        "end": 948,
+        "entry": "a85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 954,
+        "end": 954,
+        "entry": "a85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 955,
+        "end": 955,
+        "entry": "a85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 957,
+        "end": 957,
+        "entry": "a85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 958,
+        "end": 958,
+        "entry": "a85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 960,
+        "end": 960,
+        "entry": "a85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 962,
+        "end": 962,
+        "entry": "a85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 964,
+        "end": 964,
+        "entry": "a85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 967,
+        "end": 967,
+        "entry": "a85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 968,
+        "end": 968,
+        "entry": "a85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 969,
+        "end": 969,
+        "entry": "a85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 970,
+        "end": 970,
+        "entry": "a85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1010,
+        "end": 1010,
+        "entry": "b85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1011,
+        "end": 1011,
+        "entry": "b85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1012,
+        "end": 1012,
+        "entry": "b85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1053,
+        "end": 1053,
+        "entry": "z85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1054,
+        "end": 1054,
+        "entry": "z85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1055,
+        "end": 1055,
+        "entry": "z85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1094,
+        "end": 1094,
+        "entry": "a85decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1095,
+        "end": 1095,
+        "entry": "a85decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1096,
+        "end": 1096,
+        "entry": "a85decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1097,
+        "end": 1097,
+        "entry": "a85decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1098,
+        "end": 1098,
+        "entry": "a85decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1176,
+        "end": 1176,
+        "entry": "a85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1177,
+        "end": 1177,
+        "entry": "a85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1178,
+        "end": 1178,
+        "entry": "a85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1179,
+        "end": 1179,
+        "entry": "a85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1180,
+        "end": 1180,
+        "entry": "a85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1182,
+        "end": 1182,
+        "entry": "a85decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1183,
+        "end": 1183,
+        "entry": "a85decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1184,
+        "end": 1184,
+        "entry": "a85decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1185,
+        "end": 1185,
+        "entry": "a85decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1186,
+        "end": 1186,
+        "entry": "a85decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1188,
+        "end": 1188,
+        "entry": "a85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1189,
+        "end": 1189,
+        "entry": "a85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1190,
+        "end": 1190,
+        "entry": "a85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1191,
+        "end": 1191,
+        "entry": "a85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1192,
+        "end": 1192,
+        "entry": "a85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1197,
+        "end": 1197,
+        "entry": "b85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1198,
+        "end": 1198,
+        "entry": "b85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1199,
+        "end": 1199,
+        "entry": "b85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1200,
+        "end": 1200,
+        "entry": "b85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1201,
+        "end": 1201,
+        "entry": "b85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1203,
+        "end": 1203,
+        "entry": "b85decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1204,
+        "end": 1204,
+        "entry": "b85decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1205,
+        "end": 1205,
+        "entry": "b85decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1206,
+        "end": 1206,
+        "entry": "b85decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1207,
+        "end": 1207,
+        "entry": "b85decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1212,
+        "end": 1212,
+        "entry": "z85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1213,
+        "end": 1213,
+        "entry": "z85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1214,
+        "end": 1214,
+        "entry": "z85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1215,
+        "end": 1215,
+        "entry": "z85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1216,
+        "end": 1216,
+        "entry": "z85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1218,
+        "end": 1218,
+        "entry": "z85decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1219,
+        "end": 1219,
+        "entry": "z85decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1220,
+        "end": 1220,
+        "entry": "z85decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1221,
+        "end": 1221,
+        "entry": "z85decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1222,
+        "end": 1222,
+        "entry": "z85decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1261,
+        "end": 1261,
+        "entry": "a85decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 279,
+        "end": 279,
+        "entry": "b64decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 280,
+        "end": 280,
+        "entry": "b64decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 287,
+        "end": 287,
+        "entry": "standard_b64decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 288,
+        "end": 288,
+        "entry": "standard_b64decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 298,
+        "end": 298,
+        "entry": "urlsafe_b64decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 299,
+        "end": 299,
+        "entry": "urlsafe_b64decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 314,
+        "end": 314,
+        "entry": "b64decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 315,
+        "end": 315,
+        "entry": "b64decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 316,
+        "end": 316,
+        "entry": "b64decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 317,
+        "end": 317,
+        "entry": "b64decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 318,
+        "end": 318,
+        "entry": "b64decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 417,
+        "end": 417,
+        "entry": "b64decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 419,
+        "end": 419,
+        "entry": "b64decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 422,
+        "end": 422,
+        "entry": "b64decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 477,
+        "end": 477,
+        "entry": "urlsafe_b64decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 482,
+        "end": 482,
+        "entry": "urlsafe_b64decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 567,
+        "end": 567,
+        "entry": "b32decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 568,
+        "end": 568,
+        "entry": "b32decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 590,
+        "end": 590,
+        "entry": "b32decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 591,
+        "end": 591,
+        "entry": "b32decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 592,
+        "end": 592,
+        "entry": "b32decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 621,
+        "end": 621,
+        "entry": "b32decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 622,
+        "end": 622,
+        "entry": "b32decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 623,
+        "end": 623,
+        "entry": "b32decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 624,
+        "end": 624,
+        "entry": "b32decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 626,
+        "end": 626,
+        "entry": "b32decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 627,
+        "end": 627,
+        "entry": "b32decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 628,
+        "end": 628,
+        "entry": "b32decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 936,
+        "end": 936,
+        "entry": "a85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 937,
+        "end": 937,
+        "entry": "a85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 938,
+        "end": 938,
+        "entry": "a85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1001,
+        "end": 1001,
+        "entry": "b85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1044,
+        "end": 1044,
+        "entry": "z85encode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1086,
+        "end": 1086,
+        "entry": "a85decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1087,
+        "end": 1087,
+        "entry": "a85decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1088,
+        "end": 1088,
+        "entry": "a85decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1089,
+        "end": 1089,
+        "entry": "a85decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1090,
+        "end": 1090,
+        "entry": "a85decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1091,
+        "end": 1091,
+        "entry": "a85decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1132,
+        "end": 1132,
+        "entry": "b85decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1133,
+        "end": 1133,
+        "entry": "b85decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1167,
+        "end": 1167,
+        "entry": "z85decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1168,
+        "end": 1168,
+        "entry": "z85decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1228,
+        "end": 1228,
+        "entry": "a85decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1230,
+        "end": 1230,
+        "entry": "a85decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1232,
+        "end": 1232,
+        "entry": "a85decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1272,
+        "end": 1272,
+        "entry": "b85decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1273,
+        "end": 1273,
+        "entry": "b85decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1291,
+        "end": 1291,
+        "entry": "z85decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 1292,
+        "end": 1292,
+        "entry": "z85decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 692,
+        "end": 692,
+        "entry": "b32decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 694,
+        "end": 694,
+        "entry": "b32decode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 722,
+        "end": 722,
+        "entry": "b32hexencode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 723,
+        "end": 723,
+        "entry": "b32hexencode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 763,
+        "end": 763,
+        "entry": "b32hexdecode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 765,
+        "end": 766,
+        "entry": "b32hexdecode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 831,
+        "end": 831,
+        "entry": "b32hexdecode",
+        "reason": "call lacks extractable exact test obligation"
+      },
+      {
+        "line": 833,
+        "end": 833,
+        "entry": "b32hexdecode",
+        "reason": "call lacks extractable exact test obligation"
+      }
+    ],
+    "duplicate_definitions": false,
+    "unmodeled_initialization": [
+      {
+        "line": 10,
+        "end": 25,
+        "kind": "Assign"
+      },
+      {
+        "line": 28,
+        "end": 28,
+        "kind": "Assign"
+      },
+      {
+        "line": 30,
+        "end": 30,
+        "kind": "Assign"
+      },
+      {
+        "line": 153,
+        "end": 153,
+        "kind": "Assign"
+      },
+      {
+        "line": 198,
+        "end": 205,
+        "kind": "Assign"
+      },
+      {
+        "line": 206,
+        "end": 220,
+        "kind": "Assign"
+      },
+      {
+        "line": 221,
+        "end": 229,
+        "kind": "Assign"
+      },
+      {
+        "line": 233,
+        "end": 233,
+        "kind": "Assign"
+      },
+      {
+        "line": 248,
+        "end": 249,
+        "kind": "Assign"
+      },
+      {
+        "line": 254,
+        "end": 254,
+        "kind": "Assign"
+      },
+      {
+        "line": 265,
+        "end": 266,
+        "kind": "Assign"
+      },
+      {
+        "line": 412,
+        "end": 412,
+        "kind": "Assign"
+      },
+      {
+        "line": 413,
+        "end": 413,
+        "kind": "Assign"
+      },
+      {
+        "line": 497,
+        "end": 498,
+        "kind": "If"
+      }
+    ]
+  },
+  "entries": [
+    {
+      "entry": "a85decode",
+      "status": "unsupported",
+      "observations": [],
+      "pending": [],
+      "infeasible": [],
+      "dropped_tasks": 0,
+      "conflicts": [],
+      "reason": "unsupported function definition/signature"
+    },
+    {
+      "entry": "a85encode",
+      "status": "unsupported",
+      "observations": [],
+      "pending": [],
+      "infeasible": [],
+      "dropped_tasks": 0,
+      "conflicts": [],
+      "reason": "unsupported function definition/signature"
+    },
+    {
+      "entry": "b16decode",
+      "status": "unsupported",
+      "observations": [],
+      "pending": [],
+      "infeasible": [],
+      "dropped_tasks": 0,
+      "conflicts": [],
+      "reason": "unsupported function definition/signature"
+    },
+    {
+      "entry": "b16encode",
+      "status": "unsupported",
+      "observations": [],
+      "pending": [],
+      "infeasible": [],
+      "dropped_tasks": 0,
+      "conflicts": [],
+      "reason": "unsupported function definition/signature"
+    },
+    {
+      "entry": "b32decode",
+      "status": "unsupported",
+      "observations": [],
+      "pending": [],
+      "infeasible": [],
+      "dropped_tasks": 0,
+      "conflicts": [],
+      "reason": "unsupported function definition/signature"
+    },
+    {
+      "entry": "b32encode",
+      "status": "unsupported",
+      "observations": [],
+      "pending": [],
+      "infeasible": [],
+      "dropped_tasks": 0,
+      "conflicts": [],
+      "reason": "unsupported function definition/signature"
+    },
+    {
+      "entry": "b32hexdecode",
+      "status": "unsupported",
+      "observations": [],
+      "pending": [],
+      "infeasible": [],
+      "dropped_tasks": 0,
+      "conflicts": [],
+      "reason": "unsupported function definition/signature"
+    },
+    {
+      "entry": "b32hexencode",
+      "status": "unsupported",
+      "observations": [],
+      "pending": [],
+      "infeasible": [],
+      "dropped_tasks": 0,
+      "conflicts": [],
+      "reason": "unsupported function definition/signature"
+    },
+    {
+      "entry": "b64decode",
+      "status": "unsupported",
+      "observations": [],
+      "pending": [],
+      "infeasible": [],
+      "dropped_tasks": 0,
+      "conflicts": [],
+      "reason": "unsupported function definition/signature"
+    },
+    {
+      "entry": "b64encode",
+      "status": "unsupported",
+      "observations": [],
+      "pending": [],
+      "infeasible": [],
+      "dropped_tasks": 0,
+      "conflicts": [],
+      "reason": "unsupported function definition/signature"
+    },
+    {
+      "entry": "b85decode",
+      "status": "unsupported",
+      "observations": [],
+      "pending": [],
+      "infeasible": [],
+      "dropped_tasks": 0,
+      "conflicts": [],
+      "reason": "unsupported function definition/signature"
+    },
+    {
+      "entry": "b85encode",
+      "status": "unsupported",
+      "observations": [],
+      "pending": [],
+      "infeasible": [],
+      "dropped_tasks": 0,
+      "conflicts": [],
+      "reason": "unsupported function definition/signature"
+    },
+    {
+      "entry": "decode",
+      "status": "unsupported",
+      "observations": [],
+      "pending": [],
+      "infeasible": [],
+      "dropped_tasks": 0,
+      "conflicts": [],
+      "reason": "requires one integer parameter"
+    },
+    {
+      "entry": "decodebytes",
+      "status": "partial_unsupported",
+      "observations": [
+        {
+          "input": 0,
+          "outcome": "unsupported",
+          "value": {
+            "type": "NoneType",
+            "value": null
+          },
+          "trace": [],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "decodebytes",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 0,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": "unsupported statement: Expr",
+          "task": {
+            "input": 0,
+            "queue": "explore",
+            "reason": "window seed; validity unknown"
+          }
+        },
+        {
+          "input": 1,
+          "outcome": "unsupported",
+          "value": {
+            "type": "NoneType",
+            "value": null
+          },
+          "trace": [],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "decodebytes",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 1,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": "unsupported statement: Expr",
+          "task": {
+            "input": 1,
+            "queue": "explore",
+            "reason": "window seed; validity unknown"
+          }
+        },
+        {
+          "input": 100,
+          "outcome": "unsupported",
+          "value": {
+            "type": "NoneType",
+            "value": null
+          },
+          "trace": [],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "decodebytes",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 100,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": "unsupported statement: Expr",
+          "task": {
+            "input": 100,
+            "queue": "explore",
+            "reason": "window seed; validity unknown"
+          }
+        }
+      ],
+      "pending": [],
+      "infeasible": [],
+      "dropped_tasks": 0,
+      "conflicts": [],
+      "checks": []
+    },
+    {
+      "entry": "encode",
+      "status": "unsupported",
+      "observations": [],
+      "pending": [],
+      "infeasible": [],
+      "dropped_tasks": 0,
+      "conflicts": [],
+      "reason": "requires one integer parameter"
+    },
+    {
+      "entry": "encodebytes",
+      "status": "partial_unsupported",
+      "observations": [
+        {
+          "input": 0,
+          "outcome": "unsupported",
+          "value": {
+            "type": "NoneType",
+            "value": null
+          },
+          "trace": [],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "encodebytes",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 0,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": "unsupported statement: Expr",
+          "task": {
+            "input": 0,
+            "queue": "explore",
+            "reason": "window seed; validity unknown"
+          }
+        },
+        {
+          "input": 1,
+          "outcome": "unsupported",
+          "value": {
+            "type": "NoneType",
+            "value": null
+          },
+          "trace": [],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "encodebytes",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 1,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": "unsupported statement: Expr",
+          "task": {
+            "input": 1,
+            "queue": "explore",
+            "reason": "window seed; validity unknown"
+          }
+        },
+        {
+          "input": 100,
+          "outcome": "unsupported",
+          "value": {
+            "type": "NoneType",
+            "value": null
+          },
+          "trace": [],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "encodebytes",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 100,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": "unsupported statement: Expr",
+          "task": {
+            "input": 100,
+            "queue": "explore",
+            "reason": "window seed; validity unknown"
+          }
+        }
+      ],
+      "pending": [],
+      "infeasible": [],
+      "dropped_tasks": 0,
+      "conflicts": [],
+      "checks": []
+    },
+    {
+      "entry": "standard_b64decode",
+      "status": "unsupported",
+      "observations": [],
+      "pending": [],
+      "infeasible": [],
+      "dropped_tasks": 0,
+      "conflicts": [],
+      "reason": "unsupported function definition/signature"
+    },
+    {
+      "entry": "standard_b64encode",
+      "status": "unsupported",
+      "observations": [],
+      "pending": [],
+      "infeasible": [],
+      "dropped_tasks": 0,
+      "conflicts": [],
+      "reason": "unsupported function definition/signature"
+    },
+    {
+      "entry": "urlsafe_b64decode",
+      "status": "unsupported",
+      "observations": [],
+      "pending": [],
+      "infeasible": [],
+      "dropped_tasks": 0,
+      "conflicts": [],
+      "reason": "unsupported function definition/signature"
+    },
+    {
+      "entry": "urlsafe_b64encode",
+      "status": "unsupported",
+      "observations": [],
+      "pending": [],
+      "infeasible": [],
+      "dropped_tasks": 0,
+      "conflicts": [],
+      "reason": "unsupported function definition/signature"
+    },
+    {
+      "entry": "z85decode",
+      "status": "unsupported",
+      "observations": [],
+      "pending": [],
+      "infeasible": [],
+      "dropped_tasks": 0,
+      "conflicts": [],
+      "reason": "unsupported function definition/signature"
+    },
+    {
+      "entry": "z85encode",
+      "status": "unsupported",
+      "observations": [],
+      "pending": [],
+      "infeasible": [],
+      "dropped_tasks": 0,
+      "conflicts": [],
+      "reason": "unsupported function definition/signature"
+    },
+    {
+      "entry": "main",
+      "status": "unsupported",
+      "observations": [],
+      "pending": [],
+      "infeasible": [],
+      "dropped_tasks": 0,
+      "conflicts": [],
+      "reason": "requires one integer parameter"
+    }
+  ],
+  "dispatch": [
+    {
+      "entry": "decodebytes",
+      "input": 0,
+      "queue": "explore",
+      "reason": "window seed; validity unknown"
+    },
+    {
+      "entry": "encodebytes",
+      "input": 0,
+      "queue": "explore",
+      "reason": "window seed; validity unknown"
+    },
+    {
+      "entry": "decodebytes",
+      "input": 1,
+      "queue": "explore",
+      "reason": "window seed; validity unknown"
+    },
+    {
+      "entry": "encodebytes",
+      "input": 1,
+      "queue": "explore",
+      "reason": "window seed; validity unknown"
+    },
+    {
+      "entry": "decodebytes",
+      "input": 100,
+      "queue": "explore",
+      "reason": "window seed; validity unknown"
+    },
+    {
+      "entry": "encodebytes",
+      "input": 100,
+      "queue": "explore",
+      "reason": "window seed; validity unknown"
+    }
+  ],
+  "mode": "paths",
+  "window": [
+    0,
+    100
+  ],
+  "execution_enabled": false,
+  "scope": "isolated function slices; module initialization/import effects unmodeled; finite investigation window, not valid-input domain; never imports/executes subject",
+  "limits": {
+    "entries": 8,
+    "points_per_entry": 32,
+    "tasks_per_entry": 32
+  },
+  "unresolved": "unseen or unsupported paths remain unknown; test applicability requires review"
+}

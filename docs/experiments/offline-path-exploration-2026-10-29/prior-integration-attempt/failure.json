@@ -1,0 +1,7 @@
+{
+  "stage": "first real-module static evidence read",
+  "error": "ValueError: test AST budget exceeded",
+  "real_subject_executions": 0,
+  "model_calls": 0,
+  "change": "Retain test-evidence budget block and continue source inventory; limits, source selections and qualification criteria unchanged. Offline development rerun only."
+}

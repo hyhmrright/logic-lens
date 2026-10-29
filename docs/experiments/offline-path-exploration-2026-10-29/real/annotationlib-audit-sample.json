@@ -1,0 +1,199 @@
+[
+  {
+    "category": "public_inventory",
+    "record": {
+      "name": "call_evaluate_function",
+      "line": 725,
+      "end": 730,
+      "sources": [
+        "public_definition",
+        "literal_export"
+      ],
+      "evidence": [],
+      "calls": [
+        {
+          "line": 730,
+          "end": 730,
+          "expression": "call_annotate_function",
+          "target": "call_annotate_function",
+          "resolution": "local"
+        }
+      ],
+      "conflicts": []
+    }
+  },
+  {
+    "category": "public_inventory",
+    "record": {
+      "name": "annotations_to_string",
+      "line": 1150,
+      "end": 1158,
+      "sources": [
+        "public_definition",
+        "literal_export"
+      ],
+      "evidence": [],
+      "calls": [
+        {
+          "line": 1156,
+          "end": 1156,
+          "expression": "isinstance",
+          "target": "isinstance",
+          "resolution": "unresolved"
+        },
+        {
+          "line": 1156,
+          "end": 1156,
+          "expression": "type_repr",
+          "target": "type_repr",
+          "resolution": "local"
+        },
+        {
+          "line": 1157,
+          "end": 1157,
+          "expression": "annotations.items",
+          "target": null,
+          "resolution": "unresolved"
+        }
+      ],
+      "conflicts": []
+    }
+  },
+  {
+    "category": "partial_unsupported",
+    "record": {
+      "entry": "annotations_to_string",
+      "status": "partial_unsupported",
+      "observations": [
+        {
+          "input": 0,
+          "outcome": "unsupported",
+          "value": {
+            "type": "NoneType",
+            "value": null
+          },
+          "trace": [],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "annotations_to_string",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 0,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": "unsupported expression: DictComp",
+          "task": {
+            "input": 0,
+            "queue": "explore",
+            "reason": "window seed; validity unknown"
+          }
+        },
+        {
+          "input": 1,
+          "outcome": "unsupported",
+          "value": {
+            "type": "NoneType",
+            "value": null
+          },
+          "trace": [],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "annotations_to_string",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 1,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": "unsupported expression: DictComp",
+          "task": {
+            "input": 1,
+            "queue": "explore",
+            "reason": "window seed; validity unknown"
+          }
+        },
+        {
+          "input": 100,
+          "outcome": "unsupported",
+          "value": {
+            "type": "NoneType",
+            "value": null
+          },
+          "trace": [],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "annotations_to_string",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 100,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": "unsupported expression: DictComp",
+          "task": {
+            "input": 100,
+            "queue": "explore",
+            "reason": "window seed; validity unknown"
+          }
+        }
+      ],
+      "pending": [],
+      "infeasible": [],
+      "dropped_tasks": 0,
+      "conflicts": [],
+      "checks": []
+    }
+  },
+  {
+    "category": "unsupported",
+    "record": {
+      "entry": "call_annotate_function",
+      "status": "unsupported",
+      "observations": [],
+      "pending": [],
+      "infeasible": [],
+      "dropped_tasks": 0,
+      "conflicts": [],
+      "reason": "unsupported function definition/signature"
+    }
+  },
+  {
+    "category": "unresolved_call",
+    "record": {
+      "entry": "call_annotate_function",
+      "line": 756,
+      "end": 756,
+      "expression": "annotate",
+      "target": "annotate",
+      "resolution": "unresolved"
+    }
+  }
+]

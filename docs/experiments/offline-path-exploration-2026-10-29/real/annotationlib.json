@@ -1,0 +1,1217 @@
+{
+  "schema_version": 1,
+  "source_sha256": "6d56359e05c4995b23ee5a4c105702bad67925eae076f9950dd9522fe2fcfe76",
+  "tests_sha256": "141b6602adc6684350e0709dc58a1788b34d83c6dc05c6983ca3806d4bd942d0",
+  "inventory": {
+    "entries": [
+      {
+        "name": "call_evaluate_function",
+        "line": 725,
+        "end": 730,
+        "sources": [
+          "public_definition",
+          "literal_export"
+        ],
+        "evidence": [],
+        "calls": [
+          {
+            "line": 730,
+            "end": 730,
+            "expression": "call_annotate_function",
+            "target": "call_annotate_function",
+            "resolution": "local"
+          }
+        ],
+        "conflicts": []
+      },
+      {
+        "name": "call_annotate_function",
+        "line": 733,
+        "end": 886,
+        "sources": [
+          "public_definition",
+          "literal_export"
+        ],
+        "evidence": [],
+        "calls": [
+          {
+            "line": 754,
+            "end": 754,
+            "expression": "ValueError",
+            "target": "ValueError",
+            "resolution": "builtin"
+          },
+          {
+            "line": 756,
+            "end": 756,
+            "expression": "annotate",
+            "target": "annotate",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 779,
+            "end": 779,
+            "expression": "_StringifierDict",
+            "target": "_StringifierDict",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 780,
+            "end": 780,
+            "expression": "isinstance",
+            "target": "isinstance",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 781,
+            "end": 783,
+            "expression": "_build_closure",
+            "target": "_build_closure",
+            "resolution": "local"
+          },
+          {
+            "line": 784,
+            "end": 790,
+            "expression": "types.FunctionType",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 791,
+            "end": 791,
+            "expression": "func",
+            "target": "func",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 772,
+            "end": 772,
+            "expression": "annotate",
+            "target": "annotate",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 793,
+            "end": 793,
+            "expression": "_stringify_single",
+            "target": "_stringify_single",
+            "resolution": "local"
+          },
+          {
+            "line": 795,
+            "end": 795,
+            "expression": "_stringify_single",
+            "target": "_stringify_single",
+            "resolution": "local"
+          },
+          {
+            "line": 817,
+            "end": 817,
+            "expression": "isinstance",
+            "target": "isinstance",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 818,
+            "end": 824,
+            "expression": "_StringifierDict",
+            "target": "_StringifierDict",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 825,
+            "end": 827,
+            "expression": "_build_closure",
+            "target": "_build_closure",
+            "resolution": "local"
+          },
+          {
+            "line": 828,
+            "end": 834,
+            "expression": "types.FunctionType",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 848,
+            "end": 854,
+            "expression": "_StringifierDict",
+            "target": "_StringifierDict",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 855,
+            "end": 857,
+            "expression": "_build_closure",
+            "target": "_build_closure",
+            "resolution": "local"
+          },
+          {
+            "line": 858,
+            "end": 864,
+            "expression": "types.FunctionType",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 865,
+            "end": 865,
+            "expression": "func",
+            "target": "func",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 866,
+            "end": 866,
+            "expression": "globals.transmogrify",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 775,
+            "end": 775,
+            "expression": "annotations_to_string",
+            "target": "annotations_to_string",
+            "resolution": "local"
+          },
+          {
+            "line": 796,
+            "end": 796,
+            "expression": "annos.items",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 836,
+            "end": 836,
+            "expression": "func",
+            "target": "func",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 843,
+            "end": 843,
+            "expression": "globals.transmogrify",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 868,
+            "end": 868,
+            "expression": "isinstance",
+            "target": "isinstance",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 884,
+            "end": 884,
+            "expression": "RuntimeError",
+            "target": "RuntimeError",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 886,
+            "end": 886,
+            "expression": "ValueError",
+            "target": "ValueError",
+            "resolution": "builtin"
+          },
+          {
+            "line": 775,
+            "end": 775,
+            "expression": "annotate",
+            "target": "annotate",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 839,
+            "end": 839,
+            "expression": "annotate",
+            "target": "annotate",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 869,
+            "end": 869,
+            "expression": "result.evaluate",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 876,
+            "end": 876,
+            "expression": "isinstance",
+            "target": "isinstance",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 875,
+            "end": 875,
+            "expression": "val.evaluate",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 879,
+            "end": 879,
+            "expression": "result.items",
+            "target": null,
+            "resolution": "unresolved"
+          }
+        ],
+        "conflicts": []
+      },
+      {
+        "name": "get_annotate_from_class_namespace",
+        "line": 931,
+        "end": 940,
+        "sources": [
+          "public_definition",
+          "literal_export"
+        ],
+        "evidence": [],
+        "calls": [
+          {
+            "line": 940,
+            "end": 940,
+            "expression": "obj.get",
+            "target": null,
+            "resolution": "unresolved"
+          }
+        ],
+        "conflicts": []
+      },
+      {
+        "name": "get_annotations",
+        "line": 943,
+        "end": 1119,
+        "sources": [
+          "public_definition",
+          "literal_export"
+        ],
+        "evidence": [],
+        "calls": [
+          {
+            "line": 997,
+            "end": 997,
+            "expression": "ValueError",
+            "target": "ValueError",
+            "resolution": "builtin"
+          },
+          {
+            "line": 1041,
+            "end": 1041,
+            "expression": "TypeError",
+            "target": "TypeError",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 1047,
+            "end": 1047,
+            "expression": "dict",
+            "target": "dict",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 1050,
+            "end": 1050,
+            "expression": "isinstance",
+            "target": "isinstance",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 1109,
+            "end": 1109,
+            "expression": "getattr",
+            "target": "getattr",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 1002,
+            "end": 1002,
+            "expression": "_get_dunder_annotations",
+            "target": "_get_dunder_annotations",
+            "resolution": "local"
+          },
+          {
+            "line": 1018,
+            "end": 1018,
+            "expression": "_get_and_call_annotate",
+            "target": "_get_and_call_annotate",
+            "resolution": "local"
+          },
+          {
+            "line": 1026,
+            "end": 1026,
+            "expression": "_get_and_call_annotate",
+            "target": "_get_and_call_annotate",
+            "resolution": "local"
+          },
+          {
+            "line": 1030,
+            "end": 1030,
+            "expression": "_get_dunder_annotations",
+            "target": "_get_dunder_annotations",
+            "resolution": "local"
+          },
+          {
+            "line": 1034,
+            "end": 1034,
+            "expression": "ValueError",
+            "target": "ValueError",
+            "resolution": "builtin"
+          },
+          {
+            "line": 1036,
+            "end": 1036,
+            "expression": "ValueError",
+            "target": "ValueError",
+            "resolution": "builtin"
+          },
+          {
+            "line": 1039,
+            "end": 1039,
+            "expression": "isinstance",
+            "target": "isinstance",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 1039,
+            "end": 1039,
+            "expression": "callable",
+            "target": "callable",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 1053,
+            "end": 1053,
+            "expression": "getattr",
+            "target": "getattr",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 1058,
+            "end": 1058,
+            "expression": "dict",
+            "target": "dict",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 1060,
+            "end": 1060,
+            "expression": "isinstance",
+            "target": "isinstance",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 1098,
+            "end": 1098,
+            "expression": "hasattr",
+            "target": "hasattr",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 1116,
+            "end": 1116,
+            "expression": "eval",
+            "target": "eval",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 1117,
+            "end": 1117,
+            "expression": "ann.items",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 1006,
+            "end": 1006,
+            "expression": "_get_and_call_annotate",
+            "target": "_get_and_call_annotate",
+            "resolution": "local"
+          },
+          {
+            "line": 1010,
+            "end": 1010,
+            "expression": "_get_dunder_annotations",
+            "target": "_get_dunder_annotations",
+            "resolution": "local"
+          },
+          {
+            "line": 1023,
+            "end": 1023,
+            "expression": "_get_dunder_annotations",
+            "target": "_get_dunder_annotations",
+            "resolution": "local"
+          },
+          {
+            "line": 1028,
+            "end": 1028,
+            "expression": "dict",
+            "target": "dict",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 1032,
+            "end": 1032,
+            "expression": "annotations_to_string",
+            "target": "annotations_to_string",
+            "resolution": "local"
+          },
+          {
+            "line": 1055,
+            "end": 1055,
+            "expression": "sys.modules.get",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 1058,
+            "end": 1058,
+            "expression": "vars",
+            "target": "vars",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 1062,
+            "end": 1062,
+            "expression": "getattr",
+            "target": "getattr",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 1065,
+            "end": 1065,
+            "expression": "callable",
+            "target": "callable",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 1080,
+            "end": 1080,
+            "expression": "id",
+            "target": "id",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 1082,
+            "end": 1082,
+            "expression": "hasattr",
+            "target": "hasattr",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 1115,
+            "end": 1115,
+            "expression": "isinstance",
+            "target": "isinstance",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 1116,
+            "end": 1116,
+            "expression": "_rewrite_star_unpack",
+            "target": "_rewrite_star_unpack",
+            "resolution": "local"
+          },
+          {
+            "line": 1015,
+            "end": 1015,
+            "expression": "dict",
+            "target": "dict",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 1057,
+            "end": 1057,
+            "expression": "getattr",
+            "target": "getattr",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 1069,
+            "end": 1069,
+            "expression": "getattr",
+            "target": "getattr",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 1086,
+            "end": 1086,
+            "expression": "_seen_ids.add",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 1089,
+            "end": 1089,
+            "expression": "sys.modules.get",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 1090,
+            "end": 1090,
+            "expression": "isinstance",
+            "target": "isinstance",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 1084,
+            "end": 1084,
+            "expression": "id",
+            "target": "id",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 1086,
+            "end": 1086,
+            "expression": "id",
+            "target": "id",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 1094,
+            "end": 1094,
+            "expression": "_seen_ids.add",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 1092,
+            "end": 1092,
+            "expression": "id",
+            "target": "id",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 1094,
+            "end": 1094,
+            "expression": "id",
+            "target": "id",
+            "resolution": "unresolved"
+          }
+        ],
+        "conflicts": []
+      },
+      {
+        "name": "type_repr",
+        "line": 1122,
+        "end": 1147,
+        "sources": [
+          "public_definition",
+          "literal_export"
+        ],
+        "evidence": [],
+        "calls": [
+          {
+            "line": 1130,
+            "end": 1130,
+            "expression": "isinstance",
+            "target": "isinstance",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 1147,
+            "end": 1147,
+            "expression": "repr",
+            "target": "repr",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 1142,
+            "end": 1142,
+            "expression": "isinstance",
+            "target": "isinstance",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 1135,
+            "end": 1135,
+            "expression": "getattr",
+            "target": "getattr",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 1143,
+            "end": 1143,
+            "expression": "_template_to_ast",
+            "target": "_template_to_ast",
+            "resolution": "local"
+          },
+          {
+            "line": 1144,
+            "end": 1144,
+            "expression": "ast.unparse",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 1137,
+            "end": 1137,
+            "expression": "isinstance",
+            "target": "isinstance",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 1137,
+            "end": 1137,
+            "expression": "type",
+            "target": "type",
+            "resolution": "builtin"
+          }
+        ],
+        "conflicts": []
+      },
+      {
+        "name": "annotations_to_string",
+        "line": 1150,
+        "end": 1158,
+        "sources": [
+          "public_definition",
+          "literal_export"
+        ],
+        "evidence": [],
+        "calls": [
+          {
+            "line": 1156,
+            "end": 1156,
+            "expression": "isinstance",
+            "target": "isinstance",
+            "resolution": "unresolved"
+          },
+          {
+            "line": 1156,
+            "end": 1156,
+            "expression": "type_repr",
+            "target": "type_repr",
+            "resolution": "local"
+          },
+          {
+            "line": 1157,
+            "end": 1157,
+            "expression": "annotations.items",
+            "target": null,
+            "resolution": "unresolved"
+          }
+        ],
+        "conflicts": []
+      }
+    ],
+    "internal_functions": [
+      "_template_to_ast_constructor",
+      "_template_to_ast_literal",
+      "_template_to_ast",
+      "_build_closure",
+      "_stringify_single",
+      "_rewrite_star_unpack",
+      "_get_and_call_annotate",
+      "_get_dunder_annotations"
+    ],
+    "unknown": [
+      {
+        "name": "Format",
+        "reason": "export not a local function"
+      },
+      {
+        "name": "ForwardRef",
+        "reason": "export not a local function"
+      },
+      {
+        "reason": "test AST budget exceeded",
+        "stage": "test_evidence",
+        "status": "budget_blocked"
+      }
+    ],
+    "duplicate_definitions": false,
+    "unmodeled_initialization": [
+      {
+        "line": 10,
+        "end": 19,
+        "kind": "Assign"
+      },
+      {
+        "line": 22,
+        "end": 26,
+        "kind": "ClassDef"
+      },
+      {
+        "line": 29,
+        "end": 29,
+        "kind": "Assign"
+      },
+      {
+        "line": 31,
+        "end": 31,
+        "kind": "Assign"
+      },
+      {
+        "line": 37,
+        "end": 51,
+        "kind": "Assign"
+      },
+      {
+        "line": 54,
+        "end": 359,
+        "kind": "ClassDef"
+      },
+      {
+        "line": 362,
+        "end": 362,
+        "kind": "Assign"
+      },
+      {
+        "line": 365,
+        "end": 620,
+        "kind": "ClassDef"
+      },
+      {
+        "line": 687,
+        "end": 722,
+        "kind": "ClassDef"
+      },
+      {
+        "line": 1185,
+        "end": 1185,
+        "kind": "Assign"
+      },
+      {
+        "line": 1212,
+        "end": 1220,
+        "kind": "ClassDef"
+      }
+    ]
+  },
+  "entries": [
+    {
+      "entry": "annotations_to_string",
+      "status": "partial_unsupported",
+      "observations": [
+        {
+          "input": 0,
+          "outcome": "unsupported",
+          "value": {
+            "type": "NoneType",
+            "value": null
+          },
+          "trace": [],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "annotations_to_string",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 0,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": "unsupported expression: DictComp",
+          "task": {
+            "input": 0,
+            "queue": "explore",
+            "reason": "window seed; validity unknown"
+          }
+        },
+        {
+          "input": 1,
+          "outcome": "unsupported",
+          "value": {
+            "type": "NoneType",
+            "value": null
+          },
+          "trace": [],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "annotations_to_string",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 1,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": "unsupported expression: DictComp",
+          "task": {
+            "input": 1,
+            "queue": "explore",
+            "reason": "window seed; validity unknown"
+          }
+        },
+        {
+          "input": 100,
+          "outcome": "unsupported",
+          "value": {
+            "type": "NoneType",
+            "value": null
+          },
+          "trace": [],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "annotations_to_string",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 100,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": "unsupported expression: DictComp",
+          "task": {
+            "input": 100,
+            "queue": "explore",
+            "reason": "window seed; validity unknown"
+          }
+        }
+      ],
+      "pending": [],
+      "infeasible": [],
+      "dropped_tasks": 0,
+      "conflicts": [],
+      "checks": []
+    },
+    {
+      "entry": "call_annotate_function",
+      "status": "unsupported",
+      "observations": [],
+      "pending": [],
+      "infeasible": [],
+      "dropped_tasks": 0,
+      "conflicts": [],
+      "reason": "unsupported function definition/signature"
+    },
+    {
+      "entry": "call_evaluate_function",
+      "status": "unsupported",
+      "observations": [],
+      "pending": [],
+      "infeasible": [],
+      "dropped_tasks": 0,
+      "conflicts": [],
+      "reason": "unsupported function definition/signature"
+    },
+    {
+      "entry": "get_annotate_from_class_namespace",
+      "status": "partial_unsupported",
+      "observations": [
+        {
+          "input": 0,
+          "outcome": "unsupported",
+          "value": {
+            "type": "NoneType",
+            "value": null
+          },
+          "trace": [],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "get_annotate_from_class_namespace",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 0,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": "unsupported statement: Try",
+          "task": {
+            "input": 0,
+            "queue": "explore",
+            "reason": "window seed; validity unknown"
+          }
+        },
+        {
+          "input": 1,
+          "outcome": "unsupported",
+          "value": {
+            "type": "NoneType",
+            "value": null
+          },
+          "trace": [],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "get_annotate_from_class_namespace",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 1,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": "unsupported statement: Try",
+          "task": {
+            "input": 1,
+            "queue": "explore",
+            "reason": "window seed; validity unknown"
+          }
+        },
+        {
+          "input": 100,
+          "outcome": "unsupported",
+          "value": {
+            "type": "NoneType",
+            "value": null
+          },
+          "trace": [],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "get_annotate_from_class_namespace",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 100,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": "unsupported statement: Try",
+          "task": {
+            "input": 100,
+            "queue": "explore",
+            "reason": "window seed; validity unknown"
+          }
+        }
+      ],
+      "pending": [],
+      "infeasible": [],
+      "dropped_tasks": 0,
+      "conflicts": [],
+      "checks": []
+    },
+    {
+      "entry": "get_annotations",
+      "status": "unsupported",
+      "observations": [],
+      "pending": [],
+      "infeasible": [],
+      "dropped_tasks": 0,
+      "conflicts": [],
+      "reason": "unsupported function definition/signature"
+    },
+    {
+      "entry": "type_repr",
+      "status": "partial_unsupported",
+      "observations": [
+        {
+          "input": 0,
+          "outcome": "unsupported",
+          "value": {
+            "type": "NoneType",
+            "value": null
+          },
+          "trace": [],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "type_repr",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 0,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": "unsupported expression: Tuple",
+          "task": {
+            "input": 0,
+            "queue": "explore",
+            "reason": "window seed; validity unknown"
+          }
+        },
+        {
+          "input": 1,
+          "outcome": "unsupported",
+          "value": {
+            "type": "NoneType",
+            "value": null
+          },
+          "trace": [],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "type_repr",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 1,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": "unsupported expression: Tuple",
+          "task": {
+            "input": 1,
+            "queue": "explore",
+            "reason": "window seed; validity unknown"
+          }
+        },
+        {
+          "input": 100,
+          "outcome": "unsupported",
+          "value": {
+            "type": "NoneType",
+            "value": null
+          },
+          "trace": [],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "type_repr",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 100,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": "unsupported expression: Tuple",
+          "task": {
+            "input": 100,
+            "queue": "explore",
+            "reason": "window seed; validity unknown"
+          }
+        }
+      ],
+      "pending": [],
+      "infeasible": [],
+      "dropped_tasks": 0,
+      "conflicts": [],
+      "checks": []
+    }
+  ],
+  "dispatch": [
+    {
+      "entry": "annotations_to_string",
+      "input": 0,
+      "queue": "explore",
+      "reason": "window seed; validity unknown"
+    },
+    {
+      "entry": "get_annotate_from_class_namespace",
+      "input": 0,
+      "queue": "explore",
+      "reason": "window seed; validity unknown"
+    },
+    {
+      "entry": "type_repr",
+      "input": 0,
+      "queue": "explore",
+      "reason": "window seed; validity unknown"
+    },
+    {
+      "entry": "annotations_to_string",
+      "input": 1,
+      "queue": "explore",
+      "reason": "window seed; validity unknown"
+    },
+    {
+      "entry": "get_annotate_from_class_namespace",
+      "input": 1,
+      "queue": "explore",
+      "reason": "window seed; validity unknown"
+    },
+    {
+      "entry": "type_repr",
+      "input": 1,
+      "queue": "explore",
+      "reason": "window seed; validity unknown"
+    },
+    {
+      "entry": "annotations_to_string",
+      "input": 100,
+      "queue": "explore",
+      "reason": "window seed; validity unknown"
+    },
+    {
+      "entry": "get_annotate_from_class_namespace",
+      "input": 100,
+      "queue": "explore",
+      "reason": "window seed; validity unknown"
+    },
+    {
+      "entry": "type_repr",
+      "input": 100,
+      "queue": "explore",
+      "reason": "window seed; validity unknown"
+    }
+  ],
+  "mode": "paths",
+  "window": [
+    0,
+    100
+  ],
+  "execution_enabled": false,
+  "scope": "isolated function slices; module initialization/import effects unmodeled; finite investigation window, not valid-input domain; never imports/executes subject",
+  "limits": {
+    "entries": 8,
+    "points_per_entry": 32,
+    "tasks_per_entry": 32
+  },
+  "unresolved": "unseen or unsupported paths remain unknown; test applicability requires review"
+}
