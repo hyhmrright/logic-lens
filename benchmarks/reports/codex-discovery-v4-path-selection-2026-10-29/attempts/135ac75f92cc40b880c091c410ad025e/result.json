@@ -1,0 +1,51 @@
+{
+  "usage": {
+    "input_tokens": 380819,
+    "cached_input_tokens": 331008,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 11494,
+    "reasoning_output_tokens": 6551
+  },
+  "tools_used": [
+    {
+      "type": "command_execution",
+      "command": "/bin/zsh -lc \"pwd; rg --files -g 'range.js' -g '*range*' -g 'package.json' -g '.logic-lens.yaml' -g 'README*' -g 'semver.js' -g 'comparator.js' -g 'parse-options.js' -g 're.js' -g 'constants.js' -g 'cmp.js' -g 'satisfies.js' -g 'subset.js' -g 'min-version.js' -g 'valid.js' -g 'inc.js' -g 'coerce.js' -g 'intersects.js'\"",
+      "status": "completed"
+    },
+    {
+      "type": "command_execution",
+      "command": "/bin/zsh -lc \"nl -ba classes/range.js; cat package.json; rg -n 'Range|includePrerelease|intersect|hyphen|caret|tilde|prerelease|loose' README.md; rg --files --hidden -g '.logic-lens.yaml' -g '\"'!node_modules'\"' -g '\"'!'\"\\\\.git'\"",
+      "status": "failed"
+    },
+    {
+      "type": "command_execution",
+      "command": "/bin/zsh -lc \"nl -ba classes/comparator.js; sed -n '1,165p' classes/semver.js; cat internal/parse-options.js internal/constants.js internal/lrucache.js internal/debug.js; nl -ba internal/re.js | sed -n '1,255p'; sed -n '149,218p' README.md; sed -n '280,385p' README.md; sed -n '490,524p' README.md; nl -ba test/classes/range.js | sed -n '1,270p'; cat ranges/intersects.js functions/satisfies.js ranges/min-version.js\"",
+      "status": "completed"
+    },
+    {
+      "type": "command_execution",
+      "command": "/bin/zsh -lc \"cat test/fixtures/range-intersection.js; rg -n 'includePrerelease|\\\\+|\\\\*.*\\\\|\\\\||\\\\|\\\\|.*\\\\*|~1|\\\\\"'^1|hyphen'\"' test/fixtures/range-parse.js test/fixtures/range-include.js test/fixtures/range-exclude.js test/ranges/intersects.js test/classes/comparator.js; nl -ba README.md | sed -n '383,437p'; cat functions/cmp.js functions/compare.js; rg -n '\\\\.set\\\\b|\\\\.options\\\\b|new Range\\\\(' ranges/subset.js ranges/to-comparators.js ranges/outside.js test/ranges/intersects.js index.js\"",
+      "status": "completed"
+    },
+    {
+      "type": "command_execution",
+      "command": "/bin/zsh -lc \"node -e '\n\\\"use strict\\\"\nconst Range = require(\\\"./classes/range\\\")\nconst Comparator = require(\\\"./classes/comparator\\\")\nconst intersects = require(\\\"./ranges/intersects\\\")\nconst satisfies = require(\\\"./functions/satisfies\\\")\nconsole.log(\\\"runtime\\\", process.version)\nconst check = (name, fn) => { try { console.log(name, JSON.stringify(fn())) } catch (e) { console.log(name, e.name + \\\": \\\" + e.message, e.stack.split(\\\"\\\\n\\\").slice(1,4).join(\\\" | \\\")) } }\ncheck(\\\"OR prerelease\\\", () => {\n const v = \\\"1.2.3-alpha\\\"\n const a = new Range(\\\"*\\\"), b = new Range(v), combined = new Range(\\\"* || \\\" + v)\n return {a:a.test(v), b:b.test(v), expected:true, observed:combined.test(v), normalized:combined.range, includePrerelease:new Range(\\\"* || \\\"+v,{includePrerelease:true}).test(v), releaseControl:combined.test(\\\"1.2.3\\\")}\n})\ncheck(\\\"Comparator input prerelease\\\", () => new Range(new Comparator(\\\">=1.2.3-alpha\\\")).test(\\\"1.2.3-beta\\\"))\ncheck(\\\"Comparator string control\\\", () => new Range(\\\">=1.2.3-alpha\\\").test(\\\"1.2.3-beta\\\"))\ncheck(\\\"Comparator includePrerelease\\\", () => new Range(new Comparator(\\\"\\\"), {includePrerelease:true}).test(\\\"1.2.3-alpha\\\"))\ncheck(\\\"Comparator input stable control\\\", () => new Range(new Comparator(\\\">=1.2.3\\\")).test(\\\"1.2.4\\\"))\ncheck(\\\"intersection shared witness\\\", () => {\n const a = \\\">=1.0.0-alpha <2.0.0\\\", b = \\\"1.0.0-beta\\\", v=b\n return {a:satisfies(v,a), b:satisfies(v,b), expected:true, observed:intersects(a,b), reversed:intersects(b,a), includePrerelease:intersects(a,b,{includePrerelease:true})}\n})\ncheck(\\\"intersection empty discrete gap\\\", () => {\n const a=\\\">1.0.0\\\", b=\\\"<1.0.1\\\"\n return {expected:false, observed:intersects(a,b), reversed:intersects(b,a), controlNonempty:intersects(a,\\\"<=1.0.1\\\"), prereleaseRejected:satisfies(\\\"1.0.1-alpha\\\",a)&&satisfies(\\\"1.0.1-alpha\\\",b)}\n})\ncheck(\\\"hyphen metadata includePrerelease\\\", () => {\n const options={includePrerelease:true}, v=\\\"1.2.3-alpha\\\"\n const bare=new Range(\\\"1.2.3 - 2.0.0\\\",options), built=new Range(\\\"1.2.3+build - 2.0.0\\\",options)\n return {bare:bare.range, built:built.range, expected:bare.test(v), observed:built.test(v), releaseControl:built.test(\\\"1.2.3\\\")}\n})\ncheck(\\\"tilde documented equivalence\\\", () => {\n const options={includePrerelease:true}, v=\\\"1.2.0-alpha\\\"\n return [\\\"~1.2\\\",\\\"1.2.x\\\",\\\">=1.2.0 <1.3.0-0\\\"].map(r=>({r, normalized:new Range(r,options).range, accepts:satisfies(v,r,options)}))\n})\n'\"",
+      "status": "completed"
+    },
+    {
+      "type": "command_execution",
+      "command": "/bin/zsh -lc \"node -e '\nconst Range = require(\\\"./classes/range\\\")\nconst Comparator = require(\\\"./classes/comparator\\\")\nconst intersects = require(\\\"./ranges/intersects\\\")\nfor (const r of [\\\"\"'^00.2.3\", \"''^0.00.3\", \"''^00.0.3\", \"''^00.2\", \"''^0.00.3-alpha\"]) {\n const canonical=r.replace(/'\"\\\\d+/g,n=>String(Number(n)))\n const a=new Range(r,{loose:true}), b=new Range(canonical,{loose:true})\n const witnesses=[\\\"0.0.4\\\", \\\"0.1.0\\\", \\\"0.3.0\\\", \\\"0.9.0\\\"]\n console.log(\\\"loose caret\\\",JSON.stringify({r,canonical,actual:a.range,expected:b.range,differences:witnesses.filter(v=>a.test(v)\"'!==b.test(v))}))\n}\nfor (const [a,b] of [[\"<0.0.0-0\",\"*\"],[\">1.0.0 <1.0.1\",\"*\"],[\">=1.0.0-alpha <2.0.0\",\"1.0.0-beta\"],[\"1.0.0-alpha <2.0.0\",\"*\"]]) {\n console.log(\"intersection defense\",JSON.stringify({a,b,observed:intersects(a,b)}))\n}\nfor (const r of [\"1.2.3+build - 2.0.0\",\"1.2.3+build.42 - 2.0.0\",\"1.2.3-alpha+build - 2.0.0\",\"1.2.3 - 2.0.0+build\"]) {\n const options={includePrerelease:true}, a=new Range(r,options)\n console.log(\"hyphen controls\",JSON.stringify({r,parsed:a.range,alpha:a.test(\"1.2.3-alpha\"),stable:a.test(\"1.2.3\")}))\n}\nconsole.log(\"loose comparator input\",JSON.stringify({object:new Range(new Comparator(\">=1.2.3\"),{loose:true}).test(\"01.02.04\"),string:new Range(\">=1.2.3\",{loose:true}).test(\"01.02.04\")}))\n'\"'\"",
+      "status": "completed"
+    }
+  ],
+  "evidence_source": "codex-jsonl",
+  "provider": "codex",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "elapsed_seconds": 323.39725262499996,
+  "instruction_delivery": "explicit_stdin_snapshot",
+  "capability": "read-only-shell",
+  "instruction_sha256": "d429f5d89726d00cf166644a238849b0fce2e9f1a75197f0d106d5ac5fe6de37",
+  "workspace_sha256": "e4b0a736dd370fd4079c00c50164a2b87aefbd1ff5bb4b03c44d0acebe90eb7b",
+  "total_cost_usd": null
+}

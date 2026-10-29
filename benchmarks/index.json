@@ -191,6 +191,16 @@
       "planned_runs": 8,
       "completed_runs": 2,
       "notes": "Explicit continuation: two reports, one timeout, one capacity rejection, four unattempted; Gate B fails transformation-boundary criterion; unknown failure token overhead."
+    },
+    {
+      "id": "codex-discovery-v4-path-selection-2026-10-29",
+      "kind": "development-diagnostic",
+      "path": "runs/codex-discovery-v4-path-selection-2026-10-29.json",
+      "report": "reports/codex-discovery-v4-path-selection-2026-10-29/REPORT.md",
+      "model": "gpt-6.1-sol",
+      "planned_runs": 2,
+      "completed_runs": 2,
+      "notes": "Both arms deliver and miss target; neither checks key boundary; known total 881931 input+output tokens, no failure or retry; no discovery improvement."
     }
   ],
   "discovery_experiments": [

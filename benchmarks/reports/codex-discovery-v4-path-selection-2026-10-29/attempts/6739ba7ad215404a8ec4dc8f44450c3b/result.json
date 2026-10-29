@@ -1,0 +1,61 @@
+{
+  "usage": {
+    "input_tokens": 480809,
+    "cached_input_tokens": 398592,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 8809,
+    "reasoning_output_tokens": 3701
+  },
+  "tools_used": [
+    {
+      "type": "command_execution",
+      "command": "/bin/zsh -lc \"pwd; rg --files -g '\"'!node_modules'\"' -g '\"'!package-lock.json'\"' -g '\"'!yarn.lock'\"' -g '\"'!'\"\\\\.git'\"",
+      "status": "completed"
+    },
+    {
+      "type": "command_execution",
+      "command": "/bin/zsh -lc 'nl -ba classes/range.js'",
+      "status": "completed"
+    },
+    {
+      "type": "command_execution",
+      "command": "/bin/zsh -lc \"rg -n 'Comparator|includePrerelease|intersect|prerelease|Range\\\\(' README.md test/classes/range.js test/ranges/intersects.js test/fixtures/range-intersection.js test/fixtures/range-parse.js package.json .logic-lens.yaml; nl -ba classes/comparator.js; cat internal/parse-options.js functions/satisfies.js ranges/intersects.js\"",
+      "status": "completed"
+    },
+    {
+      "type": "command_execution",
+      "command": "/bin/zsh -lc \"sed -n '140,218p' README.md; sed -n '285,388p' README.md; sed -n '413,435p' README.md; cat test/classes/range.js test/fixtures/range-intersection.js; rg -n 'includePrerelease|\\\\|\\\\||build|\\\\+' test/fixtures/range-include.js test/fixtures/range-exclude.js test/fixtures/range-parse.js; cat internal/lrucache.js; sed -n '1,140p' internal/re.js; sed -n '1,140p' classes/semver.js; cat package.json\"",
+      "status": "completed"
+    },
+    {
+      "type": "command_execution",
+      "command": "/bin/zsh -lc \"node -e '\nconst Range = require(\\\"./classes/range\\\")\nconst Comparator = require(\\\"./classes/comparator\\\")\nconst satisfies = require(\\\"./functions/satisfies\\\")\nconst intersects = require(\\\"./ranges/intersects\\\")\nconsole.log(\\\"runtime\\\", process.version)\nfunction probe(label, f) {\n  try { console.log(label, JSON.stringify(f())) } catch (e) { console.log(label, e.name + \\\": \\\" + e.message) }\n}\nfor (const r of [\\\"1.2.3-alpha\\\", \\\"*\\\", \\\"* || 1.2.3-alpha\\\", \\\"1.2.3-alpha || *\\\"]) {\n  probe(\\\"OR \\\" + r, () => { const a = new Range(r); return { parsed: a.range, pre: a.test(\\\"1.2.3-alpha\\\"), stable: a.test(\\\"1.2.3\\\") } })\n}\nfor (const input of [\\\">=1.2.3-alpha\\\", \\\">=1.2.3\\\"]) {\n  for (const v of [\\\"1.2.3\\\", \\\"1.2.3-beta\\\"]) {\n    probe(\\\"comparator \\\" + input + \\\" / \\\" + v, () => new Range(new Comparator(input)).test(v))\n    probe(\\\"string \\\" + input + \\\" / \\\" + v, () => new Range(input).test(v))\n  }\n}\nprobe(\\\"comparator includePrerelease\\\", () => new Range(new Comparator(\\\">=1.2.3\\\"), { includePrerelease: true }).test(\\\"1.2.4-beta\\\"))\nprobe(\\\"satisfies comparator\\\", () => satisfies(\\\"1.2.3-beta\\\", new Comparator(\\\">=1.2.3-alpha\\\")))\nfor (const [a,b,opts] of [\n  [\\\">1.0.0 <1.0.1\\\", \\\"*\\\", undefined],\n  [\\\">1.0.0 <1.0.1\\\", \\\"*\\\", {includePrerelease:true}],\n  [\\\">=1.0.0-alpha <1.0.0\\\", \\\">=1.0.0-beta <1.0.0\\\", undefined],\n  [\\\"1.0.0-alpha\\\", \\\">=1.0.0-alpha <1.0.0\\\", undefined],\n]) probe(\\\"intersection \\\"+a+\\\" / \\\"+b+\\\" / \\\"+JSON.stringify(opts), () => intersects(a,b,opts))\n'\"",
+      "status": "completed"
+    },
+    {
+      "type": "command_execution",
+      "command": "/bin/zsh -lc \"cat ranges/min-version.js; sed -n '1,225p' ranges/subset.js; cat test/fixtures/comparator-intersection.js; sed -n '140,235p' internal/re.js; sed -n '395,416p' README.md; nl -ba functions/satisfies.js; nl -ba ranges/intersects.js; rg -n 'intersects|prerelease|build' test/ranges/min-version.js test/ranges/subset.js\"",
+      "status": "completed"
+    },
+    {
+      "type": "command_execution",
+      "command": "/bin/zsh -lc \"node -e '\nconst Range = require(\\\"./classes/range\\\")\nconst intersects = require(\\\"./ranges/intersects\\\")\nconst o = {includePrerelease:true}\nconsole.log(\\\"hyphen build lower-bound controls\\\")\nfor (const r of [\\\"1.2.3 - 2.0.0\\\", \\\"1.2.3+build - 2.0.0\\\", \\\"1.2.3 - 2.0.0+build\\\", \\\"1.2.3-alpha+build - 2.0.0\\\"]) {\n const a = new Range(r,o)\n console.log(JSON.stringify({input:r,parsed:a.range,pre:a.test(\\\"1.2.3-alpha\\\"),stable:a.test(\\\"1.2.3\\\")}))\n}\nconsole.log(\\\"intersection witnesses and controls\\\")\nconst a = new Range(\\\"1.0.0-alpha\\\")\nconst b = new Range(\\\">=1.0.0-alpha <1.0.0\\\")\nconsole.log({a:a.range,b:b.range,aWitness:a.test(\\\"1.0.0-alpha\\\"),bWitness:b.test(\\\"1.0.0-alpha\\\"),ab:a.intersects(b),ba:b.intersects(a),explicit:intersects(a,b,{includePrerelease:true})})\nconst empty = new Range(\\\">1.0.0 <1.0.1\\\")\nconsole.log({range:empty.range,intersectsStar:empty.intersects(new Range(\\\"*\\\")),self:empty.intersects(empty),tests:[\\\"1.0.0\\\",\\\"1.0.1-alpha\\\",\\\"1.0.1\\\",\\\"1.0.2\\\"].map(v=>[v,empty.test(v)]),withPrereleases:intersects(\\\">1.0.0 <1.0.1\\\",\\\"*\\\",o)})\nlet checks=0\nconst fails=[]\nfor (const [file,expect] of [[\\\"range-include\\\",true],[\\\"range-exclude\\\",false]]) {\n for (const [range,v,opts] of require(\\\"./test/fixtures/\\\"+file)) {\n  checks++\n  try { const actual=new Range(range,opts).test(v); if(actual\"'!==expect) fails.push({range,v,opts,expect,actual}) } catch(e) {fails.push({range,v,error:String(e)})}\n }\n}\nfor (const [a,b,expect] of require(\"./test/fixtures/range-intersection\")) {checks++; if(intersects(a,b)!==expect) fails.push({a,b,expect})}\nconsole.log(\"existing local fixture cases\",JSON.stringify({checks,fails}))\n'\"'\"",
+      "status": "completed"
+    },
+    {
+      "type": "command_execution",
+      "command": "/bin/zsh -lc \"node -e '\nconst assert = require(\\\"node:assert/strict\\\")\nconst Range = require(\\\"./classes/range\\\")\nconst Comparator = require(\\\"./classes/comparator\\\")\nconst intersects = require(\\\"./ranges/intersects\\\")\nconst opts = {includePrerelease:true}\nassert.equal(new Range(\\\"1.2.3-alpha\\\").test(\\\"1.2.3-alpha\\\"), true)\nassert.equal(new Range(\\\"* || 1.2.3-alpha\\\").test(\\\"1.2.3-alpha\\\"), false)\nassert.equal(new Range(\\\"1.2.3-alpha || *\\\").test(\\\"1.2.3-alpha\\\"), false)\nassert.throws(() => new Range(new Comparator(\\\">=1.2.3-alpha\\\")).test(\\\"1.2.3-beta\\\"), TypeError)\nassert.equal(new Range(\\\">=1.2.3-alpha\\\").test(\\\"1.2.3-beta\\\"), true)\nassert.equal(new Range(new Comparator(\\\">=1.2.3-alpha\\\")).test(\\\"1.2.3\\\"), true)\nassert.equal(new Range(\\\"1.2.3 - 2.0.0\\\", opts).test(\\\"1.2.3-alpha\\\"), true)\nassert.equal(new Range(\\\"1.2.3+build - 2.0.0\\\", opts).test(\\\"1.2.3-alpha\\\"), false)\nconst a = new Range(\\\"1.0.0-alpha\\\"), b = new Range(\\\">=1.0.0-alpha <1.0.0\\\")\nassert.equal(a.test(\\\"1.0.0-alpha\\\") && b.test(\\\"1.0.0-alpha\\\"), true)\nassert.equal(a.intersects(b), false)\nassert.equal(b.intersects(a), false)\nassert.equal(intersects(\\\">1.0.0 <1.0.1\\\", \\\"*\\\"), true)\nassert.equal(new Range(\\\">1.0.0 <1.0.1\\\").test(\\\"1.0.1-alpha\\\"), false)\nassert.equal(new Range(\\\">1.0.0 <1.0.1\\\", opts).test(\\\"1.0.1-alpha\\\"), true)\nconsole.log(\\\"14 assertions confirmed original defects and paired controls; no files written\\\")\n'\"",
+      "status": "completed"
+    }
+  ],
+  "evidence_source": "codex-jsonl",
+  "provider": "codex",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "elapsed_seconds": 265.1275769579952,
+  "instruction_delivery": "explicit_stdin_snapshot",
+  "capability": "read-only-shell",
+  "instruction_sha256": "9dd5e4c50d47cd71fca3d04abc006690759e8510cdbce705a9853c4a61685e0a",
+  "workspace_sha256": "e4b0a736dd370fd4079c00c50164a2b87aefbd1ff5bb4b03c44d0acebe90eb7b",
+  "total_cost_usd": null
+}

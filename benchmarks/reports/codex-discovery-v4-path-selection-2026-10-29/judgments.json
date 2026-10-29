@@ -1,0 +1,66 @@
+{
+  "135ac75f92cc40b880c091c410ad025e": {
+    "target_detected": false,
+    "false_positive_count": 0,
+    "confirmed_additional": [
+      "semver-comparator-options",
+      "semver-or-prerelease",
+      "semver-padded-caret",
+      "semver-hyphen-build",
+      "semver-intersection-empty",
+      "semver-intersection-gap",
+      "semver-intersection-witness"
+    ],
+    "unsupported_claims": [],
+    "refuted_claims": [],
+    "unresolved_leads": [
+      "Option-specific equivalence of tilde and x-range under includePrerelease; explicitly unresolved, not counted"
+    ],
+    "rationale": "Five report findings cover seven established additional classes, independently reproduced on real source. Ordinary hyphen metadata loss is not the long-tail target. Full helper/constant read is not a resolved boundary hypothesis or execution check. No executed repair or broad fixture sweep.",
+    "report_sha256": "a1a049d206fbafa447c849e073496edc0c7728c5221c61e38a8004f76dd0343c",
+    "adjudicator": "Implementing assistant, unblinded",
+    "process": {
+      "effective_constraint_definitions_read": true,
+      "key_relationship_resolved": false,
+      "key_distinguishing_family_checked": false,
+      "original_defect_verified": false,
+      "first_contract_and_dependency_read": "item_2 target/public contracts; item_3 constants, regex generation, comparator/version and matching consumers",
+      "selection_evidence": "After item_3 reviewer selects OR simplification, intersection and Comparator construction",
+      "distinguishing_checks": "item_6 construction/OR/intersection witnesses and controls; item_7 padded caret/canonical and ordinary hyphen metadata endpoint controls",
+      "premature_executable_repair": false,
+      "remaining_relation_revisit": "Final investigation expands to caret and ordinary hyphen metadata; no long-identifier bound check",
+      "tool_calls": 6
+    }
+  },
+  "6739ba7ad215404a8ec4dc8f44450c3b": {
+    "target_detected": false,
+    "false_positive_count": 0,
+    "confirmed_additional": [
+      "semver-comparator-options",
+      "semver-or-prerelease",
+      "semver-hyphen-build",
+      "semver-intersection-witness",
+      "semver-intersection-gap"
+    ],
+    "unsupported_claims": [],
+    "refuted_claims": [],
+    "unresolved_leads": [
+      "General prerelease interval intersections without exact comparators explicitly unresolved"
+    ],
+    "rationale": "Four final findings cover five established additional classes independently reproduced. Hyphen marker removal is not the long-build residual-digit target. Does not resolve effective length constraint or test its boundary. Reported remedies reasoned only, no repair executed.",
+    "report_sha256": "0a061ec501b159e22f2327a4fbdcc6f4efcc1b0dc2aa16da2e09cb4dcbc323a5",
+    "adjudicator": "Implementing assistant, unblinded",
+    "process": {
+      "effective_constraint_definitions_read": false,
+      "key_relationship_resolved": false,
+      "key_distinguishing_family_checked": false,
+      "original_defect_verified": false,
+      "first_contract_and_dependency_read": "item_2 target; item_3 comparator/public contracts; item_4 regex generation and semantic fixtures (symbolic bound but no constant definition)",
+      "selection_evidence": "After item_4 reviewer selects OR simplification and Comparator initialization then intersection",
+      "distinguishing_checks": "item_6 OR/construction/intersection controls; item_8 ordinary hyphen metadata endpoints and witness/empty gap; item_10 repeats confirmed assertions",
+      "premature_executable_repair": false,
+      "remaining_relation_revisit": "Additional ordinary hyphen path checked, but item_8 also sweeps 271 fixtures and item_10 reconfirms prior findings",
+      "tool_calls": 8
+    }
+  }
+}
