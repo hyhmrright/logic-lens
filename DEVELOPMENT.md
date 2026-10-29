@@ -76,12 +76,11 @@ tracing methodology, examples in two languages, severity rationale and eval case
 
 ## Current experiment authorization
 
-The completed v2 comparison is immutable. Revision 3 is a development candidate,
-not a qualified release. The user has limited tokens and explicitly requires approval
+The completed v2 comparison is immutable. Revision 3 remains in draft PR #16 as a development candidate,
+not a qualified release or the main branch default. The user has limited tokens and explicitly requires approval
 before **any new model-backed experiment**, including development-set diagnostics,
 smoke/content/trigger evals, retries and fresh-case comparisons. Offline validation,
 bundling and existing-evidence analysis are authorized. Present the frozen revision,
 run count, provider/model, budgets and known/unknown cost estimate before requesting
 approval. A passing development gate does not authorize the next stage. Do not create
-a model-running heartbeat or CI experiment. See
-`docs/experiments/discovery-v3-preregistration.md` for proposed stages.
+a model-running heartbeat or CI experiment. The proposed revision-3 stages remain on the experiment branch in PR #16.

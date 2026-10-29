@@ -61,10 +61,10 @@ field alone does not prove a skill was followed.
 
 ## How investigation works
 
-The candidate review process starts from sourced invariants and operation sequences,
-not just a checklist of familiar code patterns. It follows caller/callee/config/state
-dependencies as needed and records missing evidence as unresolved investigations.
-A non-reproducing experiment does not automatically disprove a suspected bug.
+The default skills retain the existing semi-formal tracing workflow. Experimental
+repository-context discovery and compact review candidates remain in draft PR #16;
+they are not installed by this branch. Frozen benchmark instructions describe the
+versions actually evaluated, independently of the current default skill files.
 
 Every confirmed finding follows the Iron Law:
 

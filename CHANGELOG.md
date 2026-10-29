@@ -26,20 +26,18 @@ Versions follow [SemVer](https://semver.org/).
   12 exact known-regression trials. No candidate superiority claim; per-run reports,
   instructions, resource counters, additional probes and limitations are frozen.
 
-### Experimental — repository-context bug discovery (not release-qualified)
+### Added — discovery evaluation infrastructure and historical evidence
 
-- Candidate `logic-review` workflow investigates sourced behavioral invariants,
-  caller/callee/state dependencies, operation sequences and unresolved evidence
-  before rendering findings. Partial defenses or a non-reproducing experiment
-  no longer automatically dismiss a candidate.
-- Corrected the shared L4 definition: mutating an input and returning it is a
-  defect only when an actual contract or caller expectation is violated.
-- Added a separate 20-case upstream discovery corpus, evaluator-only probes, and
+- Added pinned upstream discovery corpora, evaluator-only probes, and a
   plain/baseline/candidate runner with explicit instruction snapshots, source
   hashes, tool events and human adjudication. Existing content assertions and
   grader are unchanged.
-- No release/version bump or effectiveness claim until model comparisons and
-  prospective held-out validation pass; see `evals/discovery/README.md`.
+- Preserved the completed revision-2 comparison: all three arms detected 9/12
+  targets. Failure records, partial checkpoints and final reports remain inspectable.
+  These results do not establish improved bug discovery over plain Codex.
+- Experimental review and shared-framework changes remain in draft PR #16;
+  main retains its existing default skill files. No release/version bump or
+  effectiveness claim accompanies the infrastructure split.
 
 ### Fixed — grader: a wrong conclusion no longer scores on keywords
 
