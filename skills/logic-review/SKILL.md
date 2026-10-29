@@ -27,12 +27,12 @@ confirmed causes, and `report-template.md` only when rendering output.
 ## Process
 
 1. **Establish an obligation** (guide Step 1). Separate facts, sourced requirements
-   and unknowns. Read supporting evidence to resolve a behavioral question.
-2. **Select transformations** (guide Step 2). Follow actual inputs/state to observable
-   consumers. Choose a small ranked set of supported invariants to investigate.
-3. **Run distinguishing checks** (guide Step 3). Derive valid paired inputs or
-   sequences from implementation boundaries. Record what each check resolves and
-   return to important uncovered obligations after finding a defect.
+   and unknowns. Orient on the main input/state routes and supported outcomes.
+2. **Map and select paths** (guide Step 2). Identify consequential operations and
+   their consumers; resolve hidden conditions before ranking a small worklist.
+3. **Run distinguishing checks** (guide Step 3). Test supported relationships using
+   effective implementation conditions and controls. Reconsider remaining paths
+   after confirmation and before ending discovery.
 4. **Challenge the violation** (guide Step 4). Establish reachability, exact-path
    defenses and the smallest observable consequence; preserve unresolved leads.
 5. **Preserve probe evidence** (guide Step 5). Probe real code during discovery when
