@@ -1,0 +1,1008 @@
+{
+  "schema_version": 1,
+  "evidence": [
+    {
+      "test_module": "test_subject",
+      "records": [
+        {
+          "source": {
+            "module": "test_subject",
+            "line": 3,
+            "end": 3
+          },
+          "context": "test_external",
+          "call": "attach(b'A')",
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "attach",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 2,
+              "end": 3
+            },
+            "chain": [
+              "test_subject:attach",
+              "subject:attach"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "subject",
+                "line": 2,
+                "end": 3
+              }
+            ]
+          },
+          "expectation": {
+            "outcome": "returned",
+            "has_value": true,
+            "value": {
+              "type": "bytes",
+              "hex": "41",
+              "length": 1
+            }
+          },
+          "status": "exact_conditional",
+          "reason": "exact example; test environment applicability not proven",
+          "arguments": {
+            "args": [
+              {
+                "type": "bytes",
+                "hex": "41",
+                "length": 1
+              }
+            ],
+            "keywords": []
+          },
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "41",
+                "length": 1
+              }
+            },
+            "origins": {
+              "data": "positional"
+            }
+          }
+        }
+      ],
+      "unknown": [],
+      "scope": "conditional exact calls only; no valid-domain inference"
+    }
+  ],
+  "dispatch": [
+    {
+      "outcome": "unsupported",
+      "value": {
+        "type": "none"
+      },
+      "error": "target not a local function",
+      "calls": [
+        {
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "attach",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 2,
+              "end": 3
+            },
+            "chain": [
+              "test_subject:attach",
+              "subject:attach"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "subject",
+                "line": 2,
+                "end": 3
+              }
+            ]
+          },
+          "site": null,
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "41",
+                "length": 1
+              }
+            },
+            "origins": {
+              "data": "positional"
+            }
+          }
+        }
+      ],
+      "trace": [],
+      "target": {
+        "status": "local",
+        "module": "subject",
+        "name": "attach",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "subject",
+          "line": 2,
+          "end": 3
+        },
+        "chain": [
+          "test_subject:attach",
+          "subject:attach"
+        ],
+        "provenance": [
+          {
+            "module": "test_subject",
+            "line": 1,
+            "end": 1
+          },
+          {
+            "module": "subject",
+            "line": 2,
+            "end": 3
+          }
+        ]
+      },
+      "task": {
+        "values": {
+          "data": {
+            "type": "bytes",
+            "hex": "41",
+            "length": 1
+          }
+        },
+        "queue": "verify",
+        "reason": "exact conditional test call",
+        "evidence_source": {
+          "module": "test_subject",
+          "line": 3,
+          "end": 3
+        }
+      },
+      "checks": [
+        {
+          "source": {
+            "module": "test_subject",
+            "line": 3,
+            "end": 3
+          },
+          "status": "unassessed",
+          "claim": "conditional exact example only; not a confirmed bug"
+        }
+      ]
+    },
+    {
+      "outcome": "unsupported",
+      "value": {
+        "type": "none"
+      },
+      "error": "target not a local function",
+      "calls": [
+        {
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "attach",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 2,
+              "end": 3
+            },
+            "chain": [
+              "test_subject:attach",
+              "subject:attach"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "subject",
+                "line": 2,
+                "end": 3
+              }
+            ]
+          },
+          "site": null,
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "",
+                "length": 0
+              }
+            },
+            "origins": {
+              "data": "positional"
+            }
+          }
+        }
+      ],
+      "trace": [],
+      "target": {
+        "status": "local",
+        "module": "subject",
+        "name": "attach",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "subject",
+          "line": 2,
+          "end": 3
+        },
+        "chain": [
+          "test_subject:attach",
+          "subject:attach"
+        ],
+        "provenance": [
+          {
+            "module": "test_subject",
+            "line": 1,
+            "end": 1
+          },
+          {
+            "module": "subject",
+            "line": 2,
+            "end": 3
+          }
+        ]
+      },
+      "task": {
+        "values": {
+          "data": {
+            "type": "bytes",
+            "hex": "",
+            "length": 0
+          }
+        },
+        "queue": "explore",
+        "reason": {
+          "vary": "data",
+          "kind": "finite single-argument family",
+          "validity": "unknown",
+          "template": {
+            "type": "bytes",
+            "hex": "41",
+            "length": 1
+          }
+        },
+        "evidence_source": {
+          "module": "test_subject",
+          "line": 3,
+          "end": 3
+        }
+      },
+      "checks": []
+    },
+    {
+      "outcome": "unsupported",
+      "value": {
+        "type": "none"
+      },
+      "error": "target not a local function",
+      "calls": [
+        {
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "attach",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 2,
+              "end": 3
+            },
+            "chain": [
+              "test_subject:attach",
+              "subject:attach"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "subject",
+                "line": 2,
+                "end": 3
+              }
+            ]
+          },
+          "site": null,
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "4141",
+                "length": 2
+              }
+            },
+            "origins": {
+              "data": "positional"
+            }
+          }
+        }
+      ],
+      "trace": [],
+      "target": {
+        "status": "local",
+        "module": "subject",
+        "name": "attach",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "subject",
+          "line": 2,
+          "end": 3
+        },
+        "chain": [
+          "test_subject:attach",
+          "subject:attach"
+        ],
+        "provenance": [
+          {
+            "module": "test_subject",
+            "line": 1,
+            "end": 1
+          },
+          {
+            "module": "subject",
+            "line": 2,
+            "end": 3
+          }
+        ]
+      },
+      "task": {
+        "values": {
+          "data": {
+            "type": "bytes",
+            "hex": "4141",
+            "length": 2
+          }
+        },
+        "queue": "explore",
+        "reason": {
+          "vary": "data",
+          "kind": "finite single-argument family",
+          "validity": "unknown",
+          "template": {
+            "type": "bytes",
+            "hex": "41",
+            "length": 1
+          }
+        },
+        "evidence_source": {
+          "module": "test_subject",
+          "line": 3,
+          "end": 3
+        }
+      },
+      "checks": []
+    },
+    {
+      "outcome": "unsupported",
+      "value": {
+        "type": "none"
+      },
+      "error": "target not a local function",
+      "calls": [
+        {
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "attach",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 2,
+              "end": 3
+            },
+            "chain": [
+              "test_subject:attach",
+              "subject:attach"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "subject",
+                "line": 2,
+                "end": 3
+              }
+            ]
+          },
+          "site": null,
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "414141",
+                "length": 3
+              }
+            },
+            "origins": {
+              "data": "positional"
+            }
+          }
+        }
+      ],
+      "trace": [],
+      "target": {
+        "status": "local",
+        "module": "subject",
+        "name": "attach",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "subject",
+          "line": 2,
+          "end": 3
+        },
+        "chain": [
+          "test_subject:attach",
+          "subject:attach"
+        ],
+        "provenance": [
+          {
+            "module": "test_subject",
+            "line": 1,
+            "end": 1
+          },
+          {
+            "module": "subject",
+            "line": 2,
+            "end": 3
+          }
+        ]
+      },
+      "task": {
+        "values": {
+          "data": {
+            "type": "bytes",
+            "hex": "414141",
+            "length": 3
+          }
+        },
+        "queue": "explore",
+        "reason": {
+          "vary": "data",
+          "kind": "finite single-argument family",
+          "validity": "unknown",
+          "template": {
+            "type": "bytes",
+            "hex": "41",
+            "length": 1
+          }
+        },
+        "evidence_source": {
+          "module": "test_subject",
+          "line": 3,
+          "end": 3
+        }
+      },
+      "checks": []
+    },
+    {
+      "outcome": "unsupported",
+      "value": {
+        "type": "none"
+      },
+      "error": "target not a local function",
+      "calls": [
+        {
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "attach",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 2,
+              "end": 3
+            },
+            "chain": [
+              "test_subject:attach",
+              "subject:attach"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "subject",
+                "line": 2,
+                "end": 3
+              }
+            ]
+          },
+          "site": null,
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "41414141",
+                "length": 4
+              }
+            },
+            "origins": {
+              "data": "positional"
+            }
+          }
+        }
+      ],
+      "trace": [],
+      "target": {
+        "status": "local",
+        "module": "subject",
+        "name": "attach",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "subject",
+          "line": 2,
+          "end": 3
+        },
+        "chain": [
+          "test_subject:attach",
+          "subject:attach"
+        ],
+        "provenance": [
+          {
+            "module": "test_subject",
+            "line": 1,
+            "end": 1
+          },
+          {
+            "module": "subject",
+            "line": 2,
+            "end": 3
+          }
+        ]
+      },
+      "task": {
+        "values": {
+          "data": {
+            "type": "bytes",
+            "hex": "41414141",
+            "length": 4
+          }
+        },
+        "queue": "explore",
+        "reason": {
+          "vary": "data",
+          "kind": "finite single-argument family",
+          "validity": "unknown",
+          "template": {
+            "type": "bytes",
+            "hex": "41",
+            "length": 1
+          }
+        },
+        "evidence_source": {
+          "module": "test_subject",
+          "line": 3,
+          "end": 3
+        }
+      },
+      "checks": []
+    },
+    {
+      "outcome": "unsupported",
+      "value": {
+        "type": "none"
+      },
+      "error": "target not a local function",
+      "calls": [
+        {
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "attach",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 2,
+              "end": 3
+            },
+            "chain": [
+              "test_subject:attach",
+              "subject:attach"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "subject",
+                "line": 2,
+                "end": 3
+              }
+            ]
+          },
+          "site": null,
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "4141414141",
+                "length": 5
+              }
+            },
+            "origins": {
+              "data": "positional"
+            }
+          }
+        }
+      ],
+      "trace": [],
+      "target": {
+        "status": "local",
+        "module": "subject",
+        "name": "attach",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "subject",
+          "line": 2,
+          "end": 3
+        },
+        "chain": [
+          "test_subject:attach",
+          "subject:attach"
+        ],
+        "provenance": [
+          {
+            "module": "test_subject",
+            "line": 1,
+            "end": 1
+          },
+          {
+            "module": "subject",
+            "line": 2,
+            "end": 3
+          }
+        ]
+      },
+      "task": {
+        "values": {
+          "data": {
+            "type": "bytes",
+            "hex": "4141414141",
+            "length": 5
+          }
+        },
+        "queue": "explore",
+        "reason": {
+          "vary": "data",
+          "kind": "finite single-argument family",
+          "validity": "unknown",
+          "template": {
+            "type": "bytes",
+            "hex": "41",
+            "length": 1
+          }
+        },
+        "evidence_source": {
+          "module": "test_subject",
+          "line": 3,
+          "end": 3
+        }
+      },
+      "checks": []
+    },
+    {
+      "outcome": "unsupported",
+      "value": {
+        "type": "none"
+      },
+      "error": "target not a local function",
+      "calls": [
+        {
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "attach",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 2,
+              "end": 3
+            },
+            "chain": [
+              "test_subject:attach",
+              "subject:attach"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "subject",
+                "line": 2,
+                "end": 3
+              }
+            ]
+          },
+          "site": null,
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "414141414141",
+                "length": 6
+              }
+            },
+            "origins": {
+              "data": "positional"
+            }
+          }
+        }
+      ],
+      "trace": [],
+      "target": {
+        "status": "local",
+        "module": "subject",
+        "name": "attach",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "subject",
+          "line": 2,
+          "end": 3
+        },
+        "chain": [
+          "test_subject:attach",
+          "subject:attach"
+        ],
+        "provenance": [
+          {
+            "module": "test_subject",
+            "line": 1,
+            "end": 1
+          },
+          {
+            "module": "subject",
+            "line": 2,
+            "end": 3
+          }
+        ]
+      },
+      "task": {
+        "values": {
+          "data": {
+            "type": "bytes",
+            "hex": "414141414141",
+            "length": 6
+          }
+        },
+        "queue": "explore",
+        "reason": {
+          "vary": "data",
+          "kind": "finite single-argument family",
+          "validity": "unknown",
+          "template": {
+            "type": "bytes",
+            "hex": "41",
+            "length": 1
+          }
+        },
+        "evidence_source": {
+          "module": "test_subject",
+          "line": 3,
+          "end": 3
+        }
+      },
+      "checks": []
+    },
+    {
+      "outcome": "unsupported",
+      "value": {
+        "type": "none"
+      },
+      "error": "target not a local function",
+      "calls": [
+        {
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "attach",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 2,
+              "end": 3
+            },
+            "chain": [
+              "test_subject:attach",
+              "subject:attach"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "subject",
+                "line": 2,
+                "end": 3
+              }
+            ]
+          },
+          "site": null,
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "41414141414141",
+                "length": 7
+              }
+            },
+            "origins": {
+              "data": "positional"
+            }
+          }
+        }
+      ],
+      "trace": [],
+      "target": {
+        "status": "local",
+        "module": "subject",
+        "name": "attach",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "subject",
+          "line": 2,
+          "end": 3
+        },
+        "chain": [
+          "test_subject:attach",
+          "subject:attach"
+        ],
+        "provenance": [
+          {
+            "module": "test_subject",
+            "line": 1,
+            "end": 1
+          },
+          {
+            "module": "subject",
+            "line": 2,
+            "end": 3
+          }
+        ]
+      },
+      "task": {
+        "values": {
+          "data": {
+            "type": "bytes",
+            "hex": "41414141414141",
+            "length": 7
+          }
+        },
+        "queue": "explore",
+        "reason": {
+          "vary": "data",
+          "kind": "finite single-argument family",
+          "validity": "unknown",
+          "template": {
+            "type": "bytes",
+            "hex": "41",
+            "length": 1
+          }
+        },
+        "evidence_source": {
+          "module": "test_subject",
+          "line": 3,
+          "end": 3
+        }
+      },
+      "checks": []
+    }
+  ],
+  "entries": [
+    {
+      "target": {
+        "status": "local",
+        "module": "subject",
+        "name": "attach",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "subject",
+          "line": 2,
+          "end": 3
+        },
+        "chain": [
+          "test_subject:attach",
+          "subject:attach"
+        ],
+        "provenance": [
+          {
+            "module": "test_subject",
+            "line": 1,
+            "end": 1
+          },
+          {
+            "module": "subject",
+            "line": 2,
+            "end": 3
+          }
+        ]
+      },
+      "pending": [
+        {
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141414141414141",
+              "length": 8
+            }
+          },
+          "queue": "explore",
+          "reason": {
+            "vary": "data",
+            "kind": "finite single-argument family",
+            "validity": "unknown",
+            "template": {
+              "type": "bytes",
+              "hex": "41",
+              "length": 1
+            }
+          },
+          "evidence_source": {
+            "module": "test_subject",
+            "line": 3,
+            "end": 3
+          }
+        }
+      ],
+      "overflow_attempts": 0,
+      "observations": 8
+    }
+  ],
+  "deferred": [],
+  "source_sha256": {
+    "subject": "59589bd433d4dfda45346524e6df5798f4aef03c00e0c0d6ac5915af4c0d2406",
+    "test_subject": "799220bf34742892a6091add6f9b43af10904b724a5377d479684880bb332057"
+  },
+  "limits": {
+    "static_dispatch": 8,
+    "entries": 8,
+    "points_per_entry": 8,
+    "lengths": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ]
+  },
+  "execution_enabled": false,
+  "scope": "isolated source semantics; module initialization/import availability unknown; exact test evidence conditional; generated-input validity unknown",
+  "limitations": "finite content templates, one changed parameter, no string solver or inferred public contract; source identity does not establish dependency behavior"
+}

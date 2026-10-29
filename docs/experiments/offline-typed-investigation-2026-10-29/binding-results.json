@@ -1,0 +1,222 @@
+[
+  {
+    "index": 0,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "4121",
+        "length": 2
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41",
+              "length": 1
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            },
+            "enabled": {
+              "type": "bool",
+              "value": true
+            },
+            "marker": {
+              "type": "none"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "index": 1,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "4121",
+        "length": 2
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41",
+              "length": 1
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            },
+            "enabled": {
+              "type": "bool",
+              "value": true
+            },
+            "marker": {
+              "type": "none"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "index": 2,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41",
+              "length": 1
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            },
+            "enabled": {
+              "type": "bool",
+              "value": false
+            },
+            "marker": {
+              "type": "none"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "index": 3,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "4121",
+        "length": 2
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41",
+              "length": 1
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            },
+            "enabled": {
+              "type": "bool",
+              "value": true
+            },
+            "marker": {
+              "type": "none"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "index": 4,
+    "status": "agrees",
+    "result": {
+      "outcome": "python_binding_error"
+    }
+  },
+  {
+    "index": 5,
+    "status": "agrees",
+    "result": {
+      "outcome": "python_binding_error"
+    }
+  },
+  {
+    "index": 6,
+    "status": "agrees",
+    "result": {
+      "outcome": "python_binding_error"
+    }
+  },
+  {
+    "index": 7,
+    "status": "agrees",
+    "result": {
+      "outcome": "python_binding_error"
+    }
+  },
+  {
+    "index": 8,
+    "status": "agrees",
+    "result": {
+      "outcome": "python_binding_error"
+    }
+  },
+  {
+    "index": 9,
+    "status": "agrees",
+    "result": {
+      "outcome": "value_error",
+      "value": {
+        "type": "none"
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41",
+              "length": 1
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            },
+            "enabled": {
+              "type": "bool",
+              "value": true
+            },
+            "marker": {
+              "type": "bytes",
+              "hex": "626164",
+              "length": 3
+            }
+          }
+        }
+      ]
+    }
+  }
+]

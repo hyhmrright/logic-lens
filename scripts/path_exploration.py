@@ -211,6 +211,21 @@ def seed_points(lo,hi):
     return sorted({lo,hi}|{n for n in (-1,0,1) if lo<=n<=hi})
 
 
+def investigation_queue(states,per_entry_limit=32,total_limit=256):
+    """Shared bounded alternating queues; callers may append new tasks after yield."""
+    counts=[0]*len(states);total=0;turn='verify'
+    while total<total_limit:
+        progress=False
+        for index,state in enumerate(states):
+            if counts[index]>=per_entry_limit or total>=total_limit:continue
+            queue=turn if state[turn] else ('explore' if turn=='verify' else 'verify')
+            if not state[queue]:continue
+            task=state[queue].pop(0);counts[index]+=1;total+=1;progress=True
+            yield state,task
+        turn='explore' if turn=='verify' else 'verify'
+        if not progress:break
+
+
 def explore(text,tests='',module='subject',window=(0,100),point_budget=32,task_budget=32,slots=8,mode='paths'):
     lo,hi=window
     integer(lo,-10000,10000,'window lower');integer(hi,lo,min(10000,lo+127),'window upper')
@@ -250,33 +265,25 @@ def explore(text,tests='',module='subject',window=(0,100),point_budget=32,task_b
             for ev in s['entry']['evidence']:
                 if ev['input'] not in s['entry']['conflicts']:add(s,ev['input'],'verify','exact test example; no interval extrapolation')
         for n in seed_points(lo,hi):add(s,n,'explore','window seed; validity unknown')
-    dispatch=[];turn='verify'
-    while True:
-        progress=False
-        for s in states:
-            r=s['report']
-            if len(s['seen'])>=point_budget:continue
-            queue=turn if s[turn] else ('explore' if turn=='verify' else 'verify')
-            if not s[queue]:continue
-            task=s[queue].pop(0);n=task['input'];s['seen'].add(n);progress=True
-            row=observe(s['functions'],s['entry']['name'],n)
-            row['task']=task;r['observations'].append(row);dispatch.append(dict(entry=s['entry']['name'],**task))
-            if row['gaps']:r['status']='partial_trace'
-            if row['outcome']=='unsupported':
-                r['status']='partial_unsupported';continue
-            if mode!='paths':continue
-            prefix=[]
-            for p in row['trace']:
-                candidates=[x for x in range(lo,hi+1) if all(predicate(q,x)==q['decision'] for q in prefix) and predicate(p,x)!=p['decision']]
-                key=dict(function=p['function'],line=p['line'],decision=not p['decision'],prefix=prefix.copy())
-                if candidates:
-                    # Existing observations discharge alternative-path tasks, not proofs outside window.
-                    if not any(x in s['seen'] for x in candidates):
-                        add(s,min(candidates,key=lambda x:(abs(x-n),x)),'explore',dict(kind='branch_alternative',target=key))
-                elif key not in r['infeasible']:r['infeasible'].append(key)
-                prefix.append(p)
-        turn='explore' if turn=='verify' else 'verify'
-        if not progress:break
+    dispatch=[]
+    for s,task in investigation_queue(states,point_budget,slots*point_budget):
+        r=s['report'];n=task['input'];s['seen'].add(n)
+        row=observe(s['functions'],s['entry']['name'],n)
+        row['task']=task;r['observations'].append(row);dispatch.append(dict(entry=s['entry']['name'],**task))
+        if row['gaps']:r['status']='partial_trace'
+        if row['outcome']=='unsupported':
+            r['status']='partial_unsupported';continue
+        if mode!='paths':continue
+        prefix=[]
+        for p in row['trace']:
+            candidates=[x for x in range(lo,hi+1) if all(predicate(q,x)==q['decision'] for q in prefix) and predicate(p,x)!=p['decision']]
+            key=dict(function=p['function'],line=p['line'],decision=not p['decision'],prefix=prefix.copy())
+            if candidates:
+                # Existing observations discharge alternative-path tasks, not proofs outside window.
+                if not any(x in s['seen'] for x in candidates):
+                    add(s,min(candidates,key=lambda x:(abs(x-n),x)),'explore',dict(kind='branch_alternative',target=key))
+            elif key not in r['infeasible']:r['infeasible'].append(key)
+            prefix.append(p)
     for s in states:
         r=s['report'];r['pending']=s['verify']+s['explore']
         if r['status']=='planned':r['status']='budget_limited' if r['pending'] or r['dropped_tasks'] else 'bounded_complete'

@@ -71,6 +71,10 @@ entries and exact test evidence, then plans bounded cross-call branch exploratio
 It remains an experimental static tool in draft #16; it does not execute real targets
 or establish public contracts automatically.
 
+The experimental [typed-call layer](docs/TYPED_INVESTIGATION.md) adds supported
+test classes, exact byte values, immutable default binding and static import provenance
+to bounded investigation queues. It remains static for real source.
+
 Every confirmed finding follows the Iron Law:
 
 **Premises → Trace → Divergence → Trigger → Remedy**

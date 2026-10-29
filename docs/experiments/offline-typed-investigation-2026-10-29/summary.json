@@ -1,0 +1,59 @@
+{
+  "status": "complete",
+  "model_calls": 0,
+  "real_subject_executions": 0,
+  "static_tasks": 64,
+  "actual_attempts": {
+    "dispatch": 48,
+    "evaluator": 82
+  },
+  "limits": {
+    "dispatch": 64,
+    "evaluator": 128
+  },
+  "dispatch_agreements": 48,
+  "dispatch_unsupported": 16,
+  "independent_universe_agreements": 72,
+  "binding_agreements": 10,
+  "failure": null,
+  "undispatched_static_tasks": 0,
+  "entry_evidence": {
+    "01-bytes-default": {
+      "exact_conditional": 1
+    },
+    "02-unittest-binding": {
+      "exact_conditional": 2
+    },
+    "03-allowed-refusal": {
+      "exact_conditional": 1
+    },
+    "04-relative-source": {
+      "exact_conditional": 1
+    },
+    "05-reexport-source": {
+      "exact_conditional": 1
+    },
+    "06-shadowed-name": {
+      "dependency_unknown": 1
+    },
+    "07-fixture-context": {
+      "context_unknown": 1
+    },
+    "08-contract-conflict": {
+      "conflict": 2
+    },
+    "09-mutable-default": {
+      "unsupported": 1
+    },
+    "10-external-boundary": {
+      "exact_conditional": 1
+    },
+    "11-unsupported-content": {
+      "exact_conditional": 1
+    },
+    "12-equal-length-content": {
+      "exact_conditional": 2
+    }
+  },
+  "scope": "one bounded trusted-synthetic diagnostic; regression tests separate; no real modules selected or run; no retries"
+}

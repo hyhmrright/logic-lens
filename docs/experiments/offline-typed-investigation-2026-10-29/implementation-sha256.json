@@ -1,0 +1,8 @@
+{
+  "scripts/typed_calls.py": "f048f7be99eed9aad2addf64f95b2e35ef1edcb28f7160ab8515ed1495753282",
+  "scripts/typed_investigation.py": "6d5fc94504bb1d8948d2025f70569c9989172e820c2bac9225d820c0e5f63649",
+  "scripts/path_exploration.py": "c0c9c9f42f4bb37930b5110fa89bd167672b090c274a9478a67db2b89cd863cf",
+  "tests/qualify_typed_investigation.py": "1bb8cf2a34c6c74c6235515edf207d2298e89630e3ef5f99957f4fa6834575ce",
+  "tests/test_typed_investigation.py": "f29547fca662688f175cb31f089067a59921b252f96c4d6b3c5466f3c07fd98c",
+  "docs/experiments/typed-calls-offline-plan.md": "7e2b7e0f98835a376d10fb39541d2e99846078500a8c99aab7279e733e912e9d"
+}

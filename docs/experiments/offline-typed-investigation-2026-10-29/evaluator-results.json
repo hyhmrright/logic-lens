@@ -1,0 +1,3610 @@
+[
+  {
+    "case": {
+      "project": "01-bytes-default",
+      "module": "subject",
+      "function": "attach",
+      "length": 0,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "21",
+        "length": 1
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "",
+              "length": 0
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "01-bytes-default",
+      "module": "subject",
+      "function": "attach",
+      "length": 1,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "4121",
+        "length": 2
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41",
+              "length": 1
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "01-bytes-default",
+      "module": "subject",
+      "function": "attach",
+      "length": 2,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "414121",
+        "length": 3
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141",
+              "length": 2
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "01-bytes-default",
+      "module": "subject",
+      "function": "attach",
+      "length": 3,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "41414121",
+        "length": 4
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "414141",
+              "length": 3
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "01-bytes-default",
+      "module": "subject",
+      "function": "attach",
+      "length": 4,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "4141414121",
+        "length": 5
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41414141",
+              "length": 4
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "01-bytes-default",
+      "module": "subject",
+      "function": "attach",
+      "length": 5,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "414141414121",
+        "length": 6
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141414141",
+              "length": 5
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "01-bytes-default",
+      "module": "subject",
+      "function": "attach",
+      "length": 6,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "41414141414121",
+        "length": 7
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "414141414141",
+              "length": 6
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "01-bytes-default",
+      "module": "subject",
+      "function": "attach",
+      "length": 7,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "4141414141414121",
+        "length": 8
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41414141414141",
+              "length": 7
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "01-bytes-default",
+      "module": "subject",
+      "function": "attach",
+      "length": 8,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "414141414141414121",
+        "length": 9
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141414141414141",
+              "length": 8
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "02-unittest-binding",
+      "module": "subject",
+      "function": "attach",
+      "length": 0,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {
+        "enabled": {
+          "type": "bool",
+          "value": true
+        }
+      }
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "21",
+        "length": 1
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "",
+              "length": 0
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            },
+            "enabled": {
+              "type": "bool",
+              "value": true
+            },
+            "marker": {
+              "type": "none"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "02-unittest-binding",
+      "module": "subject",
+      "function": "attach",
+      "length": 1,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {
+        "enabled": {
+          "type": "bool",
+          "value": true
+        }
+      }
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "4121",
+        "length": 2
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41",
+              "length": 1
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            },
+            "enabled": {
+              "type": "bool",
+              "value": true
+            },
+            "marker": {
+              "type": "none"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "02-unittest-binding",
+      "module": "subject",
+      "function": "attach",
+      "length": 2,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {
+        "enabled": {
+          "type": "bool",
+          "value": true
+        }
+      }
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "414121",
+        "length": 3
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141",
+              "length": 2
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            },
+            "enabled": {
+              "type": "bool",
+              "value": true
+            },
+            "marker": {
+              "type": "none"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "02-unittest-binding",
+      "module": "subject",
+      "function": "attach",
+      "length": 3,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {
+        "enabled": {
+          "type": "bool",
+          "value": true
+        }
+      }
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "41414121",
+        "length": 4
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "414141",
+              "length": 3
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            },
+            "enabled": {
+              "type": "bool",
+              "value": true
+            },
+            "marker": {
+              "type": "none"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "02-unittest-binding",
+      "module": "subject",
+      "function": "attach",
+      "length": 4,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {
+        "enabled": {
+          "type": "bool",
+          "value": true
+        }
+      }
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "4141414121",
+        "length": 5
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41414141",
+              "length": 4
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            },
+            "enabled": {
+              "type": "bool",
+              "value": true
+            },
+            "marker": {
+              "type": "none"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "02-unittest-binding",
+      "module": "subject",
+      "function": "attach",
+      "length": 5,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {
+        "enabled": {
+          "type": "bool",
+          "value": true
+        }
+      }
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "414141414121",
+        "length": 6
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141414141",
+              "length": 5
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            },
+            "enabled": {
+              "type": "bool",
+              "value": true
+            },
+            "marker": {
+              "type": "none"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "02-unittest-binding",
+      "module": "subject",
+      "function": "attach",
+      "length": 6,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {
+        "enabled": {
+          "type": "bool",
+          "value": true
+        }
+      }
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "41414141414121",
+        "length": 7
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "414141414141",
+              "length": 6
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            },
+            "enabled": {
+              "type": "bool",
+              "value": true
+            },
+            "marker": {
+              "type": "none"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "02-unittest-binding",
+      "module": "subject",
+      "function": "attach",
+      "length": 7,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {
+        "enabled": {
+          "type": "bool",
+          "value": true
+        }
+      }
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "4141414141414121",
+        "length": 8
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41414141414141",
+              "length": 7
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            },
+            "enabled": {
+              "type": "bool",
+              "value": true
+            },
+            "marker": {
+              "type": "none"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "02-unittest-binding",
+      "module": "subject",
+      "function": "attach",
+      "length": 8,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {
+        "enabled": {
+          "type": "bool",
+          "value": true
+        }
+      }
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "414141414141414121",
+        "length": 9
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141414141414141",
+              "length": 8
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            },
+            "enabled": {
+              "type": "bool",
+              "value": true
+            },
+            "marker": {
+              "type": "none"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "02-unittest-binding",
+      "module": "subject",
+      "function": "attach",
+      "length": 0,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {
+        "enabled": {
+          "type": "bool",
+          "value": false
+        }
+      }
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "",
+        "length": 0
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "",
+              "length": 0
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            },
+            "enabled": {
+              "type": "bool",
+              "value": false
+            },
+            "marker": {
+              "type": "none"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "02-unittest-binding",
+      "module": "subject",
+      "function": "attach",
+      "length": 1,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {
+        "enabled": {
+          "type": "bool",
+          "value": false
+        }
+      }
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41",
+              "length": 1
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            },
+            "enabled": {
+              "type": "bool",
+              "value": false
+            },
+            "marker": {
+              "type": "none"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "02-unittest-binding",
+      "module": "subject",
+      "function": "attach",
+      "length": 2,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {
+        "enabled": {
+          "type": "bool",
+          "value": false
+        }
+      }
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "4141",
+        "length": 2
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141",
+              "length": 2
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            },
+            "enabled": {
+              "type": "bool",
+              "value": false
+            },
+            "marker": {
+              "type": "none"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "02-unittest-binding",
+      "module": "subject",
+      "function": "attach",
+      "length": 3,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {
+        "enabled": {
+          "type": "bool",
+          "value": false
+        }
+      }
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "414141",
+        "length": 3
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "414141",
+              "length": 3
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            },
+            "enabled": {
+              "type": "bool",
+              "value": false
+            },
+            "marker": {
+              "type": "none"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "02-unittest-binding",
+      "module": "subject",
+      "function": "attach",
+      "length": 4,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {
+        "enabled": {
+          "type": "bool",
+          "value": false
+        }
+      }
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "41414141",
+        "length": 4
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41414141",
+              "length": 4
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            },
+            "enabled": {
+              "type": "bool",
+              "value": false
+            },
+            "marker": {
+              "type": "none"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "02-unittest-binding",
+      "module": "subject",
+      "function": "attach",
+      "length": 5,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {
+        "enabled": {
+          "type": "bool",
+          "value": false
+        }
+      }
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "4141414141",
+        "length": 5
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141414141",
+              "length": 5
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            },
+            "enabled": {
+              "type": "bool",
+              "value": false
+            },
+            "marker": {
+              "type": "none"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "02-unittest-binding",
+      "module": "subject",
+      "function": "attach",
+      "length": 6,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {
+        "enabled": {
+          "type": "bool",
+          "value": false
+        }
+      }
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "414141414141",
+        "length": 6
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "414141414141",
+              "length": 6
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            },
+            "enabled": {
+              "type": "bool",
+              "value": false
+            },
+            "marker": {
+              "type": "none"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "02-unittest-binding",
+      "module": "subject",
+      "function": "attach",
+      "length": 7,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {
+        "enabled": {
+          "type": "bool",
+          "value": false
+        }
+      }
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "41414141414141",
+        "length": 7
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41414141414141",
+              "length": 7
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            },
+            "enabled": {
+              "type": "bool",
+              "value": false
+            },
+            "marker": {
+              "type": "none"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "02-unittest-binding",
+      "module": "subject",
+      "function": "attach",
+      "length": 8,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {
+        "enabled": {
+          "type": "bool",
+          "value": false
+        }
+      }
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "4141414141414141",
+        "length": 8
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141414141414141",
+              "length": 8
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            },
+            "enabled": {
+              "type": "bool",
+              "value": false
+            },
+            "marker": {
+              "type": "none"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "03-allowed-refusal",
+      "module": "subject",
+      "function": "check",
+      "length": 0,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "",
+        "length": 0
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "check",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "",
+              "length": 0
+            },
+            "limit": {
+              "type": "int",
+              "value": 3
+            }
+          }
+        },
+        {
+          "module": "subject",
+          "name": "helper",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "",
+              "length": 0
+            },
+            "limit": {
+              "type": "int",
+              "value": 3
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "03-allowed-refusal",
+      "module": "subject",
+      "function": "check",
+      "length": 1,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "check",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41",
+              "length": 1
+            },
+            "limit": {
+              "type": "int",
+              "value": 3
+            }
+          }
+        },
+        {
+          "module": "subject",
+          "name": "helper",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41",
+              "length": 1
+            },
+            "limit": {
+              "type": "int",
+              "value": 3
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "03-allowed-refusal",
+      "module": "subject",
+      "function": "check",
+      "length": 2,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "4141",
+        "length": 2
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "check",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141",
+              "length": 2
+            },
+            "limit": {
+              "type": "int",
+              "value": 3
+            }
+          }
+        },
+        {
+          "module": "subject",
+          "name": "helper",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141",
+              "length": 2
+            },
+            "limit": {
+              "type": "int",
+              "value": 3
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "03-allowed-refusal",
+      "module": "subject",
+      "function": "check",
+      "length": 3,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "414141",
+        "length": 3
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "check",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "414141",
+              "length": 3
+            },
+            "limit": {
+              "type": "int",
+              "value": 3
+            }
+          }
+        },
+        {
+          "module": "subject",
+          "name": "helper",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "414141",
+              "length": 3
+            },
+            "limit": {
+              "type": "int",
+              "value": 3
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "03-allowed-refusal",
+      "module": "subject",
+      "function": "check",
+      "length": 4,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "value_error",
+      "value": {
+        "type": "none"
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "check",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41414141",
+              "length": 4
+            },
+            "limit": {
+              "type": "int",
+              "value": 3
+            }
+          }
+        },
+        {
+          "module": "subject",
+          "name": "helper",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41414141",
+              "length": 4
+            },
+            "limit": {
+              "type": "int",
+              "value": 3
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "03-allowed-refusal",
+      "module": "subject",
+      "function": "check",
+      "length": 5,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "value_error",
+      "value": {
+        "type": "none"
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "check",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141414141",
+              "length": 5
+            },
+            "limit": {
+              "type": "int",
+              "value": 3
+            }
+          }
+        },
+        {
+          "module": "subject",
+          "name": "helper",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141414141",
+              "length": 5
+            },
+            "limit": {
+              "type": "int",
+              "value": 3
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "03-allowed-refusal",
+      "module": "subject",
+      "function": "check",
+      "length": 6,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "value_error",
+      "value": {
+        "type": "none"
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "check",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "414141414141",
+              "length": 6
+            },
+            "limit": {
+              "type": "int",
+              "value": 3
+            }
+          }
+        },
+        {
+          "module": "subject",
+          "name": "helper",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "414141414141",
+              "length": 6
+            },
+            "limit": {
+              "type": "int",
+              "value": 3
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "03-allowed-refusal",
+      "module": "subject",
+      "function": "check",
+      "length": 7,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "value_error",
+      "value": {
+        "type": "none"
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "check",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41414141414141",
+              "length": 7
+            },
+            "limit": {
+              "type": "int",
+              "value": 3
+            }
+          }
+        },
+        {
+          "module": "subject",
+          "name": "helper",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41414141414141",
+              "length": 7
+            },
+            "limit": {
+              "type": "int",
+              "value": 3
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "03-allowed-refusal",
+      "module": "subject",
+      "function": "check",
+      "length": 8,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "value_error",
+      "value": {
+        "type": "none"
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "check",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141414141414141",
+              "length": 8
+            },
+            "limit": {
+              "type": "int",
+              "value": 3
+            }
+          }
+        },
+        {
+          "module": "subject",
+          "name": "helper",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141414141414141",
+              "length": 8
+            },
+            "limit": {
+              "type": "int",
+              "value": 3
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "04-relative-source",
+      "module": "pkg.api",
+      "function": "attach",
+      "length": 0,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "21",
+        "length": 1
+      },
+      "calls": [
+        {
+          "module": "pkg.api",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "",
+              "length": 0
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        },
+        {
+          "module": "pkg.worker",
+          "name": "add",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "",
+              "length": 0
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "04-relative-source",
+      "module": "pkg.api",
+      "function": "attach",
+      "length": 1,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "4121",
+        "length": 2
+      },
+      "calls": [
+        {
+          "module": "pkg.api",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41",
+              "length": 1
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        },
+        {
+          "module": "pkg.worker",
+          "name": "add",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41",
+              "length": 1
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "04-relative-source",
+      "module": "pkg.api",
+      "function": "attach",
+      "length": 2,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "414121",
+        "length": 3
+      },
+      "calls": [
+        {
+          "module": "pkg.api",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141",
+              "length": 2
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        },
+        {
+          "module": "pkg.worker",
+          "name": "add",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141",
+              "length": 2
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "04-relative-source",
+      "module": "pkg.api",
+      "function": "attach",
+      "length": 3,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "41414121",
+        "length": 4
+      },
+      "calls": [
+        {
+          "module": "pkg.api",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "414141",
+              "length": 3
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        },
+        {
+          "module": "pkg.worker",
+          "name": "add",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "414141",
+              "length": 3
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "04-relative-source",
+      "module": "pkg.api",
+      "function": "attach",
+      "length": 4,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "4141414121",
+        "length": 5
+      },
+      "calls": [
+        {
+          "module": "pkg.api",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41414141",
+              "length": 4
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        },
+        {
+          "module": "pkg.worker",
+          "name": "add",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41414141",
+              "length": 4
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "04-relative-source",
+      "module": "pkg.api",
+      "function": "attach",
+      "length": 5,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "414141414121",
+        "length": 6
+      },
+      "calls": [
+        {
+          "module": "pkg.api",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141414141",
+              "length": 5
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        },
+        {
+          "module": "pkg.worker",
+          "name": "add",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141414141",
+              "length": 5
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "04-relative-source",
+      "module": "pkg.api",
+      "function": "attach",
+      "length": 6,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "41414141414121",
+        "length": 7
+      },
+      "calls": [
+        {
+          "module": "pkg.api",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "414141414141",
+              "length": 6
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        },
+        {
+          "module": "pkg.worker",
+          "name": "add",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "414141414141",
+              "length": 6
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "04-relative-source",
+      "module": "pkg.api",
+      "function": "attach",
+      "length": 7,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "4141414141414121",
+        "length": 8
+      },
+      "calls": [
+        {
+          "module": "pkg.api",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41414141414141",
+              "length": 7
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        },
+        {
+          "module": "pkg.worker",
+          "name": "add",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41414141414141",
+              "length": 7
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "04-relative-source",
+      "module": "pkg.api",
+      "function": "attach",
+      "length": 8,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "414141414141414121",
+        "length": 9
+      },
+      "calls": [
+        {
+          "module": "pkg.api",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141414141414141",
+              "length": 8
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        },
+        {
+          "module": "pkg.worker",
+          "name": "add",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141414141414141",
+              "length": 8
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "05-reexport-source",
+      "module": "backend",
+      "function": "attach",
+      "length": 0,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {
+        "suffix": {
+          "type": "bytes",
+          "hex": "3f",
+          "length": 1
+        }
+      }
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "3f",
+        "length": 1
+      },
+      "calls": [
+        {
+          "module": "backend",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "",
+              "length": 0
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "3f",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "05-reexport-source",
+      "module": "backend",
+      "function": "attach",
+      "length": 1,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {
+        "suffix": {
+          "type": "bytes",
+          "hex": "3f",
+          "length": 1
+        }
+      }
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "413f",
+        "length": 2
+      },
+      "calls": [
+        {
+          "module": "backend",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41",
+              "length": 1
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "3f",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "05-reexport-source",
+      "module": "backend",
+      "function": "attach",
+      "length": 2,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {
+        "suffix": {
+          "type": "bytes",
+          "hex": "3f",
+          "length": 1
+        }
+      }
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "41413f",
+        "length": 3
+      },
+      "calls": [
+        {
+          "module": "backend",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141",
+              "length": 2
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "3f",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "05-reexport-source",
+      "module": "backend",
+      "function": "attach",
+      "length": 3,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {
+        "suffix": {
+          "type": "bytes",
+          "hex": "3f",
+          "length": 1
+        }
+      }
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "4141413f",
+        "length": 4
+      },
+      "calls": [
+        {
+          "module": "backend",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "414141",
+              "length": 3
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "3f",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "05-reexport-source",
+      "module": "backend",
+      "function": "attach",
+      "length": 4,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {
+        "suffix": {
+          "type": "bytes",
+          "hex": "3f",
+          "length": 1
+        }
+      }
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "414141413f",
+        "length": 5
+      },
+      "calls": [
+        {
+          "module": "backend",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41414141",
+              "length": 4
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "3f",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "05-reexport-source",
+      "module": "backend",
+      "function": "attach",
+      "length": 5,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {
+        "suffix": {
+          "type": "bytes",
+          "hex": "3f",
+          "length": 1
+        }
+      }
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "41414141413f",
+        "length": 6
+      },
+      "calls": [
+        {
+          "module": "backend",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141414141",
+              "length": 5
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "3f",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "05-reexport-source",
+      "module": "backend",
+      "function": "attach",
+      "length": 6,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {
+        "suffix": {
+          "type": "bytes",
+          "hex": "3f",
+          "length": 1
+        }
+      }
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "4141414141413f",
+        "length": 7
+      },
+      "calls": [
+        {
+          "module": "backend",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "414141414141",
+              "length": 6
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "3f",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "05-reexport-source",
+      "module": "backend",
+      "function": "attach",
+      "length": 7,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {
+        "suffix": {
+          "type": "bytes",
+          "hex": "3f",
+          "length": 1
+        }
+      }
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "414141414141413f",
+        "length": 8
+      },
+      "calls": [
+        {
+          "module": "backend",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41414141414141",
+              "length": 7
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "3f",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "05-reexport-source",
+      "module": "backend",
+      "function": "attach",
+      "length": 8,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {
+        "suffix": {
+          "type": "bytes",
+          "hex": "3f",
+          "length": 1
+        }
+      }
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "41414141414141413f",
+        "length": 9
+      },
+      "calls": [
+        {
+          "module": "backend",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141414141414141",
+              "length": 8
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "3f",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "12-equal-length-content",
+      "module": "subject",
+      "function": "classify",
+      "length": 0,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "int",
+        "value": 2
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "classify",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "",
+              "length": 0
+            },
+            "labels": {
+              "type": "tuple",
+              "items": [
+                {
+                  "type": "int",
+                  "value": 1
+                },
+                {
+                  "type": "int",
+                  "value": 2
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "12-equal-length-content",
+      "module": "subject",
+      "function": "classify",
+      "length": 1,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "int",
+        "value": 1
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "classify",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41",
+              "length": 1
+            },
+            "labels": {
+              "type": "tuple",
+              "items": [
+                {
+                  "type": "int",
+                  "value": 1
+                },
+                {
+                  "type": "int",
+                  "value": 2
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "12-equal-length-content",
+      "module": "subject",
+      "function": "classify",
+      "length": 2,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "int",
+        "value": 2
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "classify",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141",
+              "length": 2
+            },
+            "labels": {
+              "type": "tuple",
+              "items": [
+                {
+                  "type": "int",
+                  "value": 1
+                },
+                {
+                  "type": "int",
+                  "value": 2
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "12-equal-length-content",
+      "module": "subject",
+      "function": "classify",
+      "length": 3,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "int",
+        "value": 2
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "classify",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "414141",
+              "length": 3
+            },
+            "labels": {
+              "type": "tuple",
+              "items": [
+                {
+                  "type": "int",
+                  "value": 1
+                },
+                {
+                  "type": "int",
+                  "value": 2
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "12-equal-length-content",
+      "module": "subject",
+      "function": "classify",
+      "length": 4,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "int",
+        "value": 2
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "classify",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41414141",
+              "length": 4
+            },
+            "labels": {
+              "type": "tuple",
+              "items": [
+                {
+                  "type": "int",
+                  "value": 1
+                },
+                {
+                  "type": "int",
+                  "value": 2
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "12-equal-length-content",
+      "module": "subject",
+      "function": "classify",
+      "length": 5,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "int",
+        "value": 2
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "classify",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141414141",
+              "length": 5
+            },
+            "labels": {
+              "type": "tuple",
+              "items": [
+                {
+                  "type": "int",
+                  "value": 1
+                },
+                {
+                  "type": "int",
+                  "value": 2
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "12-equal-length-content",
+      "module": "subject",
+      "function": "classify",
+      "length": 6,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "int",
+        "value": 2
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "classify",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "414141414141",
+              "length": 6
+            },
+            "labels": {
+              "type": "tuple",
+              "items": [
+                {
+                  "type": "int",
+                  "value": 1
+                },
+                {
+                  "type": "int",
+                  "value": 2
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "12-equal-length-content",
+      "module": "subject",
+      "function": "classify",
+      "length": 7,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "int",
+        "value": 2
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "classify",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41414141414141",
+              "length": 7
+            },
+            "labels": {
+              "type": "tuple",
+              "items": [
+                {
+                  "type": "int",
+                  "value": 1
+                },
+                {
+                  "type": "int",
+                  "value": 2
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "12-equal-length-content",
+      "module": "subject",
+      "function": "classify",
+      "length": 8,
+      "fill": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "int",
+        "value": 2
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "classify",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141414141414141",
+              "length": 8
+            },
+            "labels": {
+              "type": "tuple",
+              "items": [
+                {
+                  "type": "int",
+                  "value": 1
+                },
+                {
+                  "type": "int",
+                  "value": 2
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "12-equal-length-content",
+      "module": "subject",
+      "function": "classify",
+      "length": 0,
+      "fill": {
+        "type": "bytes",
+        "hex": "42",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "int",
+        "value": 2
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "classify",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "",
+              "length": 0
+            },
+            "labels": {
+              "type": "tuple",
+              "items": [
+                {
+                  "type": "int",
+                  "value": 1
+                },
+                {
+                  "type": "int",
+                  "value": 2
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "12-equal-length-content",
+      "module": "subject",
+      "function": "classify",
+      "length": 1,
+      "fill": {
+        "type": "bytes",
+        "hex": "42",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "int",
+        "value": 2
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "classify",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "42",
+              "length": 1
+            },
+            "labels": {
+              "type": "tuple",
+              "items": [
+                {
+                  "type": "int",
+                  "value": 1
+                },
+                {
+                  "type": "int",
+                  "value": 2
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "12-equal-length-content",
+      "module": "subject",
+      "function": "classify",
+      "length": 2,
+      "fill": {
+        "type": "bytes",
+        "hex": "42",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "int",
+        "value": 2
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "classify",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4242",
+              "length": 2
+            },
+            "labels": {
+              "type": "tuple",
+              "items": [
+                {
+                  "type": "int",
+                  "value": 1
+                },
+                {
+                  "type": "int",
+                  "value": 2
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "12-equal-length-content",
+      "module": "subject",
+      "function": "classify",
+      "length": 3,
+      "fill": {
+        "type": "bytes",
+        "hex": "42",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "int",
+        "value": 2
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "classify",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "424242",
+              "length": 3
+            },
+            "labels": {
+              "type": "tuple",
+              "items": [
+                {
+                  "type": "int",
+                  "value": 1
+                },
+                {
+                  "type": "int",
+                  "value": 2
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "12-equal-length-content",
+      "module": "subject",
+      "function": "classify",
+      "length": 4,
+      "fill": {
+        "type": "bytes",
+        "hex": "42",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "int",
+        "value": 2
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "classify",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "42424242",
+              "length": 4
+            },
+            "labels": {
+              "type": "tuple",
+              "items": [
+                {
+                  "type": "int",
+                  "value": 1
+                },
+                {
+                  "type": "int",
+                  "value": 2
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "12-equal-length-content",
+      "module": "subject",
+      "function": "classify",
+      "length": 5,
+      "fill": {
+        "type": "bytes",
+        "hex": "42",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "int",
+        "value": 2
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "classify",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4242424242",
+              "length": 5
+            },
+            "labels": {
+              "type": "tuple",
+              "items": [
+                {
+                  "type": "int",
+                  "value": 1
+                },
+                {
+                  "type": "int",
+                  "value": 2
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "12-equal-length-content",
+      "module": "subject",
+      "function": "classify",
+      "length": 6,
+      "fill": {
+        "type": "bytes",
+        "hex": "42",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "int",
+        "value": 2
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "classify",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "424242424242",
+              "length": 6
+            },
+            "labels": {
+              "type": "tuple",
+              "items": [
+                {
+                  "type": "int",
+                  "value": 1
+                },
+                {
+                  "type": "int",
+                  "value": 2
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "12-equal-length-content",
+      "module": "subject",
+      "function": "classify",
+      "length": 7,
+      "fill": {
+        "type": "bytes",
+        "hex": "42",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "int",
+        "value": 2
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "classify",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "42424242424242",
+              "length": 7
+            },
+            "labels": {
+              "type": "tuple",
+              "items": [
+                {
+                  "type": "int",
+                  "value": 1
+                },
+                {
+                  "type": "int",
+                  "value": 2
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "project": "12-equal-length-content",
+      "module": "subject",
+      "function": "classify",
+      "length": 8,
+      "fill": {
+        "type": "bytes",
+        "hex": "42",
+        "length": 1
+      },
+      "keywords": {}
+    },
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "int",
+        "value": 2
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "classify",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4242424242424242",
+              "length": 8
+            },
+            "labels": {
+              "type": "tuple",
+              "items": [
+                {
+                  "type": "int",
+                  "value": 1
+                },
+                {
+                  "type": "int",
+                  "value": 2
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+]

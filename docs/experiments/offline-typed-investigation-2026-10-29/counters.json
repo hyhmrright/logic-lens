@@ -1,0 +1,10 @@
+{
+  "counts": {
+    "dispatch": 48,
+    "evaluator": 82
+  },
+  "limits": {
+    "dispatch": 64,
+    "evaluator": 128
+  }
+}
