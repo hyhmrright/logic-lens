@@ -1,0 +1,692 @@
+{
+  "schema_version": 1,
+  "baseline_skill_commit": "bcf8dbd3f3a5bf6bb34fb46e0284c78303f9fba2",
+  "caveats": [
+    "Historical defects may be in model training data; this is not a contamination-free benchmark.",
+    "All seeds were visible during development; a future project/family-held-out set is still required.",
+    "Repaired snapshots only remove the target defect; other legitimate defects may remain."
+  ],
+  "cases": [
+    {
+      "id": "httpx-01",
+      "project": "httpx",
+      "repository": "https://github.com/encode/httpx.git",
+      "base_commit": "8ecb86f0d74ffc52d4663214fae9526bee89358d",
+      "fix_commit": "89599a9541af14bcf906fc4ed58ccbdf403802ba",
+      "fix_url": "https://github.com/encode/httpx/commit/89599a9541af14bcf906fc4ed58ccbdf403802ba",
+      "review_paths": [
+        "httpx/_config.py"
+      ],
+      "source_paths": [
+        "httpx/_config.py"
+      ],
+      "regression_test_paths": [],
+      "expected_behavior": "Client certificates are still loaded with server verification disabled.",
+      "curation_status": "target failure inspected; source pair locally verified",
+      "family": "Client TLS configuration",
+      "split": "development",
+      "verification_platform": "portable",
+      "local_verification": {
+        "status": "verified-target-pair",
+        "python": "3.11.18",
+        "environment": "environments/python311.txt",
+        "buggy_exit_code": 1,
+        "fixed_exit_code": 0,
+        "inspected_failure": "Client certificate path validation is skipped by the premature return.",
+        "log_sha256": {
+          "buggy": "535fc82a94415d0ffc7312cae133328fd55c98d2720c269b30e278fbccdbdcea",
+          "fixed": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "id": "httpx-02",
+      "project": "httpx",
+      "repository": "https://github.com/encode/httpx.git",
+      "base_commit": "189fc4bcbe5f314128775dec66a616ac9a31ad48",
+      "fix_commit": "47f4a96ffaaaa07dca1614409549b5d7a6e7af49",
+      "fix_url": "https://github.com/encode/httpx/commit/47f4a96ffaaaa07dca1614409549b5d7a6e7af49",
+      "review_paths": [
+        "httpx/_decoders.py"
+      ],
+      "source_paths": [
+        "httpx/_decoders.py"
+      ],
+      "regression_test_paths": [
+        "tests/test_decoders.py"
+      ],
+      "expected_behavior": "An empty zstd response decodes to empty content, without a truncation error.",
+      "curation_status": "target failure inspected; source pair locally verified",
+      "family": "Response content decoding",
+      "split": "development",
+      "verification_platform": "portable",
+      "local_verification": {
+        "status": "verified-target-pair",
+        "python": "3.11.18",
+        "environment": "environments/python311.txt",
+        "buggy_exit_code": 1,
+        "fixed_exit_code": 0,
+        "inspected_failure": "Empty body flush raises Zstandard data is incomplete.",
+        "log_sha256": {
+          "buggy": "bdf7c8244a0bed993bd6f452cc1a46705e1a09470378d8abe560b3a0e28f5843",
+          "fixed": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "id": "httpx-03",
+      "project": "httpx",
+      "repository": "https://github.com/encode/httpx.git",
+      "base_commit": "df5345140e09ac6c2de0d9589bcd6f3e31c6aa3f",
+      "fix_commit": "6d852d319acd5d97caf14037dff15ede04b37542",
+      "fix_url": "https://github.com/encode/httpx/commit/6d852d319acd5d97caf14037dff15ede04b37542",
+      "review_paths": [
+        "httpx/_client.py"
+      ],
+      "source_paths": [
+        "httpx/_client.py"
+      ],
+      "regression_test_paths": [
+        "tests/test_timeouts.py"
+      ],
+      "expected_behavior": "Sending an explicitly constructed Request applies the client timeout when no request timeout exists.",
+      "curation_status": "target failure inspected; source pair locally verified",
+      "family": "Client request dispatch",
+      "split": "development",
+      "verification_platform": "portable",
+      "local_verification": {
+        "status": "verified-target-pair",
+        "python": "3.11.18",
+        "environment": "environments/python311.txt",
+        "buggy_exit_code": 1,
+        "fixed_exit_code": 0,
+        "inspected_failure": "Transport receives no timeout extension.",
+        "log_sha256": {
+          "buggy": "6729a2e937e0371c342b1d57897524d333c528de6fac5de11101ae1161fd5630",
+          "fixed": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "id": "httpx-04",
+      "project": "httpx",
+      "repository": "https://github.com/encode/httpx.git",
+      "base_commit": "ca51b4532a4495c38c8abf1a393dbd80099deae3",
+      "fix_commit": "99cba6ac642b12f0331d069ae324402c54c4c600",
+      "fix_url": "https://github.com/encode/httpx/commit/99cba6ac642b12f0331d069ae324402c54c4c600",
+      "review_paths": [
+        "httpx/_auth.py"
+      ],
+      "source_paths": [
+        "httpx/_auth.py"
+      ],
+      "regression_test_paths": [
+        "tests/test_auth.py"
+      ],
+      "expected_behavior": "RFC 2069 digest authentication hashes HA1 exactly once when qop is absent.",
+      "curation_status": "target failure inspected; source pair locally verified",
+      "family": "Authentication flows",
+      "split": "development",
+      "verification_platform": "portable",
+      "local_verification": {
+        "status": "verified-target-pair",
+        "python": "3.11.18",
+        "environment": "environments/python311.txt",
+        "buggy_exit_code": 1,
+        "fixed_exit_code": 0,
+        "inspected_failure": "RFC 2069 response hash differs from the upstream/RFC test vector.",
+        "log_sha256": {
+          "buggy": "1d98735c85408cf97d02aad7acd191c28e98b285e4cd243d7165f887627bc777",
+          "fixed": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "id": "httpx-05",
+      "project": "httpx",
+      "repository": "https://github.com/encode/httpx.git",
+      "base_commit": "90538a3b4610ba49ce16c997bcfdb9101f9503be",
+      "fix_commit": "1e110964736a95d822144390b99d7ecf17fca527",
+      "fix_url": "https://github.com/encode/httpx/commit/1e110964736a95d822144390b99d7ecf17fca527",
+      "review_paths": [
+        "httpx/_models.py"
+      ],
+      "source_paths": [
+        "httpx/_decoders.py",
+        "httpx/_models.py"
+      ],
+      "regression_test_paths": [
+        "tests/test_decoders.py"
+      ],
+      "expected_behavior": "Streaming text does not append an empty decoded chunk at flush.",
+      "curation_status": "target failure inspected; source pair locally verified",
+      "family": "Streaming response text",
+      "split": "development",
+      "verification_platform": "portable",
+      "local_verification": {
+        "status": "verified-target-pair",
+        "python": "3.11.18",
+        "environment": "environments/python311.txt",
+        "buggy_exit_code": 1,
+        "fixed_exit_code": 0,
+        "inspected_failure": "Text streaming emits an extra empty chunk.",
+        "log_sha256": {
+          "buggy": "46e8a706d4c7e72f9063dafc9ba8879a1286e9a2bde9b832fb73dc42214961ca",
+          "fixed": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "id": "httpx-06",
+      "project": "httpx",
+      "repository": "https://github.com/encode/httpx.git",
+      "base_commit": "f8981f3d124f9b8db9073fd5c8afa11acb55a738",
+      "fix_commit": "90538a3b4610ba49ce16c997bcfdb9101f9503be",
+      "fix_url": "https://github.com/encode/httpx/commit/90538a3b4610ba49ce16c997bcfdb9101f9503be",
+      "review_paths": [
+        "httpx/_transports/asgi.py"
+      ],
+      "source_paths": [
+        "httpx/_transports/asgi.py"
+      ],
+      "regression_test_paths": [
+        "tests/test_asgi.py"
+      ],
+      "expected_behavior": "ASGI raw_path excludes the URL query component.",
+      "curation_status": "target failure inspected; source pair locally verified",
+      "family": "ASGI transport",
+      "split": "development",
+      "verification_platform": "portable",
+      "local_verification": {
+        "status": "verified-target-pair",
+        "python": "3.11.18",
+        "environment": "environments/python311.txt",
+        "buggy_exit_code": 1,
+        "fixed_exit_code": 0,
+        "inspected_failure": "ASGI raw_path contains the query string.",
+        "log_sha256": {
+          "buggy": "466683eb693fc11294b08c066ef667154a5dc0a8a8ad737444801a7c4ede12b8",
+          "fixed": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "id": "httpx-07",
+      "project": "httpx",
+      "repository": "https://github.com/encode/httpx.git",
+      "base_commit": "f9abbbbb4898cac96420e5c5b9d34036a94d46bf",
+      "fix_commit": "a682f6f1c7f1c5e10c66ae5bef139aea37ef0c4e",
+      "fix_url": "https://github.com/encode/httpx/commit/a682f6f1c7f1c5e10c66ae5bef139aea37ef0c4e",
+      "review_paths": [
+        "httpx/_transports/asgi.py"
+      ],
+      "source_paths": [
+        "httpx/_transports/asgi.py"
+      ],
+      "regression_test_paths": [
+        "tests/test_asgi.py"
+      ],
+      "expected_behavior": "raise_app_exceptions=False produces a 500 response when an application fails before response start.",
+      "curation_status": "target failure inspected; source pair locally verified",
+      "family": "ASGI transport error behavior",
+      "split": "development",
+      "verification_platform": "portable",
+      "local_verification": {
+        "status": "verified-target-pair",
+        "python": "3.11.18",
+        "environment": "environments/python311.txt",
+        "buggy_exit_code": 1,
+        "fixed_exit_code": 0,
+        "inspected_failure": "Application RuntimeError escapes despite raise_app_exceptions=False.",
+        "log_sha256": {
+          "buggy": "368265e7a8241b4e1f16ab3cdedf6ae6d36ce16c38c2e9924cc21e6b1dcf10e9",
+          "fixed": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "id": "httpx-08",
+      "project": "httpx",
+      "repository": "https://github.com/encode/httpx.git",
+      "base_commit": "7d7c4f15b8784e4a550d974139acfa64193b32c2",
+      "fix_commit": "15d09a3bbc20372cd87e48f17f7c9381c8220a0f",
+      "fix_url": "https://github.com/encode/httpx/commit/15d09a3bbc20372cd87e48f17f7c9381c8220a0f",
+      "review_paths": [
+        "httpx/_utils.py"
+      ],
+      "source_paths": [
+        "httpx/_utils.py"
+      ],
+      "regression_test_paths": [
+        "tests/test_utils.py"
+      ],
+      "expected_behavior": "NO_PROXY IP literals and localhost use address-appropriate mount patterns.",
+      "curation_status": "target failure inspected; source pair locally verified",
+      "family": "Proxy configuration",
+      "split": "development",
+      "verification_platform": "portable",
+      "local_verification": {
+        "status": "verified-target-pair",
+        "python": "3.11.18",
+        "environment": "environments/python311.txt",
+        "buggy_exit_code": 1,
+        "fixed_exit_code": 0,
+        "inspected_failure": "IP literals/localhost receive incorrect wildcard mount patterns.",
+        "log_sha256": {
+          "buggy": "2a20bee577b5193a99003aa1132c1c0a5d843d4f19c6e577b1b81db1da500fe0",
+          "fixed": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "id": "httpx-09",
+      "project": "httpx",
+      "repository": "https://github.com/encode/httpx.git",
+      "base_commit": "3eee17e69e43f74df2c9bfaa442da2feac81363c",
+      "fix_commit": "d5900cd40ec85e47800e21e77bc684b9f65325ed",
+      "fix_url": "https://github.com/encode/httpx/commit/d5900cd40ec85e47800e21e77bc684b9f65325ed",
+      "review_paths": [
+        "httpx/_urls.py"
+      ],
+      "source_paths": [
+        "httpx/_urls.py"
+      ],
+      "regression_test_paths": [
+        "tests/models/test_queryparams.py"
+      ],
+      "expected_behavior": "Query parameter parsing preserves blank values.",
+      "curation_status": "target failure inspected; source pair locally verified",
+      "family": "Query parameter representation",
+      "split": "development",
+      "verification_platform": "portable",
+      "local_verification": {
+        "status": "verified-target-pair",
+        "python": "3.11.18",
+        "environment": "environments/python311.txt",
+        "buggy_exit_code": 1,
+        "fixed_exit_code": 0,
+        "inspected_failure": "Blank query value is dropped.",
+        "log_sha256": {
+          "buggy": "22d42a7777c94b6ecfbda8dbe257128c6cc633b7a25d0841c67ea029b7c8dc68",
+          "fixed": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "id": "httpx-10",
+      "project": "httpx",
+      "repository": "https://github.com/encode/httpx.git",
+      "base_commit": "8dc9b6bd59114439128d23a60609bee09daf508c",
+      "fix_commit": "321d4aa5097fe7f24cdfed7191c44de589294780",
+      "fix_url": "https://github.com/encode/httpx/commit/321d4aa5097fe7f24cdfed7191c44de589294780",
+      "review_paths": [
+        "httpx/_models.py"
+      ],
+      "source_paths": [
+        "httpx/_models.py"
+      ],
+      "regression_test_paths": [
+        "tests/client/test_headers.py"
+      ],
+      "expected_behavior": "Headers.update preserves repeated values supplied for the same key.",
+      "curation_status": "target failure inspected; source pair locally verified",
+      "family": "Client header merging",
+      "split": "development",
+      "verification_platform": "portable",
+      "local_verification": {
+        "status": "verified-target-pair",
+        "python": "3.11.18",
+        "environment": "environments/python311.txt",
+        "buggy_exit_code": 1,
+        "fixed_exit_code": 0,
+        "inspected_failure": "Repeated header values collapse to the last value.",
+        "log_sha256": {
+          "buggy": "42a896ffe8dbd2975c3d660ee29707a245ade831e7a1e0824a047e8282f130af",
+          "fixed": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "id": "requests-01",
+      "project": "requests",
+      "repository": "https://github.com/psf/requests.git",
+      "base_commit": "661970d171d9c3e12e4c789c4768db647d8c4da0",
+      "fix_commit": "6f205ff422bccd5e4c4fc0b64c5f3e7df5181db6",
+      "fix_url": "https://github.com/psf/requests/commit/6f205ff422bccd5e4c4fc0b64c5f3e7df5181db6",
+      "review_paths": [
+        "src/requests/models.py"
+      ],
+      "source_paths": [
+        "src/requests/models.py"
+      ],
+      "regression_test_paths": [
+        "tests/test_requests.py"
+      ],
+      "expected_behavior": "Attribute-proxy file wrappers are read as file data during multipart preparation.",
+      "curation_status": "target failure inspected; source pair locally verified",
+      "family": "Multipart request encoding",
+      "split": "development",
+      "verification_platform": "portable",
+      "local_verification": {
+        "status": "verified-target-pair",
+        "python": "3.15.2",
+        "environment": "environments/python315.txt",
+        "buggy_exit_code": 1,
+        "fixed_exit_code": 0,
+        "inspected_failure": "Multipart preparation passes the temporary-file wrapper to urllib3 instead of file bytes.",
+        "log_sha256": {
+          "buggy": "dad9137354e01673bec10be60acd0e701567cd5711c3fc76deb3b9789b80070e",
+          "fixed": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "limitation": "Not reproduced on Python 3.11; version-dependent protocol behavior."
+      }
+    },
+    {
+      "id": "requests-02",
+      "project": "requests",
+      "repository": "https://github.com/psf/requests.git",
+      "base_commit": "0b401c76b6e80a4eecf3c690085b2553f6e261ca",
+      "fix_commit": "6404f345e562d962abe6700a1c357ec1e7e18232",
+      "fix_url": "https://github.com/psf/requests/commit/6404f345e562d962abe6700a1c357ec1e7e18232",
+      "review_paths": [
+        "src/requests/models.py"
+      ],
+      "source_paths": [
+        "src/requests/models.py"
+      ],
+      "regression_test_paths": [
+        "tests/test_requests.py"
+      ],
+      "expected_behavior": "Attribute-proxy readable streams retain stream and rewind semantics.",
+      "curation_status": "target failure inspected; source pair locally verified",
+      "family": "Request body preparation",
+      "split": "development",
+      "verification_platform": "portable",
+      "local_verification": {
+        "status": "verified-target-pair",
+        "python": "3.11.18",
+        "environment": "environments/python311.txt",
+        "buggy_exit_code": 1,
+        "fixed_exit_code": 0,
+        "inspected_failure": "Attribute-proxy stream lacks the required rewind/body-position setup.",
+        "log_sha256": {
+          "buggy": "10847eb207f88a7515f3eee37341956e9a53d04fc48c5f49230f51440e9b89af",
+          "fixed": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "id": "requests-03",
+      "project": "requests",
+      "repository": "https://github.com/psf/requests.git",
+      "base_commit": "e8d2c015eecda8273612dd4562425e00cd164ba5",
+      "fix_commit": "fd628095d7b9ddbf3e987d8a4bf0e6062768916f",
+      "fix_url": "https://github.com/psf/requests/commit/fd628095d7b9ddbf3e987d8a4bf0e6062768916f",
+      "review_paths": [
+        "src/requests/adapters.py"
+      ],
+      "source_paths": [
+        "src/requests/adapters.py"
+      ],
+      "regression_test_paths": [
+        "tests/test_adapters.py"
+      ],
+      "expected_behavior": "Direct requests preserve leading double slashes in the URL path.",
+      "curation_status": "target failure inspected; source pair locally verified",
+      "family": "Adapter request URLs",
+      "split": "development",
+      "verification_platform": "portable",
+      "local_verification": {
+        "status": "verified-target-pair",
+        "python": "3.11.18",
+        "environment": "environments/python311.txt",
+        "buggy_exit_code": 1,
+        "fixed_exit_code": 0,
+        "inspected_failure": "Adapter strips leading double slashes.",
+        "log_sha256": {
+          "buggy": "fba1329c81229f4c849dbac15d202838e23ffef464d9650532fab5f0a5d29643",
+          "fixed": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "id": "requests-04",
+      "project": "requests",
+      "repository": "https://github.com/psf/requests.git",
+      "base_commit": "bc7dd0fc4d56e808bcdd85ac2d797b3107c89259",
+      "fix_commit": "f0198e6dfc431a2293dc16e1b1e8fcddc910a7f3",
+      "fix_url": "https://github.com/psf/requests/commit/f0198e6dfc431a2293dc16e1b1e8fcddc910a7f3",
+      "review_paths": [
+        "src/requests/utils.py"
+      ],
+      "source_paths": [
+        "src/requests/utils.py"
+      ],
+      "regression_test_paths": [
+        "tests/test_utils.py"
+      ],
+      "expected_behavior": "A Content-Type charset parameter without a value does not cause an attribute error.",
+      "curation_status": "target failure inspected; source pair locally verified",
+      "family": "Response header interpretation",
+      "split": "development",
+      "verification_platform": "portable",
+      "local_verification": {
+        "status": "verified-target-pair",
+        "python": "3.11.18",
+        "environment": "environments/python311.txt",
+        "buggy_exit_code": 1,
+        "fixed_exit_code": 0,
+        "inspected_failure": "Bare charset is parsed as bool, causing AttributeError at strip.",
+        "log_sha256": {
+          "buggy": "878224011f04aefae1e28ac3ad3b313f3d03f895d1a24c6dbb4d9450e76eb4fc",
+          "fixed": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "id": "requests-05",
+      "project": "requests",
+      "repository": "https://github.com/psf/requests.git",
+      "base_commit": "1b40fdd004bfc8ba5301bcf8a6908264e9b6b877",
+      "fix_commit": "47914226c2968802f2cdee3f6f0f6e06e4472f64",
+      "fix_url": "https://github.com/psf/requests/commit/47914226c2968802f2cdee3f6f0f6e06e4472f64",
+      "review_paths": [
+        "src/requests/utils.py"
+      ],
+      "source_paths": [
+        "src/requests/utils.py"
+      ],
+      "regression_test_paths": [
+        "tests/test_utils.py"
+      ],
+      "expected_behavior": "Empty default netrc credentials are ignored.",
+      "curation_status": "target failure inspected; source pair locally verified",
+      "family": "Credential lookup",
+      "split": "development",
+      "verification_platform": "portable",
+      "local_verification": {
+        "status": "verified-target-pair",
+        "python": "3.11.18",
+        "environment": "environments/python311.txt",
+        "buggy_exit_code": 1,
+        "fixed_exit_code": 0,
+        "inspected_failure": "Empty netrc default is returned instead of being ignored.",
+        "log_sha256": {
+          "buggy": "b24d5b49a8695c03cd1139204025dcaf5e9da5908f117b9ead779f98da085a8e",
+          "fixed": "080a61223fe619983342c87e53806e7f1b1c2b5de298e1a1de5764ce4a2d7d37"
+        }
+      }
+    },
+    {
+      "id": "requests-06",
+      "project": "requests",
+      "repository": "https://github.com/psf/requests.git",
+      "base_commit": "96b22fa18c00831656ee4b286bf1c9062459b00a",
+      "fix_commit": "3ff3ff21dd45957c9e143cd500291959bb15f690",
+      "fix_url": "https://github.com/psf/requests/commit/3ff3ff21dd45957c9e143cd500291959bb15f690",
+      "review_paths": [
+        "src/requests/exceptions.py"
+      ],
+      "source_paths": [
+        "src/requests/exceptions.py"
+      ],
+      "regression_test_paths": [
+        "tests/test_requests.py"
+      ],
+      "expected_behavior": "JSONDecodeError survives a pickle round trip with constructor arguments intact.",
+      "curation_status": "target failure inspected; source pair locally verified",
+      "family": "Exception serialization",
+      "split": "development",
+      "verification_platform": "portable",
+      "local_verification": {
+        "status": "verified-target-pair",
+        "python": "3.11.18",
+        "environment": "environments/python311.txt",
+        "buggy_exit_code": 1,
+        "fixed_exit_code": 0,
+        "inspected_failure": "Pickle round trip drops JSONDecodeError constructor arguments.",
+        "log_sha256": {
+          "buggy": "aa29e004b9bb98a586fcb0f040b5be6bdea4f8ad538ba72523f007fac3e3f44b",
+          "fixed": "ff45eb88b5624afac8fe5397e3c11306505088e56455d8377d56cba3e2120e96"
+        }
+      }
+    },
+    {
+      "id": "requests-07",
+      "project": "requests",
+      "repository": "https://github.com/psf/requests.git",
+      "base_commit": "b227e3cb82c8d42ea27790d615ecafe12528d3bc",
+      "fix_commit": "d8829f9f242149174e50f45e021ffb81fbbced70",
+      "fix_url": "https://github.com/psf/requests/commit/d8829f9f242149174e50f45e021ffb81fbbced70",
+      "review_paths": [
+        "requests/utils.py"
+      ],
+      "source_paths": [
+        "requests/utils.py"
+      ],
+      "regression_test_paths": [
+        "tests/test_utils.py"
+      ],
+      "expected_behavior": "An invalid Windows UNC path terminates certificate archive lookup.",
+      "curation_status": "source-reviewed; native Windows verification blocked",
+      "family": "Certificate path resolution",
+      "split": "development",
+      "verification_platform": "windows",
+      "local_verification": {
+        "status": "blocked-platform",
+        "python": "3.11.18",
+        "note": "No Windows runtime available; exit 77 on both variants is a skip, not a pass."
+      }
+    },
+    {
+      "id": "requests-08",
+      "project": "requests",
+      "repository": "https://github.com/psf/requests.git",
+      "base_commit": "8bce583b9547c7b82d44c8e97f37cf9a16cbe758",
+      "fix_commit": "2d5517682b3b38547634d153cea43d48fbc8cdb5",
+      "fix_url": "https://github.com/psf/requests/commit/2d5517682b3b38547634d153cea43d48fbc8cdb5",
+      "review_paths": [
+        "requests/models.py"
+      ],
+      "source_paths": [
+        "requests/models.py"
+      ],
+      "regression_test_paths": [
+        "tests/test_lowlevel.py"
+      ],
+      "expected_behavior": "Malformed BOM-detected JSON raises Requests JSONDecodeError, including the RequestException base.",
+      "curation_status": "target failure inspected; source pair locally verified",
+      "family": "JSON response decoding",
+      "split": "development",
+      "verification_platform": "portable",
+      "local_verification": {
+        "status": "verified-target-pair",
+        "python": "3.11.18",
+        "environment": "environments/python311.txt",
+        "buggy_exit_code": 1,
+        "fixed_exit_code": 0,
+        "inspected_failure": "BOM JSON decoding leaks stdlib JSONDecodeError instead of the Requests subtype.",
+        "log_sha256": {
+          "buggy": "8bbe64a28b8f4d05a7addd129d4001316989acc62d77b30a0673129a978a42ce",
+          "fixed": "7b78219dec1efa9ba13480ec0e029bb5d29e87e89f47dcf5c1a67cf16cf90b0c"
+        }
+      }
+    },
+    {
+      "id": "requests-09",
+      "project": "requests",
+      "repository": "https://github.com/psf/requests.git",
+      "base_commit": "5e749546a26ce62e53d0a14ae1455f8b066fe19f",
+      "fix_commit": "79c4a017fe341fb989d3a7876cf4e44b87601b58",
+      "fix_url": "https://github.com/psf/requests/commit/79c4a017fe341fb989d3a7876cf4e44b87601b58",
+      "review_paths": [
+        "requests/sessions.py"
+      ],
+      "source_paths": [
+        "requests/sessions.py"
+      ],
+      "regression_test_paths": [
+        "tests/test_requests.py"
+      ],
+      "expected_behavior": "Empty CA bundle environment values do not override explicit verification settings.",
+      "curation_status": "target failure inspected; source pair locally verified",
+      "family": "Session environment settings",
+      "split": "development",
+      "verification_platform": "portable",
+      "local_verification": {
+        "status": "verified-target-pair",
+        "python": "3.11.18",
+        "environment": "environments/python311.txt",
+        "buggy_exit_code": 1,
+        "fixed_exit_code": 0,
+        "inspected_failure": "Empty environment bundle overrides explicit verify=True.",
+        "log_sha256": {
+          "buggy": "69530ac5fb4d7ee29038e5d5e8b0e295d3041460059a3c04dcb905227887b4f9",
+          "fixed": "51d527e036505815d0471acb9a4ef5a0079314e197a2764c5551b7176b67cf32"
+        }
+      }
+    },
+    {
+      "id": "requests-10",
+      "project": "requests",
+      "repository": "https://github.com/psf/requests.git",
+      "base_commit": "b351e906b62083b1dcfdb7a6c8aa8a4d3fb55ff4",
+      "fix_commit": "10968357a19a146332c8dfd8e6d17006d746e580",
+      "fix_url": "https://github.com/psf/requests/commit/10968357a19a146332c8dfd8e6d17006d746e580",
+      "review_paths": [
+        "requests/adapters.py"
+      ],
+      "source_paths": [
+        "requests/adapters.py"
+      ],
+      "regression_test_paths": [
+        "tests/test_lowlevel.py"
+      ],
+      "expected_behavior": "urllib3 InvalidHeader is translated into Requests InvalidHeader.",
+      "curation_status": "target failure inspected; source pair locally verified",
+      "family": "Transport exception mapping",
+      "split": "development",
+      "verification_platform": "portable",
+      "local_verification": {
+        "status": "verified-target-pair",
+        "python": "3.11.18",
+        "environment": "environments/python311.txt",
+        "buggy_exit_code": 1,
+        "fixed_exit_code": 0,
+        "inspected_failure": "urllib3 InvalidHeader escapes without Requests exception translation.",
+        "log_sha256": {
+          "buggy": "6019a00519253a97e5c4de8e4391b7804e294b206f7a7dd5f2c1c12c23e8acfa",
+          "fixed": "09ba25b4b20b9cc50b77f704fe1f648f555fd12d81dadfb7d1cce4bb8efea55a"
+        }
+      }
+    }
+  ],
+  "local_verification": {
+    "date": "2026-10-28",
+    "platform": "macOS arm64",
+    "oracle_sha256": "904b2ee6559e3798a244bbde70abecc39085a0f0ba260a631bc3138817f5fbcb",
+    "verified_pairs": 19,
+    "blocked_platform_pairs": 1,
+    "note": "Boundary-level regression checks in recorded environments; not model discovery results or a full upstream integration suite."
+  }
+}

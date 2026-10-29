@@ -46,7 +46,7 @@ it names the *real* defect (see each probe's `meta.json` → `expected_bug`), no
 ```
 evals/real-world/
 ├── README.md
-├── run-real-world.sh          # runner: claude -p logic-review on each buggy/fixed, signal check
+├── run-real-world.sh          # provider-neutral wrapper; inspect reports manually
 ├── probes/
 │   └── <id>/
 │       ├── meta.json          # source, language, expected_bug (ground truth), fixed_should_be_silent
@@ -58,7 +58,7 @@ evals/real-world/
 ## Run
 
 ```bash
-bash evals/real-world/run-real-world.sh            # all probes, costs API tokens (claude -p)
+bash evals/real-world/run-real-world.sh            # all probes, uses the selected provider quota
 PROBES_FILTER=001 bash evals/real-world/run-real-world.sh   # one probe
 ```
 
@@ -70,3 +70,8 @@ PROBES_FILTER=001 bash evals/real-world/run-real-world.sh   # one probe
 2. Create `probes/<id>/` with `buggy.<ext>`, `fixed.<ext>`, and `meta.json`.
 3. Verify the ground truth yourself **before** running the skill — record it in `expected_bug`
    so the run is a fair test, not a post-hoc rationalization.
+
+The maintained runner defaults to Codex. PROVIDER=command with ADAPTER selects
+other CLIs. No Claude account is needed. Current execution outputs reports for
+manual root-cause adjudication; do not treat old severity-header signal heuristics
+as correctness measurements. See ../../docs/TOOL_COMPATIBILITY.md.

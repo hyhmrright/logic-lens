@@ -1,0 +1,25 @@
+<!-- run b918296358c6402ab843ff3197928e0d; model gpt-6.1-sol; only temporary source links normalized -->
+
+I found six defects by static inspection. The consequences below follow from the source; they were **not observed in runtime tests**.
+
+1. **[P2] Updating headers discards repeated values.**  
+   [Headers.update]( [workspace]/httpx/_models.py:965) assigns each incoming pair through `__setitem__`, which replaces existing occurrences. Thus `h.update([("X-Test", "a"), ("X-Test", "b")])` leaves only `"b"`. Expected: preserve both incoming values while replacing any previous values for that name. This also affects outgoing requests: [client header merging](https://github.com/encode/httpx/blob/8dc9b6bd59114439128d23a60609bee09daf508c/httpx/_client.py#L399) calls this method. Repeated headers accepted by the constructor are silently lost when supplied through the client.
+
+2. **[P2] Parsing query strings silently removes empty parameters.**  
+   [QueryParams construction](https://github.com/encode/httpx/blob/8dc9b6bd59114439128d23a60609bee09daf508c/httpx/_models.py#L613) calls `parse_qs(value)` without `keep_blank_values=True`. Consequently, `QueryParams("a=&b=1")` contains only `b`, whereas `QueryParams({"a": "", "b": "1"})` retains both. Expected: equivalent supported input forms preserve empty values; [existing tests](https://github.com/encode/httpx/blob/8dc9b6bd59114439128d23a60609bee09daf508c/tests/models/test_queryparams.py#L63) explicitly support empty values. The consequence extends to URL manipulation: merging `{"c": "2"}` into `https://example.org/?a=&b=1` drops `a` from the resulting request URL.
+
+3. **[P2] Changing an internationalized URL’s port raises `UnicodeEncodeError`.**  
+   [URL.copy_with](https://github.com/encode/httpx/blob/8dc9b6bd59114439128d23a60609bee09daf508c/httpx/_models.py#L462) defaults the host to `self.host`, which returns Unicode for internationalized domains, then directly ASCII encodes it. For example, `URL("https://xn--fiqs8s.icom.museum").copy_with(port=8443)` attempts to ASCII encode `中国.icom.museum:8443` and raises. Expected: retain the valid host and change the port. Explicitly supplying a Unicode `host` fails for the same reason. The failure occurs before the reconstructed URL reaches normal IDNA processing.
+
+4. **[P2] Joining an absolute URL onto a relative base removes the destination’s authority.**  
+   The relative-base branch of [URL.join](https://github.com/encode/httpx/blob/8dc9b6bd59114439128d23a60609bee09daf508c/httpx/_models.py#L561) temporarily supplies a scheme and host, resolves the argument, and then unconditionally clears the resulting scheme and host. Thus `URL("/base").join("https://other.example/x")` becomes `/x`. Expected: the absolute argument remains `https://other.example/x`. The cleanup cannot distinguish its temporary authority from an authority supplied by the argument, so it discards a real destination.
+
+5. **[P2] Equal query parameters can have different hashes.**  
+   [QueryParams.__hash__ and __eq__](https://github.com/encode/httpx/blob/8dc9b6bd59114439128d23a60609bee09daf508c/httpx/_models.py#L797) use inconsistent representations: equality sorts all pairs, while hashing uses the insertion-ordered query string. `QueryParams("a=1&b=2")` and `QueryParams("b=2&a=1")` compare equal but hash different strings. Expected: equal objects always have equal hashes. Consequently, dictionary lookup using an equal instance can fail, and sets can retain equal entries. Existing hash tests cover identical serialization orders, so they do not exercise this mismatch.
+
+6. **[P2] Unicode host decoding misses internationalized labels after an ASCII label.**  
+   [URL.host](https://github.com/encode/httpx/blob/8dc9b6bd59114439128d23a60609bee09daf508c/httpx/_models.py#L246) invokes `idna.decode` only when the entire hostname starts with `xn--`. For `URL("https://www.xn--fiqs8s.icom.museum").host`, it therefore returns `www.xn--fiqs8s.icom.museum`. Expected: `www.中国.icom.museum`, consistent with the property’s documented Unicode representation. The concrete defect concerns the exposed `host` value; this evidence does not establish a connection failure.
+
+**Open lead:** [Credential quoting in URL.copy_with](https://github.com/encode/httpx/blob/8dc9b6bd59114439128d23a60609bee09daf508c/httpx/_models.py#L455) uses `quote()` with its default slash-safe behavior. A username or password containing `/` therefore leaves an authority delimiter unescaped. This warrants investigation, but the exact subsequent parsing, exception, or destination change depends on `rfc3986` behavior that I did not verify under this protocol.
+
+Verification was limited to workspace source, tests, and documentation using nine shell calls. I modified no files, accessed no external services or history, and ran no runtime or integration tests.

@@ -13,6 +13,32 @@ Versions follow [SemVer](https://semver.org/).
 
 ## [Unreleased]
 
+### Added — portable execution and provider-neutral evaluation
+
+- Codex is the default CLI for reviews, content/routing evaluations and real-code
+  probes. No Claude account, CLI, SDK or plugin-cache synchronization is required.
+- Added a portable six-skill Markdown pack, public Python CLI, capability doctor,
+  normalized command adapter/bridge, isolated source/home execution, JSONL telemetry
+  and bounded concurrent evaluation with failure handling.
+- Moved maintained developer instructions to DEVELOPMENT.md and documented tested
+  Codex execution separately from portable use in other coding assistants.
+- Completed a 72-review Codex pilot: plain/prior/candidate confirmed 7/6/7 of
+  12 exact known-regression trials. No candidate superiority claim; per-run reports,
+  instructions, resource counters, additional probes and limitations are frozen.
+
+### Added — discovery evaluation infrastructure and historical evidence
+
+- Added pinned upstream discovery corpora, evaluator-only probes, and a
+  plain/baseline/candidate runner with explicit instruction snapshots, source
+  hashes, tool events and human adjudication. Existing content assertions and
+  grader are unchanged.
+- Preserved the completed revision-2 comparison: all three arms detected 9/12
+  targets. Failure records, partial checkpoints and final reports remain inspectable.
+  These results do not establish improved bug discovery over plain Codex.
+- Experimental review and shared-framework changes remain in draft PR #16;
+  main retains its existing default skill files. No release/version bump or
+  effectiveness claim accompanies the infrastructure split.
+
 ### Fixed — grader: a wrong conclusion no longer scores on keywords
 
 Case rules only checked vocabulary, so a report reaching the *wrong* conclusion while naming the

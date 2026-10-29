@@ -21,7 +21,7 @@ Install via Gemini CLI extension system using `gemini-extension.json` at the rep
 
 ## Project Layout
 
-See `CLAUDE.md` for the full layout. The core content lives in `skills/` as platform-agnostic Markdown. Gemini-specific metadata is in `gemini-extension.json`.
+See `DEVELOPMENT.md` for the maintained tool-neutral developer guide. The core content lives in `skills/` as platform-agnostic Markdown. Gemini-specific metadata is in `gemini-extension.json`.
 
 ## Key Conventions
 
@@ -33,3 +33,6 @@ See `CLAUDE.md` for the full layout. The core content lives in `skills/` as plat
 ## No Hooks
 
 The session-start hook is Claude Code only. Gemini CLI discovers skills via `gemini-extension.json` and does not use hooks.
+
+For generic CLI integration or offline Markdown packs, see `docs/TOOL_COMPATIBILITY.md`.
+Native Gemini execution has not been tested in the current environment.
