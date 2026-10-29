@@ -8,7 +8,7 @@ import sys
 COMMANDS = {'review':'run_review.py', 'bundle':'skill_bundle.py',
             'eval':'run_evals.py', 'discovery':'discovery_eval.py',
             'verify':'verify_discovery.py', 'doctor':'doctor.py',
-            'search':'property_search.py', 'constraints':'constraint_plan.py', 'facts':'python_facts.py'}
+            'search':'property_search.py', 'constraints':'constraint_plan.py', 'facts':'python_facts.py', 'investigate':'investigation.py'}
 
 
 def main():

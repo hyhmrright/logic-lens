@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "id": "24ba8fcba3177230",
+  "claim": "Contract-valid entry input must return normally",
+  "domain": "Finite source-derived and fact-checked integer points",
+  "observation": "actual entry outcome",
+  "violation": "ValueError contrary to independently sourced must-return contract",
+  "contract": [
+    {
+      "path": "CONTRACTS.txt",
+      "start": 1,
+      "end": 1,
+      "quote": "first and second must return normally for each integer input from 0 through 10."
+    }
+  ],
+  "adapter": {
+    "files": [
+      "adapter.py",
+      "execution.json"
+    ],
+    "argv": [
+      "{python}",
+      "{adapter_dir}/adapter.py"
+    ]
+  },
+  "domains": {
+    "n": [
+      0,
+      2,
+      3,
+      4,
+      5,
+      9,
+      10
+    ]
+  },
+  "control": {
+    "n": 0
+  },
+  "seed": 0,
+  "limits": {
+    "max_cases": 11,
+    "seconds": 10,
+    "case_seconds": 1,
+    "shrink_cases": 4
+  }
+}

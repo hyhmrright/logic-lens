@@ -1,0 +1,1 @@
+{"status": "pass", "observation": {"outcome": "returned", "value": 8, "consumers": [{"unit": "byte", "quantity": 8}], "input": 2}, "sources": ["subject.py"]}

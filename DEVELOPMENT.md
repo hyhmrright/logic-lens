@@ -24,6 +24,8 @@ Claude is not required for development, testing, installation or evaluation.
   see `docs/CONSTRAINT_PLAN.md`. Manual declarations, no model calls.
 - `scripts/python_facts.py`: restricted offline Python source/declaration audit;
   see `docs/PYTHON_FACTS.md`. No model calls or subject execution.
+- `scripts/investigation.py`: experimental offline relation discovery/selection loop;
+  `docs/INVESTIGATION.md`. Execution opt-in for trusted synthetic fixtures only.
 - `tests/`: offline unit/integration tests for grading and runner integrity.
 - `skills-workspace/`: ignored source clones, isolated environments and paid-run artifacts.
 - `.codex-plugin/`, `gemini-extension.json`: optional native distribution metadata.

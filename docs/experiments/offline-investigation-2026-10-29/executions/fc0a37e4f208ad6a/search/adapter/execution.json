@@ -1,0 +1,81 @@
+{
+  "source": "subject.py",
+  "source_sha256": "9de8a89df32f017f4c4ecfee90dfde4556ee3500aceba3ff198f7043d0475edc",
+  "entry": "first",
+  "consumer": "packet_a",
+  "expectation": "returns",
+  "fact_observations": {
+    "0": {
+      "outcome": "returned",
+      "consumers": [
+        {
+          "unit": "byte",
+          "quantity": 2
+        }
+      ]
+    },
+    "1": {
+      "outcome": "returned",
+      "consumers": [
+        {
+          "unit": "byte",
+          "quantity": 5
+        }
+      ]
+    },
+    "4": {
+      "outcome": "returned",
+      "consumers": [
+        {
+          "unit": "byte",
+          "quantity": 14
+        }
+      ]
+    },
+    "5": {
+      "outcome": "returned",
+      "consumers": [
+        {
+          "unit": "byte",
+          "quantity": 17
+        }
+      ]
+    },
+    "6": {
+      "outcome": "value_error",
+      "consumers": [
+        {
+          "unit": "byte",
+          "quantity": 20
+        }
+      ]
+    },
+    "7": {
+      "outcome": "value_error",
+      "consumers": [
+        {
+          "unit": "byte",
+          "quantity": 23
+        }
+      ]
+    },
+    "9": {
+      "outcome": "value_error",
+      "consumers": [
+        {
+          "unit": "byte",
+          "quantity": 29
+        }
+      ]
+    },
+    "10": {
+      "outcome": "value_error",
+      "consumers": [
+        {
+          "unit": "byte",
+          "quantity": 32
+        }
+      ]
+    }
+  }
+}

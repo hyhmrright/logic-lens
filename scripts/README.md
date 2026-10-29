@@ -76,3 +76,13 @@ compares declared coefficients, representation units and consumer-reaching route
 It preserves unknown/unsupported results and never imports/executes the subject or
 calls a model. See [protocol and limits](../docs/PYTHON_FACTS.md). This is a new opt-in
 offline tool, not a formal skill change or general Python verifier.
+
+### Offline investigation loop (experimental)
+
+`python3 scripts/logic_lens.py investigate --spec REQUEST.json --workspace SOURCE --out NEW_DIR`
+automatically inventories restricted Python consumer relations, refines finite inputs,
+checks source/planner declarations and selects distinct entries. Default is planning
+only. `--execute-trusted-synthetic` explicitly enables the fixed local adapter and
+bounded property engine for reviewed synthetic programs. Outcome oracles come from
+entry contracts, not internal bounds. See [pipeline and limits](../docs/INVESTIGATION.md).
+No formal skill/model/default behavior changes or efficacy claims.

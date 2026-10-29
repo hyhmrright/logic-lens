@@ -1,0 +1,132 @@
+[
+  {
+    "case": {
+      "n": 0
+    },
+    "phase": "control",
+    "result": {
+      "status": "pass",
+      "observation": {
+        "outcome": "returned",
+        "value": 2,
+        "consumers": [
+          {
+            "unit": "byte",
+            "quantity": 2
+          }
+        ],
+        "input": 0
+      },
+      "sources": [
+        "subject.py"
+      ],
+      "source_sha256": {
+        "subject.py": "9de8a89df32f017f4c4ecfee90dfde4556ee3500aceba3ff198f7043d0475edc"
+      }
+    }
+  },
+  {
+    "case": {
+      "n": 5
+    },
+    "phase": "search",
+    "result": {
+      "status": "violation",
+      "observation": {
+        "outcome": "value_error",
+        "value": null,
+        "consumers": [
+          {
+            "unit": "byte",
+            "quantity": 17
+          }
+        ],
+        "input": 5
+      },
+      "sources": [
+        "subject.py"
+      ],
+      "source_sha256": {
+        "subject.py": "9de8a89df32f017f4c4ecfee90dfde4556ee3500aceba3ff198f7043d0475edc"
+      }
+    }
+  },
+  {
+    "case": {
+      "n": 2
+    },
+    "phase": "shrink",
+    "result": {
+      "status": "pass",
+      "observation": {
+        "outcome": "returned",
+        "value": 8,
+        "consumers": [
+          {
+            "unit": "byte",
+            "quantity": 8
+          }
+        ],
+        "input": 2
+      },
+      "sources": [
+        "subject.py"
+      ],
+      "source_sha256": {
+        "subject.py": "9de8a89df32f017f4c4ecfee90dfde4556ee3500aceba3ff198f7043d0475edc"
+      }
+    }
+  },
+  {
+    "case": {
+      "n": 3
+    },
+    "phase": "shrink",
+    "result": {
+      "status": "pass",
+      "observation": {
+        "outcome": "returned",
+        "value": 11,
+        "consumers": [
+          {
+            "unit": "byte",
+            "quantity": 11
+          }
+        ],
+        "input": 3
+      },
+      "sources": [
+        "subject.py"
+      ],
+      "source_sha256": {
+        "subject.py": "9de8a89df32f017f4c4ecfee90dfde4556ee3500aceba3ff198f7043d0475edc"
+      }
+    }
+  },
+  {
+    "case": {
+      "n": 4
+    },
+    "phase": "shrink",
+    "result": {
+      "status": "violation",
+      "observation": {
+        "outcome": "value_error",
+        "value": null,
+        "consumers": [
+          {
+            "unit": "byte",
+            "quantity": 14
+          }
+        ],
+        "input": 4
+      },
+      "sources": [
+        "subject.py"
+      ],
+      "source_sha256": {
+        "subject.py": "9de8a89df32f017f4c4ecfee90dfde4556ee3500aceba3ff198f7043d0475edc"
+      }
+    }
+  }
+]

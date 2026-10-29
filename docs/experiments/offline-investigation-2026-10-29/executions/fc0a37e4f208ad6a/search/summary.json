@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "status": "counterexample",
+  "property_id": "fc0a37e4f208ad6a",
+  "limits": {
+    "max_cases": 12,
+    "seconds": 10,
+    "case_seconds": 1,
+    "output_bytes": 4096,
+    "shrink_cases": 4
+  },
+  "domain_size": 8,
+  "evaluations": 6,
+  "counts": {
+    "pass_count": 4,
+    "violation": 2,
+    "invalid": 0,
+    "blocked": 0
+  },
+  "counterexample": {
+    "case": {
+      "n": 6
+    },
+    "phase": "shrink",
+    "result": {
+      "status": "violation",
+      "observation": {
+        "outcome": "value_error",
+        "value": null,
+        "consumers": [
+          {
+            "unit": "byte",
+            "quantity": 20
+          }
+        ],
+        "input": 6
+      },
+      "sources": [
+        "subject.py"
+      ],
+      "source_sha256": {
+        "subject.py": "9de8a89df32f017f4c4ecfee90dfde4556ee3500aceba3ff198f7043d0475edc"
+      }
+    }
+  },
+  "integrity": {
+    "original_before": "9a467ae985e6dcaa21181d0c0c7d874d792072377f415d4bfc74cfd5125f28f7",
+    "original_after": "9a467ae985e6dcaa21181d0c0c7d874d792072377f415d4bfc74cfd5125f28f7",
+    "executed_before": "9a467ae985e6dcaa21181d0c0c7d874d792072377f415d4bfc74cfd5125f28f7",
+    "executed_after": "9a467ae985e6dcaa21181d0c0c7d874d792072377f415d4bfc74cfd5125f28f7"
+  },
+  "elapsed_seconds": 0.19695954099006485,
+  "conclusion": "Adapter results require contract, harness and reachability review; no confirmed bug or correctness claim.",
+  "argv": [
+    "/opt/homebrew/opt/python@3.15/bin/python3.15",
+    "/private/tmp/logic-lens-investigation-published/executions/fc0a37e4f208ad6a/search/adapter/adapter.py"
+  ]
+}

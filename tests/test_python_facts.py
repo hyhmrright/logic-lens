@@ -170,6 +170,19 @@ print(json.dumps(rows))
             reduced = [dict(input=o['input'],outcome=o['outcome'],consumers=[dict(unit=e['unit'],quantity=e['quantity']) for e in o['consumers']]) for o in r['observations']]
             self.assertEqual(reduced, expected)
 
+    def test_explicit_points_never_imply_checked_gaps(self):
+        self.spec.pop('analysis_domain')
+        self.spec['analysis_points'] = [0, 10]
+        self.spec['declaration']['route'] = [[0, 5]]
+        r = self.result()
+        self.assertEqual(r['checked_points'], [0, 10])
+        self.assertEqual([o['input'] for o in r['observations']], [0, 10])
+        self.assertEqual(r['checks']['route']['status'], 'matched_in_scope')
+        self.assertIn('not the gaps', r['scope'])
+        self.spec['analysis_points'] = list(range(129))
+        with self.assertRaises(ValueError):
+            self.result()
+
     def test_cli_artifacts_overwrite_and_no_subject_execution(self):
         spec = self.root / 'check.json'
         spec.write_text(json.dumps(self.spec))

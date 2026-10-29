@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-29",
+  "kind": "offline-synthetic-investigation-loop",
+  "new_tests": 19,
+  "total_tests": 146,
+  "model_calls": 0,
+  "evaluation_tokens": 0,
+  "chat_implementation_usage_included": false,
+  "formal_skills_changed": false,
+  "main_merged": false,
+  "example_summary": {
+    "schema_version": 1,
+    "status": "complete",
+    "relations_discovered": 5,
+    "ready_relations": 2,
+    "execution_enabled": true,
+    "source_before": "9a467ae985e6dcaa21181d0c0c7d874d792072377f415d4bfc74cfd5125f28f7",
+    "source_after": "9a467ae985e6dcaa21181d0c0c7d874d792072377f415d4bfc74cfd5125f28f7",
+    "selected": [
+      "24ba8fcba3177230",
+      "fc0a37e4f208ad6a"
+    ],
+    "executions": [
+      {
+        "id": "24ba8fcba3177230",
+        "mode": "search",
+        "status": "counterexample",
+        "evaluations": 5
+      },
+      {
+        "id": "fc0a37e4f208ad6a",
+        "mode": "search",
+        "status": "counterexample",
+        "evaluations": 6
+      }
+    ],
+    "unexecuted_selected": [],
+    "scope": "trusted synthetic only; source leads are not bug oracles; finite checked points only",
+    "limits": "one selected relation per entry, then smaller domain/stable ID; not semantic novelty or bug-yield ranking"
+  },
+  "scope": "restricted one-module Python, finite checked points, manually scoped entries/contracts, fixed trusted-synthetic adapter",
+  "sha256": {
+    "scripts/investigation.py": "95535ac68523a5401f0f0b54632932f9fb7683d85754be91ff1338e8c8ba5985",
+    "scripts/investigation_adapter.py": "311e538f3e43d126ee6c2e65dbcfeebd0108d72588c78922fd538ee59c7f7b2f",
+    "scripts/python_facts.py": "6b85a79dda1888c927269f50621cc3d950a6fa2fbaf6c993dedd82c5789eab4b",
+    "scripts/constraint_plan.py": "defbfe09ee6325955887c48504ee671a4144e50ec9a341ca7fe0e14da057c3f4",
+    "scripts/property_search.py": "bcaece3fc11f3db771a9e29507dc7e1a01e1856623f76e4ed20f945b3eb1dfda",
+    "scripts/logic_lens.py": "125ec2331d2736ce2245eda79c6b32b6fc4784d28506a80776db6ff977945108",
+    "tests/test_investigation.py": "8351b8758d1494d7e64278a7d27916ba5bdf28130d11212347d35ec27f5c33b7",
+    "tests/test_python_facts.py": "de02ca7a7dc2d1a157ea8b07b46151e0da2e5cbc3eeb13bd3d37915a7f978545",
+    "examples/investigation/request.json": "0207b53d59b1d377b8f7488a2ca50e1311d96e6c2945c62737d19d7674fe80d0",
+    "examples/investigation/workspace/subject.py": "9de8a89df32f017f4c4ecfee90dfde4556ee3500aceba3ff198f7043d0475edc",
+    "examples/investigation/workspace/CONTRACTS.txt": "5d405dba8d9a155cd7efd9436d72474c83727a8380511f2fe9243c52697dd1f5",
+    "docs/INVESTIGATION.md": "e2380dbe25c7a337c6c990d2790530e24fbb39a635bd0f4541e8cc1e920a2e90",
+    "docs/experiments/investigation-offline.md": "fc4267c9c9d31a538189daaeea88748104fa94b302361b1a0c8c7aa57365cc16",
+    "docs/experiments/offline-investigation-2026-10-29/sha256.json": "922af115e876de193b63731aaf457b5e3951baf6e773aadbd63cef551536f975"
+  }
+}

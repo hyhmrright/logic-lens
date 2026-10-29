@@ -124,3 +124,11 @@ These tests increase confidence in this restricted interpreter. They do not esta
 soundness for general Python, automatic contract interpretation, automatic relationship
 selection, improved bug recall or token savings. Any future language extension,
 search bridge or model diagnostic needs separate qualification and authorization.
+
+## Explicit-point extension for offline scheduling
+
+The new scheduler may supply `analysis_points` instead of `analysis_domain`:1..128
+explicit unique bounded integers, sorted/deduplicated for interpretation. Output
+includes `checked_points`; `checked_scope` is just their enclosing range. It does
+**not** imply the gaps were checked. Route comparison is projected onto the listed
+points only. The original contiguous-window request/output behavior is retained.

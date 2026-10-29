@@ -263,13 +263,24 @@ def analyze(spec, workspace):
     if path.stat().st_size > 131072:
         raise ValueError('source exceeds 128KiB')
     text = path.read_text()
-    lo, hi = spec['analysis_domain']
-    lo, hi = integer(lo, -10000, 10000, 'domain lower'), integer(hi, lo, 10000, 'domain upper')
-    if hi-lo+1 > 128:
-        raise ValueError('at most 128 integer inputs per analysis')
+    if 'analysis_points' in spec:
+        supplied = spec['analysis_points']
+        if not isinstance(supplied, list) or not 1 <= len(supplied) <= 128:
+            raise ValueError('expected 1..128 explicit analysis points')
+        points = sorted({integer(n, -10000, 10000, 'analysis point') for n in supplied})
+        lo, hi = min(points), max(points)
+    else:
+        lo, hi = spec['analysis_domain']
+        lo, hi = integer(lo, -10000, 10000, 'domain lower'), integer(hi, lo, 10000, 'domain upper')
+        if hi-lo+1 > 128:
+            raise ValueError('at most 128 integer inputs per analysis')
+        points = list(range(lo, hi+1))
     result = dict(schema_version=1, source_sha256=hashlib.sha256(path.read_bytes()).hexdigest(),
                   checked_scope=[lo, hi], scope='finite exact built-in integer inputs only; no claim outside this window',
                   spec_sha256=hashlib.sha256(json.dumps(spec, sort_keys=True, allow_nan=False).encode()).hexdigest())
+    if 'analysis_points' in spec:
+        result['checked_points'] = points
+        result['scope'] = 'only explicitly listed integer points, not the gaps between them'
     try:
         functions = module_functions(text)
         entry, consumer = spec['entry'], spec['consumer']
@@ -277,7 +288,7 @@ def analyze(spec, workspace):
             raise Unsupported('entry/consumer unresolved or identical')
         result['function_spans'] = {name:dict(start=f.lineno, end=f.end_lineno) for name,f in functions.items()}
         observations, errors = [], []
-        for n in range(lo, hi+1):
+        for n in points:
             interpreter = Interpreter(functions, consumer, n)
             outcome = 'returned'
             try:
@@ -333,7 +344,7 @@ def analyze(spec, workspace):
         for pair in intervals:
             a,b = pair
             a,b = integer(a, -10000, 10000, 'route lower'), integer(b, a, 10000, 'route upper')
-            declared_points.update(range(max(a,lo), min(b,hi)+1))
+            declared_points.update(n for n in points if a <= n <= b)
         actual = set(reached)
         checks['route'] = dict(status='matched_in_scope' if actual==declared_points else 'mismatch',
                               omitted_reachable=ranges(actual-declared_points), falsely_reachable=ranges(declared_points-actual))
