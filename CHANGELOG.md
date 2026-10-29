@@ -13,6 +13,8 @@ Versions follow [SemVer](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.7.0] — 2026-10-29
+
 ### Added — portable execution and provider-neutral evaluation
 
 - Codex is the default CLI for reviews, content/routing evaluations and real-code
@@ -36,8 +38,8 @@ Versions follow [SemVer](https://semver.org/).
   targets. Failure records, partial checkpoints and final reports remain inspectable.
   These results do not establish improved bug discovery over plain Codex.
 - Experimental review and shared-framework changes remain in draft PR #16;
-  main retains its existing default skill files. No release/version bump or
-  effectiveness claim accompanies the infrastructure split.
+  main retains its existing default skill files. This release packages the
+  infrastructure split and makes no improved-effectiveness claim.
 
 ### Fixed — grader: a wrong conclusion no longer scores on keywords
 

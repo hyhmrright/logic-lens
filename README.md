@@ -4,7 +4,7 @@ Logic-first bug investigation for coding assistants: establish behavioral contra
 follow real callers and dependencies, trace failure paths, and report reproducible
 violations with evidence.
 
-![Version](https://img.shields.io/badge/version-0.6.10-blue.svg)
+![Version](https://img.shields.io/badge/version-0.7.0-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
 The core is **tool-neutral Markdown**, with an optional Python CLI for reviews,
