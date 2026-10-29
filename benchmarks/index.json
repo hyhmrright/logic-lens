@@ -181,6 +181,16 @@
       "planned_runs": 8,
       "completed_runs": 0,
       "notes": "One explicit capacity rejection, seven unattempted; no retry, no capability conclusion; actual token usage unknown."
+    },
+    {
+      "id": "codex-discovery-v3-gate-b-continuation-2026-10-29",
+      "kind": "development-diagnostic-incomplete",
+      "path": "runs/codex-discovery-v3-gate-b-continuation-2026-10-29.json",
+      "report": "reports/codex-discovery-v3-gate-b-continuation-2026-10-29/REPORT.md",
+      "model": "gpt-6.1-sol",
+      "planned_runs": 8,
+      "completed_runs": 2,
+      "notes": "Explicit continuation: two reports, one timeout, one capacity rejection, four unattempted; Gate B fails transformation-boundary criterion; unknown failure token overhead."
     }
   ],
   "discovery_experiments": [

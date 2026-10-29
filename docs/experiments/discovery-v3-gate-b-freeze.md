@@ -33,3 +33,22 @@ retries. Dispatch stopped; Gate B is unassessed. See the
 [immutable checkpoint](../../benchmarks/reports/codex-discovery-v3-gate-b-capacity-2026-10-29/REPORT.md).
 No background continuation or new-case evaluation was started. A later continuation
 requires explicit user instruction. The original plan hash and candidate are unchanged.
+
+## Explicitly authorized continuation — 2026-10-29
+
+The user authorized one same-model, same-budget capacity check by retrying the
+previously rejected trial. If service accepts the review, dispatch each of the
+seven unattempted rows once in frozen order, one worker. No automatic retry of
+any failure in this continuation; capacity/network failure stops new dispatches.
+No fresh-case evaluation is authorized. This adds at most eight dispatches to the
+historical single rejection; it does not alter the frozen plan, prompts, sources,
+model, effort, deadline or soft budgets. The original rejection is preserved by
+the runner in `failed-attempts`, and the published checkpoint remains immutable.
+
+The authorized continuation dispatched four requests: one timeout, two delivered
+candidate reports, then one capacity rejection. The other four rows were not
+attempted. No automatic retry followed. Gate B is not passed: the common-miss
+transformation limit was not exercised and its target remains missed. See the
+[new immutable continuation record](../../benchmarks/reports/codex-discovery-v3-gate-b-continuation-2026-10-29/REPORT.md)
+for process evidence, all failures and known/unknown usage. Stop remains in effect;
+further model calls require renewed user instruction.

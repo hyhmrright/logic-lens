@@ -1,0 +1,60 @@
+{
+  "d0112f51477c4b968b720e9a866b750d": {
+    "target": {
+      "command": [
+        "node",
+        "-e",
+        "const R=require('./classes/range');const a=require('node:assert/strict');const r=new R('4.17.0+'+'a'.repeat(250)+'3',{loose:true});a.equal(r.range,'4.17.0');a.equal(r.test('4.17.0'),true);"
+      ],
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "node:internal/assert/utils:146\n  throw error;\n  ^\n\nAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n'4.17.3' !== '4.17.0'\n\n    at [eval]:1:134\n    at runScriptInThisContext (node:internal/vm:219:10)\n    at node:internal/process/execution:485:12\n    at [eval]-wrapper:6:24\n    at runScriptInContext (node:internal/process/execution:483:60)\n    at evalFunction (node:internal/process/execution:317:30)\n    at evalTypeScript (node:internal/process/execution:329:3)\n    at node:internal/main/eval_string:71:3 {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: '4.17.3',\n  expected: '4.17.0',\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v26.13.0\n"
+    },
+    "additional": {
+      "semver-comparator-options": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "/Users/hyh/code/logic-lens/skills-workspace/codex-discovery-v3-gate-b-2026-10-29/workspaces/d0112f51477c4b968b720e9a866b750d/classes/range.js:530\n  if (version.prerelease.length && !options.includePrerelease) {\n                                            ^\n\nTypeError: Cannot read properties of undefined (reading 'includePrerelease')\n    at testSet (/Users/hyh/code/logic-lens/skills-workspace/codex-discovery-v3-gate-b-2026-10-29/workspaces/d0112f51477c4b968b720e9a866b750d/classes/range.js:530:45)\n    at Range.test (/Users/hyh/code/logic-lens/skills-workspace/codex-discovery-v3-gate-b-2026-10-29/workspaces/d0112f51477c4b968b720e9a866b750d/classes/range.js:207:11)\n    at [eval]:1:140\n    at runScriptInThisContext (node:internal/vm:219:10)\n    at node:internal/process/execution:485:12\n    at [eval]-wrapper:6:24\n    at runScriptInContext (node:internal/process/execution:483:60)\n    at evalFunction (node:internal/process/execution:317:30)\n    at evalTypeScript (node:internal/process/execution:329:3)\n    at node:internal/main/eval_string:71:3\n\nNode.js v26.13.0\n"
+      },
+      "semver-or-prerelease": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "node:internal/assert/utils:146\n  throw error;\n  ^\n\nAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\nfalse !== true\n\n    at [eval]:1:70\n    at runScriptInThisContext (node:internal/vm:219:10)\n    at node:internal/process/execution:485:12\n    at [eval]-wrapper:6:24\n    at runScriptInContext (node:internal/process/execution:483:60)\n    at evalFunction (node:internal/process/execution:317:30)\n    at evalTypeScript (node:internal/process/execution:329:3)\n    at node:internal/main/eval_string:71:3 {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: false,\n  expected: true,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v26.13.0\n"
+      },
+      "semver-intersection-witness": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "node:internal/assert/utils:146\n  throw error;\n  ^\n\nAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\nfalse !== true\n\n    at [eval]:1:187\n    at runScriptInThisContext (node:internal/vm:219:10)\n    at node:internal/process/execution:485:12\n    at [eval]-wrapper:6:24\n    at runScriptInContext (node:internal/process/execution:483:60)\n    at evalFunction (node:internal/process/execution:317:30)\n    at evalTypeScript (node:internal/process/execution:329:3)\n    at node:internal/main/eval_string:71:3 {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: false,\n  expected: true,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v26.13.0\n"
+      },
+      "semver-intersection-empty": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "node:internal/assert/utils:146\n  throw error;\n  ^\n\nAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\ntrue !== false\n\n    at [eval]:1:70\n    at runScriptInThisContext (node:internal/vm:219:10)\n    at node:internal/process/execution:485:12\n    at [eval]-wrapper:6:24\n    at runScriptInContext (node:internal/process/execution:483:60)\n    at evalFunction (node:internal/process/execution:317:30)\n    at evalTypeScript (node:internal/process/execution:329:3)\n    at node:internal/main/eval_string:71:3 {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: true,\n  expected: false,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v26.13.0\n"
+      },
+      "semver-intersection-gap": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "node:internal/assert/utils:146\n  throw error;\n  ^\n\nAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\ntrue !== false\n\n    at [eval]:1:70\n    at runScriptInThisContext (node:internal/vm:219:10)\n    at node:internal/process/execution:485:12\n    at [eval]-wrapper:6:24\n    at runScriptInContext (node:internal/process/execution:483:60)\n    at evalFunction (node:internal/process/execution:317:30)\n    at evalTypeScript (node:internal/process/execution:329:3)\n    at node:internal/main/eval_string:71:3 {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: true,\n  expected: false,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v26.13.0\n"
+      }
+    }
+  },
+  "70156f2deceb42da9174fccc7f4cb100": {
+    "target": {
+      "command": [
+        "node",
+        "-e",
+        "const d=require('./functions/diff'); const a=require('node:assert/strict');a.equal(d('1.7.2-1','1.8.1'),'minor');a.equal(d('1.1.1-pre','2.1.1'),'major');"
+      ],
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "node:internal/assert/utils:146\n  throw error;\n  ^\n\nAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n'patch' !== 'minor'\n\n    at [eval]:1:78\n    at runScriptInThisContext (node:internal/vm:219:10)\n    at node:internal/process/execution:485:12\n    at [eval]-wrapper:6:24\n    at runScriptInContext (node:internal/process/execution:483:60)\n    at evalFunction (node:internal/process/execution:317:30)\n    at evalTypeScript (node:internal/process/execution:329:3)\n    at node:internal/main/eval_string:71:3 {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: 'patch',\n  expected: 'minor',\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v26.13.0\n"
+    },
+    "additional": {
+      "semver-numeric-precision": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "node:internal/assert/utils:146\n  throw error;\n  ^\n\nAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n+ actual - expected\n\n+ null\n- 'prerelease'\n\n    at [eval]:1:71\n    at runScriptInThisContext (node:internal/vm:219:10)\n    at node:internal/process/execution:485:12\n    at [eval]-wrapper:6:24\n    at runScriptInContext (node:internal/process/execution:483:60)\n    at evalFunction (node:internal/process/execution:317:30)\n    at evalTypeScript (node:internal/process/execution:329:3)\n    at node:internal/main/eval_string:71:3 {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: null,\n  expected: 'prerelease',\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v26.13.0\n"
+      }
+    }
+  }
+}

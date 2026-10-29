@@ -1,0 +1,130 @@
+{
+  "schema_version": 2,
+  "provider": "codex",
+  "adapter": null,
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "timeout_seconds": 360,
+  "protocol": {
+    "local_probes": true,
+    "runtime_note": "Node.js is available. Python for these historical sources: /Users/hyh/code/logic-lens/skills-workspace/discovery-venv311/bin/python (six 1.17.0 installed); use PYTHONDONTWRITEBYTECODE=1 and local src/ or repository root on PYTHONPATH as appropriate. This external interpreter/dependency path may be used only to execute local source; do not inspect other external files."
+  },
+  "catalog_sha256": "dbb1bcd50eb310f19b8a133eaf0deb90b52985e846ec771f59e52f4f861ef6e0",
+  "tools": [
+    "read-only-shell"
+  ],
+  "seed": 31,
+  "baseline_skill_commit": "32151b0f9c10a557d1da81dad0dd1b221522333d",
+  "candidate_skill_commit": "f948b796afbbc7aac010906742ec7f88a8e64950",
+  "instruction_sha256": {
+    "baseline": "774330a59357599fc2be1f1c93211690202352d84166946ef7f50f20cd4e9c0c",
+    "candidate": "9dd5e4c50d47cd71fca3d04abc006690759e8510cdbce705a9853c4a61685e0a"
+  },
+  "runs": [
+    {
+      "run_id": "e419ca1e3b714dda9c308acf24540ce5",
+      "case_id": "semver-build",
+      "variant": "buggy",
+      "arm": "baseline",
+      "repeat": 0,
+      "workspace_sha256": "e4b0a736dd370fd4079c00c50164a2b87aefbd1ff5bb4b03c44d0acebe90eb7b",
+      "target_paths": [
+        "classes/range.js"
+      ],
+      "source_v2_run_id": "64cd035e8e7d4e9daed446c2785f4ba7"
+    },
+    {
+      "run_id": "d0112f51477c4b968b720e9a866b750d",
+      "case_id": "semver-build",
+      "variant": "buggy",
+      "arm": "candidate",
+      "repeat": 0,
+      "workspace_sha256": "e4b0a736dd370fd4079c00c50164a2b87aefbd1ff5bb4b03c44d0acebe90eb7b",
+      "target_paths": [
+        "classes/range.js"
+      ],
+      "source_v2_run_id": "64cd035e8e7d4e9daed446c2785f4ba7"
+    },
+    {
+      "run_id": "70156f2deceb42da9174fccc7f4cb100",
+      "case_id": "semver-diff",
+      "variant": "buggy",
+      "arm": "candidate",
+      "repeat": 0,
+      "workspace_sha256": "1e92fb7c97532917cc09621f6b3e88a159d21fc6653619e6cc1aa41b26c95d2a",
+      "target_paths": [
+        "functions/diff.js"
+      ],
+      "source_v2_run_id": "bd7fe4b5b0ca402181ae6dc69c89e62b"
+    },
+    {
+      "run_id": "649ec10d39934d20ba68bb7fb4060798",
+      "case_id": "semver-diff",
+      "variant": "buggy",
+      "arm": "baseline",
+      "repeat": 0,
+      "workspace_sha256": "1e92fb7c97532917cc09621f6b3e88a159d21fc6653619e6cc1aa41b26c95d2a",
+      "target_paths": [
+        "functions/diff.js"
+      ],
+      "source_v2_run_id": "bd7fe4b5b0ca402181ae6dc69c89e62b"
+    },
+    {
+      "run_id": "3def069512094c0c9ca73574b5ba6fbc",
+      "case_id": "dateutil-midnight",
+      "variant": "buggy",
+      "arm": "candidate",
+      "repeat": 0,
+      "workspace_sha256": "c63c5770a14468fb4474e0ef6b596aacc06e942736eedab36e8394e0c97ee628",
+      "target_paths": [
+        "dateutil/parser/isoparser.py"
+      ],
+      "source_v2_run_id": "9ae6d9c643694ef29b9f904df83a730d"
+    },
+    {
+      "run_id": "e37ef1e4a1e547df98a262143db32b78",
+      "case_id": "dateutil-midnight",
+      "variant": "buggy",
+      "arm": "baseline",
+      "repeat": 0,
+      "workspace_sha256": "c63c5770a14468fb4474e0ef6b596aacc06e942736eedab36e8394e0c97ee628",
+      "target_paths": [
+        "dateutil/parser/isoparser.py"
+      ],
+      "source_v2_run_id": "9ae6d9c643694ef29b9f904df83a730d"
+    },
+    {
+      "run_id": "f4c36b19f70640fdb11b18d1e50c0b3a",
+      "case_id": "dateutil-inequality",
+      "variant": "buggy",
+      "arm": "candidate",
+      "repeat": 0,
+      "workspace_sha256": "11667fbca59a6a93c5188ffeb2c4f1131b30529bf1605db8011394ca1701ad3e",
+      "target_paths": [
+        "src/dateutil/relativedelta.py"
+      ],
+      "source_v2_run_id": "5d51b5bd33a74e7996f5f975aa35e3d0"
+    },
+    {
+      "run_id": "6e67de12eb41461dbdac1e07565507d3",
+      "case_id": "dateutil-inequality",
+      "variant": "buggy",
+      "arm": "baseline",
+      "repeat": 0,
+      "workspace_sha256": "11667fbca59a6a93c5188ffeb2c4f1131b30529bf1605db8011394ca1701ad3e",
+      "target_paths": [
+        "src/dateutil/relativedelta.py"
+      ],
+      "source_v2_run_id": "5d51b5bd33a74e7996f5f975aa35e3d0"
+    }
+  ],
+  "authorization": {
+    "max_dispatches": 8,
+    "automatic_retries": false,
+    "fresh_cases": false,
+    "user_approved": "2026-10-29",
+    "estimated_total_tokens": 3500000,
+    "planning_allowance_tokens": 4500000,
+    "hard_token_cap": false
+  }
+}

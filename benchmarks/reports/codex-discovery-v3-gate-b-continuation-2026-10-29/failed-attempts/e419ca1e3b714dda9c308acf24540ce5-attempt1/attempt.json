@@ -1,0 +1,6 @@
+{
+  "run_id": "e419ca1e3b714dda9c308acf24540ce5",
+  "reason": "Preserved failed attempt before retry under the same frozen plan",
+  "instruction_sha256": "774330a59357599fc2be1f1c93211690202352d84166946ef7f50f20cd4e9c0c",
+  "workspace_sha256": "e4b0a736dd370fd4079c00c50164a2b87aefbd1ff5bb4b03c44d0acebe90eb7b"
+}
