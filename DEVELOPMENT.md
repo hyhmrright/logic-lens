@@ -20,6 +20,8 @@ Claude is not required for development, testing, installation or evaluation.
 - `benchmarks/`: frozen historical summaries/reports. Preserve model/provider provenance.
 - `scripts/property_search.py`: optional experimental finite property search; see
   `docs/PROPERTY_SEARCH.md`. No model calls; not a default review step.
+- `scripts/constraint_plan.py`: optional offline relation/property/domain planner;
+  see `docs/CONSTRAINT_PLAN.md`. Manual declarations, no model calls.
 - `tests/`: offline unit/integration tests for grading and runner integrity.
 - `skills-workspace/`: ignored source clones, isolated environments and paid-run artifacts.
 - `.codex-plugin/`, `gemini-extension.json`: optional native distribution metadata.

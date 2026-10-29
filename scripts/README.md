@@ -58,3 +58,12 @@ Structural/version checks do not establish skill effectiveness. See
 [tool compatibility](../docs/TOOL_COMPATIBILITY.md) for rigorous comparisons, adapters,
 isolation limits and costs. Case-level deltas need repeated matched measurements;
 never relax the old grader to make a candidate pass.
+
+### Offline constraint relation planner (experimental)
+
+`python3 scripts/logic_lens.py constraints --spec RELATIONS.json --workspace SOURCE --out NEW.json`
+turns manually sourced integer-affine producer/consumer relations into property
+candidates, finite inverse-boundary domains and selection reasons. It never invokes
+a model or runs a subject. See [schema and limitations](../docs/CONSTRAINT_PLAN.md)
+and `examples/constraint-plan/relations.json`. Kept in draft PR #16, not the default
+review skill or proof of improved bug discovery.
