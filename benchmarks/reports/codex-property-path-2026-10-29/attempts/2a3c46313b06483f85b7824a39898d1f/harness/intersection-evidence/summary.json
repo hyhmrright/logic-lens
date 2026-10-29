@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "status": "counterexample",
+  "property_id": "range-singleton-intersection",
+  "limits": {
+    "max_cases": 32,
+    "seconds": 10,
+    "case_seconds": 1,
+    "output_bytes": 4096,
+    "shrink_cases": 8
+  },
+  "domain_size": 24,
+  "evaluations": 4,
+  "counts": {
+    "pass_count": 3,
+    "violation": 1,
+    "invalid": 0,
+    "blocked": 0
+  },
+  "counterexample": {
+    "case": {
+      "range": ">=1.2.3-alpha <2.0.0",
+      "version": "1.2.3-alpha",
+      "includePrerelease": false
+    },
+    "phase": "search",
+    "result": {
+      "status": "violation",
+      "observation": {
+        "expected": true,
+        "actual": false,
+        "details": {
+          "range": ">=1.2.3-alpha <2.0.0",
+          "singleton": "1.2.3-alpha",
+          "reverse": false
+        },
+        "runtime": "v26.13.0",
+        "module": "/private/var/folders/kb/clk179sd5qq5htsth48gfk5c0000gn/T/logic-lens-run-ev_h5_xz/harness/tmp/logic-lens-property-1q9sx6gt/workspace/classes/range.js"
+      },
+      "sources": [
+        "classes/range.js",
+        "classes/comparator.js",
+        "classes/semver.js",
+        "internal/re.js",
+        "internal/parse-options.js"
+      ],
+      "source_sha256": {
+        "classes/range.js": "cf8f8eb6934663ae2a9d04838d4d71555427a2abd3c8748ee5219507969a6b46",
+        "classes/comparator.js": "054202956430d63d5ff4599fae09760ce465b489e4f0b5ef5ce7cc7ac21157ac",
+        "classes/semver.js": "d5ba57e5c93f031b1d234fca4bb746746fcd1fe51be7e5ee895601e2c12e2083",
+        "internal/re.js": "5833262888e2b5d843a69193f83c05e374818dbe55379b497819b5bf58e48cd8",
+        "internal/parse-options.js": "fdf51d0de8d5442c35a997ef58cd530d239ce206f961d14c5121354451b01d01"
+      }
+    }
+  },
+  "integrity": {
+    "original_before": "e4b0a736dd370fd4079c00c50164a2b87aefbd1ff5bb4b03c44d0acebe90eb7b",
+    "original_after": "e4b0a736dd370fd4079c00c50164a2b87aefbd1ff5bb4b03c44d0acebe90eb7b",
+    "executed_before": "e4b0a736dd370fd4079c00c50164a2b87aefbd1ff5bb4b03c44d0acebe90eb7b",
+    "executed_after": "e4b0a736dd370fd4079c00c50164a2b87aefbd1ff5bb4b03c44d0acebe90eb7b"
+  },
+  "elapsed_seconds": 0.5451562499947613,
+  "conclusion": "Adapter results require contract, harness and reachability review; no confirmed bug or correctness claim.",
+  "argv": [
+    "node",
+    "/private/var/folders/kb/clk179sd5qq5htsth48gfk5c0000gn/T/logic-lens-run-ev_h5_xz/harness/intersection-evidence/adapter/range-adapter.cjs",
+    "intersection"
+  ]
+}

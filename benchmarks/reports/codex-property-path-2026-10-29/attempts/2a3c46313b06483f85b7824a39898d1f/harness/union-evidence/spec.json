@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "seed": 0,
+  "limits": {
+    "max_cases": 32,
+    "seconds": 10,
+    "case_seconds": 1,
+    "shrink_cases": 8
+  },
+  "id": "range-union-membership",
+  "claim": "Matching A || B equals matching A or matching B with identical options.",
+  "domain": "Valid strict ranges: two left ranges, two right ranges, three versions and two boolean options: 24 combinations.",
+  "observation": "Compare Range.test on union against disjunction on separate branches.",
+  "violation": "Combined membership differs from disjunction.",
+  "contract": [
+    {
+      "path": "README.md",
+      "start": 174,
+      "end": 176,
+      "quote": "A range is composed of one or more comparator sets, joined by `||`.  A\nversion matches a range if and only if every comparator in at least\none of the `||`-separated comparator sets is satisfied by the version."
+    },
+    {
+      "path": "README.md",
+      "start": 187,
+      "end": 190,
+      "quote": "If a version has a prerelease tag (for example, `1.2.3-alpha.3`) then\nit will only be allowed to satisfy comparator sets if at least one\ncomparator with the same `[major, minor, patch]` tuple also has a\nprerelease tag."
+    },
+    {
+      "path": "README.md",
+      "start": 312,
+      "end": 314,
+      "quote": "* `*` := `>=0.0.0` (Any non-prerelease version satisfies, unless\n  `includePrerelease` is specified, in which case any version at all\n  satisfies)"
+    }
+  ],
+  "adapter": {
+    "files": [
+      "range-adapter.cjs"
+    ],
+    "argv": [
+      "node",
+      "{adapter_dir}/range-adapter.cjs",
+      "union"
+    ]
+  },
+  "domains": {
+    "a": [
+      "*",
+      ">=0.0.0"
+    ],
+    "b": [
+      "1.2.3-alpha",
+      ">=1.2.3-alpha <2.0.0"
+    ],
+    "version": [
+      "1.2.3",
+      "1.2.3-alpha",
+      "1.2.3-beta"
+    ],
+    "includePrerelease": [
+      false,
+      true
+    ]
+  },
+  "control": {
+    "a": "*",
+    "b": "1.2.3-alpha",
+    "version": "1.2.3",
+    "includePrerelease": false
+  }
+}

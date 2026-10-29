@@ -1,0 +1,64 @@
+{
+  "schema_version": 2,
+  "provider": "codex",
+  "adapter": null,
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "timeout_seconds": 360,
+  "protocol": {
+    "local_probes": true,
+    "runtime_note": "Node.js is available. Python for these historical sources: /Users/hyh/code/logic-lens/skills-workspace/discovery-venv311/bin/python (six 1.17.0 installed); use PYTHONDONTWRITEBYTECODE=1 and local src/ or repository root on PYTHONPATH as appropriate. This external interpreter/dependency path may be used only to execute local source; do not inspect other external files.",
+    "harness": true
+  },
+  "catalog_sha256": "dbb1bcd50eb310f19b8a133eaf0deb90b52985e846ec771f59e52f4f861ef6e0",
+  "tools": [
+    "common-local-harness"
+  ],
+  "seed": 31,
+  "instruction_sha256": {
+    "baseline": "d429f5d89726d00cf166644a238849b0fce2e9f1a75197f0d106d5ac5fe6de37",
+    "candidate": "d577f926b7f172632a2d89c150d1b27f6e538d4271187c791e96b8136646ed4e"
+  },
+  "harness_sha256": {
+    "scripts/llm_runner.py": "b99bd4dc0c4bfca8d4539bae6530b5ef03e2465326fe6fde4bbcdab8ae9f34b7",
+    "scripts/property_search.py": "bcaece3fc11f3db771a9e29507dc7e1a01e1856623f76e4ed20f945b3eb1dfda",
+    "scripts/discovery_eval.py": "2190dd5ea84d7c002b1e9a0c56eebef01a0ec3bf74bbb6e969c37178702e36da",
+    "docs/PROPERTY_SEARCH.md": "d74be92ac6f7d55a2e9c52662ab91b05b87555962901f1c6babe4a31c3e171fc"
+  },
+  "runs": [
+    {
+      "run_id": "2a3c46313b06483f85b7824a39898d1f",
+      "case_id": "semver-build",
+      "variant": "buggy",
+      "arm": "candidate",
+      "repeat": 0,
+      "workspace_sha256": "e4b0a736dd370fd4079c00c50164a2b87aefbd1ff5bb4b03c44d0acebe90eb7b",
+      "target_paths": [
+        "classes/range.js"
+      ]
+    },
+    {
+      "run_id": "1fb888c2860d4139934660db52fe5ce9",
+      "case_id": "semver-build",
+      "variant": "buggy",
+      "arm": "baseline",
+      "repeat": 0,
+      "workspace_sha256": "e4b0a736dd370fd4079c00c50164a2b87aefbd1ff5bb4b03c44d0acebe90eb7b",
+      "target_paths": [
+        "classes/range.js"
+      ]
+    }
+  ],
+  "authorization": {
+    "max_dispatches": 2,
+    "automatic_retries": false,
+    "fresh_cases": false,
+    "user_approved": "2026-10-29",
+    "estimated_total_tokens": [
+      800000,
+      1100000
+    ],
+    "planning_allowance_tokens": 1200000,
+    "hard_token_cap": false
+  }
+}

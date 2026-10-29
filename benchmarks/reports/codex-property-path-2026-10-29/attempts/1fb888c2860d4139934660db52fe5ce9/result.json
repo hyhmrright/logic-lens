@@ -1,0 +1,66 @@
+{
+  "usage": {
+    "input_tokens": 569720,
+    "cached_input_tokens": 519936,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 11393,
+    "reasoning_output_tokens": 4334
+  },
+  "tools_used": [
+    {
+      "type": "command_execution",
+      "command": "/bin/zsh -lc \"pwd; rg --files -g 'range.js' -g '*range*' -g 'package.json' -g '.logic-lens.yaml' -g 'README*' -g '*sheet*' -g '*cell*' .\"",
+      "status": "completed"
+    },
+    {
+      "type": "command_execution",
+      "command": "/bin/zsh -lc \"nl -ba classes/range.js; cat package.json; rg --files classes internal functions ranges test/classes; rg -n 'Range|includePrerelease|loose|intersects|subset' README.md | head -65\"",
+      "status": "completed"
+    },
+    {
+      "type": "command_execution",
+      "command": "/bin/zsh -lc \"sed -n '149,220p' README.md; sed -n '280,382p' README.md; sed -n '417,438p' README.md; sed -n '495,534p' README.md; nl -ba classes/comparator.js; nl -ba internal/parse-options.js; nl -ba internal/lrucache.js; nl -ba test/classes/range.js; rg -n 'BUILD|GTE0|CARET|TILDE|XRANGE|HYPHEN' internal/re.js; cat ranges/intersects.js functions/satisfies.js; rg --files -g '.logic-lens.yaml' -g '*range*' -g '*intersect*' test\"",
+      "status": "completed"
+    },
+    {
+      "type": "command_execution",
+      "command": "/bin/zsh -lc \"nl -ba classes/semver.js | sed -n '1,180p'; nl -ba internal/re.js | sed -n '1,60p;90,162p;195,225p'; nl -ba test/fixtures/range-intersection.js; rg -n '\\\\+|includePrerelease|\\\\|\\\\||00\\\\.' test/fixtures/range-parse.js test/fixtures/range-include.js test/fixtures/range-exclude.js | head -120; nl -ba ranges/min-version.js; cat internal/debug.js internal/constants.js\"",
+      "status": "completed"
+    },
+    {
+      "type": "command_execution",
+      "command": "/bin/zsh -lc \"node -e '\nconst root=\\\"/var/folders/kb/clk179sd5qq5htsth48gfk5c0000gn/T/logic-lens-run-rtiignqt/workspace/\\\";\nconst Range=require(root+\\\"classes/range\\\"), Comparator=require(root+\\\"classes/comparator\\\"), SemVer=require(root+\\\"classes/semver\\\"), intersects=require(root+\\\"ranges/intersects\\\"), satisfies=require(root+\\\"functions/satisfies\\\");\nconsole.log(\\\"runtime\\\",process.version);\nconst probe=(name,f)=>{try{console.log(name,JSON.stringify(f()))}catch(e){console.log(name,e.name+\\\": \\\"+e.message)}};\nprobe(\\\"comparator stable control\\\",()=>new Range(new Comparator(\\\">=1.2.3\\\")).test(\\\"1.2.4\\\"));\nprobe(\\\"comparator prerelease default\\\",()=>new Range(new Comparator(\\\">=1.2.3-alpha\\\")).test(\\\"1.2.3-beta\\\"));\nprobe(\\\"comparator prerelease opt-in\\\",()=>new Range(new Comparator(\\\">=1.2.3\\\"),{includePrerelease:true}).test(\\\"1.2.4-beta\\\"));\nprobe(\\\"comparator loose\\\",()=>({wrapped:new Range(new Comparator(\\\">=1.2.3\\\"),{loose:true}).test(\\\"01.2.4\\\"),string:new Range(\\\">=1.2.3\\\",{loose:true}).test(\\\"01.2.4\\\")}));\nprobe(\\\"or preservation\\\",()=>[\\\"* || 1.2.3-alpha\\\",\\\"1.2.3-alpha || *\\\",\\\"*\\\",\\\"1.2.3-alpha\\\"].map(s=>({input:s,range:new Range(s).range,match:new Range(s).test(\\\"1.2.3-alpha\\\")})));\nprobe(\\\"zero lower bound\\\",()=>({range:new Range(\\\">=0.0.0 <0.0.1-alpha\\\").range,actual:satisfies(\\\"0.0.0-alpha\\\",\\\">=0.0.0 <0.0.1-alpha\\\"),lower:new Comparator(\\\">=0.0.0\\\").test(\\\"0.0.0-alpha\\\"),upper:new Comparator(\\\"<0.0.1-alpha\\\").test(\\\"0.0.0-alpha\\\")}));\nprobe(\\\"loose caret\\\",()=>[\\\"\"'^0.2.3\",\"''^00.2.3\",\"''^0.0.3\",\"''^0.00.3\",\"''^00.0.3\"].map(s=>({input:s,range:new Range(s,{loose:true}).range,match:new Range(s,{loose:true}).test(\"0.5.0\")})));\nprobe(\"invalid build\",()=>[\"1.2.3+foo+bar\",\"1.2.3+foo..bar\",\"1.2.3+foo\",\"1.2.3+foo+\"].map(s=>{let valid;try{new SemVer(s);valid=true}catch{valid=false}let range;try{range=new Range(s).range}catch(e){range=e.message}return{input:s,valid,range}}));\nprobe(\"intersection gaps\",()=>[[\">1.0.0\",\"<1.0.1\"],[\">1.0.0\",\"<1.0.2\"],[\">=1.0.0-alpha <1.0.0\",\">=1.0.0-beta <1.0.0\"],[\">=1.0.0-alpha <1.0.0\",\"*\"],[\">1.0.0-alpha <1.0.0-alpha.0\",\"*\"]].map(([a,b])=>({a,b,result:intersects(a,b),withPre:intersects(a,b,{includePrerelease:true})})));\n'\"'\"",
+      "status": "completed"
+    },
+    {
+      "type": "command_execution",
+      "command": "/bin/zsh -lc \"node -e '\nconst root=\\\"/var/folders/kb/clk179sd5qq5htsth48gfk5c0000gn/T/logic-lens-run-rtiignqt/workspace/\\\";\nconst Range=require(root+\\\"classes/range\\\"),Comparator=require(root+\\\"classes/comparator\\\"),SemVer=require(root+\\\"classes/semver\\\"),minVersion=require(root+\\\"ranges/min-version\\\"),satisfies=require(root+\\\"functions/satisfies\\\");\nfor(const s of [\\\">=0.0.0 <0.0.0-alpha\\\",\\\">=0.0.0 >=0.0.0-alpha\\\",\\\"1.2.3+build - 2.3.4\\\",\\\"1.2.3 - 2.3.4\\\"]){const r=new Range(s,{includePrerelease:s.includes(\\\" - \\\")});console.log(JSON.stringify({input:s,range:r.range,zero:r.test(\\\"0.0.0-0\\\"),pre:r.test(\\\"1.2.3-alpha\\\")}))}\nfor(const s of [\\\"\"'^00.2.3\",\"''^0.00.3\",\"''^00.0.3\"]){let v=s.slice(1);console.log(\"loose normalization\",v,new SemVer(v,{loose:true}).version)}\nfor(const [a,b] of [[\">1.0.0\",\"<1.0.1\"],[\">1.0.0\",\"<1.0.2\"]]){const ra=new Range(a),rb=new Range(b);console.log(\"intersection witness\",JSON.stringify({a,b,actual:ra.intersects(rb),jointMin:minVersion(a+\" \"+b),preCandidates:[\"1.0.1-0\",\"1.0.1-alpha\"].map(v=>[v,ra.test(v),rb.test(v)]),stableWitness:[\"1.0.0\",\"1.0.1\"].map(v=>[v,ra.test(v),rb.test(v)])}))}\nconsole.log(\"strict invalid downstream\",satisfies(\"1.2.3\",\"1.2.3+foo+bar\"));\nconsole.log(\"hyphen build controls\",[\"1.2.3+build - 2.3.4\",\"1.2.3 - 2.3.4\"].map(s=>[s,new Range(s,{includePrerelease:true}).test(\"1.2.3-alpha\")]));\n'\"'\"",
+      "status": "completed"
+    },
+    {
+      "type": "command_execution",
+      "command": "/bin/zsh -lc \"sed -n '136,149p' README.md; sed -n '450,462p' README.md; rg -n 'build metadata|Build metadata|precedence|\\\\+build' README.md test/classes/semver.js test/fixtures/comparator-intersection.js; rg --files --hidden -g '.logic-lens.yaml' -g '\"'!node_modules/**'\"' -g '\"'!.git/**'\"' .\"",
+      "status": "failed"
+    },
+    {
+      "type": "file_change",
+      "command": null,
+      "status": "completed"
+    },
+    {
+      "type": "command_execution",
+      "command": "/bin/zsh -lc \"PYTHONDONTWRITEBYTECODE=1 python3 -c 'import pathlib, subprocess, sys; result = subprocess.run([\\\"node\\\", \\\"range-review.cjs\\\"], capture_output=True, text=True, timeout=10); output = result.stdout + result.stderr; pathlib.Path(\\\"range-review-results.txt\\\").write_text(output); print(output, end=\\\"\\\"); sys.exit(result.returncode)'\"",
+      "status": "completed"
+    }
+  ],
+  "evidence_source": "codex-jsonl",
+  "provider": "codex",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "elapsed_seconds": 357.65281529199274,
+  "instruction_delivery": "explicit_stdin_snapshot",
+  "capability": "local-harness",
+  "instruction_sha256": "d429f5d89726d00cf166644a238849b0fce2e9f1a75197f0d106d5ac5fe6de37",
+  "workspace_sha256": "e4b0a736dd370fd4079c00c50164a2b87aefbd1ff5bb4b03c44d0acebe90eb7b",
+  "total_cost_usd": null
+}

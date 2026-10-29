@@ -87,3 +87,11 @@ bundling and existing-evidence analysis are authorized. Present the frozen revis
 run count, provider/model, budgets and known/unknown cost estimate before requesting
 approval. A passing development gate does not authorize the next stage. Do not create
 a model-running heartbeat or CI experiment. The proposed revision-3 stages remain on the experiment branch in PR #16.
+
+The authorized two-session property-search diagnostic is complete (2026-10-29):
+both deliver, neither checks the key relationship or detects the original target.
+Two autonomous properties execute correctly on familiar paths; this is not demonstrated
+path-selection improvement. Actual evaluation input+output is1,044,376 tokens,
+including cached input. See
+`benchmarks/reports/codex-property-path-2026-10-29/REPORT.md`.
+No retries, fresh cases, further model evaluations or main merge are authorized.

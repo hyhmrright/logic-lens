@@ -201,6 +201,16 @@
       "planned_runs": 2,
       "completed_runs": 2,
       "notes": "Both arms deliver and miss target; neither checks key boundary; known total 881931 input+output tokens, no failure or retry; no discovery improvement."
+    },
+    {
+      "id": "codex-property-path-2026-10-29",
+      "kind": "development-diagnostic",
+      "path": "runs/codex-property-path-2026-10-29.json",
+      "report": "reports/codex-property-path-2026-10-29/REPORT.md",
+      "model": "gpt-6.1-sol",
+      "planned_runs": 2,
+      "completed_runs": 2,
+      "notes": "Common local harness; property-driven candidate vs v4, existing case only; no automatic retry, new cases or main merge. See report for semantic judgment and exact usage."
     }
   ],
   "discovery_experiments": [

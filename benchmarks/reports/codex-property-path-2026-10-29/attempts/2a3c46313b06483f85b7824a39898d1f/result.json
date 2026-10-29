@@ -1,0 +1,66 @@
+{
+  "usage": {
+    "input_tokens": 454857,
+    "cached_input_tokens": 405120,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 8406,
+    "reasoning_output_tokens": 2460
+  },
+  "tools_used": [
+    {
+      "type": "command_execution",
+      "command": "/bin/zsh -lc \"pwd && rg --files -g '\"'!node_modules'\"' -g '\"'!vendor'\"' .\"",
+      "status": "completed"
+    },
+    {
+      "type": "command_execution",
+      "command": "/bin/zsh -lc 'cat /var/folders/kb/clk179sd5qq5htsth48gfk5c0000gn/T/logic-lens-run-ev_h5_xz/toolbox/PROPERTY_SEARCH.md'",
+      "status": "completed"
+    },
+    {
+      "type": "command_execution",
+      "command": "/bin/zsh -lc \"nl -ba classes/range.js\nnl -ba classes/comparator.js\nrg -n 'Range|range|intersect|hyphen|caret|tilde|prerelease|includePrerelease' README.md\ncat package.json\nif [ -f .logic-lens.yaml ]; then cat .logic-lens.yaml; fi\"",
+      "status": "completed"
+    },
+    {
+      "type": "command_execution",
+      "command": "/bin/zsh -lc \"sed -n '149,218p' README.md\nsed -n '280,385p' README.md\nnl -ba test/classes/range.js | sed -n '1,300p'\nnl -ba test/fixtures/range-intersection.js | sed -n '1,200p'\ncat internal/parse-options.js\nnl -ba classes/semver.js | sed -n '1,175p'\nrg -n 'max_cases|seconds|spec\\\\[|spec.get|adapter|control' /var/folders/kb/clk179sd5qq5htsth48gfk5c0000gn/T/logic-lens-run-ev_h5_xz/toolbox/property_search.py\"",
+      "status": "completed"
+    },
+    {
+      "type": "command_execution",
+      "command": "/bin/zsh -lc \"sed -n '40,110p' /var/folders/kb/clk179sd5qq5htsth48gfk5c0000gn/T/logic-lens-run-ev_h5_xz/toolbox/property_search.py\nsed -n '180,205p' /var/folders/kb/clk179sd5qq5htsth48gfk5c0000gn/T/logic-lens-run-ev_h5_xz/toolbox/property_search.py\nnl -ba ranges/intersects.js\nnl -ba functions/satisfies.js\nnl -ba functions/cmp.js\nnl -ba ranges/min-version.js\nnl -ba README.md | sed -n '450,460p'\nnl -ba internal/re.js | sed -n '180,225p'\"",
+      "status": "completed"
+    },
+    {
+      "type": "command_execution",
+      "command": "/bin/zsh -lc \"PYTHONDONTWRITEBYTECODE=1 python3 -c 'import json\nfrom pathlib import Path\nroot=Path('\\\\''/var/folders/kb/clk179sd5qq5htsth48gfk5c0000gn/T/logic-lens-run-ev_h5_xz/workspace'\\\\'')\nlines=(root/'\\\\''README.md'\\\\'').read_text().splitlines()\ndef contract(start,end):\n return dict(path='\\\\''README.md'\\\\'',start=start,end=end,quote='\\\\''\\\\n'\\\\''.join(lines[start-1:end]))\nbase=dict(schema_version=1,seed=0,limits=dict(max_cases=32,seconds=10,case_seconds=1,shrink_cases=8))\nunion=dict(base,id='\\\\''range-union-membership'\\\\'',claim='\\\\''Matching A || B equals matching A or matching B with identical options.'\\\\'',domain='\\\\''Valid strict ranges: two left ranges, two right ranges, three versions and two boolean options: 24 combinations.'\\\\'',observation='\\\\''Compare Range.test on union against disjunction on separate branches.'\\\\'',violation='\\\\''Combined membership differs from disjunction.'\\\\'',contract=[contract(174,176),contract(187,190),contract(312,314)],adapter=dict(files=['\\\\''range-adapter.cjs'\\\\''],argv=['\\\\''node'\\\\'','\\\\''{adapter_dir}/range-adapter.cjs'\\\\'','\\\\''union'\\\\'']),domains=dict(a=['\\\\''*'\\\\'','\\\\''>=0.0.0'\\\\''],b=['\\\\''1.2.3-alpha'\\\\'','\\\\''>=1.2.3-alpha <2.0.0'\\\\''],version=['\\\\''1.2.3'\\\\'','\\\\''1.2.3-alpha'\\\\'','\\\\''1.2.3-beta'\\\\''],includePrerelease=[False,True]),control=dict(a='\\\\''*'\\\\'',b='\\\\''1.2.3-alpha'\\\\'',version='\\\\''1.2.3'\\\\'',includePrerelease=False))\nintersect=dict(base,id='\\\\''range-singleton-intersection'\\\\'',claim='\\\\''A range intersects an exact-version singleton iff that version matches the range under identical options.'\\\\'',domain='\\\\''Four valid strict ranges, three valid versions and two boolean options: 24 combinations. Singleton must match its own version.'\\\\'',observation='\\\\''Compare Range.intersects(singleton) to Range.test(version).'\\\\'',violation='\\\\''Intersection differs from membership.'\\\\'',contract=[contract(161,163),contract(171,176),contract(187,190),contract(456,457)],adapter=dict(files=['\\\\''range-adapter.cjs'\\\\''],argv=['\\\\''node'\\\\'','\\\\''{adapter_dir}/range-adapter.cjs'\\\\'','\\\\''intersection'\\\\'']),domains=dict(range=['\\\\''>=1.2.3-alpha <2.0.0'\\\\'','\\\\''>=1.2.3-alpha'\\\\'','\\\\''<2.0.0'\\\\'','\\\\''*'\\\\''],version=['\\\\''1.2.3'\\\\'','\\\\''1.2.3-alpha'\\\\'','\\\\''1.2.3-beta'\\\\''],includePrerelease=[False,True]),control=dict(range='\\\\''>=1.2.3-alpha <2.0.0'\\\\'',version='\\\\''1.2.3'\\\\'',includePrerelease=False))\nPath('\\\\''union-spec.json'\\\\'').write_text(json.dumps(union,indent=2))\nPath('\\\\''intersection-spec.json'\\\\'').write_text(json.dumps(intersect,indent=2))\nPath('\\\\''range-adapter.cjs'\\\\'').write_text(\\\"'\\\\''use strict'\\\\''\\\\nconst fs = require('\\\\''fs'\\\\''), path = require('\\\\''path'\\\\'')\\\\nconst source = path.join(process.cwd(), '\\\\''classes/range.js'\\\\'')\\\\nif (require.resolve(source) \"'!== source) throw Error('\"'\\\\''unexpected module path'\\\\'')\\\\nconst Range = require(source)\\\\nconst c = JSON.parse(fs.readFileSync(0, '\\\\''utf8'\\\\'')).case\\\\nconst options = { includePrerelease: c.includePrerelease }\\\\nlet expected, actual, details\\\\nif (process.argv[2] === '\\\\''union'\\\\'') {\\\\n  const a = new Range(c.a, options), b = new Range(c.b, options)\\\\n  const combined = new Range(c.a + '\\\\'' || '\\\\'' + c.b, options)\\\\n  expected = a.test(c.version) || b.test(c.version)\\\\n  actual = combined.test(c.version)\\\\n  details = { a: a.range, b: b.range, combined: combined.range }\\\\n} else {\\\\n  const range = new Range(c.range, options), singleton = new Range(c.version, options)\\\\n  if (\"'!singleton.test(c.version)) throw Error('\"'\\\\''invalid singleton oracle'\\\\'')\\\\n  expected = range.test(c.version)\\\\n  actual = range.intersects(singleton, options)\\\\n  details = { range: range.range, singleton: singleton.range, reverse: singleton.intersects(range, options) }\\\\n}\\\\nprocess.stdout.write(JSON.stringify({status: expected === actual ? '\\\\''pass'\\\\'' : '\\\\''violation'\\\\'', observation: {expected, actual, details, runtime: process.version, module: source}, sources: ['\\\\''classes/range.js'\\\\'','\\\\''classes/comparator.js'\\\\'','\\\\''classes/semver.js'\\\\'','\\\\''internal/re.js'\\\\'','\\\\''internal/parse-options.js'\\\\'']}))\\\\n\\\")\nprint('\\\\''Created two finite properties, 24 combinations each, with stable-version controls.'\\\\'')\n'\"",
+      "status": "completed"
+    },
+    {
+      "type": "command_execution",
+      "command": "/bin/zsh -lc 'PYTHONDONTWRITEBYTECODE=1 python3 /var/folders/kb/clk179sd5qq5htsth48gfk5c0000gn/T/logic-lens-run-ev_h5_xz/toolbox/property_search.py --spec intersection-spec.json --workspace /var/folders/kb/clk179sd5qq5htsth48gfk5c0000gn/T/logic-lens-run-ev_h5_xz/workspace --out intersection-evidence'",
+      "status": "completed"
+    },
+    {
+      "type": "command_execution",
+      "command": "/bin/zsh -lc 'PYTHONDONTWRITEBYTECODE=1 python3 /var/folders/kb/clk179sd5qq5htsth48gfk5c0000gn/T/logic-lens-run-ev_h5_xz/toolbox/property_search.py --spec union-spec.json --workspace /var/folders/kb/clk179sd5qq5htsth48gfk5c0000gn/T/logic-lens-run-ev_h5_xz/workspace --out union-evidence'",
+      "status": "completed"
+    },
+    {
+      "type": "command_execution",
+      "command": "/bin/zsh -lc \"node -e ''\\\\''use strict'\\\\''\nconst fs = require('\\\\''fs'\\\\''), path = require('\\\\''path'\\\\'')\nconst root = '\\\\''/var/folders/kb/clk179sd5qq5htsth48gfk5c0000gn/T/logic-lens-run-ev_h5_xz/workspace'\\\\''\nconst Range = require(path.join(root, '\\\\''classes/range.js'\\\\''))\nconst Comparator = require(path.join(root, '\\\\''classes/comparator.js'\\\\''))\nconst satisfies = require(path.join(root, '\\\\''functions/satisfies.js'\\\\''))\nconst intersects = require(path.join(root, '\\\\''ranges/intersects.js'\\\\''))\nconst capture = f => { try { return {value:f()} } catch(e) { return {error:e.name, message:e.message, stack:e.stack.split('\\\\''\\\\n'\\\\'').slice(0,5)} } }\nconst result = {runtime:process.version, module:require.resolve(path.join(root,'\\\\''classes/range.js'\\\\''))}\nresult.union = {single:new Range('\\\\''1.2.3-alpha'\\\\'').test('\\\\''1.2.3-alpha'\\\\''), combined:new Range('\\\\''* || 1.2.3-alpha'\\\\'').test('\\\\''1.2.3-alpha'\\\\''), reversed:new Range('\\\\''1.2.3-alpha || *'\\\\'').test('\\\\''1.2.3-alpha'\\\\''), public:satisfies('\\\\''1.2.3-alpha'\\\\'','\\\\''* || 1.2.3-alpha'\\\\''), optIn:new Range('\\\\''* || 1.2.3-alpha'\\\\'',{includePrerelease:true}).test('\\\\''1.2.3-alpha'\\\\'')}\nconst r = new Range('\\\\''>=1.2.3-alpha <2.0.0'\\\\''), exact = new Range('\\\\''1.2.3-alpha'\\\\'')\nresult.intersection = {member:r.test('\\\\''1.2.3-alpha'\\\\''), forward:r.intersects(exact), reverse:exact.intersects(r), public:intersects(r.raw,exact.raw), optIn:intersects(r.raw,exact.raw,{includePrerelease:true}), stable:intersects(r.raw,'\\\\''1.2.3'\\\\'')}\nresult.comparator = {\n stable:capture(()=>new Range(new Comparator('\\\\''>=1.2.3'\\\\'')).test('\\\\''1.2.3'\\\\'')),\n prerelease:capture(()=>new Range(new Comparator('\\\\''>=1.2.3-alpha'\\\\'')).test('\\\\''1.2.3-alpha'\\\\'')),\n string:capture(()=>new Range('\\\\''>=1.2.3-alpha'\\\\'').test('\\\\''1.2.3-alpha'\\\\'')),\n options:capture(()=>new Range(new Comparator('\\\\''>=1.2.3-alpha'\\\\''),{includePrerelease:true}).test('\\\\''1.2.3-alpha'\\\\'')),\n public:capture(()=>satisfies('\\\\''1.2.3-alpha'\\\\'',new Comparator('\\\\''>=1.2.3-alpha'\\\\'')))\n}\nfs.writeFileSync('\\\\''direct-evidence.json'\\\\'',JSON.stringify(result,null,2))\nconsole.log(JSON.stringify(result,null,2))\n'\"",
+      "status": "completed"
+    }
+  ],
+  "evidence_source": "codex-jsonl",
+  "provider": "codex",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "elapsed_seconds": 235.89516320898838,
+  "instruction_delivery": "explicit_stdin_snapshot",
+  "capability": "local-harness",
+  "instruction_sha256": "d577f926b7f172632a2d89c150d1b27f6e538d4271187c791e96b8136646ed4e",
+  "workspace_sha256": "e4b0a736dd370fd4079c00c50164a2b87aefbd1ff5bb4b03c44d0acebe90eb7b",
+  "total_cost_usd": null
+}

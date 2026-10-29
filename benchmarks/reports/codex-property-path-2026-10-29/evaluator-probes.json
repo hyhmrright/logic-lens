@@ -1,0 +1,262 @@
+{
+  "2a3c46313b06483f85b7824a39898d1f": {
+    "target": {
+      "command": [
+        "node",
+        "-e",
+        "const R=require('./classes/range');const a=require('node:assert/strict');const r=new R('4.17.0+'+'a'.repeat(250)+'3',{loose:true});a.equal(r.range,'4.17.0');a.equal(r.test('4.17.0'),true);"
+      ],
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "node:internal/assert/utils:146\n  throw error;\n  ^\n\nAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n'4.17.3' !== '4.17.0'\n\n    at [eval]:1:134\n    at runScriptInThisContext (node:internal/vm:219:10)\n    at node:internal/process/execution:485:12\n    at [eval]-wrapper:6:24\n    at runScriptInContext (node:internal/process/execution:483:60)\n    at evalFunction (node:internal/process/execution:317:30)\n    at evalTypeScript (node:internal/process/execution:329:3)\n    at node:internal/main/eval_string:71:3 {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: '4.17.3',\n  expected: '4.17.0',\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v26.13.0\n"
+    },
+    "additional": {
+      "semver-or-prerelease": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "node:internal/assert/utils:146\n  throw error;\n  ^\n\nAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\nfalse !== true\n\n    at [eval]:1:70\n    at runScriptInThisContext (node:internal/vm:219:10)\n    at node:internal/process/execution:485:12\n    at [eval]-wrapper:6:24\n    at runScriptInContext (node:internal/process/execution:483:60)\n    at evalFunction (node:internal/process/execution:317:30)\n    at evalTypeScript (node:internal/process/execution:329:3)\n    at node:internal/main/eval_string:71:3 {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: false,\n  expected: true,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v26.13.0\n"
+      },
+      "semver-intersection-witness": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "node:internal/assert/utils:146\n  throw error;\n  ^\n\nAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\nfalse !== true\n\n    at [eval]:1:187\n    at runScriptInThisContext (node:internal/vm:219:10)\n    at node:internal/process/execution:485:12\n    at [eval]-wrapper:6:24\n    at runScriptInContext (node:internal/process/execution:483:60)\n    at evalFunction (node:internal/process/execution:317:30)\n    at evalTypeScript (node:internal/process/execution:329:3)\n    at node:internal/main/eval_string:71:3 {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: false,\n  expected: true,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v26.13.0\n"
+      },
+      "semver-comparator-options": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "/Users/hyh/code/logic-lens/skills-workspace/codex-property-path-2026-10-29/workspaces/2a3c46313b06483f85b7824a39898d1f/classes/range.js:530\n  if (version.prerelease.length && !options.includePrerelease) {\n                                            ^\n\nTypeError: Cannot read properties of undefined (reading 'includePrerelease')\n    at testSet (/Users/hyh/code/logic-lens/skills-workspace/codex-property-path-2026-10-29/workspaces/2a3c46313b06483f85b7824a39898d1f/classes/range.js:530:45)\n    at Range.test (/Users/hyh/code/logic-lens/skills-workspace/codex-property-path-2026-10-29/workspaces/2a3c46313b06483f85b7824a39898d1f/classes/range.js:207:11)\n    at [eval]:1:140\n    at runScriptInThisContext (node:internal/vm:219:10)\n    at node:internal/process/execution:485:12\n    at [eval]-wrapper:6:24\n    at runScriptInContext (node:internal/process/execution:483:60)\n    at evalFunction (node:internal/process/execution:317:30)\n    at evalTypeScript (node:internal/process/execution:329:3)\n    at node:internal/main/eval_string:71:3\n\nNode.js v26.13.0\n"
+      },
+      "semver-intersection-empty": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "node:internal/assert/utils:146\n  throw error;\n  ^\n\nAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\ntrue !== false\n\n    at [eval]:1:70\n    at runScriptInThisContext (node:internal/vm:219:10)\n    at node:internal/process/execution:485:12\n    at [eval]-wrapper:6:24\n    at runScriptInContext (node:internal/process/execution:483:60)\n    at evalFunction (node:internal/process/execution:317:30)\n    at evalTypeScript (node:internal/process/execution:329:3)\n    at node:internal/main/eval_string:71:3 {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: true,\n  expected: false,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v26.13.0\n"
+      },
+      "semver-intersection-gap": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "node:internal/assert/utils:146\n  throw error;\n  ^\n\nAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\ntrue !== false\n\n    at [eval]:1:70\n    at runScriptInThisContext (node:internal/vm:219:10)\n    at node:internal/process/execution:485:12\n    at [eval]-wrapper:6:24\n    at runScriptInContext (node:internal/process/execution:483:60)\n    at evalFunction (node:internal/process/execution:317:30)\n    at evalTypeScript (node:internal/process/execution:329:3)\n    at node:internal/main/eval_string:71:3 {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: true,\n  expected: false,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v26.13.0\n"
+      },
+      "semver-hyphen-build": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "node:internal/assert/utils:146\n  throw error;\n  ^\n\nAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\nfalse !== true\n\n    at [eval]:1:70\n    at runScriptInThisContext (node:internal/vm:219:10)\n    at node:internal/process/execution:485:12\n    at [eval]-wrapper:6:24\n    at runScriptInContext (node:internal/process/execution:483:60)\n    at evalFunction (node:internal/process/execution:317:30)\n    at evalTypeScript (node:internal/process/execution:329:3)\n    at node:internal/main/eval_string:71:3 {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: false,\n  expected: true,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v26.13.0\n"
+      },
+      "semver-padded-caret": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "node:internal/assert/utils:146\n  throw error;\n  ^\n\nAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\ntrue !== false\n\n    at [eval]:1:70\n    at runScriptInThisContext (node:internal/vm:219:10)\n    at node:internal/process/execution:485:12\n    at [eval]-wrapper:6:24\n    at runScriptInContext (node:internal/process/execution:483:60)\n    at evalFunction (node:internal/process/execution:317:30)\n    at evalTypeScript (node:internal/process/execution:329:3)\n    at node:internal/main/eval_string:71:3 {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: true,\n  expected: false,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v26.13.0\n"
+      },
+      "semver-zero-lower-bound": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "node:internal/assert/utils:146\n  throw error;\n  ^\n\nAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\ntrue !== false\n\n    at [eval]:1:70\n    at runScriptInThisContext (node:internal/vm:219:10)\n    at node:internal/process/execution:485:12\n    at [eval]-wrapper:6:24\n    at runScriptInContext (node:internal/process/execution:483:60)\n    at evalFunction (node:internal/process/execution:317:30)\n    at evalTypeScript (node:internal/process/execution:329:3)\n    at node:internal/main/eval_string:71:3 {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: true,\n  expected: false,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v26.13.0\n"
+      },
+      "semver-invalid-build": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "node:internal/assert/utils:146\n  throw error;\n  ^\n\nAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n'*' !== null\n\n    at [eval]:1:73\n    at runScriptInThisContext (node:internal/vm:219:10)\n    at node:internal/process/execution:485:12\n    at [eval]-wrapper:6:24\n    at runScriptInContext (node:internal/process/execution:483:60)\n    at evalFunction (node:internal/process/execution:317:30)\n    at evalTypeScript (node:internal/process/execution:329:3)\n    at node:internal/main/eval_string:71:3 {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: '*',\n  expected: null,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v26.13.0\n"
+      }
+    },
+    "property_replays": {
+      "intersection-spec.json": {
+        "schema_version": 1,
+        "status": "counterexample",
+        "property_id": "range-singleton-intersection",
+        "limits": {
+          "max_cases": 32,
+          "seconds": 10,
+          "case_seconds": 1,
+          "output_bytes": 4096,
+          "shrink_cases": 8
+        },
+        "domain_size": 24,
+        "evaluations": 4,
+        "counts": {
+          "pass_count": 3,
+          "violation": 1,
+          "invalid": 0,
+          "blocked": 0
+        },
+        "counterexample": {
+          "case": {
+            "range": ">=1.2.3-alpha <2.0.0",
+            "version": "1.2.3-alpha",
+            "includePrerelease": false
+          },
+          "phase": "search",
+          "result": {
+            "status": "violation",
+            "observation": {
+              "expected": true,
+              "actual": false,
+              "details": {
+                "range": ">=1.2.3-alpha <2.0.0",
+                "singleton": "1.2.3-alpha",
+                "reverse": false
+              },
+              "runtime": "v26.13.0",
+              "module": "/private/var/folders/kb/clk179sd5qq5htsth48gfk5c0000gn/T/logic-lens-property-5jdbiqdx/workspace/classes/range.js"
+            },
+            "sources": [
+              "classes/range.js",
+              "classes/comparator.js",
+              "classes/semver.js",
+              "internal/re.js",
+              "internal/parse-options.js"
+            ],
+            "source_sha256": {
+              "classes/range.js": "cf8f8eb6934663ae2a9d04838d4d71555427a2abd3c8748ee5219507969a6b46",
+              "classes/comparator.js": "054202956430d63d5ff4599fae09760ce465b489e4f0b5ef5ce7cc7ac21157ac",
+              "classes/semver.js": "d5ba57e5c93f031b1d234fca4bb746746fcd1fe51be7e5ee895601e2c12e2083",
+              "internal/re.js": "5833262888e2b5d843a69193f83c05e374818dbe55379b497819b5bf58e48cd8",
+              "internal/parse-options.js": "fdf51d0de8d5442c35a997ef58cd530d239ce206f961d14c5121354451b01d01"
+            }
+          }
+        },
+        "integrity": {
+          "original_before": "e4b0a736dd370fd4079c00c50164a2b87aefbd1ff5bb4b03c44d0acebe90eb7b",
+          "original_after": "e4b0a736dd370fd4079c00c50164a2b87aefbd1ff5bb4b03c44d0acebe90eb7b",
+          "executed_before": "e4b0a736dd370fd4079c00c50164a2b87aefbd1ff5bb4b03c44d0acebe90eb7b",
+          "executed_after": "e4b0a736dd370fd4079c00c50164a2b87aefbd1ff5bb4b03c44d0acebe90eb7b"
+        },
+        "elapsed_seconds": 0.49170429099467583,
+        "conclusion": "Adapter results require contract, harness and reachability review; no confirmed bug or correctness claim.",
+        "argv": [
+          "node",
+          "/var/folders/kb/clk179sd5qq5htsth48gfk5c0000gn/T/tmparmulxx4/replay/adapter/range-adapter.cjs",
+          "intersection"
+        ]
+      },
+      "union-spec.json": {
+        "schema_version": 1,
+        "status": "counterexample",
+        "property_id": "range-union-membership",
+        "limits": {
+          "max_cases": 32,
+          "seconds": 10,
+          "case_seconds": 1,
+          "output_bytes": 4096,
+          "shrink_cases": 8
+        },
+        "domain_size": 24,
+        "evaluations": 4,
+        "counts": {
+          "pass_count": 2,
+          "violation": 2,
+          "invalid": 0,
+          "blocked": 0
+        },
+        "counterexample": {
+          "case": {
+            "a": "*",
+            "b": "1.2.3-alpha",
+            "version": "1.2.3-alpha",
+            "includePrerelease": false
+          },
+          "phase": "shrink",
+          "result": {
+            "status": "violation",
+            "observation": {
+              "expected": true,
+              "actual": false,
+              "details": {
+                "a": "",
+                "b": "1.2.3-alpha",
+                "combined": ""
+              },
+              "runtime": "v26.13.0",
+              "module": "/private/var/folders/kb/clk179sd5qq5htsth48gfk5c0000gn/T/logic-lens-property-bxx23cp1/workspace/classes/range.js"
+            },
+            "sources": [
+              "classes/range.js",
+              "classes/comparator.js",
+              "classes/semver.js",
+              "internal/re.js",
+              "internal/parse-options.js"
+            ],
+            "source_sha256": {
+              "classes/range.js": "cf8f8eb6934663ae2a9d04838d4d71555427a2abd3c8748ee5219507969a6b46",
+              "classes/comparator.js": "054202956430d63d5ff4599fae09760ce465b489e4f0b5ef5ce7cc7ac21157ac",
+              "classes/semver.js": "d5ba57e5c93f031b1d234fca4bb746746fcd1fe51be7e5ee895601e2c12e2083",
+              "internal/re.js": "5833262888e2b5d843a69193f83c05e374818dbe55379b497819b5bf58e48cd8",
+              "internal/parse-options.js": "fdf51d0de8d5442c35a997ef58cd530d239ce206f961d14c5121354451b01d01"
+            }
+          }
+        },
+        "integrity": {
+          "original_before": "e4b0a736dd370fd4079c00c50164a2b87aefbd1ff5bb4b03c44d0acebe90eb7b",
+          "original_after": "e4b0a736dd370fd4079c00c50164a2b87aefbd1ff5bb4b03c44d0acebe90eb7b",
+          "executed_before": "e4b0a736dd370fd4079c00c50164a2b87aefbd1ff5bb4b03c44d0acebe90eb7b",
+          "executed_after": "e4b0a736dd370fd4079c00c50164a2b87aefbd1ff5bb4b03c44d0acebe90eb7b"
+        },
+        "elapsed_seconds": 0.4898075829987647,
+        "conclusion": "Adapter results require contract, harness and reachability review; no confirmed bug or correctness claim.",
+        "argv": [
+          "node",
+          "/var/folders/kb/clk179sd5qq5htsth48gfk5c0000gn/T/tmpw9nhug4t/replay/adapter/range-adapter.cjs",
+          "union"
+        ]
+      }
+    }
+  },
+  "1fb888c2860d4139934660db52fe5ce9": {
+    "target": {
+      "command": [
+        "node",
+        "-e",
+        "const R=require('./classes/range');const a=require('node:assert/strict');const r=new R('4.17.0+'+'a'.repeat(250)+'3',{loose:true});a.equal(r.range,'4.17.0');a.equal(r.test('4.17.0'),true);"
+      ],
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "node:internal/assert/utils:146\n  throw error;\n  ^\n\nAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n'4.17.3' !== '4.17.0'\n\n    at [eval]:1:134\n    at runScriptInThisContext (node:internal/vm:219:10)\n    at node:internal/process/execution:485:12\n    at [eval]-wrapper:6:24\n    at runScriptInContext (node:internal/process/execution:483:60)\n    at evalFunction (node:internal/process/execution:317:30)\n    at evalTypeScript (node:internal/process/execution:329:3)\n    at node:internal/main/eval_string:71:3 {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: '4.17.3',\n  expected: '4.17.0',\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v26.13.0\n"
+    },
+    "additional": {
+      "semver-or-prerelease": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "node:internal/assert/utils:146\n  throw error;\n  ^\n\nAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\nfalse !== true\n\n    at [eval]:1:70\n    at runScriptInThisContext (node:internal/vm:219:10)\n    at node:internal/process/execution:485:12\n    at [eval]-wrapper:6:24\n    at runScriptInContext (node:internal/process/execution:483:60)\n    at evalFunction (node:internal/process/execution:317:30)\n    at evalTypeScript (node:internal/process/execution:329:3)\n    at node:internal/main/eval_string:71:3 {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: false,\n  expected: true,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v26.13.0\n"
+      },
+      "semver-intersection-witness": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "node:internal/assert/utils:146\n  throw error;\n  ^\n\nAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\nfalse !== true\n\n    at [eval]:1:187\n    at runScriptInThisContext (node:internal/vm:219:10)\n    at node:internal/process/execution:485:12\n    at [eval]-wrapper:6:24\n    at runScriptInContext (node:internal/process/execution:483:60)\n    at evalFunction (node:internal/process/execution:317:30)\n    at evalTypeScript (node:internal/process/execution:329:3)\n    at node:internal/main/eval_string:71:3 {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: false,\n  expected: true,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v26.13.0\n"
+      },
+      "semver-comparator-options": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "/Users/hyh/code/logic-lens/skills-workspace/codex-property-path-2026-10-29/workspaces/1fb888c2860d4139934660db52fe5ce9/classes/range.js:530\n  if (version.prerelease.length && !options.includePrerelease) {\n                                            ^\n\nTypeError: Cannot read properties of undefined (reading 'includePrerelease')\n    at testSet (/Users/hyh/code/logic-lens/skills-workspace/codex-property-path-2026-10-29/workspaces/1fb888c2860d4139934660db52fe5ce9/classes/range.js:530:45)\n    at Range.test (/Users/hyh/code/logic-lens/skills-workspace/codex-property-path-2026-10-29/workspaces/1fb888c2860d4139934660db52fe5ce9/classes/range.js:207:11)\n    at [eval]:1:140\n    at runScriptInThisContext (node:internal/vm:219:10)\n    at node:internal/process/execution:485:12\n    at [eval]-wrapper:6:24\n    at runScriptInContext (node:internal/process/execution:483:60)\n    at evalFunction (node:internal/process/execution:317:30)\n    at evalTypeScript (node:internal/process/execution:329:3)\n    at node:internal/main/eval_string:71:3\n\nNode.js v26.13.0\n"
+      },
+      "semver-intersection-empty": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "node:internal/assert/utils:146\n  throw error;\n  ^\n\nAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\ntrue !== false\n\n    at [eval]:1:70\n    at runScriptInThisContext (node:internal/vm:219:10)\n    at node:internal/process/execution:485:12\n    at [eval]-wrapper:6:24\n    at runScriptInContext (node:internal/process/execution:483:60)\n    at evalFunction (node:internal/process/execution:317:30)\n    at evalTypeScript (node:internal/process/execution:329:3)\n    at node:internal/main/eval_string:71:3 {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: true,\n  expected: false,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v26.13.0\n"
+      },
+      "semver-intersection-gap": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "node:internal/assert/utils:146\n  throw error;\n  ^\n\nAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\ntrue !== false\n\n    at [eval]:1:70\n    at runScriptInThisContext (node:internal/vm:219:10)\n    at node:internal/process/execution:485:12\n    at [eval]-wrapper:6:24\n    at runScriptInContext (node:internal/process/execution:483:60)\n    at evalFunction (node:internal/process/execution:317:30)\n    at evalTypeScript (node:internal/process/execution:329:3)\n    at node:internal/main/eval_string:71:3 {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: true,\n  expected: false,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v26.13.0\n"
+      },
+      "semver-hyphen-build": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "node:internal/assert/utils:146\n  throw error;\n  ^\n\nAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\nfalse !== true\n\n    at [eval]:1:70\n    at runScriptInThisContext (node:internal/vm:219:10)\n    at node:internal/process/execution:485:12\n    at [eval]-wrapper:6:24\n    at runScriptInContext (node:internal/process/execution:483:60)\n    at evalFunction (node:internal/process/execution:317:30)\n    at evalTypeScript (node:internal/process/execution:329:3)\n    at node:internal/main/eval_string:71:3 {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: false,\n  expected: true,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v26.13.0\n"
+      },
+      "semver-padded-caret": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "node:internal/assert/utils:146\n  throw error;\n  ^\n\nAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\ntrue !== false\n\n    at [eval]:1:70\n    at runScriptInThisContext (node:internal/vm:219:10)\n    at node:internal/process/execution:485:12\n    at [eval]-wrapper:6:24\n    at runScriptInContext (node:internal/process/execution:483:60)\n    at evalFunction (node:internal/process/execution:317:30)\n    at evalTypeScript (node:internal/process/execution:329:3)\n    at node:internal/main/eval_string:71:3 {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: true,\n  expected: false,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v26.13.0\n"
+      },
+      "semver-zero-lower-bound": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "node:internal/assert/utils:146\n  throw error;\n  ^\n\nAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\ntrue !== false\n\n    at [eval]:1:70\n    at runScriptInThisContext (node:internal/vm:219:10)\n    at node:internal/process/execution:485:12\n    at [eval]-wrapper:6:24\n    at runScriptInContext (node:internal/process/execution:483:60)\n    at evalFunction (node:internal/process/execution:317:30)\n    at evalTypeScript (node:internal/process/execution:329:3)\n    at node:internal/main/eval_string:71:3 {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: true,\n  expected: false,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v26.13.0\n"
+      },
+      "semver-invalid-build": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "node:internal/assert/utils:146\n  throw error;\n  ^\n\nAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n'*' !== null\n\n    at [eval]:1:73\n    at runScriptInThisContext (node:internal/vm:219:10)\n    at node:internal/process/execution:485:12\n    at [eval]-wrapper:6:24\n    at runScriptInContext (node:internal/process/execution:483:60)\n    at evalFunction (node:internal/process/execution:317:30)\n    at evalTypeScript (node:internal/process/execution:329:3)\n    at node:internal/main/eval_string:71:3 {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: '*',\n  expected: null,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v26.13.0\n"
+      }
+    },
+    "property_replays": {}
+  }
+}
