@@ -143,3 +143,17 @@ skills reference them on demand. `package.json` is the version source; use
 The current discovery candidate remains experimental until its release gates pass.
 
 MIT licensed. Third-party evaluator probe attributions are under `evals/discovery/`.
+
+## Experimental offline tools (proposed)
+
+Opt-in commands `search`, `constraints`, `facts`, `investigate`, `explore` and
+`typed-investigate` are experimental. They do not change default reviews or skills.
+See [typed investigation](docs/TYPED_INVESTIGATION.md) and the related protocol guides.
+Static commands never execute analyzed targets; property search executes explicitly
+selected trusted adapters and is not an OS sandbox. Unknown and unsupported states
+are preserved. Synthetic validation does not demonstrate improved real bug discovery.
+
+The immutable qualification evidence and prior model experiments remain in
+[draft #16](https://github.com/hyhmrright/logic-lens/pull/16). This extraction
+requires real-project static integration qualification before promotion; it does
+not authorize model calls or execution of real target code.

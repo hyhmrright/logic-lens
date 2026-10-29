@@ -84,3 +84,12 @@ bundling and existing-evidence analysis are authorized. Present the frozen revis
 run count, provider/model, budgets and known/unknown cost estimate before requesting
 approval. A passing development gate does not authorize the next stage. Do not create
 a model-running heartbeat or CI experiment. The proposed revision-3 stages remain on the experiment branch in PR #16.
+
+## Proposed experimental offline tools
+
+The optional offline commands are split from draft #16 without its skill changes,
+model harness changes or model reports. See docs/TYPED_INVESTIGATION.md and related
+protocol guides. Qualification drivers require an explicit trusted-synthetic flag;
+never run them on real repositories. Existing historical evidence remains in #16.
+No new model evaluation or automatic retry is authorized. A static real-project
+integration assessment remains a promotion gate; keep this PR draft until reviewed.

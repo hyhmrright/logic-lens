@@ -1,0 +1,216 @@
+{
+  "schema_version": 1,
+  "source_sha256": "5baafb9692c834f96afb86afce8fb593f4396480f4877ce118a4ff08cda65402",
+  "checked_scope": [
+    -1,
+    11
+  ],
+  "scope": "finite exact built-in integer inputs only; no claim outside this window",
+  "spec_sha256": "dbb7d272314f5a7bfc3b3d1a6ae10d3214f116d96e1926e7527e24693057c3bf",
+  "function_spans": {
+    "encode": {
+      "start": 8,
+      "end": 9
+    },
+    "consume": {
+      "start": 12,
+      "end": 15
+    },
+    "transfer": {
+      "start": 18,
+      "end": 21
+    },
+    "routed_transfer": {
+      "start": 24,
+      "end": 30
+    },
+    "secondary_consume": {
+      "start": 33,
+      "end": 36
+    },
+    "unreachable_transfer": {
+      "start": 39,
+      "end": 44
+    }
+  },
+  "observations": [
+    {
+      "input": -1,
+      "outcome": "rejected_before_consumer",
+      "consumers": []
+    },
+    {
+      "input": 0,
+      "outcome": "returned",
+      "consumers": [
+        {
+          "line": 28,
+          "expression": "encode(n)",
+          "unit": "byte",
+          "scale": 3,
+          "offset": 2,
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "input": 1,
+      "outcome": "returned",
+      "consumers": [
+        {
+          "line": 28,
+          "expression": "encode(n)",
+          "unit": "byte",
+          "scale": 3,
+          "offset": 2,
+          "quantity": 5
+        }
+      ]
+    },
+    {
+      "input": 2,
+      "outcome": "returned",
+      "consumers": [
+        {
+          "line": 28,
+          "expression": "encode(n)",
+          "unit": "byte",
+          "scale": 3,
+          "offset": 2,
+          "quantity": 8
+        }
+      ]
+    },
+    {
+      "input": 3,
+      "outcome": "returned",
+      "consumers": [
+        {
+          "line": 28,
+          "expression": "encode(n)",
+          "unit": "byte",
+          "scale": 3,
+          "offset": 2,
+          "quantity": 11
+        }
+      ]
+    },
+    {
+      "input": 4,
+      "outcome": "returned",
+      "consumers": [
+        {
+          "line": 28,
+          "expression": "encode(n)",
+          "unit": "byte",
+          "scale": 3,
+          "offset": 2,
+          "quantity": 14
+        }
+      ]
+    },
+    {
+      "input": 5,
+      "outcome": "returned",
+      "consumers": [
+        {
+          "line": 28,
+          "expression": "encode(n)",
+          "unit": "byte",
+          "scale": 3,
+          "offset": 2,
+          "quantity": 17
+        }
+      ]
+    },
+    {
+      "input": 6,
+      "outcome": "returned",
+      "consumers": []
+    },
+    {
+      "input": 7,
+      "outcome": "returned",
+      "consumers": []
+    },
+    {
+      "input": 8,
+      "outcome": "returned",
+      "consumers": []
+    },
+    {
+      "input": 9,
+      "outcome": "returned",
+      "consumers": []
+    },
+    {
+      "input": 10,
+      "outcome": "returned",
+      "consumers": []
+    },
+    {
+      "input": 11,
+      "outcome": "rejected_before_consumer",
+      "consumers": []
+    }
+  ],
+  "facts": {
+    "reachable": [
+      [
+        0,
+        5
+      ]
+    ],
+    "rejected_before_consumer": [
+      [
+        -1,
+        -1
+      ],
+      [
+        11,
+        11
+      ]
+    ],
+    "variants": [
+      {
+        "scale": 3,
+        "offset": 2,
+        "unit": "byte"
+      }
+    ],
+    "implementation_consumer_bound": 17
+  },
+  "status": "checked_with_unknowns",
+  "checks": {
+    "scale": {
+      "status": "matched_in_scope",
+      "witness": null,
+      "comparison": "source-derived affine coefficient, not regression fitting"
+    },
+    "offset": {
+      "status": "matched_in_scope",
+      "witness": null,
+      "comparison": "source-derived affine coefficient, not regression fitting"
+    },
+    "output_unit": {
+      "status": "matched_in_scope",
+      "observed": [
+        "byte"
+      ]
+    },
+    "route": {
+      "status": "matched_in_scope",
+      "omitted_reachable": [],
+      "falsely_reachable": []
+    },
+    "bound": {
+      "status": "matched_in_scope",
+      "observed": 17
+    },
+    "input_business_unit": {
+      "status": "unknown",
+      "reason": "no business-unit inference"
+    }
+  },
+  "contract": "Not extracted: runtime rejection does not redefine the public valid domain or prove a bug."
+}
