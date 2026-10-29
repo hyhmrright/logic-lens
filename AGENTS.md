@@ -17,7 +17,7 @@ $logic-fix-all   — autonomous audit-and-fix pipeline
 
 ## Project Layout
 
-See `CLAUDE.md` for the full layout. The core content lives in `skills/` as platform-agnostic Markdown. Codex-specific metadata is in `.codex-plugin/plugin.json`.
+See `DEVELOPMENT.md` for the tool-neutral layout and development workflow. The core content lives in `skills/` as platform-agnostic Markdown. Codex-specific metadata is in `.codex-plugin/plugin.json`.
 
 ## Key Conventions
 
@@ -29,3 +29,13 @@ See `CLAUDE.md` for the full layout. The core content lives in `skills/` as plat
 ## No Hooks
 
 The session-start hook in `hooks/` is Claude Code only. Codex CLI discovers skills via `.codex-plugin/plugin.json` and does not use the hook system.
+
+## Portable execution
+
+Use `python3 scripts/logic_lens.py` for reviews, portable bundles and evaluations.
+Codex is the default tested CLI; `--provider command` accepts other coding tools.
+Compiled snapshots replace plugin-cache synchronization. No Claude runtime or
+authentication is required. Never infer native activation from report field labels.
+
+Do not introduce Claude-only prerequisites or cache gates into the maintained workflow.
+Keep optional host distribution metadata separate from the provider-neutral core.

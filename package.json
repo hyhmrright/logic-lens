@@ -3,13 +3,24 @@
   "version": "0.6.10",
   "description": "Logic-first code review using semi-formal execution tracing. Surfaces behavioral bugs that linters miss.",
   "license": "MIT",
-  "keywords": ["code-review", "logic", "debugging", "semantic-analysis", "claude", "ai-tools"],
+  "keywords": [
+    "code-review",
+    "logic",
+    "debugging",
+    "semantic-analysis",
+    "ai-tools",
+    "codex",
+    "tool-agnostic"
+  ],
   "scripts": {
     "validate": "bash scripts/validate-repo.sh",
     "lint-shell": "bash scripts/lint-shell.sh",
     "unit-tests": "python3 -m unittest discover tests/",
     "trigger-evals": "bash scripts/run-trigger-evals.sh",
     "content-evals": "bash scripts/run-content-evals.sh",
-    "bump-version": "python3 scripts/bump-version.py"
+    "bump-version": "python3 scripts/bump-version.py",
+    "review": "python3 scripts/logic_lens.py review",
+    "bundle": "python3 scripts/logic_lens.py bundle",
+    "discovery-evals": "python3 scripts/logic_lens.py discovery"
   }
 }

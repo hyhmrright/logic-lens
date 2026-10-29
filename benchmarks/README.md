@@ -49,3 +49,12 @@ The grader splits each case into a **logic** sub-score (reasoning / bug-detectio
 Required fields for every `published_runs` entry: `id`, `kind`, `path`, `model`, `cases_graded`, `overall_pass_rate`, `notes`.
 
 Optional fields (added as needed, not required for older entries): `report` (path to markdown report), `date` (ISO date of run), `skill_filter` (when only a subset of skills was evaluated), `source_iteration_dir`.
+
+## Repository discovery experiments
+
+`index.json` also catalogs `discovery_experiments`, separately from legacy content
+`published_runs`. They use root-cause/source adjudication, matched provider/model
+controls and per-review evidence, not a combined keyword/format pass rate. The
+2026-10-28 Codex pilot has 72 reviews over four development cases; it does not
+establish candidate superiority or qualify a release. Read its report before
+quoting totals. Both catalog sections together describe the artifacts in runs/.
