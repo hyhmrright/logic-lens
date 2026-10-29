@@ -1,0 +1,195 @@
+{
+  "schema_version": 1,
+  "spec_sha256": "13d9f96232ed11eb2ada63542a8f2a56e696d56fac9af04fdce90cb7dde2a305",
+  "selected": [
+    "packet-capacity"
+  ],
+  "relations": [
+    {
+      "id": "packet-capacity",
+      "evidence": {
+        "contract": {
+          "path": "pipeline.py",
+          "start": 2,
+          "end": 2,
+          "sha256": "5baafb9692c834f96afb86afce8fb593f4396480f4877ce118a4ff08cda65402"
+        },
+        "input": {
+          "path": "pipeline.py",
+          "start": 19,
+          "end": 20,
+          "sha256": "5baafb9692c834f96afb86afce8fb593f4396480f4877ce118a4ff08cda65402"
+        },
+        "producer": {
+          "path": "pipeline.py",
+          "start": 8,
+          "end": 9,
+          "sha256": "5baafb9692c834f96afb86afce8fb593f4396480f4877ce118a4ff08cda65402"
+        },
+        "consumer": {
+          "path": "pipeline.py",
+          "start": 12,
+          "end": 15,
+          "sha256": "5baafb9692c834f96afb86afce8fb593f4396480f4877ce118a4ff08cda65402"
+        },
+        "route": {
+          "path": "pipeline.py",
+          "start": 18,
+          "end": 21,
+          "sha256": "5baafb9692c834f96afb86afce8fb593f4396480f4877ce118a4ff08cda65402"
+        },
+        "claims": [
+          {
+            "path": "pipeline.py",
+            "start": 2,
+            "end": 2,
+            "sha256": "5baafb9692c834f96afb86afce8fb593f4396480f4877ce118a4ff08cda65402"
+          }
+        ]
+      },
+      "declarations": {
+        "id": "packet-capacity",
+        "contract": {
+          "source": {
+            "path": "pipeline.py",
+            "start": 2,
+            "end": 2,
+            "quote": "The public transfer operation accepts every integer n from 0 through 10."
+          },
+          "status": "supported",
+          "obligation": "consumer_precondition",
+          "claims": [
+            {
+              "effect": "allow",
+              "scope": [
+                [
+                  0,
+                  10
+                ]
+              ],
+              "source": {
+                "path": "pipeline.py",
+                "start": 2,
+                "end": 2,
+                "quote": "The public transfer operation accepts every integer n from 0 through 10."
+              }
+            }
+          ]
+        },
+        "input": {
+          "source": {
+            "path": "pipeline.py",
+            "start": 19,
+            "end": 20,
+            "quote": "    if type(n) is not int or not 0 <= n <= 10:\n        raise ValueError('outside public domain')"
+          },
+          "unit": "record",
+          "valid": [
+            [
+              0,
+              10
+            ]
+          ]
+        },
+        "producer": {
+          "source": {
+            "path": "pipeline.py",
+            "start": 8,
+            "end": 9,
+            "quote": "def encode(n):\n    return b'x' * (3 * n + 2)"
+          },
+          "kind": "integer_affine",
+          "input_unit": "record",
+          "output_unit": "byte",
+          "scale": 3,
+          "offset": 2
+        },
+        "consumer": {
+          "source": {
+            "path": "pipeline.py",
+            "start": 12,
+            "end": 15,
+            "quote": "def consume(packet):\n    if len(packet) > 17:\n        raise ValueError('packet exceeds capacity')\n    return len(packet)"
+          },
+          "unit": "byte",
+          "operator": "<=",
+          "bound": 17
+        },
+        "route": {
+          "source": {
+            "path": "pipeline.py",
+            "start": 18,
+            "end": 21,
+            "quote": "def transfer(n):\n    if type(n) is not int or not 0 <= n <= 10:\n        raise ValueError('outside public domain')\n    return consume(encode(n))"
+          },
+          "guard": [
+            [
+              0,
+              10
+            ]
+          ]
+        }
+      },
+      "edge": [
+        {
+          "path": "pipeline.py",
+          "start": 8,
+          "end": 9,
+          "sha256": "5baafb9692c834f96afb86afce8fb593f4396480f4877ce118a4ff08cda65402"
+        },
+        {
+          "path": "pipeline.py",
+          "start": 12,
+          "end": 15,
+          "sha256": "5baafb9692c834f96afb86afce8fb593f4396480f4877ce118a4ff08cda65402"
+        }
+      ],
+      "status": "ready",
+      "property": {
+        "kind": "consumer_precondition",
+        "premise": "supported public input on declared route",
+        "observation": "actual value passed to the identified consumer",
+        "predicate": "observed[byte] <= 17",
+        "oracle": "declared contract; implementation model selects inputs only"
+      },
+      "model": {
+        "scale": 3,
+        "offset": 2,
+        "bound": 17,
+        "input_unit": "record",
+        "output_unit": "byte"
+      },
+      "domain": [
+        0,
+        4,
+        5,
+        6,
+        7,
+        10
+      ],
+      "reachable_intervals": [
+        [
+          0,
+          10
+        ]
+      ],
+      "control": 0,
+      "control_status": "predicted_only_requires_execution",
+      "boundary_status": "reachable_crossing",
+      "predicted_safe": [
+        0,
+        4,
+        5
+      ],
+      "predicted_unsafe": [
+        6,
+        7,
+        10
+      ],
+      "evidence_limit": "Source quotes match; declarations, contract status and route completeness require human verification. No subject execution or bug confirmation.",
+      "selection": "selected"
+    }
+  ],
+  "selection_policy": "eligible crossing + predicted control; one per overlapping sourced producer/consumer edge; smaller domain then stable id",
+  "limits": "Finite supplied relation inventory only. No source extraction, semantic oracle proof, automatic execution or superiority claim."
+}
