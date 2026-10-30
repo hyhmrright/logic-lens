@@ -75,6 +75,10 @@ The experimental [typed-call layer](docs/TYPED_INVESTIGATION.md) adds supported
 test classes, exact byte values, immutable default binding and static import provenance
 to bounded investigation queues. It remains static for real source.
 
+The opt-in [relation selector](docs/RELATION_SELECTION.md) follows supported affine
+constraints to choose boundary points before expanding fixed input families. Its
+synthetic checks demonstrate bounded selection behavior, not improved real bug recall.
+
 Every confirmed finding follows the Iron Law:
 
 **Premises → Trace → Divergence → Trigger → Remedy**

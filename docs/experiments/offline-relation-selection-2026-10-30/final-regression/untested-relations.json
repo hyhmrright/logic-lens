@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "entries": [
+    {
+      "target": {
+        "status": "local",
+        "module": "subject",
+        "name": "public",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "subject",
+          "line": 1,
+          "end": 4
+        },
+        "chain": [
+          "subject:public"
+        ],
+        "provenance": [
+          {
+            "module": "subject",
+            "line": 1,
+            "end": 4
+          }
+        ]
+      },
+      "status": "missing_binding",
+      "relations": [],
+      "unbound_predicates": [
+        {
+          "source": {
+            "module": "subject",
+            "line": 2,
+            "end": 2
+          },
+          "consumer_predicate": "len(data) > 12",
+          "searchability": "missing_binding",
+          "oracle_status": "none"
+        }
+      ],
+      "unbound_calls": [
+        {
+          "source": {
+            "module": "subject",
+            "line": 2,
+            "end": 2
+          },
+          "target": {
+            "status": "unknown",
+            "reason": "unresolved name",
+            "chain": [
+              "subject:len"
+            ],
+            "provenance": []
+          },
+          "searchability": "missing_binding"
+        }
+      ]
+    }
+  ],
+  "relations": [],
+  "issues": [],
+  "evidence": [],
+  "dispatch": [],
+  "deferred": [],
+  "execution_enabled": false,
+  "source_sha256": {
+    "subject": "0311d28feaa2921343892ddaf7bcedfd698ba60e1f9af07e3d353dfb2e63e38a"
+  },
+  "limits": {
+    "static_dispatch": 64,
+    "points_per_entry": 32,
+    "entries": 8,
+    "relations_per_entry": 32,
+    "steps_per_entry": 2000,
+    "call_depth": 4,
+    "integer_window": [
+      -10000,
+      10000
+    ]
+  },
+  "scope": "conditional isolated source semantics; no public contract inference; no actual target execution"
+}
