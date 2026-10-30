@@ -1,0 +1,1079 @@
+{
+  "schema_version": 1,
+  "evidence": [
+    {
+      "test_module": "test_subject",
+      "records": [
+        {
+          "source": {
+            "module": "test_subject",
+            "line": 4,
+            "end": 4
+          },
+          "context": "TestBoundary.test_value",
+          "call": "invoke(b'B', suffix=b'')",
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "entry",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 1,
+              "end": 5
+            },
+            "chain": [
+              "test_subject:invoke",
+              "subject:entry"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "subject",
+                "line": 1,
+                "end": 5
+              }
+            ]
+          },
+          "expectation": {
+            "outcome": "returned",
+            "has_value": true,
+            "value": {
+              "type": "int",
+              "value": 0
+            }
+          },
+          "status": "exact_conditional",
+          "reason": "exact example; test environment applicability not proven",
+          "arguments": {
+            "args": [
+              {
+                "type": "bytes",
+                "hex": "42",
+                "length": 1
+              }
+            ],
+            "keywords": [
+              {
+                "name": "suffix",
+                "value": {
+                  "type": "bytes",
+                  "hex": "",
+                  "length": 0
+                }
+              }
+            ]
+          },
+          "binding": {
+            "values": {
+              "payload": {
+                "type": "bytes",
+                "hex": "42",
+                "length": 1
+              },
+              "suffix": {
+                "type": "bytes",
+                "hex": "",
+                "length": 0
+              }
+            },
+            "origins": {
+              "payload": "positional",
+              "suffix": "keyword"
+            }
+          }
+        }
+      ],
+      "unknown": [],
+      "scope": "conditional exact calls only; no valid-domain inference"
+    }
+  ],
+  "dispatch": [
+    {
+      "outcome": "returned",
+      "value": {
+        "type": "int",
+        "value": 0
+      },
+      "error": null,
+      "calls": [
+        {
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "entry",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 1,
+              "end": 5
+            },
+            "chain": [
+              "test_subject:invoke",
+              "subject:entry"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "subject",
+                "line": 1,
+                "end": 5
+              }
+            ]
+          },
+          "site": null,
+          "binding": {
+            "values": {
+              "payload": {
+                "type": "bytes",
+                "hex": "42",
+                "length": 1
+              },
+              "suffix": {
+                "type": "bytes",
+                "hex": "",
+                "length": 0
+              }
+            },
+            "origins": {
+              "payload": "positional",
+              "suffix": "keyword"
+            }
+          }
+        }
+      ],
+      "trace": [
+        {
+          "module": "subject",
+          "line": 3,
+          "end": 3,
+          "operator": "Lt",
+          "left": {
+            "type": "int",
+            "value": 36
+          },
+          "right": {
+            "type": "int",
+            "value": 6
+          },
+          "decision": false
+        }
+      ],
+      "target": {
+        "status": "local",
+        "module": "subject",
+        "name": "entry",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "subject",
+          "line": 1,
+          "end": 5
+        },
+        "chain": [
+          "test_subject:invoke",
+          "subject:entry"
+        ],
+        "provenance": [
+          {
+            "module": "test_subject",
+            "line": 1,
+            "end": 1
+          },
+          {
+            "module": "subject",
+            "line": 1,
+            "end": 5
+          }
+        ]
+      },
+      "task": {
+        "values": {
+          "payload": {
+            "type": "bytes",
+            "hex": "42",
+            "length": 1
+          },
+          "suffix": {
+            "type": "bytes",
+            "hex": "",
+            "length": 0
+          }
+        },
+        "queue": "verify",
+        "reason": "exact conditional test call",
+        "evidence_source": {
+          "module": "test_subject",
+          "line": 4,
+          "end": 4
+        }
+      },
+      "checks": [
+        {
+          "source": {
+            "module": "test_subject",
+            "line": 4,
+            "end": 4
+          },
+          "status": "matches_example",
+          "claim": "conditional exact example only; not a confirmed bug"
+        }
+      ]
+    },
+    {
+      "outcome": "returned",
+      "value": {
+        "type": "int",
+        "value": 0
+      },
+      "error": null,
+      "calls": [
+        {
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "entry",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 1,
+              "end": 5
+            },
+            "chain": [
+              "test_subject:invoke",
+              "subject:entry"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "subject",
+                "line": 1,
+                "end": 5
+              }
+            ]
+          },
+          "site": null,
+          "binding": {
+            "values": {
+              "payload": {
+                "type": "bytes",
+                "hex": "",
+                "length": 0
+              },
+              "suffix": {
+                "type": "bytes",
+                "hex": "",
+                "length": 0
+              }
+            },
+            "origins": {
+              "payload": "positional",
+              "suffix": "keyword"
+            }
+          }
+        }
+      ],
+      "trace": [
+        {
+          "module": "subject",
+          "line": 3,
+          "end": 3,
+          "operator": "Lt",
+          "left": {
+            "type": "int",
+            "value": 36
+          },
+          "right": {
+            "type": "int",
+            "value": 3
+          },
+          "decision": false
+        }
+      ],
+      "target": {
+        "status": "local",
+        "module": "subject",
+        "name": "entry",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "subject",
+          "line": 1,
+          "end": 5
+        },
+        "chain": [
+          "test_subject:invoke",
+          "subject:entry"
+        ],
+        "provenance": [
+          {
+            "module": "test_subject",
+            "line": 1,
+            "end": 1
+          },
+          {
+            "module": "subject",
+            "line": 1,
+            "end": 5
+          }
+        ]
+      },
+      "task": {
+        "values": {
+          "payload": {
+            "type": "bytes",
+            "hex": "",
+            "length": 0
+          },
+          "suffix": {
+            "type": "bytes",
+            "hex": "",
+            "length": 0
+          }
+        },
+        "queue": "explore",
+        "reason": {
+          "vary": "payload",
+          "kind": "finite single-argument family",
+          "validity": "unknown",
+          "template": {
+            "type": "bytes",
+            "hex": "42",
+            "length": 1
+          }
+        },
+        "evidence_source": {
+          "module": "test_subject",
+          "line": 4,
+          "end": 4
+        }
+      },
+      "checks": []
+    },
+    {
+      "outcome": "returned",
+      "value": {
+        "type": "int",
+        "value": 0
+      },
+      "error": null,
+      "calls": [
+        {
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "entry",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 1,
+              "end": 5
+            },
+            "chain": [
+              "test_subject:invoke",
+              "subject:entry"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "subject",
+                "line": 1,
+                "end": 5
+              }
+            ]
+          },
+          "site": null,
+          "binding": {
+            "values": {
+              "payload": {
+                "type": "bytes",
+                "hex": "4242",
+                "length": 2
+              },
+              "suffix": {
+                "type": "bytes",
+                "hex": "",
+                "length": 0
+              }
+            },
+            "origins": {
+              "payload": "positional",
+              "suffix": "keyword"
+            }
+          }
+        }
+      ],
+      "trace": [
+        {
+          "module": "subject",
+          "line": 3,
+          "end": 3,
+          "operator": "Lt",
+          "left": {
+            "type": "int",
+            "value": 36
+          },
+          "right": {
+            "type": "int",
+            "value": 9
+          },
+          "decision": false
+        }
+      ],
+      "target": {
+        "status": "local",
+        "module": "subject",
+        "name": "entry",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "subject",
+          "line": 1,
+          "end": 5
+        },
+        "chain": [
+          "test_subject:invoke",
+          "subject:entry"
+        ],
+        "provenance": [
+          {
+            "module": "test_subject",
+            "line": 1,
+            "end": 1
+          },
+          {
+            "module": "subject",
+            "line": 1,
+            "end": 5
+          }
+        ]
+      },
+      "task": {
+        "values": {
+          "payload": {
+            "type": "bytes",
+            "hex": "4242",
+            "length": 2
+          },
+          "suffix": {
+            "type": "bytes",
+            "hex": "",
+            "length": 0
+          }
+        },
+        "queue": "explore",
+        "reason": {
+          "vary": "payload",
+          "kind": "finite single-argument family",
+          "validity": "unknown",
+          "template": {
+            "type": "bytes",
+            "hex": "42",
+            "length": 1
+          }
+        },
+        "evidence_source": {
+          "module": "test_subject",
+          "line": 4,
+          "end": 4
+        }
+      },
+      "checks": []
+    },
+    {
+      "outcome": "returned",
+      "value": {
+        "type": "int",
+        "value": 0
+      },
+      "error": null,
+      "calls": [
+        {
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "entry",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 1,
+              "end": 5
+            },
+            "chain": [
+              "test_subject:invoke",
+              "subject:entry"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "subject",
+                "line": 1,
+                "end": 5
+              }
+            ]
+          },
+          "site": null,
+          "binding": {
+            "values": {
+              "payload": {
+                "type": "bytes",
+                "hex": "424242",
+                "length": 3
+              },
+              "suffix": {
+                "type": "bytes",
+                "hex": "",
+                "length": 0
+              }
+            },
+            "origins": {
+              "payload": "positional",
+              "suffix": "keyword"
+            }
+          }
+        }
+      ],
+      "trace": [
+        {
+          "module": "subject",
+          "line": 3,
+          "end": 3,
+          "operator": "Lt",
+          "left": {
+            "type": "int",
+            "value": 36
+          },
+          "right": {
+            "type": "int",
+            "value": 12
+          },
+          "decision": false
+        }
+      ],
+      "target": {
+        "status": "local",
+        "module": "subject",
+        "name": "entry",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "subject",
+          "line": 1,
+          "end": 5
+        },
+        "chain": [
+          "test_subject:invoke",
+          "subject:entry"
+        ],
+        "provenance": [
+          {
+            "module": "test_subject",
+            "line": 1,
+            "end": 1
+          },
+          {
+            "module": "subject",
+            "line": 1,
+            "end": 5
+          }
+        ]
+      },
+      "task": {
+        "values": {
+          "payload": {
+            "type": "bytes",
+            "hex": "424242",
+            "length": 3
+          },
+          "suffix": {
+            "type": "bytes",
+            "hex": "",
+            "length": 0
+          }
+        },
+        "queue": "explore",
+        "reason": {
+          "vary": "payload",
+          "kind": "finite single-argument family",
+          "validity": "unknown",
+          "template": {
+            "type": "bytes",
+            "hex": "42",
+            "length": 1
+          }
+        },
+        "evidence_source": {
+          "module": "test_subject",
+          "line": 4,
+          "end": 4
+        }
+      },
+      "checks": []
+    }
+  ],
+  "entries": [
+    {
+      "target": {
+        "status": "local",
+        "module": "subject",
+        "name": "entry",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "subject",
+          "line": 1,
+          "end": 5
+        },
+        "chain": [
+          "test_subject:invoke",
+          "subject:entry"
+        ],
+        "provenance": [
+          {
+            "module": "test_subject",
+            "line": 1,
+            "end": 1
+          },
+          {
+            "module": "subject",
+            "line": 1,
+            "end": 5
+          }
+        ]
+      },
+      "pending": [
+        {
+          "values": {
+            "payload": {
+              "type": "bytes",
+              "hex": "42424242",
+              "length": 4
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "",
+              "length": 0
+            }
+          },
+          "queue": "explore",
+          "reason": {
+            "vary": "payload",
+            "kind": "finite single-argument family",
+            "validity": "unknown",
+            "template": {
+              "type": "bytes",
+              "hex": "42",
+              "length": 1
+            }
+          },
+          "evidence_source": {
+            "module": "test_subject",
+            "line": 4,
+            "end": 4
+          }
+        },
+        {
+          "values": {
+            "payload": {
+              "type": "bytes",
+              "hex": "4242424242",
+              "length": 5
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "",
+              "length": 0
+            }
+          },
+          "queue": "explore",
+          "reason": {
+            "vary": "payload",
+            "kind": "finite single-argument family",
+            "validity": "unknown",
+            "template": {
+              "type": "bytes",
+              "hex": "42",
+              "length": 1
+            }
+          },
+          "evidence_source": {
+            "module": "test_subject",
+            "line": 4,
+            "end": 4
+          }
+        },
+        {
+          "values": {
+            "payload": {
+              "type": "bytes",
+              "hex": "424242424242",
+              "length": 6
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "",
+              "length": 0
+            }
+          },
+          "queue": "explore",
+          "reason": {
+            "vary": "payload",
+            "kind": "finite single-argument family",
+            "validity": "unknown",
+            "template": {
+              "type": "bytes",
+              "hex": "42",
+              "length": 1
+            }
+          },
+          "evidence_source": {
+            "module": "test_subject",
+            "line": 4,
+            "end": 4
+          }
+        },
+        {
+          "values": {
+            "payload": {
+              "type": "bytes",
+              "hex": "42424242424242",
+              "length": 7
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "",
+              "length": 0
+            }
+          },
+          "queue": "explore",
+          "reason": {
+            "vary": "payload",
+            "kind": "finite single-argument family",
+            "validity": "unknown",
+            "template": {
+              "type": "bytes",
+              "hex": "42",
+              "length": 1
+            }
+          },
+          "evidence_source": {
+            "module": "test_subject",
+            "line": 4,
+            "end": 4
+          }
+        },
+        {
+          "values": {
+            "payload": {
+              "type": "bytes",
+              "hex": "4242424242424242",
+              "length": 8
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "",
+              "length": 0
+            }
+          },
+          "queue": "explore",
+          "reason": {
+            "vary": "payload",
+            "kind": "finite single-argument family",
+            "validity": "unknown",
+            "template": {
+              "type": "bytes",
+              "hex": "42",
+              "length": 1
+            }
+          },
+          "evidence_source": {
+            "module": "test_subject",
+            "line": 4,
+            "end": 4
+          }
+        },
+        {
+          "values": {
+            "payload": {
+              "type": "bytes",
+              "hex": "42",
+              "length": 1
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "00",
+              "length": 1
+            }
+          },
+          "queue": "explore",
+          "reason": {
+            "vary": "suffix",
+            "kind": "finite single-argument family",
+            "validity": "unknown",
+            "template": {
+              "type": "bytes",
+              "hex": "00",
+              "length": 1
+            }
+          },
+          "evidence_source": {
+            "module": "test_subject",
+            "line": 4,
+            "end": 4
+          }
+        },
+        {
+          "values": {
+            "payload": {
+              "type": "bytes",
+              "hex": "42",
+              "length": 1
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "0000",
+              "length": 2
+            }
+          },
+          "queue": "explore",
+          "reason": {
+            "vary": "suffix",
+            "kind": "finite single-argument family",
+            "validity": "unknown",
+            "template": {
+              "type": "bytes",
+              "hex": "00",
+              "length": 1
+            }
+          },
+          "evidence_source": {
+            "module": "test_subject",
+            "line": 4,
+            "end": 4
+          }
+        },
+        {
+          "values": {
+            "payload": {
+              "type": "bytes",
+              "hex": "42",
+              "length": 1
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "000000",
+              "length": 3
+            }
+          },
+          "queue": "explore",
+          "reason": {
+            "vary": "suffix",
+            "kind": "finite single-argument family",
+            "validity": "unknown",
+            "template": {
+              "type": "bytes",
+              "hex": "00",
+              "length": 1
+            }
+          },
+          "evidence_source": {
+            "module": "test_subject",
+            "line": 4,
+            "end": 4
+          }
+        },
+        {
+          "values": {
+            "payload": {
+              "type": "bytes",
+              "hex": "42",
+              "length": 1
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "00000000",
+              "length": 4
+            }
+          },
+          "queue": "explore",
+          "reason": {
+            "vary": "suffix",
+            "kind": "finite single-argument family",
+            "validity": "unknown",
+            "template": {
+              "type": "bytes",
+              "hex": "00",
+              "length": 1
+            }
+          },
+          "evidence_source": {
+            "module": "test_subject",
+            "line": 4,
+            "end": 4
+          }
+        },
+        {
+          "values": {
+            "payload": {
+              "type": "bytes",
+              "hex": "42",
+              "length": 1
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "0000000000",
+              "length": 5
+            }
+          },
+          "queue": "explore",
+          "reason": {
+            "vary": "suffix",
+            "kind": "finite single-argument family",
+            "validity": "unknown",
+            "template": {
+              "type": "bytes",
+              "hex": "00",
+              "length": 1
+            }
+          },
+          "evidence_source": {
+            "module": "test_subject",
+            "line": 4,
+            "end": 4
+          }
+        },
+        {
+          "values": {
+            "payload": {
+              "type": "bytes",
+              "hex": "42",
+              "length": 1
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "000000000000",
+              "length": 6
+            }
+          },
+          "queue": "explore",
+          "reason": {
+            "vary": "suffix",
+            "kind": "finite single-argument family",
+            "validity": "unknown",
+            "template": {
+              "type": "bytes",
+              "hex": "00",
+              "length": 1
+            }
+          },
+          "evidence_source": {
+            "module": "test_subject",
+            "line": 4,
+            "end": 4
+          }
+        },
+        {
+          "values": {
+            "payload": {
+              "type": "bytes",
+              "hex": "42",
+              "length": 1
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "00000000000000",
+              "length": 7
+            }
+          },
+          "queue": "explore",
+          "reason": {
+            "vary": "suffix",
+            "kind": "finite single-argument family",
+            "validity": "unknown",
+            "template": {
+              "type": "bytes",
+              "hex": "00",
+              "length": 1
+            }
+          },
+          "evidence_source": {
+            "module": "test_subject",
+            "line": 4,
+            "end": 4
+          }
+        },
+        {
+          "values": {
+            "payload": {
+              "type": "bytes",
+              "hex": "42",
+              "length": 1
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "0000000000000000",
+              "length": 8
+            }
+          },
+          "queue": "explore",
+          "reason": {
+            "vary": "suffix",
+            "kind": "finite single-argument family",
+            "validity": "unknown",
+            "template": {
+              "type": "bytes",
+              "hex": "00",
+              "length": 1
+            }
+          },
+          "evidence_source": {
+            "module": "test_subject",
+            "line": 4,
+            "end": 4
+          }
+        }
+      ],
+      "overflow_attempts": 0,
+      "observations": 4
+    }
+  ],
+  "deferred": [],
+  "source_sha256": {
+    "subject": "70876db69e9c2d3b47b18e555dbcce4c50a064d4c37cbc9fc4de1023b6841605",
+    "test_subject": "eef6dbfb00780c6204f9b5bca440ef3b850fea37a6447a81f6aae33b8ec2e8db"
+  },
+  "limits": {
+    "static_dispatch": 4,
+    "entries": 8,
+    "points_per_entry": 32,
+    "lengths": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ]
+  },
+  "execution_enabled": false,
+  "scope": "isolated source semantics; module initialization/import availability unknown; exact test evidence conditional; generated-input validity unknown",
+  "limitations": "finite content templates, one changed parameter, no string solver or inferred public contract; source identity does not establish dependency behavior"
+}

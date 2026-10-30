@@ -1,0 +1,73 @@
+{
+  "family": "nonlinear",
+  "variants": [
+    {
+      "variant": "canonical",
+      "baseline_dispatch": 4,
+      "relation_dispatch": 1,
+      "issues": [
+        {
+          "entry": {
+            "status": "local",
+            "module": "subject",
+            "name": "f",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 1,
+              "end": 5
+            },
+            "chain": [
+              "subject:f"
+            ],
+            "provenance": [
+              {
+                "module": "subject",
+                "line": 1,
+                "end": 5
+              }
+            ]
+          },
+          "reason": "nonlinear or dimensioned multiplication",
+          "status": "unsupported"
+        }
+      ],
+      "status": "invariant-but-unsupported"
+    },
+    {
+      "variant": "transformed",
+      "baseline_dispatch": 4,
+      "relation_dispatch": 1,
+      "issues": [
+        {
+          "entry": {
+            "status": "local",
+            "module": "subject",
+            "name": "entry",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 1,
+              "end": 5
+            },
+            "chain": [
+              "subject:entry"
+            ],
+            "provenance": [
+              {
+                "module": "subject",
+                "line": 1,
+                "end": 5
+              }
+            ]
+          },
+          "reason": "nonlinear or dimensioned multiplication",
+          "status": "unsupported"
+        }
+      ],
+      "status": "invariant-but-unsupported"
+    }
+  ],
+  "normalized_invariant": true,
+  "status": "invariant-but-unsupported"
+}

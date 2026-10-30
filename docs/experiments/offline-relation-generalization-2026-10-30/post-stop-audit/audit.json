@@ -1,0 +1,212 @@
+{
+  "batch_status": "stopped_on_real_selector_failure",
+  "synthetic_status": "pass",
+  "supported_pairs_passed": 6,
+  "negative_control_pairs": 1,
+  "completed_static_counts": {
+    "baseline_static": 56,
+    "relation_static": 50,
+    "independent_arithmetic": 48
+  },
+  "real": [
+    {
+      "name": "ast",
+      "mode": "independent AST/manual audit after batch stop; no selector invocation",
+      "source_sha256": "573d22fefb010c4f2b0d848d74f2599a414f3c767d34164876532c4ba0375b1f",
+      "public_functions": [
+        {
+          "name": "parse",
+          "line": 26,
+          "end": 48
+        },
+        {
+          "name": "literal_eval",
+          "line": 51,
+          "end": 64
+        },
+        {
+          "name": "dump",
+          "line": 117,
+          "end": 226
+        },
+        {
+          "name": "copy_location",
+          "line": 229,
+          "end": 243
+        },
+        {
+          "name": "fix_missing_locations",
+          "line": 246,
+          "end": 278
+        },
+        {
+          "name": "increment_lineno",
+          "line": 281,
+          "end": 301
+        },
+        {
+          "name": "iter_fields",
+          "line": 304,
+          "end": 313
+        },
+        {
+          "name": "iter_child_nodes",
+          "line": 316,
+          "end": 327
+        },
+        {
+          "name": "get_docstring",
+          "line": 330,
+          "end": 351
+        },
+        {
+          "name": "get_source_segment",
+          "line": 385,
+          "end": 419
+        },
+        {
+          "name": "walk",
+          "line": 422,
+          "end": 433
+        },
+        {
+          "name": "compare",
+          "line": 436,
+          "end": 515
+        },
+        {
+          "name": "unparse",
+          "line": 653,
+          "end": 660
+        },
+        {
+          "name": "main",
+          "line": 663,
+          "end": 715
+        }
+      ],
+      "first_public": {
+        "line": 26,
+        "end": 48,
+        "source": "def parse(source, filename='<unknown>', mode='exec', *,\n          type_comments=False, feature_version=None, optimize=-1, module=None):\n    \"\"\"\n    Parse the source into an AST node.\n    Equivalent to compile(source, filename, mode, PyCF_ONLY_AST).\n    Pass type_comments=True to get back type comments where the syntax allows.\n    \"\"\"\n    flags = PyCF_ONLY_AST\n    if optimize > 0:\n        flags |= PyCF_OPTIMIZED_AST\n    if type_comments:\n        flags |= PyCF_TYPE_COMMENTS\n    if feature_version is None:\n        feature_version = -1\n    elif isinstance(feature_version, tuple):\n        major, minor = feature_version  # Should be a 2-tuple.\n        if major != 3:\n            raise ValueError(f\"Unsupported major version: {major}\")\n        feature_version = minor\n    # Else it should be an int giving the minor version for 3.x.\n    return compile(source, filename, mode, flags,\n                   _feature_version=feature_version, optimize=optimize,\n                   module=module)"
+      },
+      "last_public": {
+        "line": 663,
+        "end": 715,
+        "source": "def main(args=None):\n    import argparse\n    import sys\n\n    parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)\n    parser.add_argument('infile', nargs='?', default='-',\n                        help='the file to parse; defaults to `stdin`')\n    parser.add_argument('-m', '--mode', default='exec',\n                        choices=('exec', 'single', 'eval', 'func_type'),\n                        help='specify what kind of code must be parsed')\n    parser.add_argument('--no-type-comments', default=True, action='store_false',\n                        help=\"don't add information about type comments\")\n    parser.add_argument('-a', '--include-attributes', action='store_true',\n                        help='include attributes such as line numbers and '\n                             'column offsets')\n    parser.add_argument('-i', '--indent', type=int, default=3,\n                        help='indentation of nodes (number of spaces)')\n    parser.add_argument('--feature-version',\n                        type=str, default=None, metavar='VERSION',\n                        help='Python version in the format `3.x` '\n                             '(for example, `3.10`)')\n    parser.add_argument('-O', '--optimize',\n                        type=int, default=-1, metavar='LEVEL',\n                        help='optimization level for parser')\n    parser.add_argument('--show-empty', default=False, action='store_true',\n                        help='show empty lists and fields in dump output')\n    args = parser.parse_args(args)\n\n    if args.infile == '-':\n        name = '<stdin>'\n        source = sys.stdin.buffer.read()\n    else:\n        name = args.infile\n        with open(args.infile, 'rb') as infile:\n            source = infile.read()\n\n    # Process feature_version\n    feature_version = None\n    if args.feature_version:\n        try:\n            major, minor = map(int, args.feature_version.split('.', 1))\n        except ValueError:\n            parser.error('Invalid format for --feature-version; '\n                         'expected format 3.x (for example, 3.10)')\n\n        feature_version = (major, minor)\n\n    tree = parse(source, name, args.mode, type_comments=args.no_type_comments,\n                 feature_version=feature_version, optimize=args.optimize)\n    from _colorize import can_colorize\n    print(dump(tree, include_attributes=args.include_attributes,\n               color=can_colorize(file=sys.stdout),\n               indent=args.indent, show_empty=args.show_empty))"
+      },
+      "raw_comparisons": 57,
+      "raw_calls": 194,
+      "star_imports": [
+        {
+          "line": 23,
+          "end": 23,
+          "source": "from _ast import *"
+        }
+      ],
+      "selector_status": "failed before report delivery",
+      "first_public_comparison": {
+        "line": 34,
+        "end": 34,
+        "source": "optimize > 0"
+      },
+      "first_public_call": {
+        "line": 46,
+        "end": 48,
+        "source": "compile(source, filename, mode, flags,\n                   _feature_version=feature_version, optimize=optimize,\n                   module=module)"
+      },
+      "raw_tests": {
+        "status": "specified sibling test file absent; no replacement/package search"
+      }
+    },
+    {
+      "name": "bdb",
+      "mode": "independent AST/manual audit after batch stop; no selector invocation",
+      "source_sha256": "4424591274df9355ca445c39263eea56dfcc994f02eeb5cb3d11122a9427a8a2",
+      "public_functions": [
+        {
+          "name": "set_trace",
+          "line": 964,
+          "end": 966
+        },
+        {
+          "name": "checkfuncname",
+          "line": 1091,
+          "end": 1120
+        },
+        {
+          "name": "effective",
+          "line": 1123,
+          "end": 1171
+        },
+        {
+          "name": "foo",
+          "line": 1194,
+          "end": 1197
+        },
+        {
+          "name": "bar",
+          "line": 1199,
+          "end": 1201
+        },
+        {
+          "name": "test",
+          "line": 1203,
+          "end": 1205
+        }
+      ],
+      "first_public": {
+        "line": 964,
+        "end": 966,
+        "source": "def set_trace():\n    \"\"\"Start debugging with a Bdb instance from the caller's frame.\"\"\"\n    Bdb().set_trace()"
+      },
+      "last_public": {
+        "line": 1203,
+        "end": 1205,
+        "source": "def test():\n    t = Tdb()\n    t.run('import bdb; bdb.foo(10)')"
+      },
+      "raw_comparisons": 87,
+      "raw_calls": 198,
+      "star_imports": [],
+      "selector_status": "not attempted after stop",
+      "first_public_comparison": {
+        "line": 1108,
+        "end": 1108,
+        "source": "frame.f_code.co_name != b.funcname"
+      },
+      "first_public_call": {
+        "line": 966,
+        "end": 966,
+        "source": "Bdb().set_trace()"
+      },
+      "raw_tests": {
+        "size": 46207,
+        "ast_nodes": 6291,
+        "assertions": 1,
+        "classes": 13,
+        "test_functions": 37,
+        "fits_file_ast_budgets": true,
+        "first_test": {
+          "line": 593,
+          "end": 601,
+          "source": "def test_step(self):\n        self.expect_set = [\n            ('line', 2, 'tfunc_main'),  ('step', ),\n            ('line', 3, 'tfunc_main'),  ('step', ),\n            ('call', 1, 'tfunc_first'), ('step', ),\n            ('line', 2, 'tfunc_first'), ('quit', ),\n        ]\n        with TracerRun(self) as tracer:\n            tracer.runcall(tfunc_main)"
+        }
+      }
+    }
+  ],
+  "real_applicability": "not_qualified",
+  "confirmed_real_searchable_relations": 0,
+  "confirmed_real_searchable_relations_note": "0 established; bdb not attempted, not measured as zero yield",
+  "actual_target_calls": 0,
+  "model_calls": 0,
+  "retries": 0,
+  "missing_reports": [
+    "ast paired/inventory reports",
+    "bdb paired reports"
+  ],
+  "limitations": [
+    "same-author fresh transformations, not external blind holdout",
+    "real ast is also the pre-existing parser infrastructure module; no frozen source snapshot was loaded as a target",
+    "no selector or protocol changes after outcomes"
+  ]
+}

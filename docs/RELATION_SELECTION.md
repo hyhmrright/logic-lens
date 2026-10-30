@@ -73,3 +73,8 @@ Qualification and initial accounting correction are disclosed in
 [the result](experiments/relation-selection-offline.md). The inspected transformation
 subset is now a regression set; the independent holdout gate remains open. Do not
 promote based on these synthetic checks or automatically run a model diagnostic.
+
+The [fresh frozen transformation and real static check](experiments/relation-generalization-offline.md)
+passes the six supported synthetic transformation pairs, but real integration stops
+on unresolved-entry handling in ast; bdb selection remains unattempted. This is an
+explicit failed integration gate, not qualification for deployment or model evaluation.
