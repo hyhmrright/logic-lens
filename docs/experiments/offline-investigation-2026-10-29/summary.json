@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "status": "complete",
+  "relations_discovered": 5,
+  "ready_relations": 2,
+  "execution_enabled": true,
+  "source_before": "9a467ae985e6dcaa21181d0c0c7d874d792072377f415d4bfc74cfd5125f28f7",
+  "source_after": "9a467ae985e6dcaa21181d0c0c7d874d792072377f415d4bfc74cfd5125f28f7",
+  "selected": [
+    "24ba8fcba3177230",
+    "fc0a37e4f208ad6a"
+  ],
+  "executions": [
+    {
+      "id": "24ba8fcba3177230",
+      "mode": "search",
+      "status": "counterexample",
+      "evaluations": 5
+    },
+    {
+      "id": "fc0a37e4f208ad6a",
+      "mode": "search",
+      "status": "counterexample",
+      "evaluations": 6
+    }
+  ],
+  "unexecuted_selected": [],
+  "scope": "trusted synthetic only; source leads are not bug oracles; finite checked points only",
+  "limits": "one selected relation per entry, then smaller domain/stable ID; not semantic novelty or bug-yield ranking"
+}

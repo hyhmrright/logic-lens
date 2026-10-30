@@ -1,0 +1,18 @@
+{
+  "adapter/range-adapter.cjs": "b9a0fa9628857b94f42f51a4dd3c92170022079e3fac48f6a5f8ab5138f58162",
+  "cases/000/input.json": "a0d441ed5efe3726818abd2513939171d4a8be1fff6c5a2dc2e3cc67cea671a1",
+  "cases/000/stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "cases/000/stdout.txt": "88f36c5010ad5d4d4fb2e58eabf2eddb74abe610dcd06b9c5b9ea64d1d5f8d11",
+  "cases/001/input.json": "5c8c26ef7065c76e2ea47049e6e10656eef2da0b16f10d73234cb832edb8fc82",
+  "cases/001/stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "cases/001/stdout.txt": "fbd7cb93599ff1c8a7974e88698b1eb370df7d705e0514d365cd23c1f2e5fb04",
+  "cases/002/input.json": "cd72715198711fdf3eeda67a8737acc27ee767f0d77e64aca1cc2e3c1987db6a",
+  "cases/002/stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "cases/002/stdout.txt": "383c35a3270d80f61e84a7aa749c10c7d2c5bbda12be12fcc9efb3357e9537ab",
+  "cases/003/input.json": "916f3abd352b58957cb40c1fdd61bbda5439a9633f5fffb3f8611661908cb58d",
+  "cases/003/stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "cases/003/stdout.txt": "383c35a3270d80f61e84a7aa749c10c7d2c5bbda12be12fcc9efb3357e9537ab",
+  "observations.json": "9893d64798bf2a1598f144d10ce08a795bcb8243b7418099ee7942aa0078ede4",
+  "spec.json": "43edf16a12b7f235d2d1111a17d7c86b342f6021eafd8fc570a2d2bea8e28ff8",
+  "summary.json": "8bfa17f256a5d84e7deb6dfca13f49c50884d4d5c147432762f8ff0c0c0fe969"
+}

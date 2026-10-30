@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-29",
+  "kind": "offline-synthetic-mechanism-validation",
+  "new_tests": 16,
+  "total_tests": 111,
+  "model_calls": 0,
+  "evaluation_tokens": 0,
+  "chat_implementation_usage_included": false,
+  "formal_skills_changed": false,
+  "main_merged": false,
+  "example_selected": [
+    "packet-capacity"
+  ],
+  "example_domain": [
+    0,
+    4,
+    5,
+    6,
+    7,
+    10
+  ],
+  "finite_affine_partition_checks": 108,
+  "negative_control": "Accurate source quote plus inaccurate coefficient remains undetected; actual synthetic input6 fails despite all-safe prediction.",
+  "limitations": [
+    "manual declarations and contract applicability",
+    "integer affine upper bound only",
+    "no automatic search adapter",
+    "source-span selection heuristic",
+    "no model efficacy or token-saving evidence"
+  ],
+  "sha256": {
+    "scripts/constraint_plan.py": "defbfe09ee6325955887c48504ee671a4144e50ec9a341ca7fe0e14da057c3f4",
+    "scripts/logic_lens.py": "ced1e17b7f01a5b7927ca5cf91ada1e781027dcd2da3fd266bdba92746d9ef7c",
+    "tests/test_constraint_plan.py": "2b4606c86126488854c23616b68a643939a11efbd3d114a5ebb6a0051f47f8df",
+    "examples/constraint-plan/workspace/pipeline.py": "5baafb9692c834f96afb86afce8fb593f4396480f4877ce118a4ff08cda65402",
+    "examples/constraint-plan/relations.json": "88084e80a3742590f341c4509252727673c0616c33fb77c0cdc3b1856a785fa2",
+    "examples/constraint-plan/expected-plan.json": "54dfb82d118a6823cea77b94720a537982c733135042bcccec8fc0a2f1ac8747",
+    "docs/CONSTRAINT_PLAN.md": "9f8e79dc7210050d999a8295e87ce48fedd414a97359df4ab9fb970156de786c",
+    "docs/experiments/constraint-plan-offline.md": "7b664e9a47cc2181f171178d5ff9d5d7a76c665bb548b56e711aea817493e631"
+  }
+}

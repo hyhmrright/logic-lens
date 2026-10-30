@@ -1,0 +1,2351 @@
+[
+  {
+    "id": "fc0a37e4f208ad6a",
+    "entry": "first",
+    "consumer": "packet_a",
+    "caller": "first",
+    "line": 29,
+    "contract": {
+      "name": "first",
+      "valid": [
+        [
+          0,
+          10
+        ]
+      ],
+      "expectation": "returns",
+      "evidence": {
+        "path": "CONTRACTS.txt",
+        "start": 1,
+        "end": 1,
+        "quote": "first and second must return normally for each integer input from 0 through 10."
+      }
+    },
+    "expectation": "returns",
+    "points": [
+      0,
+      1,
+      4,
+      5,
+      6,
+      7,
+      9,
+      10
+    ],
+    "source": "subject.py",
+    "source_evidence": {
+      "path": "subject.py",
+      "start": 29,
+      "end": 29,
+      "quote": "    return packet_a(encode(n))"
+    },
+    "fact_check": {
+      "schema_version": 1,
+      "source_sha256": "9de8a89df32f017f4c4ecfee90dfde4556ee3500aceba3ff198f7043d0475edc",
+      "checked_scope": [
+        0,
+        10
+      ],
+      "scope": "only explicitly listed integer points, not the gaps between them",
+      "spec_sha256": "a768a7d578144375f5399851b00c094d8cb384f7d2a3b7e4c7375c3f14e41788",
+      "checked_points": [
+        0,
+        1,
+        4,
+        5,
+        6,
+        7,
+        9,
+        10
+      ],
+      "function_spans": {
+        "encode": {
+          "start": 4,
+          "end": 5
+        },
+        "packet_a": {
+          "start": 8,
+          "end": 11
+        },
+        "packet_b": {
+          "start": 14,
+          "end": 17
+        },
+        "unused_consumer": {
+          "start": 20,
+          "end": 23
+        },
+        "first": {
+          "start": 26,
+          "end": 29
+        },
+        "second": {
+          "start": 32,
+          "end": 35
+        },
+        "guarded": {
+          "start": 38,
+          "end": 43
+        },
+        "tolerated": {
+          "start": 46,
+          "end": 49
+        },
+        "unreachable": {
+          "start": 52,
+          "end": 57
+        }
+      },
+      "observations": [
+        {
+          "input": 0,
+          "outcome": "returned",
+          "consumers": [
+            {
+              "line": 29,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 2
+            }
+          ]
+        },
+        {
+          "input": 1,
+          "outcome": "returned",
+          "consumers": [
+            {
+              "line": 29,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 5
+            }
+          ]
+        },
+        {
+          "input": 4,
+          "outcome": "returned",
+          "consumers": [
+            {
+              "line": 29,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 14
+            }
+          ]
+        },
+        {
+          "input": 5,
+          "outcome": "returned",
+          "consumers": [
+            {
+              "line": 29,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 17
+            }
+          ]
+        },
+        {
+          "input": 6,
+          "outcome": "rejected_after_consumer",
+          "consumers": [
+            {
+              "line": 29,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 20
+            }
+          ]
+        },
+        {
+          "input": 7,
+          "outcome": "rejected_after_consumer",
+          "consumers": [
+            {
+              "line": 29,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 23
+            }
+          ]
+        },
+        {
+          "input": 9,
+          "outcome": "rejected_after_consumer",
+          "consumers": [
+            {
+              "line": 29,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 29
+            }
+          ]
+        },
+        {
+          "input": 10,
+          "outcome": "rejected_after_consumer",
+          "consumers": [
+            {
+              "line": 29,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 32
+            }
+          ]
+        }
+      ],
+      "facts": {
+        "reachable": [
+          [
+            0,
+            1
+          ],
+          [
+            4,
+            7
+          ],
+          [
+            9,
+            10
+          ]
+        ],
+        "rejected_before_consumer": [],
+        "variants": [
+          {
+            "scale": 3,
+            "offset": 2,
+            "unit": "byte"
+          }
+        ],
+        "implementation_consumer_bound": 17
+      },
+      "status": "checked_with_unknowns",
+      "checks": {
+        "scale": {
+          "status": "matched_in_scope",
+          "witness": null,
+          "comparison": "source-derived affine coefficient, not regression fitting"
+        },
+        "offset": {
+          "status": "matched_in_scope",
+          "witness": null,
+          "comparison": "source-derived affine coefficient, not regression fitting"
+        },
+        "output_unit": {
+          "status": "matched_in_scope",
+          "observed": [
+            "byte"
+          ]
+        },
+        "route": {
+          "status": "matched_in_scope",
+          "omitted_reachable": [],
+          "falsely_reachable": []
+        },
+        "bound": {
+          "status": "matched_in_scope",
+          "observed": 17
+        },
+        "input_business_unit": {
+          "status": "unknown",
+          "reason": "no business-unit inference"
+        }
+      },
+      "contract": "Not extracted: runtime rejection does not redefine the public valid domain or prove a bug."
+    },
+    "domain_plan": {
+      "id": "fc0a37e4f208ad6a",
+      "evidence": {
+        "contract": {
+          "path": "CONTRACTS.txt",
+          "start": 1,
+          "end": 1,
+          "sha256": "5d405dba8d9a155cd7efd9436d72474c83727a8380511f2fe9243c52697dd1f5"
+        },
+        "input": {
+          "path": "subject.py",
+          "start": 26,
+          "end": 29,
+          "sha256": "9de8a89df32f017f4c4ecfee90dfde4556ee3500aceba3ff198f7043d0475edc"
+        },
+        "producer": {
+          "path": "subject.py",
+          "start": 26,
+          "end": 29,
+          "sha256": "9de8a89df32f017f4c4ecfee90dfde4556ee3500aceba3ff198f7043d0475edc"
+        },
+        "consumer": {
+          "path": "subject.py",
+          "start": 8,
+          "end": 11,
+          "sha256": "9de8a89df32f017f4c4ecfee90dfde4556ee3500aceba3ff198f7043d0475edc"
+        },
+        "route": {
+          "path": "subject.py",
+          "start": 29,
+          "end": 29,
+          "sha256": "9de8a89df32f017f4c4ecfee90dfde4556ee3500aceba3ff198f7043d0475edc"
+        },
+        "claims": [
+          {
+            "path": "CONTRACTS.txt",
+            "start": 1,
+            "end": 1,
+            "sha256": "5d405dba8d9a155cd7efd9436d72474c83727a8380511f2fe9243c52697dd1f5"
+          }
+        ]
+      },
+      "declarations": {
+        "id": "fc0a37e4f208ad6a",
+        "contract": {
+          "source": {
+            "path": "CONTRACTS.txt",
+            "start": 1,
+            "end": 1,
+            "quote": "first and second must return normally for each integer input from 0 through 10."
+          },
+          "status": "supported",
+          "obligation": "consumer_precondition",
+          "claims": [
+            {
+              "effect": "allow",
+              "scope": [
+                [
+                  0,
+                  10
+                ]
+              ],
+              "source": {
+                "path": "CONTRACTS.txt",
+                "start": 1,
+                "end": 1,
+                "quote": "first and second must return normally for each integer input from 0 through 10."
+              }
+            }
+          ]
+        },
+        "input": {
+          "source": {
+            "path": "subject.py",
+            "start": 26,
+            "end": 29,
+            "quote": "def first(n):\n    if type(n) is not int or not 0 <= n <= 10:\n        raise ValueError('input')\n    return packet_a(encode(n))"
+          },
+          "unit": "input_integer",
+          "valid": [
+            [
+              0,
+              10
+            ]
+          ]
+        },
+        "producer": {
+          "source": {
+            "path": "subject.py",
+            "start": 26,
+            "end": 29,
+            "quote": "def first(n):\n    if type(n) is not int or not 0 <= n <= 10:\n        raise ValueError('input')\n    return packet_a(encode(n))"
+          },
+          "kind": "integer_affine",
+          "input_unit": "input_integer",
+          "output_unit": "byte",
+          "scale": 3,
+          "offset": 2
+        },
+        "consumer": {
+          "source": {
+            "path": "subject.py",
+            "start": 8,
+            "end": 11,
+            "quote": "def packet_a(packet):\n    if len(packet) > 17:\n        raise ValueError('capacity')\n    return len(packet)"
+          },
+          "unit": "byte",
+          "operator": "<=",
+          "bound": 17
+        },
+        "route": {
+          "source": {
+            "path": "subject.py",
+            "start": 29,
+            "end": 29,
+            "quote": "    return packet_a(encode(n))"
+          },
+          "guard": [
+            [
+              0,
+              1
+            ],
+            [
+              4,
+              7
+            ],
+            [
+              9,
+              10
+            ]
+          ]
+        }
+      },
+      "edge": [
+        {
+          "path": "subject.py",
+          "start": 26,
+          "end": 29,
+          "sha256": "9de8a89df32f017f4c4ecfee90dfde4556ee3500aceba3ff198f7043d0475edc"
+        },
+        {
+          "path": "subject.py",
+          "start": 8,
+          "end": 11,
+          "sha256": "9de8a89df32f017f4c4ecfee90dfde4556ee3500aceba3ff198f7043d0475edc"
+        }
+      ],
+      "status": "ready",
+      "property": {
+        "kind": "consumer_precondition",
+        "premise": "supported public input on declared route",
+        "observation": "actual value passed to the identified consumer",
+        "predicate": "observed[byte] <= 17",
+        "oracle": "declared contract; implementation model selects inputs only"
+      },
+      "model": {
+        "scale": 3,
+        "offset": 2,
+        "bound": 17,
+        "input_unit": "input_integer",
+        "output_unit": "byte"
+      },
+      "domain": [
+        0,
+        1,
+        4,
+        5,
+        6,
+        7,
+        9,
+        10
+      ],
+      "reachable_intervals": [
+        [
+          0,
+          1
+        ],
+        [
+          4,
+          7
+        ],
+        [
+          9,
+          10
+        ]
+      ],
+      "control": 0,
+      "control_status": "predicted_only_requires_execution",
+      "boundary_status": "reachable_crossing",
+      "predicted_safe": [
+        0,
+        1,
+        4,
+        5
+      ],
+      "predicted_unsafe": [
+        6,
+        7,
+        9,
+        10
+      ],
+      "evidence_limit": "Source quotes match; declarations, contract status and route completeness require human verification. No subject execution or bug confirmation.",
+      "selection": "selected"
+    },
+    "bridge_check": {
+      "schema_version": 1,
+      "source_sha256": "9de8a89df32f017f4c4ecfee90dfde4556ee3500aceba3ff198f7043d0475edc",
+      "checked_scope": [
+        0,
+        10
+      ],
+      "scope": "only explicitly listed integer points, not the gaps between them",
+      "spec_sha256": "a768a7d578144375f5399851b00c094d8cb384f7d2a3b7e4c7375c3f14e41788",
+      "checked_points": [
+        0,
+        1,
+        4,
+        5,
+        6,
+        7,
+        9,
+        10
+      ],
+      "function_spans": {
+        "encode": {
+          "start": 4,
+          "end": 5
+        },
+        "packet_a": {
+          "start": 8,
+          "end": 11
+        },
+        "packet_b": {
+          "start": 14,
+          "end": 17
+        },
+        "unused_consumer": {
+          "start": 20,
+          "end": 23
+        },
+        "first": {
+          "start": 26,
+          "end": 29
+        },
+        "second": {
+          "start": 32,
+          "end": 35
+        },
+        "guarded": {
+          "start": 38,
+          "end": 43
+        },
+        "tolerated": {
+          "start": 46,
+          "end": 49
+        },
+        "unreachable": {
+          "start": 52,
+          "end": 57
+        }
+      },
+      "observations": [
+        {
+          "input": 0,
+          "outcome": "returned",
+          "consumers": [
+            {
+              "line": 29,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 2
+            }
+          ]
+        },
+        {
+          "input": 1,
+          "outcome": "returned",
+          "consumers": [
+            {
+              "line": 29,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 5
+            }
+          ]
+        },
+        {
+          "input": 4,
+          "outcome": "returned",
+          "consumers": [
+            {
+              "line": 29,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 14
+            }
+          ]
+        },
+        {
+          "input": 5,
+          "outcome": "returned",
+          "consumers": [
+            {
+              "line": 29,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 17
+            }
+          ]
+        },
+        {
+          "input": 6,
+          "outcome": "rejected_after_consumer",
+          "consumers": [
+            {
+              "line": 29,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 20
+            }
+          ]
+        },
+        {
+          "input": 7,
+          "outcome": "rejected_after_consumer",
+          "consumers": [
+            {
+              "line": 29,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 23
+            }
+          ]
+        },
+        {
+          "input": 9,
+          "outcome": "rejected_after_consumer",
+          "consumers": [
+            {
+              "line": 29,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 29
+            }
+          ]
+        },
+        {
+          "input": 10,
+          "outcome": "rejected_after_consumer",
+          "consumers": [
+            {
+              "line": 29,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 32
+            }
+          ]
+        }
+      ],
+      "facts": {
+        "reachable": [
+          [
+            0,
+            1
+          ],
+          [
+            4,
+            7
+          ],
+          [
+            9,
+            10
+          ]
+        ],
+        "rejected_before_consumer": [],
+        "variants": [
+          {
+            "scale": 3,
+            "offset": 2,
+            "unit": "byte"
+          }
+        ],
+        "implementation_consumer_bound": 17
+      },
+      "status": "checked_with_unknowns",
+      "checks": {
+        "scale": {
+          "status": "matched_in_scope",
+          "witness": null,
+          "comparison": "source-derived affine coefficient, not regression fitting"
+        },
+        "offset": {
+          "status": "matched_in_scope",
+          "witness": null,
+          "comparison": "source-derived affine coefficient, not regression fitting"
+        },
+        "output_unit": {
+          "status": "matched_in_scope",
+          "observed": [
+            "byte"
+          ]
+        },
+        "route": {
+          "status": "matched_in_scope",
+          "omitted_reachable": [],
+          "falsely_reachable": []
+        },
+        "bound": {
+          "status": "matched_in_scope",
+          "observed": 17
+        },
+        "input_business_unit": {
+          "status": "unknown",
+          "reason": "no business-unit inference"
+        }
+      },
+      "contract": "Not extracted: runtime rejection does not redefine the public valid domain or prove a bug."
+    },
+    "lead_not_oracle": "consumer precondition is implementation evidence; outcome oracle is independent entry contract",
+    "status": "ready",
+    "mode": "search",
+    "control": 0,
+    "domain": [
+      0,
+      1,
+      4,
+      5,
+      6,
+      7,
+      9,
+      10
+    ],
+    "reason": "supported entry obligation + source-derived distinguishing outcome",
+    "selection": "selected"
+  },
+  {
+    "id": "24ba8fcba3177230",
+    "entry": "second",
+    "consumer": "packet_b",
+    "caller": "second",
+    "line": 35,
+    "contract": {
+      "name": "second",
+      "valid": [
+        [
+          0,
+          10
+        ]
+      ],
+      "expectation": "returns",
+      "evidence": {
+        "path": "CONTRACTS.txt",
+        "start": 1,
+        "end": 1,
+        "quote": "first and second must return normally for each integer input from 0 through 10."
+      }
+    },
+    "expectation": "returns",
+    "points": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      9,
+      10
+    ],
+    "source": "subject.py",
+    "source_evidence": {
+      "path": "subject.py",
+      "start": 35,
+      "end": 35,
+      "quote": "    return packet_b(encode(n))"
+    },
+    "fact_check": {
+      "schema_version": 1,
+      "source_sha256": "9de8a89df32f017f4c4ecfee90dfde4556ee3500aceba3ff198f7043d0475edc",
+      "checked_scope": [
+        0,
+        10
+      ],
+      "scope": "only explicitly listed integer points, not the gaps between them",
+      "spec_sha256": "34d76c8864371cfbdfa1f4a4608e2ee0e0a575c26b0eb46ada101378cd179808",
+      "checked_points": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        9,
+        10
+      ],
+      "function_spans": {
+        "encode": {
+          "start": 4,
+          "end": 5
+        },
+        "packet_a": {
+          "start": 8,
+          "end": 11
+        },
+        "packet_b": {
+          "start": 14,
+          "end": 17
+        },
+        "unused_consumer": {
+          "start": 20,
+          "end": 23
+        },
+        "first": {
+          "start": 26,
+          "end": 29
+        },
+        "second": {
+          "start": 32,
+          "end": 35
+        },
+        "guarded": {
+          "start": 38,
+          "end": 43
+        },
+        "tolerated": {
+          "start": 46,
+          "end": 49
+        },
+        "unreachable": {
+          "start": 52,
+          "end": 57
+        }
+      },
+      "observations": [
+        {
+          "input": 0,
+          "outcome": "returned",
+          "consumers": [
+            {
+              "line": 35,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 2
+            }
+          ]
+        },
+        {
+          "input": 1,
+          "outcome": "returned",
+          "consumers": [
+            {
+              "line": 35,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 5
+            }
+          ]
+        },
+        {
+          "input": 2,
+          "outcome": "returned",
+          "consumers": [
+            {
+              "line": 35,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 8
+            }
+          ]
+        },
+        {
+          "input": 3,
+          "outcome": "returned",
+          "consumers": [
+            {
+              "line": 35,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 11
+            }
+          ]
+        },
+        {
+          "input": 4,
+          "outcome": "rejected_after_consumer",
+          "consumers": [
+            {
+              "line": 35,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 14
+            }
+          ]
+        },
+        {
+          "input": 5,
+          "outcome": "rejected_after_consumer",
+          "consumers": [
+            {
+              "line": 35,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 17
+            }
+          ]
+        },
+        {
+          "input": 9,
+          "outcome": "rejected_after_consumer",
+          "consumers": [
+            {
+              "line": 35,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 29
+            }
+          ]
+        },
+        {
+          "input": 10,
+          "outcome": "rejected_after_consumer",
+          "consumers": [
+            {
+              "line": 35,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 32
+            }
+          ]
+        }
+      ],
+      "facts": {
+        "reachable": [
+          [
+            0,
+            5
+          ],
+          [
+            9,
+            10
+          ]
+        ],
+        "rejected_before_consumer": [],
+        "variants": [
+          {
+            "scale": 3,
+            "offset": 2,
+            "unit": "byte"
+          }
+        ],
+        "implementation_consumer_bound": 13
+      },
+      "status": "checked_with_unknowns",
+      "checks": {
+        "scale": {
+          "status": "matched_in_scope",
+          "witness": null,
+          "comparison": "source-derived affine coefficient, not regression fitting"
+        },
+        "offset": {
+          "status": "matched_in_scope",
+          "witness": null,
+          "comparison": "source-derived affine coefficient, not regression fitting"
+        },
+        "output_unit": {
+          "status": "matched_in_scope",
+          "observed": [
+            "byte"
+          ]
+        },
+        "route": {
+          "status": "matched_in_scope",
+          "omitted_reachable": [],
+          "falsely_reachable": []
+        },
+        "bound": {
+          "status": "matched_in_scope",
+          "observed": 13
+        },
+        "input_business_unit": {
+          "status": "unknown",
+          "reason": "no business-unit inference"
+        }
+      },
+      "contract": "Not extracted: runtime rejection does not redefine the public valid domain or prove a bug."
+    },
+    "domain_plan": {
+      "id": "24ba8fcba3177230",
+      "evidence": {
+        "contract": {
+          "path": "CONTRACTS.txt",
+          "start": 1,
+          "end": 1,
+          "sha256": "5d405dba8d9a155cd7efd9436d72474c83727a8380511f2fe9243c52697dd1f5"
+        },
+        "input": {
+          "path": "subject.py",
+          "start": 32,
+          "end": 35,
+          "sha256": "9de8a89df32f017f4c4ecfee90dfde4556ee3500aceba3ff198f7043d0475edc"
+        },
+        "producer": {
+          "path": "subject.py",
+          "start": 32,
+          "end": 35,
+          "sha256": "9de8a89df32f017f4c4ecfee90dfde4556ee3500aceba3ff198f7043d0475edc"
+        },
+        "consumer": {
+          "path": "subject.py",
+          "start": 14,
+          "end": 17,
+          "sha256": "9de8a89df32f017f4c4ecfee90dfde4556ee3500aceba3ff198f7043d0475edc"
+        },
+        "route": {
+          "path": "subject.py",
+          "start": 35,
+          "end": 35,
+          "sha256": "9de8a89df32f017f4c4ecfee90dfde4556ee3500aceba3ff198f7043d0475edc"
+        },
+        "claims": [
+          {
+            "path": "CONTRACTS.txt",
+            "start": 1,
+            "end": 1,
+            "sha256": "5d405dba8d9a155cd7efd9436d72474c83727a8380511f2fe9243c52697dd1f5"
+          }
+        ]
+      },
+      "declarations": {
+        "id": "24ba8fcba3177230",
+        "contract": {
+          "source": {
+            "path": "CONTRACTS.txt",
+            "start": 1,
+            "end": 1,
+            "quote": "first and second must return normally for each integer input from 0 through 10."
+          },
+          "status": "supported",
+          "obligation": "consumer_precondition",
+          "claims": [
+            {
+              "effect": "allow",
+              "scope": [
+                [
+                  0,
+                  10
+                ]
+              ],
+              "source": {
+                "path": "CONTRACTS.txt",
+                "start": 1,
+                "end": 1,
+                "quote": "first and second must return normally for each integer input from 0 through 10."
+              }
+            }
+          ]
+        },
+        "input": {
+          "source": {
+            "path": "subject.py",
+            "start": 32,
+            "end": 35,
+            "quote": "def second(n):\n    if type(n) is not int or not 0 <= n <= 10:\n        raise ValueError('input')\n    return packet_b(encode(n))"
+          },
+          "unit": "input_integer",
+          "valid": [
+            [
+              0,
+              10
+            ]
+          ]
+        },
+        "producer": {
+          "source": {
+            "path": "subject.py",
+            "start": 32,
+            "end": 35,
+            "quote": "def second(n):\n    if type(n) is not int or not 0 <= n <= 10:\n        raise ValueError('input')\n    return packet_b(encode(n))"
+          },
+          "kind": "integer_affine",
+          "input_unit": "input_integer",
+          "output_unit": "byte",
+          "scale": 3,
+          "offset": 2
+        },
+        "consumer": {
+          "source": {
+            "path": "subject.py",
+            "start": 14,
+            "end": 17,
+            "quote": "def packet_b(packet):\n    if len(packet) > 13:\n        raise ValueError('capacity')\n    return len(packet)"
+          },
+          "unit": "byte",
+          "operator": "<=",
+          "bound": 13
+        },
+        "route": {
+          "source": {
+            "path": "subject.py",
+            "start": 35,
+            "end": 35,
+            "quote": "    return packet_b(encode(n))"
+          },
+          "guard": [
+            [
+              0,
+              5
+            ],
+            [
+              9,
+              10
+            ]
+          ]
+        }
+      },
+      "edge": [
+        {
+          "path": "subject.py",
+          "start": 32,
+          "end": 35,
+          "sha256": "9de8a89df32f017f4c4ecfee90dfde4556ee3500aceba3ff198f7043d0475edc"
+        },
+        {
+          "path": "subject.py",
+          "start": 14,
+          "end": 17,
+          "sha256": "9de8a89df32f017f4c4ecfee90dfde4556ee3500aceba3ff198f7043d0475edc"
+        }
+      ],
+      "status": "ready",
+      "property": {
+        "kind": "consumer_precondition",
+        "premise": "supported public input on declared route",
+        "observation": "actual value passed to the identified consumer",
+        "predicate": "observed[byte] <= 13",
+        "oracle": "declared contract; implementation model selects inputs only"
+      },
+      "model": {
+        "scale": 3,
+        "offset": 2,
+        "bound": 13,
+        "input_unit": "input_integer",
+        "output_unit": "byte"
+      },
+      "domain": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        9,
+        10
+      ],
+      "reachable_intervals": [
+        [
+          0,
+          5
+        ],
+        [
+          9,
+          10
+        ]
+      ],
+      "control": 0,
+      "control_status": "predicted_only_requires_execution",
+      "boundary_status": "reachable_crossing",
+      "predicted_safe": [
+        0,
+        2,
+        3
+      ],
+      "predicted_unsafe": [
+        4,
+        5,
+        9,
+        10
+      ],
+      "evidence_limit": "Source quotes match; declarations, contract status and route completeness require human verification. No subject execution or bug confirmation.",
+      "selection": "selected"
+    },
+    "bridge_check": {
+      "schema_version": 1,
+      "source_sha256": "9de8a89df32f017f4c4ecfee90dfde4556ee3500aceba3ff198f7043d0475edc",
+      "checked_scope": [
+        0,
+        10
+      ],
+      "scope": "only explicitly listed integer points, not the gaps between them",
+      "spec_sha256": "34d76c8864371cfbdfa1f4a4608e2ee0e0a575c26b0eb46ada101378cd179808",
+      "checked_points": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        9,
+        10
+      ],
+      "function_spans": {
+        "encode": {
+          "start": 4,
+          "end": 5
+        },
+        "packet_a": {
+          "start": 8,
+          "end": 11
+        },
+        "packet_b": {
+          "start": 14,
+          "end": 17
+        },
+        "unused_consumer": {
+          "start": 20,
+          "end": 23
+        },
+        "first": {
+          "start": 26,
+          "end": 29
+        },
+        "second": {
+          "start": 32,
+          "end": 35
+        },
+        "guarded": {
+          "start": 38,
+          "end": 43
+        },
+        "tolerated": {
+          "start": 46,
+          "end": 49
+        },
+        "unreachable": {
+          "start": 52,
+          "end": 57
+        }
+      },
+      "observations": [
+        {
+          "input": 0,
+          "outcome": "returned",
+          "consumers": [
+            {
+              "line": 35,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 2
+            }
+          ]
+        },
+        {
+          "input": 1,
+          "outcome": "returned",
+          "consumers": [
+            {
+              "line": 35,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 5
+            }
+          ]
+        },
+        {
+          "input": 2,
+          "outcome": "returned",
+          "consumers": [
+            {
+              "line": 35,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 8
+            }
+          ]
+        },
+        {
+          "input": 3,
+          "outcome": "returned",
+          "consumers": [
+            {
+              "line": 35,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 11
+            }
+          ]
+        },
+        {
+          "input": 4,
+          "outcome": "rejected_after_consumer",
+          "consumers": [
+            {
+              "line": 35,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 14
+            }
+          ]
+        },
+        {
+          "input": 5,
+          "outcome": "rejected_after_consumer",
+          "consumers": [
+            {
+              "line": 35,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 17
+            }
+          ]
+        },
+        {
+          "input": 9,
+          "outcome": "rejected_after_consumer",
+          "consumers": [
+            {
+              "line": 35,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 29
+            }
+          ]
+        },
+        {
+          "input": 10,
+          "outcome": "rejected_after_consumer",
+          "consumers": [
+            {
+              "line": 35,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 32
+            }
+          ]
+        }
+      ],
+      "facts": {
+        "reachable": [
+          [
+            0,
+            5
+          ],
+          [
+            9,
+            10
+          ]
+        ],
+        "rejected_before_consumer": [],
+        "variants": [
+          {
+            "scale": 3,
+            "offset": 2,
+            "unit": "byte"
+          }
+        ],
+        "implementation_consumer_bound": 13
+      },
+      "status": "checked_with_unknowns",
+      "checks": {
+        "scale": {
+          "status": "matched_in_scope",
+          "witness": null,
+          "comparison": "source-derived affine coefficient, not regression fitting"
+        },
+        "offset": {
+          "status": "matched_in_scope",
+          "witness": null,
+          "comparison": "source-derived affine coefficient, not regression fitting"
+        },
+        "output_unit": {
+          "status": "matched_in_scope",
+          "observed": [
+            "byte"
+          ]
+        },
+        "route": {
+          "status": "matched_in_scope",
+          "omitted_reachable": [],
+          "falsely_reachable": []
+        },
+        "bound": {
+          "status": "matched_in_scope",
+          "observed": 13
+        },
+        "input_business_unit": {
+          "status": "unknown",
+          "reason": "no business-unit inference"
+        }
+      },
+      "contract": "Not extracted: runtime rejection does not redefine the public valid domain or prove a bug."
+    },
+    "lead_not_oracle": "consumer precondition is implementation evidence; outcome oracle is independent entry contract",
+    "status": "ready",
+    "mode": "search",
+    "control": 0,
+    "domain": [
+      0,
+      2,
+      3,
+      4,
+      5,
+      9,
+      10
+    ],
+    "reason": "supported entry obligation + source-derived distinguishing outcome",
+    "selection": "selected"
+  },
+  {
+    "id": "35bf6da3f0d6e744",
+    "entry": "guarded",
+    "consumer": "packet_a",
+    "caller": "guarded",
+    "line": 42,
+    "contract": {
+      "name": "guarded",
+      "valid": [
+        [
+          0,
+          10
+        ]
+      ],
+      "expectation": "returns",
+      "evidence": {
+        "path": "CONTRACTS.txt",
+        "start": 2,
+        "end": 2,
+        "quote": "guarded and unreachable must return normally for each integer input from 0 through 10."
+      }
+    },
+    "expectation": "returns",
+    "points": [
+      0,
+      1,
+      4,
+      5,
+      6,
+      7,
+      9,
+      10
+    ],
+    "source": "subject.py",
+    "source_evidence": {
+      "path": "subject.py",
+      "start": 42,
+      "end": 42,
+      "quote": "        return packet_a(encode(n))"
+    },
+    "fact_check": {
+      "schema_version": 1,
+      "source_sha256": "9de8a89df32f017f4c4ecfee90dfde4556ee3500aceba3ff198f7043d0475edc",
+      "checked_scope": [
+        0,
+        10
+      ],
+      "scope": "only explicitly listed integer points, not the gaps between them",
+      "spec_sha256": "61027c1e3f43fa2707a825cf5802c4856842e0063227fcc0ec072a2e9cc86826",
+      "checked_points": [
+        0,
+        1,
+        4,
+        5,
+        6,
+        7,
+        9,
+        10
+      ],
+      "function_spans": {
+        "encode": {
+          "start": 4,
+          "end": 5
+        },
+        "packet_a": {
+          "start": 8,
+          "end": 11
+        },
+        "packet_b": {
+          "start": 14,
+          "end": 17
+        },
+        "unused_consumer": {
+          "start": 20,
+          "end": 23
+        },
+        "first": {
+          "start": 26,
+          "end": 29
+        },
+        "second": {
+          "start": 32,
+          "end": 35
+        },
+        "guarded": {
+          "start": 38,
+          "end": 43
+        },
+        "tolerated": {
+          "start": 46,
+          "end": 49
+        },
+        "unreachable": {
+          "start": 52,
+          "end": 57
+        }
+      },
+      "observations": [
+        {
+          "input": 0,
+          "outcome": "returned",
+          "consumers": [
+            {
+              "line": 42,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 2
+            }
+          ]
+        },
+        {
+          "input": 1,
+          "outcome": "returned",
+          "consumers": [
+            {
+              "line": 42,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 5
+            }
+          ]
+        },
+        {
+          "input": 4,
+          "outcome": "returned",
+          "consumers": [
+            {
+              "line": 42,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 14
+            }
+          ]
+        },
+        {
+          "input": 5,
+          "outcome": "returned",
+          "consumers": [
+            {
+              "line": 42,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 17
+            }
+          ]
+        },
+        {
+          "input": 6,
+          "outcome": "returned",
+          "consumers": []
+        },
+        {
+          "input": 7,
+          "outcome": "returned",
+          "consumers": []
+        },
+        {
+          "input": 9,
+          "outcome": "returned",
+          "consumers": []
+        },
+        {
+          "input": 10,
+          "outcome": "returned",
+          "consumers": []
+        }
+      ],
+      "facts": {
+        "reachable": [
+          [
+            0,
+            1
+          ],
+          [
+            4,
+            5
+          ]
+        ],
+        "rejected_before_consumer": [],
+        "variants": [
+          {
+            "scale": 3,
+            "offset": 2,
+            "unit": "byte"
+          }
+        ],
+        "implementation_consumer_bound": 17
+      },
+      "status": "checked_with_unknowns",
+      "checks": {
+        "scale": {
+          "status": "matched_in_scope",
+          "witness": null,
+          "comparison": "source-derived affine coefficient, not regression fitting"
+        },
+        "offset": {
+          "status": "matched_in_scope",
+          "witness": null,
+          "comparison": "source-derived affine coefficient, not regression fitting"
+        },
+        "output_unit": {
+          "status": "matched_in_scope",
+          "observed": [
+            "byte"
+          ]
+        },
+        "route": {
+          "status": "matched_in_scope",
+          "omitted_reachable": [],
+          "falsely_reachable": []
+        },
+        "bound": {
+          "status": "matched_in_scope",
+          "observed": 17
+        },
+        "input_business_unit": {
+          "status": "unknown",
+          "reason": "no business-unit inference"
+        }
+      },
+      "contract": "Not extracted: runtime rejection does not redefine the public valid domain or prove a bug."
+    },
+    "domain_plan": {
+      "id": "35bf6da3f0d6e744",
+      "evidence": {
+        "contract": {
+          "path": "CONTRACTS.txt",
+          "start": 2,
+          "end": 2,
+          "sha256": "5d405dba8d9a155cd7efd9436d72474c83727a8380511f2fe9243c52697dd1f5"
+        },
+        "input": {
+          "path": "subject.py",
+          "start": 38,
+          "end": 43,
+          "sha256": "9de8a89df32f017f4c4ecfee90dfde4556ee3500aceba3ff198f7043d0475edc"
+        },
+        "producer": {
+          "path": "subject.py",
+          "start": 38,
+          "end": 43,
+          "sha256": "9de8a89df32f017f4c4ecfee90dfde4556ee3500aceba3ff198f7043d0475edc"
+        },
+        "consumer": {
+          "path": "subject.py",
+          "start": 8,
+          "end": 11,
+          "sha256": "9de8a89df32f017f4c4ecfee90dfde4556ee3500aceba3ff198f7043d0475edc"
+        },
+        "route": {
+          "path": "subject.py",
+          "start": 42,
+          "end": 42,
+          "sha256": "9de8a89df32f017f4c4ecfee90dfde4556ee3500aceba3ff198f7043d0475edc"
+        },
+        "claims": [
+          {
+            "path": "CONTRACTS.txt",
+            "start": 2,
+            "end": 2,
+            "sha256": "5d405dba8d9a155cd7efd9436d72474c83727a8380511f2fe9243c52697dd1f5"
+          }
+        ]
+      },
+      "declarations": {
+        "id": "35bf6da3f0d6e744",
+        "contract": {
+          "source": {
+            "path": "CONTRACTS.txt",
+            "start": 2,
+            "end": 2,
+            "quote": "guarded and unreachable must return normally for each integer input from 0 through 10."
+          },
+          "status": "supported",
+          "obligation": "consumer_precondition",
+          "claims": [
+            {
+              "effect": "allow",
+              "scope": [
+                [
+                  0,
+                  10
+                ]
+              ],
+              "source": {
+                "path": "CONTRACTS.txt",
+                "start": 2,
+                "end": 2,
+                "quote": "guarded and unreachable must return normally for each integer input from 0 through 10."
+              }
+            }
+          ]
+        },
+        "input": {
+          "source": {
+            "path": "subject.py",
+            "start": 38,
+            "end": 43,
+            "quote": "def guarded(n):\n    if type(n) is not int or not 0 <= n <= 10:\n        raise ValueError('input')\n    if n <= 5:\n        return packet_a(encode(n))\n    return len(encode(n))"
+          },
+          "unit": "input_integer",
+          "valid": [
+            [
+              0,
+              10
+            ]
+          ]
+        },
+        "producer": {
+          "source": {
+            "path": "subject.py",
+            "start": 38,
+            "end": 43,
+            "quote": "def guarded(n):\n    if type(n) is not int or not 0 <= n <= 10:\n        raise ValueError('input')\n    if n <= 5:\n        return packet_a(encode(n))\n    return len(encode(n))"
+          },
+          "kind": "integer_affine",
+          "input_unit": "input_integer",
+          "output_unit": "byte",
+          "scale": 3,
+          "offset": 2
+        },
+        "consumer": {
+          "source": {
+            "path": "subject.py",
+            "start": 8,
+            "end": 11,
+            "quote": "def packet_a(packet):\n    if len(packet) > 17:\n        raise ValueError('capacity')\n    return len(packet)"
+          },
+          "unit": "byte",
+          "operator": "<=",
+          "bound": 17
+        },
+        "route": {
+          "source": {
+            "path": "subject.py",
+            "start": 42,
+            "end": 42,
+            "quote": "        return packet_a(encode(n))"
+          },
+          "guard": [
+            [
+              0,
+              1
+            ],
+            [
+              4,
+              5
+            ]
+          ]
+        }
+      },
+      "edge": [
+        {
+          "path": "subject.py",
+          "start": 38,
+          "end": 43,
+          "sha256": "9de8a89df32f017f4c4ecfee90dfde4556ee3500aceba3ff198f7043d0475edc"
+        },
+        {
+          "path": "subject.py",
+          "start": 8,
+          "end": 11,
+          "sha256": "9de8a89df32f017f4c4ecfee90dfde4556ee3500aceba3ff198f7043d0475edc"
+        }
+      ],
+      "status": "ready",
+      "property": {
+        "kind": "consumer_precondition",
+        "premise": "supported public input on declared route",
+        "observation": "actual value passed to the identified consumer",
+        "predicate": "observed[byte] <= 17",
+        "oracle": "declared contract; implementation model selects inputs only"
+      },
+      "model": {
+        "scale": 3,
+        "offset": 2,
+        "bound": 17,
+        "input_unit": "input_integer",
+        "output_unit": "byte"
+      },
+      "domain": [
+        0,
+        1,
+        4,
+        5
+      ],
+      "reachable_intervals": [
+        [
+          0,
+          1
+        ],
+        [
+          4,
+          5
+        ]
+      ],
+      "control": 0,
+      "control_status": "predicted_only_requires_execution",
+      "boundary_status": "all_predicted_safe",
+      "predicted_safe": [
+        0,
+        1,
+        4,
+        5
+      ],
+      "predicted_unsafe": [],
+      "evidence_limit": "Source quotes match; declarations, contract status and route completeness require human verification. No subject execution or bug confirmation.",
+      "selection": "not_eligible"
+    },
+    "bridge_check": {
+      "schema_version": 1,
+      "source_sha256": "9de8a89df32f017f4c4ecfee90dfde4556ee3500aceba3ff198f7043d0475edc",
+      "checked_scope": [
+        0,
+        10
+      ],
+      "scope": "only explicitly listed integer points, not the gaps between them",
+      "spec_sha256": "61027c1e3f43fa2707a825cf5802c4856842e0063227fcc0ec072a2e9cc86826",
+      "checked_points": [
+        0,
+        1,
+        4,
+        5,
+        6,
+        7,
+        9,
+        10
+      ],
+      "function_spans": {
+        "encode": {
+          "start": 4,
+          "end": 5
+        },
+        "packet_a": {
+          "start": 8,
+          "end": 11
+        },
+        "packet_b": {
+          "start": 14,
+          "end": 17
+        },
+        "unused_consumer": {
+          "start": 20,
+          "end": 23
+        },
+        "first": {
+          "start": 26,
+          "end": 29
+        },
+        "second": {
+          "start": 32,
+          "end": 35
+        },
+        "guarded": {
+          "start": 38,
+          "end": 43
+        },
+        "tolerated": {
+          "start": 46,
+          "end": 49
+        },
+        "unreachable": {
+          "start": 52,
+          "end": 57
+        }
+      },
+      "observations": [
+        {
+          "input": 0,
+          "outcome": "returned",
+          "consumers": [
+            {
+              "line": 42,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 2
+            }
+          ]
+        },
+        {
+          "input": 1,
+          "outcome": "returned",
+          "consumers": [
+            {
+              "line": 42,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 5
+            }
+          ]
+        },
+        {
+          "input": 4,
+          "outcome": "returned",
+          "consumers": [
+            {
+              "line": 42,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 14
+            }
+          ]
+        },
+        {
+          "input": 5,
+          "outcome": "returned",
+          "consumers": [
+            {
+              "line": 42,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 17
+            }
+          ]
+        },
+        {
+          "input": 6,
+          "outcome": "returned",
+          "consumers": []
+        },
+        {
+          "input": 7,
+          "outcome": "returned",
+          "consumers": []
+        },
+        {
+          "input": 9,
+          "outcome": "returned",
+          "consumers": []
+        },
+        {
+          "input": 10,
+          "outcome": "returned",
+          "consumers": []
+        }
+      ],
+      "facts": {
+        "reachable": [
+          [
+            0,
+            1
+          ],
+          [
+            4,
+            5
+          ]
+        ],
+        "rejected_before_consumer": [],
+        "variants": [
+          {
+            "scale": 3,
+            "offset": 2,
+            "unit": "byte"
+          }
+        ],
+        "implementation_consumer_bound": 17
+      },
+      "status": "checked_with_unknowns",
+      "checks": {
+        "scale": {
+          "status": "matched_in_scope",
+          "witness": null,
+          "comparison": "source-derived affine coefficient, not regression fitting"
+        },
+        "offset": {
+          "status": "matched_in_scope",
+          "witness": null,
+          "comparison": "source-derived affine coefficient, not regression fitting"
+        },
+        "output_unit": {
+          "status": "matched_in_scope",
+          "observed": [
+            "byte"
+          ]
+        },
+        "route": {
+          "status": "matched_in_scope",
+          "omitted_reachable": [],
+          "falsely_reachable": []
+        },
+        "bound": {
+          "status": "matched_in_scope",
+          "observed": 17
+        },
+        "input_business_unit": {
+          "status": "unknown",
+          "reason": "no business-unit inference"
+        }
+      },
+      "contract": "Not extracted: runtime rejection does not redefine the public valid domain or prove a bug."
+    },
+    "lead_not_oracle": "consumer precondition is implementation evidence; outcome oracle is independent entry contract",
+    "status": "deferred",
+    "reason": "no predicted contract-distinguishing outcome on checked points",
+    "selection": "deferred"
+  },
+  {
+    "id": "a9ad89203c236913",
+    "entry": "unreachable",
+    "consumer": "packet_a",
+    "caller": "unreachable",
+    "line": 56,
+    "contract": {
+      "name": "unreachable",
+      "valid": [
+        [
+          0,
+          10
+        ]
+      ],
+      "expectation": "returns",
+      "evidence": {
+        "path": "CONTRACTS.txt",
+        "start": 2,
+        "end": 2,
+        "quote": "guarded and unreachable must return normally for each integer input from 0 through 10."
+      }
+    },
+    "expectation": "returns",
+    "points": [
+      0,
+      1,
+      9,
+      10
+    ],
+    "source": "subject.py",
+    "source_evidence": {
+      "path": "subject.py",
+      "start": 56,
+      "end": 56,
+      "quote": "        return packet_a(encode(n))"
+    },
+    "status": "deferred",
+    "reason": "not observed on checked points; not globally unreachable",
+    "selection": "deferred"
+  },
+  {
+    "id": "812c9cdeabd8828f",
+    "entry": "tolerated",
+    "consumer": "packet_a",
+    "caller": "tolerated",
+    "line": 49,
+    "contract": {
+      "name": "tolerated",
+      "valid": [
+        [
+          0,
+          10
+        ]
+      ],
+      "expectation": "return_or_value_error",
+      "evidence": {
+        "path": "CONTRACTS.txt",
+        "start": 3,
+        "end": 3,
+        "quote": "tolerated may return normally or raise ValueError for each integer input from 0 through 10."
+      }
+    },
+    "expectation": "return_or_value_error",
+    "points": [
+      0,
+      1,
+      4,
+      5,
+      6,
+      7,
+      9,
+      10
+    ],
+    "source": "subject.py",
+    "source_evidence": {
+      "path": "subject.py",
+      "start": 49,
+      "end": 49,
+      "quote": "    return packet_a(encode(n))"
+    },
+    "fact_check": {
+      "schema_version": 1,
+      "source_sha256": "9de8a89df32f017f4c4ecfee90dfde4556ee3500aceba3ff198f7043d0475edc",
+      "checked_scope": [
+        0,
+        10
+      ],
+      "scope": "only explicitly listed integer points, not the gaps between them",
+      "spec_sha256": "a58f142cf598d45eb11158a5068e94058abc1c56bd764a74cb283fc55196572e",
+      "checked_points": [
+        0,
+        1,
+        4,
+        5,
+        6,
+        7,
+        9,
+        10
+      ],
+      "function_spans": {
+        "encode": {
+          "start": 4,
+          "end": 5
+        },
+        "packet_a": {
+          "start": 8,
+          "end": 11
+        },
+        "packet_b": {
+          "start": 14,
+          "end": 17
+        },
+        "unused_consumer": {
+          "start": 20,
+          "end": 23
+        },
+        "first": {
+          "start": 26,
+          "end": 29
+        },
+        "second": {
+          "start": 32,
+          "end": 35
+        },
+        "guarded": {
+          "start": 38,
+          "end": 43
+        },
+        "tolerated": {
+          "start": 46,
+          "end": 49
+        },
+        "unreachable": {
+          "start": 52,
+          "end": 57
+        }
+      },
+      "observations": [
+        {
+          "input": 0,
+          "outcome": "returned",
+          "consumers": [
+            {
+              "line": 49,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 2
+            }
+          ]
+        },
+        {
+          "input": 1,
+          "outcome": "returned",
+          "consumers": [
+            {
+              "line": 49,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 5
+            }
+          ]
+        },
+        {
+          "input": 4,
+          "outcome": "returned",
+          "consumers": [
+            {
+              "line": 49,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 14
+            }
+          ]
+        },
+        {
+          "input": 5,
+          "outcome": "returned",
+          "consumers": [
+            {
+              "line": 49,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 17
+            }
+          ]
+        },
+        {
+          "input": 6,
+          "outcome": "rejected_after_consumer",
+          "consumers": [
+            {
+              "line": 49,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 20
+            }
+          ]
+        },
+        {
+          "input": 7,
+          "outcome": "rejected_after_consumer",
+          "consumers": [
+            {
+              "line": 49,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 23
+            }
+          ]
+        },
+        {
+          "input": 9,
+          "outcome": "rejected_after_consumer",
+          "consumers": [
+            {
+              "line": 49,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 29
+            }
+          ]
+        },
+        {
+          "input": 10,
+          "outcome": "rejected_after_consumer",
+          "consumers": [
+            {
+              "line": 49,
+              "expression": "encode(n)",
+              "unit": "byte",
+              "scale": 3,
+              "offset": 2,
+              "quantity": 32
+            }
+          ]
+        }
+      ],
+      "facts": {
+        "reachable": [
+          [
+            0,
+            1
+          ],
+          [
+            4,
+            7
+          ],
+          [
+            9,
+            10
+          ]
+        ],
+        "rejected_before_consumer": [],
+        "variants": [
+          {
+            "scale": 3,
+            "offset": 2,
+            "unit": "byte"
+          }
+        ],
+        "implementation_consumer_bound": 17
+      },
+      "status": "checked_with_unknowns",
+      "checks": {
+        "scale": {
+          "status": "matched_in_scope",
+          "witness": null,
+          "comparison": "source-derived affine coefficient, not regression fitting"
+        },
+        "offset": {
+          "status": "matched_in_scope",
+          "witness": null,
+          "comparison": "source-derived affine coefficient, not regression fitting"
+        },
+        "output_unit": {
+          "status": "matched_in_scope",
+          "observed": [
+            "byte"
+          ]
+        },
+        "route": {
+          "status": "matched_in_scope",
+          "omitted_reachable": [],
+          "falsely_reachable": []
+        },
+        "bound": {
+          "status": "matched_in_scope",
+          "observed": 17
+        },
+        "input_business_unit": {
+          "status": "unknown",
+          "reason": "no business-unit inference"
+        }
+      },
+      "contract": "Not extracted: runtime rejection does not redefine the public valid domain or prove a bug."
+    },
+    "status": "deferred",
+    "reason": "no distinguishing must-return oracle",
+    "selection": "deferred"
+  }
+]

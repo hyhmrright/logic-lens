@@ -1,0 +1,1656 @@
+{
+  "schema_version": 1,
+  "evidence": [
+    {
+      "test_module": "test_subject",
+      "records": [
+        {
+          "source": {
+            "module": "test_subject",
+            "line": 6,
+            "end": 6
+          },
+          "context": "Refusal.test_refusal",
+          "call": "check(b'AAAA')",
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "check",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 1,
+              "end": 2
+            },
+            "chain": [
+              "test_subject:check",
+              "subject:check"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 2,
+                "end": 2
+              },
+              {
+                "module": "subject",
+                "line": 1,
+                "end": 2
+              }
+            ]
+          },
+          "expectation": {
+            "outcome": "value_error",
+            "has_value": false,
+            "value": null
+          },
+          "status": "exact_conditional",
+          "reason": "exact example; test environment applicability not proven",
+          "arguments": {
+            "args": [
+              {
+                "type": "bytes",
+                "hex": "41414141",
+                "length": 4
+              }
+            ],
+            "keywords": []
+          },
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "41414141",
+                "length": 4
+              },
+              "limit": {
+                "type": "int",
+                "value": 3
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "limit": "default"
+            }
+          }
+        }
+      ],
+      "unknown": [],
+      "scope": "conditional exact calls only; no valid-domain inference"
+    }
+  ],
+  "dispatch": [
+    {
+      "outcome": "value_error",
+      "value": {
+        "type": "none"
+      },
+      "error": null,
+      "calls": [
+        {
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "check",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 1,
+              "end": 2
+            },
+            "chain": [
+              "test_subject:check",
+              "subject:check"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 2,
+                "end": 2
+              },
+              {
+                "module": "subject",
+                "line": 1,
+                "end": 2
+              }
+            ]
+          },
+          "site": null,
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "41414141",
+                "length": 4
+              },
+              "limit": {
+                "type": "int",
+                "value": 3
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "limit": "positional"
+            }
+          }
+        },
+        {
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "helper",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 3,
+              "end": 6
+            },
+            "chain": [
+              "subject:helper"
+            ],
+            "provenance": [
+              {
+                "module": "subject",
+                "line": 3,
+                "end": 6
+              }
+            ]
+          },
+          "site": {
+            "module": "subject",
+            "line": 2,
+            "end": 2
+          },
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "41414141",
+                "length": 4
+              },
+              "limit": {
+                "type": "int",
+                "value": 3
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "limit": "positional"
+            }
+          }
+        }
+      ],
+      "trace": [
+        {
+          "module": "subject",
+          "line": 4,
+          "end": 4,
+          "operator": "Gt",
+          "left": {
+            "type": "int",
+            "value": 4
+          },
+          "right": {
+            "type": "int",
+            "value": 3
+          },
+          "decision": true
+        }
+      ],
+      "target": {
+        "status": "local",
+        "module": "subject",
+        "name": "check",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "subject",
+          "line": 1,
+          "end": 2
+        },
+        "chain": [
+          "test_subject:check",
+          "subject:check"
+        ],
+        "provenance": [
+          {
+            "module": "test_subject",
+            "line": 2,
+            "end": 2
+          },
+          {
+            "module": "subject",
+            "line": 1,
+            "end": 2
+          }
+        ]
+      },
+      "task": {
+        "values": {
+          "data": {
+            "type": "bytes",
+            "hex": "41414141",
+            "length": 4
+          },
+          "limit": {
+            "type": "int",
+            "value": 3
+          }
+        },
+        "queue": "verify",
+        "reason": "exact conditional test call",
+        "evidence_source": {
+          "module": "test_subject",
+          "line": 6,
+          "end": 6
+        }
+      },
+      "checks": [
+        {
+          "source": {
+            "module": "test_subject",
+            "line": 6,
+            "end": 6
+          },
+          "status": "matches_example",
+          "claim": "conditional exact example only; not a confirmed bug"
+        }
+      ]
+    },
+    {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "",
+        "length": 0
+      },
+      "error": null,
+      "calls": [
+        {
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "check",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 1,
+              "end": 2
+            },
+            "chain": [
+              "test_subject:check",
+              "subject:check"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 2,
+                "end": 2
+              },
+              {
+                "module": "subject",
+                "line": 1,
+                "end": 2
+              }
+            ]
+          },
+          "site": null,
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "",
+                "length": 0
+              },
+              "limit": {
+                "type": "int",
+                "value": 3
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "limit": "positional"
+            }
+          }
+        },
+        {
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "helper",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 3,
+              "end": 6
+            },
+            "chain": [
+              "subject:helper"
+            ],
+            "provenance": [
+              {
+                "module": "subject",
+                "line": 3,
+                "end": 6
+              }
+            ]
+          },
+          "site": {
+            "module": "subject",
+            "line": 2,
+            "end": 2
+          },
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "",
+                "length": 0
+              },
+              "limit": {
+                "type": "int",
+                "value": 3
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "limit": "positional"
+            }
+          }
+        }
+      ],
+      "trace": [
+        {
+          "module": "subject",
+          "line": 4,
+          "end": 4,
+          "operator": "Gt",
+          "left": {
+            "type": "int",
+            "value": 0
+          },
+          "right": {
+            "type": "int",
+            "value": 3
+          },
+          "decision": false
+        }
+      ],
+      "target": {
+        "status": "local",
+        "module": "subject",
+        "name": "check",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "subject",
+          "line": 1,
+          "end": 2
+        },
+        "chain": [
+          "test_subject:check",
+          "subject:check"
+        ],
+        "provenance": [
+          {
+            "module": "test_subject",
+            "line": 2,
+            "end": 2
+          },
+          {
+            "module": "subject",
+            "line": 1,
+            "end": 2
+          }
+        ]
+      },
+      "task": {
+        "values": {
+          "data": {
+            "type": "bytes",
+            "hex": "",
+            "length": 0
+          },
+          "limit": {
+            "type": "int",
+            "value": 3
+          }
+        },
+        "queue": "explore",
+        "reason": {
+          "vary": "data",
+          "kind": "finite single-argument family",
+          "validity": "unknown",
+          "template": {
+            "type": "bytes",
+            "hex": "41",
+            "length": 1
+          }
+        },
+        "evidence_source": {
+          "module": "test_subject",
+          "line": 6,
+          "end": 6
+        }
+      },
+      "checks": []
+    },
+    {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "error": null,
+      "calls": [
+        {
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "check",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 1,
+              "end": 2
+            },
+            "chain": [
+              "test_subject:check",
+              "subject:check"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 2,
+                "end": 2
+              },
+              {
+                "module": "subject",
+                "line": 1,
+                "end": 2
+              }
+            ]
+          },
+          "site": null,
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "41",
+                "length": 1
+              },
+              "limit": {
+                "type": "int",
+                "value": 3
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "limit": "positional"
+            }
+          }
+        },
+        {
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "helper",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 3,
+              "end": 6
+            },
+            "chain": [
+              "subject:helper"
+            ],
+            "provenance": [
+              {
+                "module": "subject",
+                "line": 3,
+                "end": 6
+              }
+            ]
+          },
+          "site": {
+            "module": "subject",
+            "line": 2,
+            "end": 2
+          },
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "41",
+                "length": 1
+              },
+              "limit": {
+                "type": "int",
+                "value": 3
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "limit": "positional"
+            }
+          }
+        }
+      ],
+      "trace": [
+        {
+          "module": "subject",
+          "line": 4,
+          "end": 4,
+          "operator": "Gt",
+          "left": {
+            "type": "int",
+            "value": 1
+          },
+          "right": {
+            "type": "int",
+            "value": 3
+          },
+          "decision": false
+        }
+      ],
+      "target": {
+        "status": "local",
+        "module": "subject",
+        "name": "check",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "subject",
+          "line": 1,
+          "end": 2
+        },
+        "chain": [
+          "test_subject:check",
+          "subject:check"
+        ],
+        "provenance": [
+          {
+            "module": "test_subject",
+            "line": 2,
+            "end": 2
+          },
+          {
+            "module": "subject",
+            "line": 1,
+            "end": 2
+          }
+        ]
+      },
+      "task": {
+        "values": {
+          "data": {
+            "type": "bytes",
+            "hex": "41",
+            "length": 1
+          },
+          "limit": {
+            "type": "int",
+            "value": 3
+          }
+        },
+        "queue": "explore",
+        "reason": {
+          "vary": "data",
+          "kind": "finite single-argument family",
+          "validity": "unknown",
+          "template": {
+            "type": "bytes",
+            "hex": "41",
+            "length": 1
+          }
+        },
+        "evidence_source": {
+          "module": "test_subject",
+          "line": 6,
+          "end": 6
+        }
+      },
+      "checks": []
+    },
+    {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "4141",
+        "length": 2
+      },
+      "error": null,
+      "calls": [
+        {
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "check",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 1,
+              "end": 2
+            },
+            "chain": [
+              "test_subject:check",
+              "subject:check"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 2,
+                "end": 2
+              },
+              {
+                "module": "subject",
+                "line": 1,
+                "end": 2
+              }
+            ]
+          },
+          "site": null,
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "4141",
+                "length": 2
+              },
+              "limit": {
+                "type": "int",
+                "value": 3
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "limit": "positional"
+            }
+          }
+        },
+        {
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "helper",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 3,
+              "end": 6
+            },
+            "chain": [
+              "subject:helper"
+            ],
+            "provenance": [
+              {
+                "module": "subject",
+                "line": 3,
+                "end": 6
+              }
+            ]
+          },
+          "site": {
+            "module": "subject",
+            "line": 2,
+            "end": 2
+          },
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "4141",
+                "length": 2
+              },
+              "limit": {
+                "type": "int",
+                "value": 3
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "limit": "positional"
+            }
+          }
+        }
+      ],
+      "trace": [
+        {
+          "module": "subject",
+          "line": 4,
+          "end": 4,
+          "operator": "Gt",
+          "left": {
+            "type": "int",
+            "value": 2
+          },
+          "right": {
+            "type": "int",
+            "value": 3
+          },
+          "decision": false
+        }
+      ],
+      "target": {
+        "status": "local",
+        "module": "subject",
+        "name": "check",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "subject",
+          "line": 1,
+          "end": 2
+        },
+        "chain": [
+          "test_subject:check",
+          "subject:check"
+        ],
+        "provenance": [
+          {
+            "module": "test_subject",
+            "line": 2,
+            "end": 2
+          },
+          {
+            "module": "subject",
+            "line": 1,
+            "end": 2
+          }
+        ]
+      },
+      "task": {
+        "values": {
+          "data": {
+            "type": "bytes",
+            "hex": "4141",
+            "length": 2
+          },
+          "limit": {
+            "type": "int",
+            "value": 3
+          }
+        },
+        "queue": "explore",
+        "reason": {
+          "vary": "data",
+          "kind": "finite single-argument family",
+          "validity": "unknown",
+          "template": {
+            "type": "bytes",
+            "hex": "41",
+            "length": 1
+          }
+        },
+        "evidence_source": {
+          "module": "test_subject",
+          "line": 6,
+          "end": 6
+        }
+      },
+      "checks": []
+    },
+    {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "414141",
+        "length": 3
+      },
+      "error": null,
+      "calls": [
+        {
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "check",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 1,
+              "end": 2
+            },
+            "chain": [
+              "test_subject:check",
+              "subject:check"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 2,
+                "end": 2
+              },
+              {
+                "module": "subject",
+                "line": 1,
+                "end": 2
+              }
+            ]
+          },
+          "site": null,
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "414141",
+                "length": 3
+              },
+              "limit": {
+                "type": "int",
+                "value": 3
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "limit": "positional"
+            }
+          }
+        },
+        {
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "helper",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 3,
+              "end": 6
+            },
+            "chain": [
+              "subject:helper"
+            ],
+            "provenance": [
+              {
+                "module": "subject",
+                "line": 3,
+                "end": 6
+              }
+            ]
+          },
+          "site": {
+            "module": "subject",
+            "line": 2,
+            "end": 2
+          },
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "414141",
+                "length": 3
+              },
+              "limit": {
+                "type": "int",
+                "value": 3
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "limit": "positional"
+            }
+          }
+        }
+      ],
+      "trace": [
+        {
+          "module": "subject",
+          "line": 4,
+          "end": 4,
+          "operator": "Gt",
+          "left": {
+            "type": "int",
+            "value": 3
+          },
+          "right": {
+            "type": "int",
+            "value": 3
+          },
+          "decision": false
+        }
+      ],
+      "target": {
+        "status": "local",
+        "module": "subject",
+        "name": "check",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "subject",
+          "line": 1,
+          "end": 2
+        },
+        "chain": [
+          "test_subject:check",
+          "subject:check"
+        ],
+        "provenance": [
+          {
+            "module": "test_subject",
+            "line": 2,
+            "end": 2
+          },
+          {
+            "module": "subject",
+            "line": 1,
+            "end": 2
+          }
+        ]
+      },
+      "task": {
+        "values": {
+          "data": {
+            "type": "bytes",
+            "hex": "414141",
+            "length": 3
+          },
+          "limit": {
+            "type": "int",
+            "value": 3
+          }
+        },
+        "queue": "explore",
+        "reason": {
+          "vary": "data",
+          "kind": "finite single-argument family",
+          "validity": "unknown",
+          "template": {
+            "type": "bytes",
+            "hex": "41",
+            "length": 1
+          }
+        },
+        "evidence_source": {
+          "module": "test_subject",
+          "line": 6,
+          "end": 6
+        }
+      },
+      "checks": []
+    },
+    {
+      "outcome": "value_error",
+      "value": {
+        "type": "none"
+      },
+      "error": null,
+      "calls": [
+        {
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "check",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 1,
+              "end": 2
+            },
+            "chain": [
+              "test_subject:check",
+              "subject:check"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 2,
+                "end": 2
+              },
+              {
+                "module": "subject",
+                "line": 1,
+                "end": 2
+              }
+            ]
+          },
+          "site": null,
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "4141414141",
+                "length": 5
+              },
+              "limit": {
+                "type": "int",
+                "value": 3
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "limit": "positional"
+            }
+          }
+        },
+        {
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "helper",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 3,
+              "end": 6
+            },
+            "chain": [
+              "subject:helper"
+            ],
+            "provenance": [
+              {
+                "module": "subject",
+                "line": 3,
+                "end": 6
+              }
+            ]
+          },
+          "site": {
+            "module": "subject",
+            "line": 2,
+            "end": 2
+          },
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "4141414141",
+                "length": 5
+              },
+              "limit": {
+                "type": "int",
+                "value": 3
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "limit": "positional"
+            }
+          }
+        }
+      ],
+      "trace": [
+        {
+          "module": "subject",
+          "line": 4,
+          "end": 4,
+          "operator": "Gt",
+          "left": {
+            "type": "int",
+            "value": 5
+          },
+          "right": {
+            "type": "int",
+            "value": 3
+          },
+          "decision": true
+        }
+      ],
+      "target": {
+        "status": "local",
+        "module": "subject",
+        "name": "check",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "subject",
+          "line": 1,
+          "end": 2
+        },
+        "chain": [
+          "test_subject:check",
+          "subject:check"
+        ],
+        "provenance": [
+          {
+            "module": "test_subject",
+            "line": 2,
+            "end": 2
+          },
+          {
+            "module": "subject",
+            "line": 1,
+            "end": 2
+          }
+        ]
+      },
+      "task": {
+        "values": {
+          "data": {
+            "type": "bytes",
+            "hex": "4141414141",
+            "length": 5
+          },
+          "limit": {
+            "type": "int",
+            "value": 3
+          }
+        },
+        "queue": "explore",
+        "reason": {
+          "vary": "data",
+          "kind": "finite single-argument family",
+          "validity": "unknown",
+          "template": {
+            "type": "bytes",
+            "hex": "41",
+            "length": 1
+          }
+        },
+        "evidence_source": {
+          "module": "test_subject",
+          "line": 6,
+          "end": 6
+        }
+      },
+      "checks": []
+    },
+    {
+      "outcome": "value_error",
+      "value": {
+        "type": "none"
+      },
+      "error": null,
+      "calls": [
+        {
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "check",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 1,
+              "end": 2
+            },
+            "chain": [
+              "test_subject:check",
+              "subject:check"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 2,
+                "end": 2
+              },
+              {
+                "module": "subject",
+                "line": 1,
+                "end": 2
+              }
+            ]
+          },
+          "site": null,
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "414141414141",
+                "length": 6
+              },
+              "limit": {
+                "type": "int",
+                "value": 3
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "limit": "positional"
+            }
+          }
+        },
+        {
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "helper",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 3,
+              "end": 6
+            },
+            "chain": [
+              "subject:helper"
+            ],
+            "provenance": [
+              {
+                "module": "subject",
+                "line": 3,
+                "end": 6
+              }
+            ]
+          },
+          "site": {
+            "module": "subject",
+            "line": 2,
+            "end": 2
+          },
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "414141414141",
+                "length": 6
+              },
+              "limit": {
+                "type": "int",
+                "value": 3
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "limit": "positional"
+            }
+          }
+        }
+      ],
+      "trace": [
+        {
+          "module": "subject",
+          "line": 4,
+          "end": 4,
+          "operator": "Gt",
+          "left": {
+            "type": "int",
+            "value": 6
+          },
+          "right": {
+            "type": "int",
+            "value": 3
+          },
+          "decision": true
+        }
+      ],
+      "target": {
+        "status": "local",
+        "module": "subject",
+        "name": "check",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "subject",
+          "line": 1,
+          "end": 2
+        },
+        "chain": [
+          "test_subject:check",
+          "subject:check"
+        ],
+        "provenance": [
+          {
+            "module": "test_subject",
+            "line": 2,
+            "end": 2
+          },
+          {
+            "module": "subject",
+            "line": 1,
+            "end": 2
+          }
+        ]
+      },
+      "task": {
+        "values": {
+          "data": {
+            "type": "bytes",
+            "hex": "414141414141",
+            "length": 6
+          },
+          "limit": {
+            "type": "int",
+            "value": 3
+          }
+        },
+        "queue": "explore",
+        "reason": {
+          "vary": "data",
+          "kind": "finite single-argument family",
+          "validity": "unknown",
+          "template": {
+            "type": "bytes",
+            "hex": "41",
+            "length": 1
+          }
+        },
+        "evidence_source": {
+          "module": "test_subject",
+          "line": 6,
+          "end": 6
+        }
+      },
+      "checks": []
+    },
+    {
+      "outcome": "value_error",
+      "value": {
+        "type": "none"
+      },
+      "error": null,
+      "calls": [
+        {
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "check",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 1,
+              "end": 2
+            },
+            "chain": [
+              "test_subject:check",
+              "subject:check"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 2,
+                "end": 2
+              },
+              {
+                "module": "subject",
+                "line": 1,
+                "end": 2
+              }
+            ]
+          },
+          "site": null,
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "41414141414141",
+                "length": 7
+              },
+              "limit": {
+                "type": "int",
+                "value": 3
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "limit": "positional"
+            }
+          }
+        },
+        {
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "helper",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 3,
+              "end": 6
+            },
+            "chain": [
+              "subject:helper"
+            ],
+            "provenance": [
+              {
+                "module": "subject",
+                "line": 3,
+                "end": 6
+              }
+            ]
+          },
+          "site": {
+            "module": "subject",
+            "line": 2,
+            "end": 2
+          },
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "41414141414141",
+                "length": 7
+              },
+              "limit": {
+                "type": "int",
+                "value": 3
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "limit": "positional"
+            }
+          }
+        }
+      ],
+      "trace": [
+        {
+          "module": "subject",
+          "line": 4,
+          "end": 4,
+          "operator": "Gt",
+          "left": {
+            "type": "int",
+            "value": 7
+          },
+          "right": {
+            "type": "int",
+            "value": 3
+          },
+          "decision": true
+        }
+      ],
+      "target": {
+        "status": "local",
+        "module": "subject",
+        "name": "check",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "subject",
+          "line": 1,
+          "end": 2
+        },
+        "chain": [
+          "test_subject:check",
+          "subject:check"
+        ],
+        "provenance": [
+          {
+            "module": "test_subject",
+            "line": 2,
+            "end": 2
+          },
+          {
+            "module": "subject",
+            "line": 1,
+            "end": 2
+          }
+        ]
+      },
+      "task": {
+        "values": {
+          "data": {
+            "type": "bytes",
+            "hex": "41414141414141",
+            "length": 7
+          },
+          "limit": {
+            "type": "int",
+            "value": 3
+          }
+        },
+        "queue": "explore",
+        "reason": {
+          "vary": "data",
+          "kind": "finite single-argument family",
+          "validity": "unknown",
+          "template": {
+            "type": "bytes",
+            "hex": "41",
+            "length": 1
+          }
+        },
+        "evidence_source": {
+          "module": "test_subject",
+          "line": 6,
+          "end": 6
+        }
+      },
+      "checks": []
+    }
+  ],
+  "entries": [
+    {
+      "target": {
+        "status": "local",
+        "module": "subject",
+        "name": "check",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "subject",
+          "line": 1,
+          "end": 2
+        },
+        "chain": [
+          "test_subject:check",
+          "subject:check"
+        ],
+        "provenance": [
+          {
+            "module": "test_subject",
+            "line": 2,
+            "end": 2
+          },
+          {
+            "module": "subject",
+            "line": 1,
+            "end": 2
+          }
+        ]
+      },
+      "pending": [
+        {
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141414141414141",
+              "length": 8
+            },
+            "limit": {
+              "type": "int",
+              "value": 3
+            }
+          },
+          "queue": "explore",
+          "reason": {
+            "vary": "data",
+            "kind": "finite single-argument family",
+            "validity": "unknown",
+            "template": {
+              "type": "bytes",
+              "hex": "41",
+              "length": 1
+            }
+          },
+          "evidence_source": {
+            "module": "test_subject",
+            "line": 6,
+            "end": 6
+          }
+        },
+        {
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41414141",
+              "length": 4
+            },
+            "limit": {
+              "type": "int",
+              "value": -1
+            }
+          },
+          "queue": "explore",
+          "reason": {
+            "vary": "limit",
+            "kind": "finite single-argument family",
+            "validity": "unknown",
+            "template": null
+          },
+          "evidence_source": {
+            "module": "test_subject",
+            "line": 6,
+            "end": 6
+          }
+        },
+        {
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41414141",
+              "length": 4
+            },
+            "limit": {
+              "type": "int",
+              "value": 0
+            }
+          },
+          "queue": "explore",
+          "reason": {
+            "vary": "limit",
+            "kind": "finite single-argument family",
+            "validity": "unknown",
+            "template": null
+          },
+          "evidence_source": {
+            "module": "test_subject",
+            "line": 6,
+            "end": 6
+          }
+        },
+        {
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41414141",
+              "length": 4
+            },
+            "limit": {
+              "type": "int",
+              "value": 1
+            }
+          },
+          "queue": "explore",
+          "reason": {
+            "vary": "limit",
+            "kind": "finite single-argument family",
+            "validity": "unknown",
+            "template": null
+          },
+          "evidence_source": {
+            "module": "test_subject",
+            "line": 6,
+            "end": 6
+          }
+        }
+      ],
+      "overflow_attempts": 0,
+      "observations": 8
+    }
+  ],
+  "deferred": [],
+  "source_sha256": {
+    "subject": "ac47bb985481c9411ddd02de21f758b798449405a1c258d62c6acd9fc6b0667e",
+    "test_subject": "98e9fefa9c63b0af76a717a30a135790379956dd0f1e143a79e5ca660a205307"
+  },
+  "limits": {
+    "static_dispatch": 8,
+    "entries": 8,
+    "points_per_entry": 8,
+    "lengths": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ]
+  },
+  "execution_enabled": false,
+  "scope": "isolated source semantics; module initialization/import availability unknown; exact test evidence conditional; generated-input validity unknown",
+  "limitations": "finite content templates, one changed parameter, no string solver or inferred public contract; source identity does not establish dependency behavior"
+}

@@ -1,0 +1,3 @@
+first and second must return normally for each integer input from 0 through 10.
+guarded and unreachable must return normally for each integer input from 0 through 10.
+tolerated may return normally or raise ValueError for each integer input from 0 through 10.

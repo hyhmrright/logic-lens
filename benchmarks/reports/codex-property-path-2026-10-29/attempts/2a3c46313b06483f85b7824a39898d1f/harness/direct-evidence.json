@@ -1,0 +1,60 @@
+{
+  "runtime": "v26.13.0",
+  "module": "/private/var/folders/kb/clk179sd5qq5htsth48gfk5c0000gn/T/logic-lens-run-ev_h5_xz/workspace/classes/range.js",
+  "union": {
+    "single": true,
+    "combined": false,
+    "reversed": false,
+    "public": false,
+    "optIn": true
+  },
+  "intersection": {
+    "member": true,
+    "forward": false,
+    "reverse": false,
+    "public": false,
+    "optIn": true,
+    "stable": true
+  },
+  "comparator": {
+    "stable": {
+      "value": true
+    },
+    "prerelease": {
+      "error": "TypeError",
+      "message": "Cannot read properties of undefined (reading 'includePrerelease')",
+      "stack": [
+        "TypeError: Cannot read properties of undefined (reading 'includePrerelease')",
+        "    at testSet (/private/var/folders/kb/clk179sd5qq5htsth48gfk5c0000gn/T/logic-lens-run-ev_h5_xz/workspace/classes/range.js:530:45)",
+        "    at Range.test (/private/var/folders/kb/clk179sd5qq5htsth48gfk5c0000gn/T/logic-lens-run-ev_h5_xz/workspace/classes/range.js:207:11)",
+        "    at [eval]:15:68",
+        "    at capture ([eval]:8:44)"
+      ]
+    },
+    "string": {
+      "value": true
+    },
+    "options": {
+      "error": "TypeError",
+      "message": "Cannot read properties of undefined (reading 'includePrerelease')",
+      "stack": [
+        "TypeError: Cannot read properties of undefined (reading 'includePrerelease')",
+        "    at testSet (/private/var/folders/kb/clk179sd5qq5htsth48gfk5c0000gn/T/logic-lens-run-ev_h5_xz/workspace/classes/range.js:530:45)",
+        "    at Range.test (/private/var/folders/kb/clk179sd5qq5htsth48gfk5c0000gn/T/logic-lens-run-ev_h5_xz/workspace/classes/range.js:207:11)",
+        "    at [eval]:17:90",
+        "    at capture ([eval]:8:44)"
+      ]
+    },
+    "public": {
+      "error": "TypeError",
+      "message": "Cannot read properties of undefined (reading 'includePrerelease')",
+      "stack": [
+        "TypeError: Cannot read properties of undefined (reading 'includePrerelease')",
+        "    at testSet (/private/var/folders/kb/clk179sd5qq5htsth48gfk5c0000gn/T/logic-lens-run-ev_h5_xz/workspace/classes/range.js:530:45)",
+        "    at Range.test (/private/var/folders/kb/clk179sd5qq5htsth48gfk5c0000gn/T/logic-lens-run-ev_h5_xz/workspace/classes/range.js:207:11)",
+        "    at satisfies (/private/var/folders/kb/clk179sd5qq5htsth48gfk5c0000gn/T/logic-lens-run-ev_h5_xz/workspace/functions/satisfies.js:10:16)",
+        "    at [eval]:18:21"
+      ]
+    }
+  }
+}

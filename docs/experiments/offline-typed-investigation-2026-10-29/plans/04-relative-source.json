@@ -1,0 +1,1889 @@
+{
+  "schema_version": 1,
+  "evidence": [
+    {
+      "test_module": "test_subject",
+      "records": [
+        {
+          "source": {
+            "module": "test_subject",
+            "line": 3,
+            "end": 3
+          },
+          "context": "test_attach",
+          "call": "attach(b'A')",
+          "target": {
+            "status": "local",
+            "module": "pkg.api",
+            "name": "attach",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "pkg.api",
+              "line": 2,
+              "end": 3
+            },
+            "chain": [
+              "test_subject:attach",
+              "pkg:attach",
+              "pkg.api:attach"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "pkg",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "pkg.api",
+                "line": 2,
+                "end": 3
+              }
+            ]
+          },
+          "expectation": {
+            "outcome": "returned",
+            "has_value": true,
+            "value": {
+              "type": "bytes",
+              "hex": "4121",
+              "length": 2
+            }
+          },
+          "status": "exact_conditional",
+          "reason": "exact example; test environment applicability not proven",
+          "arguments": {
+            "args": [
+              {
+                "type": "bytes",
+                "hex": "41",
+                "length": 1
+              }
+            ],
+            "keywords": []
+          },
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "41",
+                "length": 1
+              },
+              "suffix": {
+                "type": "bytes",
+                "hex": "21",
+                "length": 1
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "suffix": "default"
+            }
+          }
+        }
+      ],
+      "unknown": [],
+      "scope": "conditional exact calls only; no valid-domain inference"
+    }
+  ],
+  "dispatch": [
+    {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "4121",
+        "length": 2
+      },
+      "error": null,
+      "calls": [
+        {
+          "target": {
+            "status": "local",
+            "module": "pkg.api",
+            "name": "attach",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "pkg.api",
+              "line": 2,
+              "end": 3
+            },
+            "chain": [
+              "test_subject:attach",
+              "pkg:attach",
+              "pkg.api:attach"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "pkg",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "pkg.api",
+                "line": 2,
+                "end": 3
+              }
+            ]
+          },
+          "site": null,
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "41",
+                "length": 1
+              },
+              "suffix": {
+                "type": "bytes",
+                "hex": "21",
+                "length": 1
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "suffix": "positional"
+            }
+          }
+        },
+        {
+          "target": {
+            "status": "local",
+            "module": "pkg.worker",
+            "name": "add",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "pkg.worker",
+              "line": 1,
+              "end": 2
+            },
+            "chain": [
+              "pkg.api:add",
+              "pkg.worker:add"
+            ],
+            "provenance": [
+              {
+                "module": "pkg.api",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "pkg.worker",
+                "line": 1,
+                "end": 2
+              }
+            ]
+          },
+          "site": {
+            "module": "pkg.api",
+            "line": 3,
+            "end": 3
+          },
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "41",
+                "length": 1
+              },
+              "suffix": {
+                "type": "bytes",
+                "hex": "21",
+                "length": 1
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "suffix": "positional"
+            }
+          }
+        }
+      ],
+      "trace": [],
+      "target": {
+        "status": "local",
+        "module": "pkg.api",
+        "name": "attach",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "pkg.api",
+          "line": 2,
+          "end": 3
+        },
+        "chain": [
+          "test_subject:attach",
+          "pkg:attach",
+          "pkg.api:attach"
+        ],
+        "provenance": [
+          {
+            "module": "test_subject",
+            "line": 1,
+            "end": 1
+          },
+          {
+            "module": "pkg",
+            "line": 1,
+            "end": 1
+          },
+          {
+            "module": "pkg.api",
+            "line": 2,
+            "end": 3
+          }
+        ]
+      },
+      "task": {
+        "values": {
+          "data": {
+            "type": "bytes",
+            "hex": "41",
+            "length": 1
+          },
+          "suffix": {
+            "type": "bytes",
+            "hex": "21",
+            "length": 1
+          }
+        },
+        "queue": "verify",
+        "reason": "exact conditional test call",
+        "evidence_source": {
+          "module": "test_subject",
+          "line": 3,
+          "end": 3
+        }
+      },
+      "checks": [
+        {
+          "source": {
+            "module": "test_subject",
+            "line": 3,
+            "end": 3
+          },
+          "status": "matches_example",
+          "claim": "conditional exact example only; not a confirmed bug"
+        }
+      ]
+    },
+    {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "21",
+        "length": 1
+      },
+      "error": null,
+      "calls": [
+        {
+          "target": {
+            "status": "local",
+            "module": "pkg.api",
+            "name": "attach",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "pkg.api",
+              "line": 2,
+              "end": 3
+            },
+            "chain": [
+              "test_subject:attach",
+              "pkg:attach",
+              "pkg.api:attach"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "pkg",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "pkg.api",
+                "line": 2,
+                "end": 3
+              }
+            ]
+          },
+          "site": null,
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "",
+                "length": 0
+              },
+              "suffix": {
+                "type": "bytes",
+                "hex": "21",
+                "length": 1
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "suffix": "positional"
+            }
+          }
+        },
+        {
+          "target": {
+            "status": "local",
+            "module": "pkg.worker",
+            "name": "add",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "pkg.worker",
+              "line": 1,
+              "end": 2
+            },
+            "chain": [
+              "pkg.api:add",
+              "pkg.worker:add"
+            ],
+            "provenance": [
+              {
+                "module": "pkg.api",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "pkg.worker",
+                "line": 1,
+                "end": 2
+              }
+            ]
+          },
+          "site": {
+            "module": "pkg.api",
+            "line": 3,
+            "end": 3
+          },
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "",
+                "length": 0
+              },
+              "suffix": {
+                "type": "bytes",
+                "hex": "21",
+                "length": 1
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "suffix": "positional"
+            }
+          }
+        }
+      ],
+      "trace": [],
+      "target": {
+        "status": "local",
+        "module": "pkg.api",
+        "name": "attach",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "pkg.api",
+          "line": 2,
+          "end": 3
+        },
+        "chain": [
+          "test_subject:attach",
+          "pkg:attach",
+          "pkg.api:attach"
+        ],
+        "provenance": [
+          {
+            "module": "test_subject",
+            "line": 1,
+            "end": 1
+          },
+          {
+            "module": "pkg",
+            "line": 1,
+            "end": 1
+          },
+          {
+            "module": "pkg.api",
+            "line": 2,
+            "end": 3
+          }
+        ]
+      },
+      "task": {
+        "values": {
+          "data": {
+            "type": "bytes",
+            "hex": "",
+            "length": 0
+          },
+          "suffix": {
+            "type": "bytes",
+            "hex": "21",
+            "length": 1
+          }
+        },
+        "queue": "explore",
+        "reason": {
+          "vary": "data",
+          "kind": "finite single-argument family",
+          "validity": "unknown",
+          "template": {
+            "type": "bytes",
+            "hex": "41",
+            "length": 1
+          }
+        },
+        "evidence_source": {
+          "module": "test_subject",
+          "line": 3,
+          "end": 3
+        }
+      },
+      "checks": []
+    },
+    {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "414121",
+        "length": 3
+      },
+      "error": null,
+      "calls": [
+        {
+          "target": {
+            "status": "local",
+            "module": "pkg.api",
+            "name": "attach",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "pkg.api",
+              "line": 2,
+              "end": 3
+            },
+            "chain": [
+              "test_subject:attach",
+              "pkg:attach",
+              "pkg.api:attach"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "pkg",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "pkg.api",
+                "line": 2,
+                "end": 3
+              }
+            ]
+          },
+          "site": null,
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "4141",
+                "length": 2
+              },
+              "suffix": {
+                "type": "bytes",
+                "hex": "21",
+                "length": 1
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "suffix": "positional"
+            }
+          }
+        },
+        {
+          "target": {
+            "status": "local",
+            "module": "pkg.worker",
+            "name": "add",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "pkg.worker",
+              "line": 1,
+              "end": 2
+            },
+            "chain": [
+              "pkg.api:add",
+              "pkg.worker:add"
+            ],
+            "provenance": [
+              {
+                "module": "pkg.api",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "pkg.worker",
+                "line": 1,
+                "end": 2
+              }
+            ]
+          },
+          "site": {
+            "module": "pkg.api",
+            "line": 3,
+            "end": 3
+          },
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "4141",
+                "length": 2
+              },
+              "suffix": {
+                "type": "bytes",
+                "hex": "21",
+                "length": 1
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "suffix": "positional"
+            }
+          }
+        }
+      ],
+      "trace": [],
+      "target": {
+        "status": "local",
+        "module": "pkg.api",
+        "name": "attach",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "pkg.api",
+          "line": 2,
+          "end": 3
+        },
+        "chain": [
+          "test_subject:attach",
+          "pkg:attach",
+          "pkg.api:attach"
+        ],
+        "provenance": [
+          {
+            "module": "test_subject",
+            "line": 1,
+            "end": 1
+          },
+          {
+            "module": "pkg",
+            "line": 1,
+            "end": 1
+          },
+          {
+            "module": "pkg.api",
+            "line": 2,
+            "end": 3
+          }
+        ]
+      },
+      "task": {
+        "values": {
+          "data": {
+            "type": "bytes",
+            "hex": "4141",
+            "length": 2
+          },
+          "suffix": {
+            "type": "bytes",
+            "hex": "21",
+            "length": 1
+          }
+        },
+        "queue": "explore",
+        "reason": {
+          "vary": "data",
+          "kind": "finite single-argument family",
+          "validity": "unknown",
+          "template": {
+            "type": "bytes",
+            "hex": "41",
+            "length": 1
+          }
+        },
+        "evidence_source": {
+          "module": "test_subject",
+          "line": 3,
+          "end": 3
+        }
+      },
+      "checks": []
+    },
+    {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "41414121",
+        "length": 4
+      },
+      "error": null,
+      "calls": [
+        {
+          "target": {
+            "status": "local",
+            "module": "pkg.api",
+            "name": "attach",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "pkg.api",
+              "line": 2,
+              "end": 3
+            },
+            "chain": [
+              "test_subject:attach",
+              "pkg:attach",
+              "pkg.api:attach"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "pkg",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "pkg.api",
+                "line": 2,
+                "end": 3
+              }
+            ]
+          },
+          "site": null,
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "414141",
+                "length": 3
+              },
+              "suffix": {
+                "type": "bytes",
+                "hex": "21",
+                "length": 1
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "suffix": "positional"
+            }
+          }
+        },
+        {
+          "target": {
+            "status": "local",
+            "module": "pkg.worker",
+            "name": "add",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "pkg.worker",
+              "line": 1,
+              "end": 2
+            },
+            "chain": [
+              "pkg.api:add",
+              "pkg.worker:add"
+            ],
+            "provenance": [
+              {
+                "module": "pkg.api",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "pkg.worker",
+                "line": 1,
+                "end": 2
+              }
+            ]
+          },
+          "site": {
+            "module": "pkg.api",
+            "line": 3,
+            "end": 3
+          },
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "414141",
+                "length": 3
+              },
+              "suffix": {
+                "type": "bytes",
+                "hex": "21",
+                "length": 1
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "suffix": "positional"
+            }
+          }
+        }
+      ],
+      "trace": [],
+      "target": {
+        "status": "local",
+        "module": "pkg.api",
+        "name": "attach",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "pkg.api",
+          "line": 2,
+          "end": 3
+        },
+        "chain": [
+          "test_subject:attach",
+          "pkg:attach",
+          "pkg.api:attach"
+        ],
+        "provenance": [
+          {
+            "module": "test_subject",
+            "line": 1,
+            "end": 1
+          },
+          {
+            "module": "pkg",
+            "line": 1,
+            "end": 1
+          },
+          {
+            "module": "pkg.api",
+            "line": 2,
+            "end": 3
+          }
+        ]
+      },
+      "task": {
+        "values": {
+          "data": {
+            "type": "bytes",
+            "hex": "414141",
+            "length": 3
+          },
+          "suffix": {
+            "type": "bytes",
+            "hex": "21",
+            "length": 1
+          }
+        },
+        "queue": "explore",
+        "reason": {
+          "vary": "data",
+          "kind": "finite single-argument family",
+          "validity": "unknown",
+          "template": {
+            "type": "bytes",
+            "hex": "41",
+            "length": 1
+          }
+        },
+        "evidence_source": {
+          "module": "test_subject",
+          "line": 3,
+          "end": 3
+        }
+      },
+      "checks": []
+    },
+    {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "4141414121",
+        "length": 5
+      },
+      "error": null,
+      "calls": [
+        {
+          "target": {
+            "status": "local",
+            "module": "pkg.api",
+            "name": "attach",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "pkg.api",
+              "line": 2,
+              "end": 3
+            },
+            "chain": [
+              "test_subject:attach",
+              "pkg:attach",
+              "pkg.api:attach"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "pkg",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "pkg.api",
+                "line": 2,
+                "end": 3
+              }
+            ]
+          },
+          "site": null,
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "41414141",
+                "length": 4
+              },
+              "suffix": {
+                "type": "bytes",
+                "hex": "21",
+                "length": 1
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "suffix": "positional"
+            }
+          }
+        },
+        {
+          "target": {
+            "status": "local",
+            "module": "pkg.worker",
+            "name": "add",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "pkg.worker",
+              "line": 1,
+              "end": 2
+            },
+            "chain": [
+              "pkg.api:add",
+              "pkg.worker:add"
+            ],
+            "provenance": [
+              {
+                "module": "pkg.api",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "pkg.worker",
+                "line": 1,
+                "end": 2
+              }
+            ]
+          },
+          "site": {
+            "module": "pkg.api",
+            "line": 3,
+            "end": 3
+          },
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "41414141",
+                "length": 4
+              },
+              "suffix": {
+                "type": "bytes",
+                "hex": "21",
+                "length": 1
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "suffix": "positional"
+            }
+          }
+        }
+      ],
+      "trace": [],
+      "target": {
+        "status": "local",
+        "module": "pkg.api",
+        "name": "attach",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "pkg.api",
+          "line": 2,
+          "end": 3
+        },
+        "chain": [
+          "test_subject:attach",
+          "pkg:attach",
+          "pkg.api:attach"
+        ],
+        "provenance": [
+          {
+            "module": "test_subject",
+            "line": 1,
+            "end": 1
+          },
+          {
+            "module": "pkg",
+            "line": 1,
+            "end": 1
+          },
+          {
+            "module": "pkg.api",
+            "line": 2,
+            "end": 3
+          }
+        ]
+      },
+      "task": {
+        "values": {
+          "data": {
+            "type": "bytes",
+            "hex": "41414141",
+            "length": 4
+          },
+          "suffix": {
+            "type": "bytes",
+            "hex": "21",
+            "length": 1
+          }
+        },
+        "queue": "explore",
+        "reason": {
+          "vary": "data",
+          "kind": "finite single-argument family",
+          "validity": "unknown",
+          "template": {
+            "type": "bytes",
+            "hex": "41",
+            "length": 1
+          }
+        },
+        "evidence_source": {
+          "module": "test_subject",
+          "line": 3,
+          "end": 3
+        }
+      },
+      "checks": []
+    },
+    {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "414141414121",
+        "length": 6
+      },
+      "error": null,
+      "calls": [
+        {
+          "target": {
+            "status": "local",
+            "module": "pkg.api",
+            "name": "attach",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "pkg.api",
+              "line": 2,
+              "end": 3
+            },
+            "chain": [
+              "test_subject:attach",
+              "pkg:attach",
+              "pkg.api:attach"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "pkg",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "pkg.api",
+                "line": 2,
+                "end": 3
+              }
+            ]
+          },
+          "site": null,
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "4141414141",
+                "length": 5
+              },
+              "suffix": {
+                "type": "bytes",
+                "hex": "21",
+                "length": 1
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "suffix": "positional"
+            }
+          }
+        },
+        {
+          "target": {
+            "status": "local",
+            "module": "pkg.worker",
+            "name": "add",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "pkg.worker",
+              "line": 1,
+              "end": 2
+            },
+            "chain": [
+              "pkg.api:add",
+              "pkg.worker:add"
+            ],
+            "provenance": [
+              {
+                "module": "pkg.api",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "pkg.worker",
+                "line": 1,
+                "end": 2
+              }
+            ]
+          },
+          "site": {
+            "module": "pkg.api",
+            "line": 3,
+            "end": 3
+          },
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "4141414141",
+                "length": 5
+              },
+              "suffix": {
+                "type": "bytes",
+                "hex": "21",
+                "length": 1
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "suffix": "positional"
+            }
+          }
+        }
+      ],
+      "trace": [],
+      "target": {
+        "status": "local",
+        "module": "pkg.api",
+        "name": "attach",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "pkg.api",
+          "line": 2,
+          "end": 3
+        },
+        "chain": [
+          "test_subject:attach",
+          "pkg:attach",
+          "pkg.api:attach"
+        ],
+        "provenance": [
+          {
+            "module": "test_subject",
+            "line": 1,
+            "end": 1
+          },
+          {
+            "module": "pkg",
+            "line": 1,
+            "end": 1
+          },
+          {
+            "module": "pkg.api",
+            "line": 2,
+            "end": 3
+          }
+        ]
+      },
+      "task": {
+        "values": {
+          "data": {
+            "type": "bytes",
+            "hex": "4141414141",
+            "length": 5
+          },
+          "suffix": {
+            "type": "bytes",
+            "hex": "21",
+            "length": 1
+          }
+        },
+        "queue": "explore",
+        "reason": {
+          "vary": "data",
+          "kind": "finite single-argument family",
+          "validity": "unknown",
+          "template": {
+            "type": "bytes",
+            "hex": "41",
+            "length": 1
+          }
+        },
+        "evidence_source": {
+          "module": "test_subject",
+          "line": 3,
+          "end": 3
+        }
+      },
+      "checks": []
+    },
+    {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "41414141414121",
+        "length": 7
+      },
+      "error": null,
+      "calls": [
+        {
+          "target": {
+            "status": "local",
+            "module": "pkg.api",
+            "name": "attach",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "pkg.api",
+              "line": 2,
+              "end": 3
+            },
+            "chain": [
+              "test_subject:attach",
+              "pkg:attach",
+              "pkg.api:attach"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "pkg",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "pkg.api",
+                "line": 2,
+                "end": 3
+              }
+            ]
+          },
+          "site": null,
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "414141414141",
+                "length": 6
+              },
+              "suffix": {
+                "type": "bytes",
+                "hex": "21",
+                "length": 1
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "suffix": "positional"
+            }
+          }
+        },
+        {
+          "target": {
+            "status": "local",
+            "module": "pkg.worker",
+            "name": "add",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "pkg.worker",
+              "line": 1,
+              "end": 2
+            },
+            "chain": [
+              "pkg.api:add",
+              "pkg.worker:add"
+            ],
+            "provenance": [
+              {
+                "module": "pkg.api",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "pkg.worker",
+                "line": 1,
+                "end": 2
+              }
+            ]
+          },
+          "site": {
+            "module": "pkg.api",
+            "line": 3,
+            "end": 3
+          },
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "414141414141",
+                "length": 6
+              },
+              "suffix": {
+                "type": "bytes",
+                "hex": "21",
+                "length": 1
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "suffix": "positional"
+            }
+          }
+        }
+      ],
+      "trace": [],
+      "target": {
+        "status": "local",
+        "module": "pkg.api",
+        "name": "attach",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "pkg.api",
+          "line": 2,
+          "end": 3
+        },
+        "chain": [
+          "test_subject:attach",
+          "pkg:attach",
+          "pkg.api:attach"
+        ],
+        "provenance": [
+          {
+            "module": "test_subject",
+            "line": 1,
+            "end": 1
+          },
+          {
+            "module": "pkg",
+            "line": 1,
+            "end": 1
+          },
+          {
+            "module": "pkg.api",
+            "line": 2,
+            "end": 3
+          }
+        ]
+      },
+      "task": {
+        "values": {
+          "data": {
+            "type": "bytes",
+            "hex": "414141414141",
+            "length": 6
+          },
+          "suffix": {
+            "type": "bytes",
+            "hex": "21",
+            "length": 1
+          }
+        },
+        "queue": "explore",
+        "reason": {
+          "vary": "data",
+          "kind": "finite single-argument family",
+          "validity": "unknown",
+          "template": {
+            "type": "bytes",
+            "hex": "41",
+            "length": 1
+          }
+        },
+        "evidence_source": {
+          "module": "test_subject",
+          "line": 3,
+          "end": 3
+        }
+      },
+      "checks": []
+    },
+    {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "4141414141414121",
+        "length": 8
+      },
+      "error": null,
+      "calls": [
+        {
+          "target": {
+            "status": "local",
+            "module": "pkg.api",
+            "name": "attach",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "pkg.api",
+              "line": 2,
+              "end": 3
+            },
+            "chain": [
+              "test_subject:attach",
+              "pkg:attach",
+              "pkg.api:attach"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "pkg",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "pkg.api",
+                "line": 2,
+                "end": 3
+              }
+            ]
+          },
+          "site": null,
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "41414141414141",
+                "length": 7
+              },
+              "suffix": {
+                "type": "bytes",
+                "hex": "21",
+                "length": 1
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "suffix": "positional"
+            }
+          }
+        },
+        {
+          "target": {
+            "status": "local",
+            "module": "pkg.worker",
+            "name": "add",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "pkg.worker",
+              "line": 1,
+              "end": 2
+            },
+            "chain": [
+              "pkg.api:add",
+              "pkg.worker:add"
+            ],
+            "provenance": [
+              {
+                "module": "pkg.api",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "pkg.worker",
+                "line": 1,
+                "end": 2
+              }
+            ]
+          },
+          "site": {
+            "module": "pkg.api",
+            "line": 3,
+            "end": 3
+          },
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "41414141414141",
+                "length": 7
+              },
+              "suffix": {
+                "type": "bytes",
+                "hex": "21",
+                "length": 1
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "suffix": "positional"
+            }
+          }
+        }
+      ],
+      "trace": [],
+      "target": {
+        "status": "local",
+        "module": "pkg.api",
+        "name": "attach",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "pkg.api",
+          "line": 2,
+          "end": 3
+        },
+        "chain": [
+          "test_subject:attach",
+          "pkg:attach",
+          "pkg.api:attach"
+        ],
+        "provenance": [
+          {
+            "module": "test_subject",
+            "line": 1,
+            "end": 1
+          },
+          {
+            "module": "pkg",
+            "line": 1,
+            "end": 1
+          },
+          {
+            "module": "pkg.api",
+            "line": 2,
+            "end": 3
+          }
+        ]
+      },
+      "task": {
+        "values": {
+          "data": {
+            "type": "bytes",
+            "hex": "41414141414141",
+            "length": 7
+          },
+          "suffix": {
+            "type": "bytes",
+            "hex": "21",
+            "length": 1
+          }
+        },
+        "queue": "explore",
+        "reason": {
+          "vary": "data",
+          "kind": "finite single-argument family",
+          "validity": "unknown",
+          "template": {
+            "type": "bytes",
+            "hex": "41",
+            "length": 1
+          }
+        },
+        "evidence_source": {
+          "module": "test_subject",
+          "line": 3,
+          "end": 3
+        }
+      },
+      "checks": []
+    }
+  ],
+  "entries": [
+    {
+      "target": {
+        "status": "local",
+        "module": "pkg.api",
+        "name": "attach",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "pkg.api",
+          "line": 2,
+          "end": 3
+        },
+        "chain": [
+          "test_subject:attach",
+          "pkg:attach",
+          "pkg.api:attach"
+        ],
+        "provenance": [
+          {
+            "module": "test_subject",
+            "line": 1,
+            "end": 1
+          },
+          {
+            "module": "pkg",
+            "line": 1,
+            "end": 1
+          },
+          {
+            "module": "pkg.api",
+            "line": 2,
+            "end": 3
+          }
+        ]
+      },
+      "pending": [
+        {
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141414141414141",
+              "length": 8
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          },
+          "queue": "explore",
+          "reason": {
+            "vary": "data",
+            "kind": "finite single-argument family",
+            "validity": "unknown",
+            "template": {
+              "type": "bytes",
+              "hex": "41",
+              "length": 1
+            }
+          },
+          "evidence_source": {
+            "module": "test_subject",
+            "line": 3,
+            "end": 3
+          }
+        },
+        {
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41",
+              "length": 1
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "",
+              "length": 0
+            }
+          },
+          "queue": "explore",
+          "reason": {
+            "vary": "suffix",
+            "kind": "finite single-argument family",
+            "validity": "unknown",
+            "template": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          },
+          "evidence_source": {
+            "module": "test_subject",
+            "line": 3,
+            "end": 3
+          }
+        },
+        {
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41",
+              "length": 1
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "2121",
+              "length": 2
+            }
+          },
+          "queue": "explore",
+          "reason": {
+            "vary": "suffix",
+            "kind": "finite single-argument family",
+            "validity": "unknown",
+            "template": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          },
+          "evidence_source": {
+            "module": "test_subject",
+            "line": 3,
+            "end": 3
+          }
+        },
+        {
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41",
+              "length": 1
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "212121",
+              "length": 3
+            }
+          },
+          "queue": "explore",
+          "reason": {
+            "vary": "suffix",
+            "kind": "finite single-argument family",
+            "validity": "unknown",
+            "template": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          },
+          "evidence_source": {
+            "module": "test_subject",
+            "line": 3,
+            "end": 3
+          }
+        },
+        {
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41",
+              "length": 1
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21212121",
+              "length": 4
+            }
+          },
+          "queue": "explore",
+          "reason": {
+            "vary": "suffix",
+            "kind": "finite single-argument family",
+            "validity": "unknown",
+            "template": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          },
+          "evidence_source": {
+            "module": "test_subject",
+            "line": 3,
+            "end": 3
+          }
+        },
+        {
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41",
+              "length": 1
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "2121212121",
+              "length": 5
+            }
+          },
+          "queue": "explore",
+          "reason": {
+            "vary": "suffix",
+            "kind": "finite single-argument family",
+            "validity": "unknown",
+            "template": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          },
+          "evidence_source": {
+            "module": "test_subject",
+            "line": 3,
+            "end": 3
+          }
+        },
+        {
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41",
+              "length": 1
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "212121212121",
+              "length": 6
+            }
+          },
+          "queue": "explore",
+          "reason": {
+            "vary": "suffix",
+            "kind": "finite single-argument family",
+            "validity": "unknown",
+            "template": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          },
+          "evidence_source": {
+            "module": "test_subject",
+            "line": 3,
+            "end": 3
+          }
+        },
+        {
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41",
+              "length": 1
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21212121212121",
+              "length": 7
+            }
+          },
+          "queue": "explore",
+          "reason": {
+            "vary": "suffix",
+            "kind": "finite single-argument family",
+            "validity": "unknown",
+            "template": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          },
+          "evidence_source": {
+            "module": "test_subject",
+            "line": 3,
+            "end": 3
+          }
+        },
+        {
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41",
+              "length": 1
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "2121212121212121",
+              "length": 8
+            }
+          },
+          "queue": "explore",
+          "reason": {
+            "vary": "suffix",
+            "kind": "finite single-argument family",
+            "validity": "unknown",
+            "template": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          },
+          "evidence_source": {
+            "module": "test_subject",
+            "line": 3,
+            "end": 3
+          }
+        }
+      ],
+      "overflow_attempts": 0,
+      "observations": 8
+    }
+  ],
+  "deferred": [],
+  "source_sha256": {
+    "pkg": "d129224a69e1b67f7de6ea2a15614e7c88742a3d27767212aa9e5c3238266833",
+    "pkg.api": "1fcd0a6585ec71fab25843ec306a370fd200680cb097a66c4fe307550c79ce89",
+    "pkg.worker": "8453ea61e0b9e2986998b749768cbb3c9995847ca813600dd6d3579e082af893",
+    "test_subject": "d1579f0cfc49f818162204b7fcfe34611f9cca963f7c3cb88f78ebc2b1e637f9"
+  },
+  "limits": {
+    "static_dispatch": 8,
+    "entries": 8,
+    "points_per_entry": 8,
+    "lengths": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ]
+  },
+  "execution_enabled": false,
+  "scope": "isolated source semantics; module initialization/import availability unknown; exact test evidence conditional; generated-input validity unknown",
+  "limitations": "finite content templates, one changed parameter, no string solver or inferred public contract; source identity does not establish dependency behavior"
+}

@@ -1,0 +1,58 @@
+{
+  "schema_version": 2,
+  "provider": "codex",
+  "adapter": null,
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "timeout_seconds": 360,
+  "protocol": {
+    "local_probes": true,
+    "runtime_note": "Node.js is available. Python for these historical sources: /Users/hyh/code/logic-lens/skills-workspace/discovery-venv311/bin/python (six 1.17.0 installed); use PYTHONDONTWRITEBYTECODE=1 and local src/ or repository root on PYTHONPATH as appropriate. This external interpreter/dependency path may be used only to execute local source; do not inspect other external files."
+  },
+  "catalog_sha256": "dbb1bcd50eb310f19b8a133eaf0deb90b52985e846ec771f59e52f4f861ef6e0",
+  "tools": [
+    "read-only-shell"
+  ],
+  "seed": 31,
+  "baseline_skill_commit": "f948b796afbbc7aac010906742ec7f88a8e64950",
+  "candidate_skill_commit": "9f3b0cd72c67aaf000da3e8e88332efb2f3556b6",
+  "instruction_sha256": {
+    "baseline": "9dd5e4c50d47cd71fca3d04abc006690759e8510cdbce705a9853c4a61685e0a",
+    "candidate": "d429f5d89726d00cf166644a238849b0fce2e9f1a75197f0d106d5ac5fe6de37"
+  },
+  "runs": [
+    {
+      "run_id": "135ac75f92cc40b880c091c410ad025e",
+      "case_id": "semver-build",
+      "variant": "buggy",
+      "arm": "candidate",
+      "repeat": 0,
+      "workspace_sha256": "e4b0a736dd370fd4079c00c50164a2b87aefbd1ff5bb4b03c44d0acebe90eb7b",
+      "target_paths": [
+        "classes/range.js"
+      ],
+      "source_v3_run_id": "d0112f51477c4b968b720e9a866b750d"
+    },
+    {
+      "run_id": "6739ba7ad215404a8ec4dc8f44450c3b",
+      "case_id": "semver-build",
+      "variant": "buggy",
+      "arm": "baseline",
+      "repeat": 0,
+      "workspace_sha256": "e4b0a736dd370fd4079c00c50164a2b87aefbd1ff5bb4b03c44d0acebe90eb7b",
+      "target_paths": [
+        "classes/range.js"
+      ],
+      "source_v3_run_id": "d0112f51477c4b968b720e9a866b750d"
+    }
+  ],
+  "authorization": {
+    "max_dispatches": 2,
+    "automatic_retries": false,
+    "fresh_cases": false,
+    "user_approved": "2026-10-29",
+    "estimated_total_tokens": 840000,
+    "planning_allowance_tokens": 1200000,
+    "hard_token_cap": false
+  }
+}

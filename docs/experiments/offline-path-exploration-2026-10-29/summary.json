@@ -1,0 +1,267 @@
+{
+  "python": "3.15.2 (main, Oct 25 2026, 16:57:51) [Clang 21.0.0 (clang-2100.3.34.2)]",
+  "stdlib": "/opt/homebrew/opt/python@3.15/Frameworks/Python.framework/Versions/3.15/lib/python3.15",
+  "license_source": "/opt/homebrew/Cellar/python@3.15/3.15.2/LICENSE",
+  "synthetic": {
+    "seeds": {
+      "points": 24,
+      "coverage": {
+        "alternate": {
+          "observed": 2,
+          "reference": 2,
+          "missing": 0,
+          "points": 3,
+          "status": "bounded_complete"
+        },
+        "conflicting": {
+          "observed": 1,
+          "reference": 1,
+          "missing": 0,
+          "points": 3,
+          "status": "bounded_complete"
+        },
+        "converted": {
+          "observed": 2,
+          "reference": 4,
+          "missing": 2,
+          "points": 3,
+          "status": "bounded_complete"
+        },
+        "hidden": {
+          "observed": 1,
+          "reference": 2,
+          "missing": 1,
+          "points": 3,
+          "status": "bounded_complete"
+        },
+        "impossible": {
+          "observed": 2,
+          "reference": 2,
+          "missing": 0,
+          "points": 3,
+          "status": "bounded_complete"
+        },
+        "multiple": {
+          "observed": 2,
+          "reference": 3,
+          "missing": 1,
+          "points": 3,
+          "status": "bounded_complete"
+        },
+        "permitted": {
+          "observed": 2,
+          "reference": 2,
+          "missing": 0,
+          "points": 3,
+          "status": "bounded_complete"
+        },
+        "dynamic": {
+          "observed": 0,
+          "reference": 2,
+          "missing": 2,
+          "points": 3,
+          "status": "partial_unsupported"
+        }
+      }
+    },
+    "evidence": {
+      "points": 26,
+      "coverage": {
+        "alternate": {
+          "observed": 2,
+          "reference": 2,
+          "missing": 0,
+          "points": 4,
+          "status": "bounded_complete"
+        },
+        "conflicting": {
+          "observed": 1,
+          "reference": 1,
+          "missing": 0,
+          "points": 3,
+          "status": "bounded_complete"
+        },
+        "converted": {
+          "observed": 2,
+          "reference": 4,
+          "missing": 2,
+          "points": 3,
+          "status": "bounded_complete"
+        },
+        "hidden": {
+          "observed": 1,
+          "reference": 2,
+          "missing": 1,
+          "points": 3,
+          "status": "bounded_complete"
+        },
+        "impossible": {
+          "observed": 2,
+          "reference": 2,
+          "missing": 0,
+          "points": 3,
+          "status": "bounded_complete"
+        },
+        "multiple": {
+          "observed": 2,
+          "reference": 3,
+          "missing": 1,
+          "points": 3,
+          "status": "bounded_complete"
+        },
+        "permitted": {
+          "observed": 2,
+          "reference": 2,
+          "missing": 0,
+          "points": 4,
+          "status": "bounded_complete"
+        },
+        "dynamic": {
+          "observed": 0,
+          "reference": 2,
+          "missing": 2,
+          "points": 3,
+          "status": "partial_unsupported"
+        }
+      }
+    },
+    "paths": {
+      "points": 34,
+      "coverage": {
+        "alternate": {
+          "observed": 2,
+          "reference": 2,
+          "missing": 0,
+          "points": 5,
+          "status": "bounded_complete"
+        },
+        "conflicting": {
+          "observed": 1,
+          "reference": 1,
+          "missing": 0,
+          "points": 3,
+          "status": "bounded_complete"
+        },
+        "converted": {
+          "observed": 4,
+          "reference": 4,
+          "missing": 0,
+          "points": 6,
+          "status": "bounded_complete"
+        },
+        "hidden": {
+          "observed": 2,
+          "reference": 2,
+          "missing": 0,
+          "points": 4,
+          "status": "bounded_complete"
+        },
+        "impossible": {
+          "observed": 2,
+          "reference": 2,
+          "missing": 0,
+          "points": 4,
+          "status": "bounded_complete"
+        },
+        "multiple": {
+          "observed": 3,
+          "reference": 3,
+          "missing": 0,
+          "points": 4,
+          "status": "bounded_complete"
+        },
+        "permitted": {
+          "observed": 2,
+          "reference": 2,
+          "missing": 0,
+          "points": 5,
+          "status": "bounded_complete"
+        },
+        "dynamic": {
+          "observed": 0,
+          "reference": 2,
+          "missing": 2,
+          "points": 3,
+          "status": "partial_unsupported"
+        }
+      }
+    }
+  },
+  "replay_calls": 31,
+  "evaluator_calls": 128,
+  "integration": [
+    {
+      "module": "annotationlib",
+      "path": "/opt/homebrew/opt/python@3.15/Frameworks/Python.framework/Versions/3.15/lib/python3.15/annotationlib.py",
+      "source_sha256": "6d56359e05c4995b23ee5a4c105702bad67925eae076f9950dd9522fe2fcfe76",
+      "unchanged": true,
+      "tests_path": "/opt/homebrew/opt/python@3.15/Frameworks/Python.framework/Versions/3.15/lib/python3.15/test/test_annotationlib.py",
+      "tests_status": "present",
+      "entries": 6,
+      "exact_examples": 0,
+      "statuses": {
+        "partial_unsupported": 3,
+        "unsupported": 3
+      },
+      "interpreted_points": 9,
+      "subject_executions": 0
+    },
+    {
+      "module": "base64",
+      "path": "/opt/homebrew/opt/python@3.15/Frameworks/Python.framework/Versions/3.15/lib/python3.15/base64.py",
+      "source_sha256": "93319e370390777e2b0a14dcb02b53d61e1bc83719c088e760eb5ab74eafa978",
+      "unchanged": true,
+      "tests_path": "/opt/homebrew/opt/python@3.15/Frameworks/Python.framework/Versions/3.15/lib/python3.15/test/test_base64.py",
+      "tests_status": "present",
+      "entries": 23,
+      "exact_examples": 0,
+      "statuses": {
+        "partial_unsupported": 2,
+        "unsupported": 21
+      },
+      "interpreted_points": 6,
+      "subject_executions": 0
+    }
+  ],
+  "selection": [
+    {
+      "name": "abc.py",
+      "public_functions": 2,
+      "literal_exports": 0,
+      "eligible": false
+    },
+    {
+      "name": "annotationlib.py",
+      "public_functions": 6,
+      "literal_exports": 8,
+      "eligible": true
+    },
+    {
+      "name": "antigravity.py",
+      "public_functions": 1,
+      "literal_exports": 0,
+      "eligible": false
+    },
+    {
+      "name": "argparse.py",
+      "public_functions": 0,
+      "literal_exports": 18,
+      "eligible": false
+    },
+    {
+      "name": "ast.py",
+      "public_functions": 14,
+      "literal_exports": 0,
+      "eligible": false
+    },
+    {
+      "name": "base64.py",
+      "public_functions": 23,
+      "literal_exports": 22,
+      "eligible": true
+    }
+  ],
+  "model_calls": 0,
+  "real_subject_executions": 0,
+  "limitations": "isolated slices; imported/global context unknown; exact examples only; bounded supported paths; no bug-yield claim"
+}

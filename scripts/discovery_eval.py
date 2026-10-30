@@ -140,6 +140,9 @@ def run(args):
     for arm, digest in plan['instruction_sha256'].items():
         if hashlib.sha256((out / f'{arm}.txt').read_bytes()).hexdigest() != digest:
             raise ValueError(f'instruction drift: {arm}')
+    for name, digest in plan.get('harness_sha256', {}).items():
+        if hashlib.sha256(Path(name).read_bytes()).hexdigest() != digest:
+            raise ValueError(f'harness drift: {name}')
     provider = plan.get('provider', 'codex')
     adapter = plan.get('adapter')
     selected_ids = set(getattr(args, 'run_id', None) or [])
@@ -188,13 +191,18 @@ def run(args):
             runtime = plan['protocol'].get('runtime_note', '')
             if runtime:
                 prompt += ' Available runtime: ' + runtime
+        if plan.get('protocol', {}).get('harness'):
+            prompt = prompt.replace('Do not modify files.', 'Do not modify source files.').replace(
+                'Do not install dependencies, write files, or run service/integration tests.',
+                'Do not install dependencies or run service/integration tests. Test files may be written only in the separate harness directory.')
         started = time.monotonic()
         try:
             result = execute(provider=provider, workspace=work, prompt=prompt,
                 instructions=(out / f"{item['arm']}.txt").read_text(),
                 model=plan['model'], effort=plan['effort'],
                 timeout=plan['timeout_seconds'], artifacts=artifacts,
-                binary=getattr(args, 'binary', None), adapter=adapter)
+                binary=getattr(args, 'binary', None), adapter=adapter,
+                harness=plan.get('protocol', {}).get('harness', False))
             (artifacts / 'report.md').write_text(result.pop('report'))
             result.update(instruction_sha256=plan['instruction_sha256'][item['arm']],
                           workspace_sha256=item['workspace_sha256'],

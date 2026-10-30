@@ -1,98 +1,47 @@
 ---
 name: logic-review
 description: >
-  Find logic bugs in a single file or function via semi-formal execution
-  tracing (Premises → Trace → Divergence → Trigger → Remedy). Trigger when a user
-  shares code and suspects something is wrong without naming a concrete
-  failure — phrases like "review this", "does this look right", "check
-  this function", "audit this code", "tests pass but prod fails".
-  SCOPE HARD RULE: one file or one function only. For a directory or
-  whole module use logic-health; for a confirmed failure (stack trace,
-  failing test, specific wrong value) use logic-locate; for two versions
-  use logic-diff; for repo-wide autonomous fixing use logic-fix-all.
-  Do NOT trigger for: style/formatting, security scanning, performance,
-  test generation, architecture or design questions.
+  Find behavioral bugs in a file or function by investigating its contracts,
+  callers, dependencies, and execution paths. Trigger for "review this",
+  "check this function", "find bugs", or "tests pass but production fails"
+  without an already confirmed failure. A file is the review target, not a
+  boundary on supporting evidence. For directory-wide surveys use logic-health;
+  for a confirmed failure use logic-locate; for two versions use logic-diff.
+  Do NOT trigger for: style/formatting, standalone security or performance audits,
+  test authoring without a review request, or architecture-only questions.
 ---
 
 # Logic-Lens — Logic Review
 
-## Output Skeleton Contract
-
-The downstream grader (`scripts/grade-iteration.py`) and other Logic-Lens skills consume this report by substring-matching literal tokens defined in `../_shared/common.md` §1 (header map), §2 (mandatory field labels + Logic Score), and `../_shared/report-template.md` (skeleton). Paraphrasing those tokens — even with a synonym that reads fine to a human — breaks the contract regardless of analysis quality.
-
-**Language selects the token set, not the structure.** The two templates below are the same contract in two languages. Emitting English labels into a Chinese report is as much a contract breach as paraphrasing them — it violates `common.md` §1 (HIGHEST PRIORITY) and fails grading identically. Detect the user's language first, then fill the skeleton with that language's column from the §1 header map.
-
-**Three failure modes observed in benchmark that deserve specific callout** beyond the general rule:
-
-- **Synonym substitution for field labels whose substituted form omits the required substring** — replacing `Premises` / `前提` with `前置条件构建` / `前置条件` (eval-201), or `Divergence` / `偏差` with `根因` / `核心缺陷` / `结论` (eval-252). Each substitution reads fine to a human and may even appear as a section heading or table column, but the substituted word does NOT contain the required substring, so grader and cross-skill consumers see the document as missing the field entirely. Use the literal token from `common.md` §1; you can still add a descriptive subtitle alongside it.
-- **Demoting a confirmed L-code finding** to `### 附加观察（非 Finding）` / `### Additional observation` — if Premises→Trace→Divergence holds, the finding belongs inside `## Findings` (中文 `## 发现`) with the five literal fields, even at Suggestion severity. This was a recurring cause of eval-279 (quicksort L4) failing on Sonnet runs.
-- **Omitting `Divergence:` / `偏差：` field entirely** — the single most frequent failure mode. Many outputs correctly analyze the bug but write the divergence as prose, in a table cell, or under headings like `根因`, `故障点`, `核心问题`, `缺陷`. The `Divergence:` field is the specific label for "the point where actual behavior diverges from the premise." It is NOT optional and has no acceptable synonym. For no-bug findings use `Divergence: None — [why the premise holds]` (中文 `偏差：无——[原因]`).
-
-**Correctly formatted finding — use as template:**
-
-```
-### 🔴 Critical
-**[L4] — Mutation during iteration skips elements**
-Premises: `users` is `list[User]` passed by reference; `list.remove()` shifts subsequent elements left; the `for` iterator advances by index.
-Trace: [1] index=0, user is inactive → `remove()` shifts list. [2] Iterator advances to index 1, which now holds the element originally at index 2 — the original index-1 element is skipped. Rebuttal check: PASSED — no defense found.
-Divergence: `remove_inactive([inactive₁, inactive₂, active])` returns `[inactive₂, active]` (2 elements) instead of `[active]` (1 element) — the second inactive user is never visited.
-Trigger: `remove_inactive([User(False), User(False), User(True)])` → expected 1, actual 2.
-Remedy: Replace loop body with `return [u for u in users if u.is_active]`. Dry-run: ✅ divergence eliminated.
-```
-
-Each finding block MUST contain all five literal labels (`Premises:` / `Trace:` / `Divergence:` / `Trigger:` / `Remedy:` or `前提：` / `追踪：` / `偏差：` / `触发：` / `修复：`) as line-starting prefixes. Section headers (`### Premises`, `## Execution Trace`) do NOT satisfy this requirement — the labels must appear inside the finding block.
-
-**No-bug case**: emit `## Findings` (中文 `## 发现`) with a finding block that uses all five field labels, with `Divergence: None — [why the premise holds]`. This format is REQUIRED — it satisfies both grading and auditing.
-
-The example below is deliberately shown **in Chinese** to make the localized token set concrete — it is the exact same skeleton as the English template above. For an English-language review, use the English labels; the structure does not change.
-
-```
-### ✅ 无 Bug
-**[无 Bug] — defer 保证所有退出路径都会解锁**
-前提：`mu.Lock()` 在第 12 行获取；`defer mu.Unlock()` 位于第 13 行（在任何条件分支或提前返回之前）。
-追踪：[1] `defer` 在 `Lock()` 之后立即注册。[2] Go 规范保证 deferred 调用在所有函数退出路径上执行（return、panic、提前返回）。[3] Lock 与 defer 注册之间无条件分支。
-偏差：无——`defer mu.Unlock()` 无条件置于加锁之后，保证每条退出路径都会释放，不存在锁泄漏。
-触发：N/A（无 bug 可复现）。
-修复：N/A（代码本身正确）。
-```
+Find observable violations of supported behavior. Investigate before rendering a
+report: a familiar pattern, missing guard, or uncertain contract is a lead, not a bug.
 
 ## Setup
 
-Use lazy loading per `../_shared/common.md` §13:
-1. Read `../_shared/common.md` only for language, Iron Law, Logic Score, scope management, Remedy discipline, config fields, and loading budget.
-2. Read only the relevant step in `logic-review-guide.md` as you reach it.
-3. Load `../_shared/logic-risks.md`, `../_shared/semiformal-guide.md`, `../_shared/semiformal-checklist.md`, and `../_shared/report-template.md` on demand when the current step needs them.
+Use lazy loading from `../_shared/common.md` §13. Read its language, Iron Law,
+headers/score, scope, confidence, remedy, and project-config rules; read the active
+step of `logic-review-guide.md` as needed. Load `semiformal-checklist.md` when building
+premises, `semiformal-guide.md` for trace mechanics, `logic-risks.md` when classifying
+confirmed causes, and `report-template.md` only when rendering output.
 
 ## Process
 
-**Step 0. Language + scope routing.** Detect the user's language per `common.md` §1; every label and header below must be in that language. Confirm scope is one file or one function — if the user points at a directory, switch to logic-health; if they describe a confirmed failure, switch to logic-locate; if two versions, logic-diff.
+1. **Establish an obligation** (guide Step 1). Separate facts, sourced requirements
+   and unknowns. Orient on the main input/state routes and supported outcomes.
+2. **Map and select paths** (guide Step 2). Identify consequential operations and
+   their consumers; resolve hidden conditions before ranking a small worklist.
+3. **Run distinguishing checks** (guide Step 3). Test supported relationships using
+   effective implementation conditions and controls. Reconsider remaining paths
+   after confirmation and before ending discovery.
+4. **Challenge the violation** (guide Step 4). Establish reachability, exact-path
+   defenses and the smallest observable consequence; preserve unresolved leads.
+5. **Preserve probe evidence** (guide Step 5). Probe real code during discovery when
+   feasible. Record oracle, runtime, result and limitations. Defer implementation
+   and broad remedy regression to a separately requested fix task.
+6. **Prepare findings** (guide Step 6). Deduplicate causes, classify confirmed defects
+   and give a minimal concrete remedy with its verification limits.
+7. **Report once** (guide Step 7). Use shared localized Iron Law fields and scope/score
+   rules. Expose uncovered obligations without treating them as confirmed defects.
 
-**Step 1. Establish claimed behavior + review entry points** (guide Step 1) — write one sentence describing what the code is supposed to do, then select the concrete entry function(s) that will be traced. If a file exceeds `common.md` §9 limits, state the selected subset and why.
-
-**Step 2. Build premises** (guide Step 2) — per the Premises Construction Checklist in `semiformal-checklist.md`; include caller/callee contracts when the reviewed function depends on another local function.
-
-**Step 3. Build the risk path ledger** (guide Step 3) — enumerate candidate bug paths across L1–L9 before writing findings. Tag each retained path as Class A (self-evident) or Class B (invariant-dependent). Do not stop after the happy path. Read `logic-risks.md` Quick Disambiguation Table before assigning any L-code — common misclassifications are catalogued there. **L4 priority check:** does any function mutate its input AND return the same object? **L7 priority check:** is shared state accessed across `await`/yield/thread boundaries without explicit synchronization? **L4 vs L7 disambiguation:** any state access involving more than one execution context (thread / goroutine / `await` / yield) is **L7**, never L4 — including single-threaded asyncio where coroutines interleave at `await`. L4 is for single-context aliasing only (mutable defaults, in-place mutation footgun, mutation-during-iteration). L4 requires an actual **mutation of shared/aliased state** as the root cause — variable scoping issues (const/let visibility, constructor scope) are L1, and query-pattern inefficiencies (N+1) are L3.
-
-**L1 vs L6 disambiguation:** if the root cause is a name/identifier resolving to a different definition than the developer expected (import shadowing, module constant lookup, prototype chain, constructor-scoped `const`/`let` not visible to methods), it is **L1** even when the symptom is a missing-method error or wrong return value — L6 applies only when the name resolves correctly but the callee's behavior differs from what the caller assumed.
-
-**L2 vs L6 disambiguation:** if the root cause is an implicit type coercion at the **operator level** (`+`/`-`/`*`/`==` triggering string↔number conversion, or `as`/cast bypassing runtime type checks), it is **L2** — L6 requires calling a specific callee whose behavior differs from the caller's assumption. Operators are not callees.
-
-**L5 vs L7 disambiguation:** if an error code, exit status, or exception is suppressed by a **single-context construct** (`|| true`, empty `catch`, missing `set -e`, bare `except`), it is **L5** (control flow escape) — L7 requires multiple execution contexts. Error propagation failure within one sequential script/function is L5.
-
-**L9 check:** if the bug's root cause is timezone/locale/encoding information **lost at the data-type level** (e.g., `TIMESTAMP` vs `TIMESTAMPTZ`, naive vs aware datetime, locale-dependent string sort), it is **L9** — not L6 even if it looks like "callee behavior differs from expectation", not L2, not L8.
-
-**Step 4. Deep-trace selected paths** (guide Step 4) — trace the normal path plus the highest-risk edge paths; resolve every name, state every type, cross callee boundaries, and stop each trace at either a confirmed divergence or a confirmed safe post-condition. **Java/C++ DCL rule:** for double-checked locking patterns, MUST trace both faces: (a) missing `volatile` / memory barrier (visibility hazard) AND (b) `instance = new X(); instance.init();` as two non-atomic statements — lock-free readers can see non-null `instance` before `init()` completes (publish-before-init hazard). Report both; omitting either is an incomplete analysis.
-
-**Step 5. Identify divergences** (guide Step 5) — classify each by L1–L9; assign severity; apply the reachability gate (Class A reports directly; Class B requires a probe — enforcement found → drop candidate, not found → assigned severity, partial → cap at Warning with `manual verification recommended`). Apply the correctness parity principle for no-bug scenarios. **No-bug output discipline:** when zero divergences remain, still emit the full template skeleton — Mode line, Scope, `**Logic Score:** 100/100`, `## Findings` (中文 `## 发现`) followed by a finding block that uses `Divergence: None — [why the premise holds]` (中文 `偏差：无——[原因]`) with all five field labels present. This makes the reasoning auditable and satisfies the format contract. If analysis actively disproves a suspected bug, explain the defense in the `Trace:` field (e.g., "Go `defer mu.Unlock()` guarantees release on all exit paths including early return"). Do not collapse the verdict into free-form prose or omit the structured fields; downstream grading requires the five-field format even for no-bug conclusions.
-
-**Step 5.5. Adversarial Red Team** (guide Step 5.5) — for each candidate finding, attempt to disprove it by answering three rebuttal questions (premise rebuttal, path rebuttal, consequence rebuttal). Withdraw findings with confirmed defenses; downgrade findings with partial defenses to Suggestion. **Design-intent gate:** before reporting an L3 Boundary Blindspot, ask "Does the code explicitly return an error / rejection at this boundary rather than attempting to continue past it?" If yes (e.g., `errors.New("cache full")` at `maxSize`, `429 Too Many Requests`, buffer-full rejection), withdraw — these are correct boundary enforcement, not blindspots. L3 applies only when code *attempts* to operate past the boundary and silently fails (wrong result, crash, infinite loop). Note: a `panic` at a boundary is a crash, not a designed error return, and remains a potential L3.
-
-**Step 6. Apply Iron Law — Five-Field Discipline** (guide Step 6) — confirm all findings have Premises → Trace → Divergence complete; then write Trigger (concrete reproducing input, required for Critical/Warning) and Remedy (paste-ready per `common.md` §10). **Each finding MUST use these literal field labels** — English `Premises:` / `Trace:` / `Divergence:` / `Trigger:` / `Remedy:`, or Chinese `前提：` / `追踪：` / `偏差：` / `触发：` / `修复：`. Do not paraphrase. Headers like `Execution Path`, `Issue Found`, `Core Defect`, `执行路径`, `发现的逻辑隐患`, `核心缺陷` are unacceptable substitutes — they fail downstream grading and break the report contract that other Logic-Lens skills consume. **Multi-finding discipline:** When there are multiple findings, each finding block inside `## Findings` (中文 `## 发现`) must include all five literal field labels — `Premises:` / `Trace:` / `Divergence:` / `Trigger:` / `Remedy:` (or their Chinese equivalents) — with content specific to that finding. Any shared background context may appear as a preamble section, but it does NOT substitute for the per-finding fields. A finding that omits `Divergence:` (or any other required field) breaks the contract even if `Premises:` or `Trace:` appear elsewhere in the report.
-
-**Step 6.5. Remedy Dry-Run** (guide Step 6.5) — mentally re-trace the Trigger input through the fixed code to confirm: divergence eliminated, no regression introduced, happy path preserved.
-
-**Step 7. Score and output** (guide Step 7) — **run Step 8 first whenever a runtime is available**; it withdraws false positives and so changes the score. Compute Logic Score per `common.md` §6 over the findings that survive verification, and emit it as the literal line `**Logic Score:** XX/100` (中文 `**逻辑评分：** XX/100`) directly under the Scope line (`**Scope:**` / 中文 `**范围：**`) — this exact token (not "Score: XX", not "Quality: XX") is required for both grader recognition and cross-skill consumption. Then render the rest of the Report Template with localized headers.
-
-**Step 8. Execution Verification Gate** (guide Step 8) — **required for every Critical and Warning finding whenever a runtime for the target language is available**; it is the only step that can contradict the analysis, so a confident trace is never a reason to skip it. Generate a minimal reproducer from the Trigger field, execute it against the original code, then apply the Remedy and re-execute. Withdraw findings whose reproducer passes on the original code — they are false positives. Mark survivors `✅ Execution-verified`; when no runtime exists mark `⚠️ Unverified — no runtime available` (中文 `⚠️ 未验证——无可用运行时`).
-
-**Mode line in report:** `Logic Review` (Chinese: `逻辑审查`).
+**Mode line:** `Logic Review` (Chinese: `逻辑审查`). Route whole-directory requests
+to logic-health; supporting caller/callee/configuration files remain available to review.

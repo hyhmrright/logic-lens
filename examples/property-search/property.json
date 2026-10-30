@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "id": "signed-axis-roundtrip",
+  "claim": "Moving by delta followed by its inverse preserves position",
+  "domain": "Integer positions and signed integer displacements",
+  "observation": "The final position after both real implementation calls",
+  "violation": "Final position differs from the initial position",
+  "contract": [{
+    "path": "axis.py", "start": 2, "end": 2,
+    "quote": "Moving by delta and then by -delta restores the original position."
+  }],
+  "adapter": {"files": ["adapter.py"], "argv": ["{python}", "{adapter_dir}/adapter.py"]},
+  "domains": {"origin": [0, 4], "delta": [0, 1, -1, 3, -3]},
+  "control": {"origin": 0, "delta": 0},
+  "seed": 31,
+  "limits": {"max_cases": 16, "seconds": 10, "case_seconds": 1, "output_bytes": 4096, "shrink_cases": 4}
+}

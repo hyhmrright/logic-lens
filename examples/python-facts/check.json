@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "source": "pipeline.py",
+  "entry": "routed_transfer",
+  "consumer": "consume",
+  "analysis_domain": [-1, 11],
+  "declaration": {
+    "scale": 3,
+    "offset": 2,
+    "output_unit": "byte",
+    "bound": 17,
+    "route": [[0, 5]]
+  }
+}

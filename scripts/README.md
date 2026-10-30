@@ -10,6 +10,7 @@ python3 scripts/logic_lens.py bundle --help
 python3 scripts/logic_lens.py eval --help
 python3 scripts/logic_lens.py discovery --help
 python3 scripts/logic_lens.py verify --help
+python3 scripts/logic_lens.py search --help
 ```
 
 - `run_review.py`: read-only review/explain/diff/locate/health; writes reports and raw events.
@@ -20,6 +21,8 @@ python3 scripts/logic_lens.py verify --help
 - `run_evals.py routing`: evaluate description routing, separately from native activation.
 - `discovery_eval.py`: freeze plain/prior/candidate plans, run repository-context reviews, summarize adjudications.
 - `verify_discovery.py`: independently verify target source pairs using evaluator-only probes.
+- `property_search.py`: experimental finite local property search, no model calls;
+  [protocol and limitations](../docs/PROPERTY_SEARCH.md).
 - `run_probes.py`: run legacy real-code probes through the same provider interface.
 - `grade-iteration.py`: existing offline keyword/contract regression grader; not a discovery oracle.
 - `bump-version.py`: synchronize six version locations and validate; add CHANGELOG manually.
@@ -55,3 +58,31 @@ Structural/version checks do not establish skill effectiveness. See
 [tool compatibility](../docs/TOOL_COMPATIBILITY.md) for rigorous comparisons, adapters,
 isolation limits and costs. Case-level deltas need repeated matched measurements;
 never relax the old grader to make a candidate pass.
+
+### Offline constraint relation planner (experimental)
+
+`python3 scripts/logic_lens.py constraints --spec RELATIONS.json --workspace SOURCE --out NEW.json`
+turns manually sourced integer-affine producer/consumer relations into property
+candidates, finite inverse-boundary domains and selection reasons. It never invokes
+a model or runs a subject. See [schema and limitations](../docs/CONSTRAINT_PLAN.md)
+and `examples/constraint-plan/relations.json`. Kept in draft PR #16, not the default
+review skill or proof of improved bug discovery.
+
+### Offline Python fact audit (experimental)
+
+`python3 scripts/logic_lens.py facts --spec CHECK.json --workspace SOURCE --out NEW.json`
+independently interprets a restricted Python AST on a bounded integer window and
+compares declared coefficients, representation units and consumer-reaching routes.
+It preserves unknown/unsupported results and never imports/executes the subject or
+calls a model. See [protocol and limits](../docs/PYTHON_FACTS.md). This is a new opt-in
+offline tool, not a formal skill change or general Python verifier.
+
+### Offline investigation loop (experimental)
+
+`python3 scripts/logic_lens.py investigate --spec REQUEST.json --workspace SOURCE --out NEW_DIR`
+automatically inventories restricted Python consumer relations, refines finite inputs,
+checks source/planner declarations and selects distinct entries. Default is planning
+only. `--execute-trusted-synthetic` explicitly enables the fixed local adapter and
+bounded property engine for reviewed synthetic programs. Outcome oracles come from
+entry contracts, not internal bounds. See [pipeline and limits](../docs/INVESTIGATION.md).
+No formal skill/model/default behavior changes or efficacy claims.

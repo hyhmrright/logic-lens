@@ -1,0 +1,433 @@
+{
+  "records": [
+    {
+      "entry": "alternate",
+      "input": 8,
+      "queue": "verify",
+      "reason": "exact test example; no interval extrapolation",
+      "outcome": "returned",
+      "value": 8,
+      "status": "agrees"
+    },
+    {
+      "entry": "conflicting",
+      "input": 0,
+      "queue": "explore",
+      "reason": "window seed; validity unknown",
+      "outcome": "returned",
+      "value": 0,
+      "status": "agrees"
+    },
+    {
+      "entry": "converted",
+      "input": 0,
+      "queue": "verify",
+      "reason": "exact test example; no interval extrapolation",
+      "outcome": "returned",
+      "value": 2,
+      "status": "agrees"
+    },
+    {
+      "entry": "hidden",
+      "input": 0,
+      "queue": "verify",
+      "reason": "exact test example; no interval extrapolation",
+      "outcome": "returned",
+      "value": 2,
+      "status": "agrees"
+    },
+    {
+      "entry": "impossible",
+      "input": 0,
+      "queue": "verify",
+      "reason": "exact test example; no interval extrapolation",
+      "outcome": "returned",
+      "value": 0,
+      "status": "agrees"
+    },
+    {
+      "entry": "multiple",
+      "input": 1,
+      "queue": "verify",
+      "reason": "exact test example; no interval extrapolation",
+      "outcome": "returned",
+      "value": 1,
+      "status": "agrees"
+    },
+    {
+      "entry": "permitted",
+      "input": 8,
+      "queue": "verify",
+      "reason": "exact test example; no interval extrapolation",
+      "outcome": "value_error",
+      "value": null,
+      "status": "agrees"
+    },
+    {
+      "entry": "dynamic",
+      "input": 0,
+      "queue": "explore",
+      "reason": "window seed; validity unknown",
+      "status": "unsupported_not_executed"
+    },
+    {
+      "entry": "alternate",
+      "input": 0,
+      "queue": "explore",
+      "reason": "window seed; validity unknown",
+      "outcome": "returned",
+      "value": 0,
+      "status": "agrees"
+    },
+    {
+      "entry": "conflicting",
+      "input": 1,
+      "queue": "explore",
+      "reason": "window seed; validity unknown",
+      "outcome": "returned",
+      "value": 1,
+      "status": "agrees"
+    },
+    {
+      "entry": "converted",
+      "input": 1,
+      "queue": "explore",
+      "reason": "window seed; validity unknown",
+      "outcome": "returned",
+      "value": 5,
+      "status": "agrees"
+    },
+    {
+      "entry": "hidden",
+      "input": 1,
+      "queue": "explore",
+      "reason": "window seed; validity unknown",
+      "outcome": "returned",
+      "value": 5,
+      "status": "agrees"
+    },
+    {
+      "entry": "impossible",
+      "input": 1,
+      "queue": "explore",
+      "reason": "window seed; validity unknown",
+      "outcome": "returned",
+      "value": 1,
+      "status": "agrees"
+    },
+    {
+      "entry": "multiple",
+      "input": 0,
+      "queue": "explore",
+      "reason": "window seed; validity unknown",
+      "outcome": "returned",
+      "value": 0,
+      "status": "agrees"
+    },
+    {
+      "entry": "permitted",
+      "input": 0,
+      "queue": "explore",
+      "reason": "window seed; validity unknown",
+      "outcome": "returned",
+      "value": 0,
+      "status": "agrees"
+    },
+    {
+      "entry": "dynamic",
+      "input": 1,
+      "queue": "explore",
+      "reason": "window seed; validity unknown",
+      "status": "unsupported_not_executed"
+    },
+    {
+      "entry": "alternate",
+      "input": 1,
+      "queue": "explore",
+      "reason": "window seed; validity unknown",
+      "outcome": "returned",
+      "value": 1,
+      "status": "agrees"
+    },
+    {
+      "entry": "conflicting",
+      "input": 15,
+      "queue": "explore",
+      "reason": "window seed; validity unknown",
+      "outcome": "returned",
+      "value": 15,
+      "status": "agrees"
+    },
+    {
+      "entry": "converted",
+      "input": 15,
+      "queue": "explore",
+      "reason": "window seed; validity unknown",
+      "outcome": "returned",
+      "value": 47,
+      "status": "agrees"
+    },
+    {
+      "entry": "hidden",
+      "input": 15,
+      "queue": "explore",
+      "reason": "window seed; validity unknown",
+      "outcome": "returned",
+      "value": 47,
+      "status": "agrees"
+    },
+    {
+      "entry": "impossible",
+      "input": 15,
+      "queue": "explore",
+      "reason": "window seed; validity unknown",
+      "outcome": "returned",
+      "value": 15,
+      "status": "agrees"
+    },
+    {
+      "entry": "multiple",
+      "input": 15,
+      "queue": "explore",
+      "reason": "window seed; validity unknown",
+      "outcome": "value_error",
+      "value": null,
+      "status": "agrees"
+    },
+    {
+      "entry": "permitted",
+      "input": 1,
+      "queue": "explore",
+      "reason": "window seed; validity unknown",
+      "outcome": "returned",
+      "value": 2,
+      "status": "agrees"
+    },
+    {
+      "entry": "dynamic",
+      "input": 15,
+      "queue": "explore",
+      "reason": "window seed; validity unknown",
+      "status": "unsupported_not_executed"
+    },
+    {
+      "entry": "alternate",
+      "input": 15,
+      "queue": "explore",
+      "reason": "window seed; validity unknown",
+      "outcome": "returned",
+      "value": 15,
+      "status": "agrees"
+    },
+    {
+      "entry": "converted",
+      "input": 5,
+      "queue": "explore",
+      "reason": {
+        "kind": "branch_alternative",
+        "target": {
+          "function": "_route",
+          "line": 16,
+          "decision": true,
+          "prefix": []
+        }
+      },
+      "outcome": "returned",
+      "value": 17,
+      "status": "agrees"
+    },
+    {
+      "entry": "hidden",
+      "input": 7,
+      "queue": "explore",
+      "reason": {
+        "kind": "branch_alternative",
+        "target": {
+          "function": "_hidden",
+          "line": 6,
+          "decision": true,
+          "prefix": []
+        }
+      },
+      "outcome": "value_error",
+      "value": null,
+      "status": "agrees"
+    },
+    {
+      "entry": "impossible",
+      "input": 4,
+      "queue": "explore",
+      "reason": {
+        "kind": "branch_alternative",
+        "target": {
+          "function": "impossible",
+          "line": 53,
+          "decision": false,
+          "prefix": []
+        }
+      },
+      "outcome": "returned",
+      "value": 4,
+      "status": "agrees"
+    },
+    {
+      "entry": "multiple",
+      "input": 5,
+      "queue": "explore",
+      "reason": {
+        "kind": "branch_alternative",
+        "target": {
+          "function": "multiple",
+          "line": 33,
+          "decision": false,
+          "prefix": []
+        }
+      },
+      "outcome": "returned",
+      "value": 10,
+      "status": "agrees"
+    },
+    {
+      "entry": "permitted",
+      "input": 15,
+      "queue": "explore",
+      "reason": "window seed; validity unknown",
+      "outcome": "value_error",
+      "value": null,
+      "status": "agrees"
+    },
+    {
+      "entry": "alternate",
+      "input": 5,
+      "queue": "explore",
+      "reason": {
+        "kind": "branch_alternative",
+        "target": {
+          "function": "alternate",
+          "line": 39,
+          "decision": false,
+          "prefix": []
+        }
+      },
+      "outcome": "returned",
+      "value": 5,
+      "status": "agrees"
+    },
+    {
+      "entry": "converted",
+      "input": 9,
+      "queue": "explore",
+      "reason": {
+        "kind": "branch_alternative",
+        "target": {
+          "function": "_route",
+          "line": 17,
+          "decision": true,
+          "prefix": [
+            {
+              "function": "_route",
+              "line": 16,
+              "op": "Lt",
+              "left": [
+                0,
+                15
+              ],
+              "right": [
+                3,
+                2
+              ],
+              "decision": true
+            }
+          ]
+        }
+      },
+      "outcome": "returned",
+      "value": 29,
+      "status": "agrees"
+    },
+    {
+      "entry": "permitted",
+      "input": 5,
+      "queue": "explore",
+      "reason": {
+        "kind": "branch_alternative",
+        "target": {
+          "function": "_sink",
+          "line": 27,
+          "decision": false,
+          "prefix": [
+            {
+              "function": "permitted",
+              "line": 45,
+              "op": "GtE",
+              "left": [
+                2,
+                0
+              ],
+              "right": [
+                0,
+                0
+              ],
+              "decision": true,
+              "implicit": "sequence repetition clamps negative counts"
+            }
+          ]
+        }
+      },
+      "outcome": "returned",
+      "value": 10,
+      "status": "agrees"
+    },
+    {
+      "entry": "converted",
+      "input": 7,
+      "queue": "explore",
+      "reason": {
+        "kind": "branch_alternative",
+        "target": {
+          "function": "_hidden",
+          "line": 6,
+          "decision": true,
+          "prefix": [
+            {
+              "function": "_route",
+              "line": 16,
+              "op": "Lt",
+              "left": [
+                0,
+                15
+              ],
+              "right": [
+                3,
+                2
+              ],
+              "decision": true
+            },
+            {
+              "function": "_route",
+              "line": 17,
+              "op": "Lt",
+              "left": [
+                3,
+                2
+              ],
+              "right": [
+                0,
+                30
+              ],
+              "decision": true
+            }
+          ]
+        }
+      },
+      "outcome": "value_error",
+      "value": null,
+      "status": "agrees"
+    }
+  ],
+  "executed": 31,
+  "evaluator_calls": 128,
+  "unexecuted_tasks": 0,
+  "stopped": false,
+  "scope": "trusted fixture only; evaluator calls separate from <=64 dispatch cap"
+}

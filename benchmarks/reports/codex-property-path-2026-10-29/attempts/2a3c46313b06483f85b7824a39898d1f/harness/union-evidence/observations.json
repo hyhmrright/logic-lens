@@ -1,0 +1,150 @@
+[
+  {
+    "case": {
+      "a": "*",
+      "b": "1.2.3-alpha",
+      "version": "1.2.3",
+      "includePrerelease": false
+    },
+    "phase": "control",
+    "result": {
+      "status": "pass",
+      "observation": {
+        "expected": true,
+        "actual": true,
+        "details": {
+          "a": "",
+          "b": "1.2.3-alpha",
+          "combined": ""
+        },
+        "runtime": "v26.13.0",
+        "module": "/private/var/folders/kb/clk179sd5qq5htsth48gfk5c0000gn/T/logic-lens-run-ev_h5_xz/harness/tmp/logic-lens-property-qrx0vyw_/workspace/classes/range.js"
+      },
+      "sources": [
+        "classes/range.js",
+        "classes/comparator.js",
+        "classes/semver.js",
+        "internal/re.js",
+        "internal/parse-options.js"
+      ],
+      "source_sha256": {
+        "classes/range.js": "cf8f8eb6934663ae2a9d04838d4d71555427a2abd3c8748ee5219507969a6b46",
+        "classes/comparator.js": "054202956430d63d5ff4599fae09760ce465b489e4f0b5ef5ce7cc7ac21157ac",
+        "classes/semver.js": "d5ba57e5c93f031b1d234fca4bb746746fcd1fe51be7e5ee895601e2c12e2083",
+        "internal/re.js": "5833262888e2b5d843a69193f83c05e374818dbe55379b497819b5bf58e48cd8",
+        "internal/parse-options.js": "fdf51d0de8d5442c35a997ef58cd530d239ce206f961d14c5121354451b01d01"
+      }
+    }
+  },
+  {
+    "case": {
+      "a": ">=0.0.0",
+      "b": "1.2.3-alpha",
+      "version": "1.2.3",
+      "includePrerelease": true
+    },
+    "phase": "search",
+    "result": {
+      "status": "pass",
+      "observation": {
+        "expected": true,
+        "actual": true,
+        "details": {
+          "a": ">=0.0.0",
+          "b": "1.2.3-alpha",
+          "combined": ">=0.0.0||1.2.3-alpha"
+        },
+        "runtime": "v26.13.0",
+        "module": "/private/var/folders/kb/clk179sd5qq5htsth48gfk5c0000gn/T/logic-lens-run-ev_h5_xz/harness/tmp/logic-lens-property-qrx0vyw_/workspace/classes/range.js"
+      },
+      "sources": [
+        "classes/range.js",
+        "classes/comparator.js",
+        "classes/semver.js",
+        "internal/re.js",
+        "internal/parse-options.js"
+      ],
+      "source_sha256": {
+        "classes/range.js": "cf8f8eb6934663ae2a9d04838d4d71555427a2abd3c8748ee5219507969a6b46",
+        "classes/comparator.js": "054202956430d63d5ff4599fae09760ce465b489e4f0b5ef5ce7cc7ac21157ac",
+        "classes/semver.js": "d5ba57e5c93f031b1d234fca4bb746746fcd1fe51be7e5ee895601e2c12e2083",
+        "internal/re.js": "5833262888e2b5d843a69193f83c05e374818dbe55379b497819b5bf58e48cd8",
+        "internal/parse-options.js": "fdf51d0de8d5442c35a997ef58cd530d239ce206f961d14c5121354451b01d01"
+      }
+    }
+  },
+  {
+    "case": {
+      "a": ">=0.0.0",
+      "b": "1.2.3-alpha",
+      "version": "1.2.3-alpha",
+      "includePrerelease": false
+    },
+    "phase": "search",
+    "result": {
+      "status": "violation",
+      "observation": {
+        "expected": true,
+        "actual": false,
+        "details": {
+          "a": "",
+          "b": "1.2.3-alpha",
+          "combined": ""
+        },
+        "runtime": "v26.13.0",
+        "module": "/private/var/folders/kb/clk179sd5qq5htsth48gfk5c0000gn/T/logic-lens-run-ev_h5_xz/harness/tmp/logic-lens-property-qrx0vyw_/workspace/classes/range.js"
+      },
+      "sources": [
+        "classes/range.js",
+        "classes/comparator.js",
+        "classes/semver.js",
+        "internal/re.js",
+        "internal/parse-options.js"
+      ],
+      "source_sha256": {
+        "classes/range.js": "cf8f8eb6934663ae2a9d04838d4d71555427a2abd3c8748ee5219507969a6b46",
+        "classes/comparator.js": "054202956430d63d5ff4599fae09760ce465b489e4f0b5ef5ce7cc7ac21157ac",
+        "classes/semver.js": "d5ba57e5c93f031b1d234fca4bb746746fcd1fe51be7e5ee895601e2c12e2083",
+        "internal/re.js": "5833262888e2b5d843a69193f83c05e374818dbe55379b497819b5bf58e48cd8",
+        "internal/parse-options.js": "fdf51d0de8d5442c35a997ef58cd530d239ce206f961d14c5121354451b01d01"
+      }
+    }
+  },
+  {
+    "case": {
+      "a": "*",
+      "b": "1.2.3-alpha",
+      "version": "1.2.3-alpha",
+      "includePrerelease": false
+    },
+    "phase": "shrink",
+    "result": {
+      "status": "violation",
+      "observation": {
+        "expected": true,
+        "actual": false,
+        "details": {
+          "a": "",
+          "b": "1.2.3-alpha",
+          "combined": ""
+        },
+        "runtime": "v26.13.0",
+        "module": "/private/var/folders/kb/clk179sd5qq5htsth48gfk5c0000gn/T/logic-lens-run-ev_h5_xz/harness/tmp/logic-lens-property-qrx0vyw_/workspace/classes/range.js"
+      },
+      "sources": [
+        "classes/range.js",
+        "classes/comparator.js",
+        "classes/semver.js",
+        "internal/re.js",
+        "internal/parse-options.js"
+      ],
+      "source_sha256": {
+        "classes/range.js": "cf8f8eb6934663ae2a9d04838d4d71555427a2abd3c8748ee5219507969a6b46",
+        "classes/comparator.js": "054202956430d63d5ff4599fae09760ce465b489e4f0b5ef5ce7cc7ac21157ac",
+        "classes/semver.js": "d5ba57e5c93f031b1d234fca4bb746746fcd1fe51be7e5ee895601e2c12e2083",
+        "internal/re.js": "5833262888e2b5d843a69193f83c05e374818dbe55379b497819b5bf58e48cd8",
+        "internal/parse-options.js": "fdf51d0de8d5442c35a997ef58cd530d239ce206f961d14c5121354451b01d01"
+      }
+    }
+  }
+]

@@ -1,0 +1,130 @@
+{"event": "attempt", "kind": "dispatch", "index": 1, "case": {"project": "01-bytes-default", "index": 0}}
+{"event": "attempt", "kind": "dispatch", "index": 2, "case": {"project": "01-bytes-default", "index": 1}}
+{"event": "attempt", "kind": "dispatch", "index": 3, "case": {"project": "01-bytes-default", "index": 2}}
+{"event": "attempt", "kind": "dispatch", "index": 4, "case": {"project": "01-bytes-default", "index": 3}}
+{"event": "attempt", "kind": "dispatch", "index": 5, "case": {"project": "01-bytes-default", "index": 4}}
+{"event": "attempt", "kind": "dispatch", "index": 6, "case": {"project": "01-bytes-default", "index": 5}}
+{"event": "attempt", "kind": "dispatch", "index": 7, "case": {"project": "01-bytes-default", "index": 6}}
+{"event": "attempt", "kind": "dispatch", "index": 8, "case": {"project": "01-bytes-default", "index": 7}}
+{"event": "attempt", "kind": "dispatch", "index": 9, "case": {"project": "02-unittest-binding", "index": 0}}
+{"event": "attempt", "kind": "dispatch", "index": 10, "case": {"project": "02-unittest-binding", "index": 1}}
+{"event": "attempt", "kind": "dispatch", "index": 11, "case": {"project": "02-unittest-binding", "index": 2}}
+{"event": "attempt", "kind": "dispatch", "index": 12, "case": {"project": "02-unittest-binding", "index": 3}}
+{"event": "attempt", "kind": "dispatch", "index": 13, "case": {"project": "02-unittest-binding", "index": 4}}
+{"event": "attempt", "kind": "dispatch", "index": 14, "case": {"project": "02-unittest-binding", "index": 5}}
+{"event": "attempt", "kind": "dispatch", "index": 15, "case": {"project": "02-unittest-binding", "index": 6}}
+{"event": "attempt", "kind": "dispatch", "index": 16, "case": {"project": "02-unittest-binding", "index": 7}}
+{"event": "attempt", "kind": "dispatch", "index": 17, "case": {"project": "03-allowed-refusal", "index": 0}}
+{"event": "attempt", "kind": "dispatch", "index": 18, "case": {"project": "03-allowed-refusal", "index": 1}}
+{"event": "attempt", "kind": "dispatch", "index": 19, "case": {"project": "03-allowed-refusal", "index": 2}}
+{"event": "attempt", "kind": "dispatch", "index": 20, "case": {"project": "03-allowed-refusal", "index": 3}}
+{"event": "attempt", "kind": "dispatch", "index": 21, "case": {"project": "03-allowed-refusal", "index": 4}}
+{"event": "attempt", "kind": "dispatch", "index": 22, "case": {"project": "03-allowed-refusal", "index": 5}}
+{"event": "attempt", "kind": "dispatch", "index": 23, "case": {"project": "03-allowed-refusal", "index": 6}}
+{"event": "attempt", "kind": "dispatch", "index": 24, "case": {"project": "03-allowed-refusal", "index": 7}}
+{"event": "attempt", "kind": "dispatch", "index": 25, "case": {"project": "04-relative-source", "index": 0}}
+{"event": "attempt", "kind": "dispatch", "index": 26, "case": {"project": "04-relative-source", "index": 1}}
+{"event": "attempt", "kind": "dispatch", "index": 27, "case": {"project": "04-relative-source", "index": 2}}
+{"event": "attempt", "kind": "dispatch", "index": 28, "case": {"project": "04-relative-source", "index": 3}}
+{"event": "attempt", "kind": "dispatch", "index": 29, "case": {"project": "04-relative-source", "index": 4}}
+{"event": "attempt", "kind": "dispatch", "index": 30, "case": {"project": "04-relative-source", "index": 5}}
+{"event": "attempt", "kind": "dispatch", "index": 31, "case": {"project": "04-relative-source", "index": 6}}
+{"event": "attempt", "kind": "dispatch", "index": 32, "case": {"project": "04-relative-source", "index": 7}}
+{"event": "attempt", "kind": "dispatch", "index": 33, "case": {"project": "05-reexport-source", "index": 0}}
+{"event": "attempt", "kind": "dispatch", "index": 34, "case": {"project": "05-reexport-source", "index": 1}}
+{"event": "attempt", "kind": "dispatch", "index": 35, "case": {"project": "05-reexport-source", "index": 2}}
+{"event": "attempt", "kind": "dispatch", "index": 36, "case": {"project": "05-reexport-source", "index": 3}}
+{"event": "attempt", "kind": "dispatch", "index": 37, "case": {"project": "05-reexport-source", "index": 4}}
+{"event": "attempt", "kind": "dispatch", "index": 38, "case": {"project": "05-reexport-source", "index": 5}}
+{"event": "attempt", "kind": "dispatch", "index": 39, "case": {"project": "05-reexport-source", "index": 6}}
+{"event": "attempt", "kind": "dispatch", "index": 40, "case": {"project": "05-reexport-source", "index": 7}}
+{"event": "attempt", "kind": "dispatch", "index": 41, "case": {"project": "12-equal-length-content", "index": 0}}
+{"event": "attempt", "kind": "dispatch", "index": 42, "case": {"project": "12-equal-length-content", "index": 1}}
+{"event": "attempt", "kind": "dispatch", "index": 43, "case": {"project": "12-equal-length-content", "index": 2}}
+{"event": "attempt", "kind": "dispatch", "index": 44, "case": {"project": "12-equal-length-content", "index": 3}}
+{"event": "attempt", "kind": "dispatch", "index": 45, "case": {"project": "12-equal-length-content", "index": 4}}
+{"event": "attempt", "kind": "dispatch", "index": 46, "case": {"project": "12-equal-length-content", "index": 5}}
+{"event": "attempt", "kind": "dispatch", "index": 47, "case": {"project": "12-equal-length-content", "index": 6}}
+{"event": "attempt", "kind": "dispatch", "index": 48, "case": {"project": "12-equal-length-content", "index": 7}}
+{"event": "attempt", "kind": "evaluator", "index": 1, "case": {"project": "01-bytes-default", "module": "subject", "function": "attach", "length": 0, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 2, "case": {"project": "01-bytes-default", "module": "subject", "function": "attach", "length": 1, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 3, "case": {"project": "01-bytes-default", "module": "subject", "function": "attach", "length": 2, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 4, "case": {"project": "01-bytes-default", "module": "subject", "function": "attach", "length": 3, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 5, "case": {"project": "01-bytes-default", "module": "subject", "function": "attach", "length": 4, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 6, "case": {"project": "01-bytes-default", "module": "subject", "function": "attach", "length": 5, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 7, "case": {"project": "01-bytes-default", "module": "subject", "function": "attach", "length": 6, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 8, "case": {"project": "01-bytes-default", "module": "subject", "function": "attach", "length": 7, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 9, "case": {"project": "01-bytes-default", "module": "subject", "function": "attach", "length": 8, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 10, "case": {"project": "02-unittest-binding", "module": "subject", "function": "attach", "length": 0, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {"enabled": {"type": "bool", "value": true}}}}
+{"event": "attempt", "kind": "evaluator", "index": 11, "case": {"project": "02-unittest-binding", "module": "subject", "function": "attach", "length": 1, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {"enabled": {"type": "bool", "value": true}}}}
+{"event": "attempt", "kind": "evaluator", "index": 12, "case": {"project": "02-unittest-binding", "module": "subject", "function": "attach", "length": 2, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {"enabled": {"type": "bool", "value": true}}}}
+{"event": "attempt", "kind": "evaluator", "index": 13, "case": {"project": "02-unittest-binding", "module": "subject", "function": "attach", "length": 3, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {"enabled": {"type": "bool", "value": true}}}}
+{"event": "attempt", "kind": "evaluator", "index": 14, "case": {"project": "02-unittest-binding", "module": "subject", "function": "attach", "length": 4, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {"enabled": {"type": "bool", "value": true}}}}
+{"event": "attempt", "kind": "evaluator", "index": 15, "case": {"project": "02-unittest-binding", "module": "subject", "function": "attach", "length": 5, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {"enabled": {"type": "bool", "value": true}}}}
+{"event": "attempt", "kind": "evaluator", "index": 16, "case": {"project": "02-unittest-binding", "module": "subject", "function": "attach", "length": 6, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {"enabled": {"type": "bool", "value": true}}}}
+{"event": "attempt", "kind": "evaluator", "index": 17, "case": {"project": "02-unittest-binding", "module": "subject", "function": "attach", "length": 7, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {"enabled": {"type": "bool", "value": true}}}}
+{"event": "attempt", "kind": "evaluator", "index": 18, "case": {"project": "02-unittest-binding", "module": "subject", "function": "attach", "length": 8, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {"enabled": {"type": "bool", "value": true}}}}
+{"event": "attempt", "kind": "evaluator", "index": 19, "case": {"project": "02-unittest-binding", "module": "subject", "function": "attach", "length": 0, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {"enabled": {"type": "bool", "value": false}}}}
+{"event": "attempt", "kind": "evaluator", "index": 20, "case": {"project": "02-unittest-binding", "module": "subject", "function": "attach", "length": 1, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {"enabled": {"type": "bool", "value": false}}}}
+{"event": "attempt", "kind": "evaluator", "index": 21, "case": {"project": "02-unittest-binding", "module": "subject", "function": "attach", "length": 2, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {"enabled": {"type": "bool", "value": false}}}}
+{"event": "attempt", "kind": "evaluator", "index": 22, "case": {"project": "02-unittest-binding", "module": "subject", "function": "attach", "length": 3, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {"enabled": {"type": "bool", "value": false}}}}
+{"event": "attempt", "kind": "evaluator", "index": 23, "case": {"project": "02-unittest-binding", "module": "subject", "function": "attach", "length": 4, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {"enabled": {"type": "bool", "value": false}}}}
+{"event": "attempt", "kind": "evaluator", "index": 24, "case": {"project": "02-unittest-binding", "module": "subject", "function": "attach", "length": 5, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {"enabled": {"type": "bool", "value": false}}}}
+{"event": "attempt", "kind": "evaluator", "index": 25, "case": {"project": "02-unittest-binding", "module": "subject", "function": "attach", "length": 6, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {"enabled": {"type": "bool", "value": false}}}}
+{"event": "attempt", "kind": "evaluator", "index": 26, "case": {"project": "02-unittest-binding", "module": "subject", "function": "attach", "length": 7, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {"enabled": {"type": "bool", "value": false}}}}
+{"event": "attempt", "kind": "evaluator", "index": 27, "case": {"project": "02-unittest-binding", "module": "subject", "function": "attach", "length": 8, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {"enabled": {"type": "bool", "value": false}}}}
+{"event": "attempt", "kind": "evaluator", "index": 28, "case": {"project": "03-allowed-refusal", "module": "subject", "function": "check", "length": 0, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 29, "case": {"project": "03-allowed-refusal", "module": "subject", "function": "check", "length": 1, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 30, "case": {"project": "03-allowed-refusal", "module": "subject", "function": "check", "length": 2, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 31, "case": {"project": "03-allowed-refusal", "module": "subject", "function": "check", "length": 3, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 32, "case": {"project": "03-allowed-refusal", "module": "subject", "function": "check", "length": 4, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 33, "case": {"project": "03-allowed-refusal", "module": "subject", "function": "check", "length": 5, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 34, "case": {"project": "03-allowed-refusal", "module": "subject", "function": "check", "length": 6, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 35, "case": {"project": "03-allowed-refusal", "module": "subject", "function": "check", "length": 7, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 36, "case": {"project": "03-allowed-refusal", "module": "subject", "function": "check", "length": 8, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 37, "case": {"project": "04-relative-source", "module": "pkg.api", "function": "attach", "length": 0, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 38, "case": {"project": "04-relative-source", "module": "pkg.api", "function": "attach", "length": 1, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 39, "case": {"project": "04-relative-source", "module": "pkg.api", "function": "attach", "length": 2, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 40, "case": {"project": "04-relative-source", "module": "pkg.api", "function": "attach", "length": 3, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 41, "case": {"project": "04-relative-source", "module": "pkg.api", "function": "attach", "length": 4, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 42, "case": {"project": "04-relative-source", "module": "pkg.api", "function": "attach", "length": 5, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 43, "case": {"project": "04-relative-source", "module": "pkg.api", "function": "attach", "length": 6, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 44, "case": {"project": "04-relative-source", "module": "pkg.api", "function": "attach", "length": 7, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 45, "case": {"project": "04-relative-source", "module": "pkg.api", "function": "attach", "length": 8, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 46, "case": {"project": "05-reexport-source", "module": "backend", "function": "attach", "length": 0, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {"suffix": {"type": "bytes", "hex": "3f", "length": 1}}}}
+{"event": "attempt", "kind": "evaluator", "index": 47, "case": {"project": "05-reexport-source", "module": "backend", "function": "attach", "length": 1, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {"suffix": {"type": "bytes", "hex": "3f", "length": 1}}}}
+{"event": "attempt", "kind": "evaluator", "index": 48, "case": {"project": "05-reexport-source", "module": "backend", "function": "attach", "length": 2, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {"suffix": {"type": "bytes", "hex": "3f", "length": 1}}}}
+{"event": "attempt", "kind": "evaluator", "index": 49, "case": {"project": "05-reexport-source", "module": "backend", "function": "attach", "length": 3, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {"suffix": {"type": "bytes", "hex": "3f", "length": 1}}}}
+{"event": "attempt", "kind": "evaluator", "index": 50, "case": {"project": "05-reexport-source", "module": "backend", "function": "attach", "length": 4, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {"suffix": {"type": "bytes", "hex": "3f", "length": 1}}}}
+{"event": "attempt", "kind": "evaluator", "index": 51, "case": {"project": "05-reexport-source", "module": "backend", "function": "attach", "length": 5, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {"suffix": {"type": "bytes", "hex": "3f", "length": 1}}}}
+{"event": "attempt", "kind": "evaluator", "index": 52, "case": {"project": "05-reexport-source", "module": "backend", "function": "attach", "length": 6, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {"suffix": {"type": "bytes", "hex": "3f", "length": 1}}}}
+{"event": "attempt", "kind": "evaluator", "index": 53, "case": {"project": "05-reexport-source", "module": "backend", "function": "attach", "length": 7, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {"suffix": {"type": "bytes", "hex": "3f", "length": 1}}}}
+{"event": "attempt", "kind": "evaluator", "index": 54, "case": {"project": "05-reexport-source", "module": "backend", "function": "attach", "length": 8, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {"suffix": {"type": "bytes", "hex": "3f", "length": 1}}}}
+{"event": "attempt", "kind": "evaluator", "index": 55, "case": {"project": "12-equal-length-content", "module": "subject", "function": "classify", "length": 0, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 56, "case": {"project": "12-equal-length-content", "module": "subject", "function": "classify", "length": 1, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 57, "case": {"project": "12-equal-length-content", "module": "subject", "function": "classify", "length": 2, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 58, "case": {"project": "12-equal-length-content", "module": "subject", "function": "classify", "length": 3, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 59, "case": {"project": "12-equal-length-content", "module": "subject", "function": "classify", "length": 4, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 60, "case": {"project": "12-equal-length-content", "module": "subject", "function": "classify", "length": 5, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 61, "case": {"project": "12-equal-length-content", "module": "subject", "function": "classify", "length": 6, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 62, "case": {"project": "12-equal-length-content", "module": "subject", "function": "classify", "length": 7, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 63, "case": {"project": "12-equal-length-content", "module": "subject", "function": "classify", "length": 8, "fill": {"type": "bytes", "hex": "41", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 64, "case": {"project": "12-equal-length-content", "module": "subject", "function": "classify", "length": 0, "fill": {"type": "bytes", "hex": "42", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 65, "case": {"project": "12-equal-length-content", "module": "subject", "function": "classify", "length": 1, "fill": {"type": "bytes", "hex": "42", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 66, "case": {"project": "12-equal-length-content", "module": "subject", "function": "classify", "length": 2, "fill": {"type": "bytes", "hex": "42", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 67, "case": {"project": "12-equal-length-content", "module": "subject", "function": "classify", "length": 3, "fill": {"type": "bytes", "hex": "42", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 68, "case": {"project": "12-equal-length-content", "module": "subject", "function": "classify", "length": 4, "fill": {"type": "bytes", "hex": "42", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 69, "case": {"project": "12-equal-length-content", "module": "subject", "function": "classify", "length": 5, "fill": {"type": "bytes", "hex": "42", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 70, "case": {"project": "12-equal-length-content", "module": "subject", "function": "classify", "length": 6, "fill": {"type": "bytes", "hex": "42", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 71, "case": {"project": "12-equal-length-content", "module": "subject", "function": "classify", "length": 7, "fill": {"type": "bytes", "hex": "42", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 72, "case": {"project": "12-equal-length-content", "module": "subject", "function": "classify", "length": 8, "fill": {"type": "bytes", "hex": "42", "length": 1}, "keywords": {}}}
+{"event": "attempt", "kind": "evaluator", "index": 73, "case": {"kind": "binding", "index": 0}}
+{"event": "attempt", "kind": "evaluator", "index": 74, "case": {"kind": "binding", "index": 1}}
+{"event": "attempt", "kind": "evaluator", "index": 75, "case": {"kind": "binding", "index": 2}}
+{"event": "attempt", "kind": "evaluator", "index": 76, "case": {"kind": "binding", "index": 3}}
+{"event": "attempt", "kind": "evaluator", "index": 77, "case": {"kind": "binding", "index": 4}}
+{"event": "attempt", "kind": "evaluator", "index": 78, "case": {"kind": "binding", "index": 5}}
+{"event": "attempt", "kind": "evaluator", "index": 79, "case": {"kind": "binding", "index": 6}}
+{"event": "attempt", "kind": "evaluator", "index": 80, "case": {"kind": "binding", "index": 7}}
+{"event": "attempt", "kind": "evaluator", "index": 81, "case": {"kind": "binding", "index": 8}}
+{"event": "attempt", "kind": "evaluator", "index": 82, "case": {"kind": "binding", "index": 9}}

@@ -1,0 +1,563 @@
+{
+  "first": {
+    "status": "analyzed",
+    "seed_points": [
+      0,
+      1,
+      9,
+      10
+    ],
+    "checked_points": [
+      0,
+      1,
+      4,
+      5,
+      6,
+      7,
+      9,
+      10
+    ],
+    "consumers": {
+      "packet_a": {
+        "observations": [
+          {
+            "input": 0,
+            "outcome": "returned",
+            "consumers": [
+              {
+                "line": 29,
+                "expression": "encode(n)",
+                "unit": "byte",
+                "scale": 3,
+                "offset": 2,
+                "quantity": 2
+              }
+            ]
+          },
+          {
+            "input": 1,
+            "outcome": "returned",
+            "consumers": [
+              {
+                "line": 29,
+                "expression": "encode(n)",
+                "unit": "byte",
+                "scale": 3,
+                "offset": 2,
+                "quantity": 5
+              }
+            ]
+          },
+          {
+            "input": 4,
+            "outcome": "returned",
+            "consumers": [
+              {
+                "line": 29,
+                "expression": "encode(n)",
+                "unit": "byte",
+                "scale": 3,
+                "offset": 2,
+                "quantity": 14
+              }
+            ]
+          },
+          {
+            "input": 5,
+            "outcome": "returned",
+            "consumers": [
+              {
+                "line": 29,
+                "expression": "encode(n)",
+                "unit": "byte",
+                "scale": 3,
+                "offset": 2,
+                "quantity": 17
+              }
+            ]
+          },
+          {
+            "input": 6,
+            "outcome": "value_error",
+            "consumers": [
+              {
+                "line": 29,
+                "expression": "encode(n)",
+                "unit": "byte",
+                "scale": 3,
+                "offset": 2,
+                "quantity": 20
+              }
+            ]
+          },
+          {
+            "input": 7,
+            "outcome": "value_error",
+            "consumers": [
+              {
+                "line": 29,
+                "expression": "encode(n)",
+                "unit": "byte",
+                "scale": 3,
+                "offset": 2,
+                "quantity": 23
+              }
+            ]
+          },
+          {
+            "input": 9,
+            "outcome": "value_error",
+            "consumers": [
+              {
+                "line": 29,
+                "expression": "encode(n)",
+                "unit": "byte",
+                "scale": 3,
+                "offset": 2,
+                "quantity": 29
+              }
+            ]
+          },
+          {
+            "input": 10,
+            "outcome": "value_error",
+            "consumers": [
+              {
+                "line": 29,
+                "expression": "encode(n)",
+                "unit": "byte",
+                "scale": 3,
+                "offset": 2,
+                "quantity": 32
+              }
+            ]
+          }
+        ],
+        "errors": []
+      }
+    }
+  },
+  "second": {
+    "status": "analyzed",
+    "seed_points": [
+      0,
+      1,
+      9,
+      10
+    ],
+    "checked_points": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      9,
+      10
+    ],
+    "consumers": {
+      "packet_b": {
+        "observations": [
+          {
+            "input": 0,
+            "outcome": "returned",
+            "consumers": [
+              {
+                "line": 35,
+                "expression": "encode(n)",
+                "unit": "byte",
+                "scale": 3,
+                "offset": 2,
+                "quantity": 2
+              }
+            ]
+          },
+          {
+            "input": 1,
+            "outcome": "returned",
+            "consumers": [
+              {
+                "line": 35,
+                "expression": "encode(n)",
+                "unit": "byte",
+                "scale": 3,
+                "offset": 2,
+                "quantity": 5
+              }
+            ]
+          },
+          {
+            "input": 2,
+            "outcome": "returned",
+            "consumers": [
+              {
+                "line": 35,
+                "expression": "encode(n)",
+                "unit": "byte",
+                "scale": 3,
+                "offset": 2,
+                "quantity": 8
+              }
+            ]
+          },
+          {
+            "input": 3,
+            "outcome": "returned",
+            "consumers": [
+              {
+                "line": 35,
+                "expression": "encode(n)",
+                "unit": "byte",
+                "scale": 3,
+                "offset": 2,
+                "quantity": 11
+              }
+            ]
+          },
+          {
+            "input": 4,
+            "outcome": "value_error",
+            "consumers": [
+              {
+                "line": 35,
+                "expression": "encode(n)",
+                "unit": "byte",
+                "scale": 3,
+                "offset": 2,
+                "quantity": 14
+              }
+            ]
+          },
+          {
+            "input": 5,
+            "outcome": "value_error",
+            "consumers": [
+              {
+                "line": 35,
+                "expression": "encode(n)",
+                "unit": "byte",
+                "scale": 3,
+                "offset": 2,
+                "quantity": 17
+              }
+            ]
+          },
+          {
+            "input": 9,
+            "outcome": "value_error",
+            "consumers": [
+              {
+                "line": 35,
+                "expression": "encode(n)",
+                "unit": "byte",
+                "scale": 3,
+                "offset": 2,
+                "quantity": 29
+              }
+            ]
+          },
+          {
+            "input": 10,
+            "outcome": "value_error",
+            "consumers": [
+              {
+                "line": 35,
+                "expression": "encode(n)",
+                "unit": "byte",
+                "scale": 3,
+                "offset": 2,
+                "quantity": 32
+              }
+            ]
+          }
+        ],
+        "errors": []
+      }
+    }
+  },
+  "guarded": {
+    "status": "analyzed",
+    "seed_points": [
+      0,
+      1,
+      4,
+      5,
+      6,
+      9,
+      10
+    ],
+    "checked_points": [
+      0,
+      1,
+      4,
+      5,
+      6,
+      7,
+      9,
+      10
+    ],
+    "consumers": {
+      "packet_a": {
+        "observations": [
+          {
+            "input": 0,
+            "outcome": "returned",
+            "consumers": [
+              {
+                "line": 42,
+                "expression": "encode(n)",
+                "unit": "byte",
+                "scale": 3,
+                "offset": 2,
+                "quantity": 2
+              }
+            ]
+          },
+          {
+            "input": 1,
+            "outcome": "returned",
+            "consumers": [
+              {
+                "line": 42,
+                "expression": "encode(n)",
+                "unit": "byte",
+                "scale": 3,
+                "offset": 2,
+                "quantity": 5
+              }
+            ]
+          },
+          {
+            "input": 4,
+            "outcome": "returned",
+            "consumers": [
+              {
+                "line": 42,
+                "expression": "encode(n)",
+                "unit": "byte",
+                "scale": 3,
+                "offset": 2,
+                "quantity": 14
+              }
+            ]
+          },
+          {
+            "input": 5,
+            "outcome": "returned",
+            "consumers": [
+              {
+                "line": 42,
+                "expression": "encode(n)",
+                "unit": "byte",
+                "scale": 3,
+                "offset": 2,
+                "quantity": 17
+              }
+            ]
+          },
+          {
+            "input": 6,
+            "outcome": "returned",
+            "consumers": []
+          },
+          {
+            "input": 7,
+            "outcome": "returned",
+            "consumers": []
+          },
+          {
+            "input": 9,
+            "outcome": "returned",
+            "consumers": []
+          },
+          {
+            "input": 10,
+            "outcome": "returned",
+            "consumers": []
+          }
+        ],
+        "errors": []
+      }
+    }
+  },
+  "unreachable": {
+    "status": "analyzed",
+    "seed_points": [
+      0,
+      1,
+      9,
+      10
+    ],
+    "checked_points": [
+      0,
+      1,
+      9,
+      10
+    ],
+    "consumers": {
+      "packet_a": {
+        "observations": [
+          {
+            "input": 0,
+            "outcome": "returned",
+            "consumers": []
+          },
+          {
+            "input": 1,
+            "outcome": "returned",
+            "consumers": []
+          },
+          {
+            "input": 9,
+            "outcome": "returned",
+            "consumers": []
+          },
+          {
+            "input": 10,
+            "outcome": "returned",
+            "consumers": []
+          }
+        ],
+        "errors": []
+      }
+    }
+  },
+  "tolerated": {
+    "status": "analyzed",
+    "seed_points": [
+      0,
+      1,
+      9,
+      10
+    ],
+    "checked_points": [
+      0,
+      1,
+      4,
+      5,
+      6,
+      7,
+      9,
+      10
+    ],
+    "consumers": {
+      "packet_a": {
+        "observations": [
+          {
+            "input": 0,
+            "outcome": "returned",
+            "consumers": [
+              {
+                "line": 49,
+                "expression": "encode(n)",
+                "unit": "byte",
+                "scale": 3,
+                "offset": 2,
+                "quantity": 2
+              }
+            ]
+          },
+          {
+            "input": 1,
+            "outcome": "returned",
+            "consumers": [
+              {
+                "line": 49,
+                "expression": "encode(n)",
+                "unit": "byte",
+                "scale": 3,
+                "offset": 2,
+                "quantity": 5
+              }
+            ]
+          },
+          {
+            "input": 4,
+            "outcome": "returned",
+            "consumers": [
+              {
+                "line": 49,
+                "expression": "encode(n)",
+                "unit": "byte",
+                "scale": 3,
+                "offset": 2,
+                "quantity": 14
+              }
+            ]
+          },
+          {
+            "input": 5,
+            "outcome": "returned",
+            "consumers": [
+              {
+                "line": 49,
+                "expression": "encode(n)",
+                "unit": "byte",
+                "scale": 3,
+                "offset": 2,
+                "quantity": 17
+              }
+            ]
+          },
+          {
+            "input": 6,
+            "outcome": "value_error",
+            "consumers": [
+              {
+                "line": 49,
+                "expression": "encode(n)",
+                "unit": "byte",
+                "scale": 3,
+                "offset": 2,
+                "quantity": 20
+              }
+            ]
+          },
+          {
+            "input": 7,
+            "outcome": "value_error",
+            "consumers": [
+              {
+                "line": 49,
+                "expression": "encode(n)",
+                "unit": "byte",
+                "scale": 3,
+                "offset": 2,
+                "quantity": 23
+              }
+            ]
+          },
+          {
+            "input": 9,
+            "outcome": "value_error",
+            "consumers": [
+              {
+                "line": 49,
+                "expression": "encode(n)",
+                "unit": "byte",
+                "scale": 3,
+                "offset": 2,
+                "quantity": 29
+              }
+            ]
+          },
+          {
+            "input": 10,
+            "outcome": "value_error",
+            "consumers": [
+              {
+                "line": 49,
+                "expression": "encode(n)",
+                "unit": "byte",
+                "scale": 3,
+                "offset": 2,
+                "quantity": 32
+              }
+            ]
+          }
+        ],
+        "errors": []
+      }
+    }
+  }
+}

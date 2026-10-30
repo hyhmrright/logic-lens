@@ -1,0 +1,1780 @@
+[
+  {
+    "entry": "hidden",
+    "input": 0,
+    "outcome": "returned",
+    "value": 2,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "hidden",
+    "input": 1,
+    "outcome": "returned",
+    "value": 5,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "hidden",
+    "input": 2,
+    "outcome": "returned",
+    "value": 8,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "hidden",
+    "input": 3,
+    "outcome": "returned",
+    "value": 11,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "hidden",
+    "input": 4,
+    "outcome": "returned",
+    "value": 14,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "hidden",
+    "input": 5,
+    "outcome": "returned",
+    "value": 17,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "hidden",
+    "input": 6,
+    "outcome": "returned",
+    "value": 20,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "hidden",
+    "input": 7,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        true
+      ]
+    ]
+  },
+  {
+    "entry": "hidden",
+    "input": 8,
+    "outcome": "returned",
+    "value": 26,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "hidden",
+    "input": 9,
+    "outcome": "returned",
+    "value": 29,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "hidden",
+    "input": 10,
+    "outcome": "returned",
+    "value": 32,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "hidden",
+    "input": 11,
+    "outcome": "returned",
+    "value": 35,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "hidden",
+    "input": 12,
+    "outcome": "returned",
+    "value": 38,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "hidden",
+    "input": 13,
+    "outcome": "returned",
+    "value": 41,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "hidden",
+    "input": 14,
+    "outcome": "returned",
+    "value": 44,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "hidden",
+    "input": 15,
+    "outcome": "returned",
+    "value": 47,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "converted",
+    "input": 0,
+    "outcome": "returned",
+    "value": 2,
+    "trace": [
+      [
+        "_route",
+        16,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "converted",
+    "input": 1,
+    "outcome": "returned",
+    "value": 5,
+    "trace": [
+      [
+        "_route",
+        16,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "converted",
+    "input": 2,
+    "outcome": "returned",
+    "value": 8,
+    "trace": [
+      [
+        "_route",
+        16,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "converted",
+    "input": 3,
+    "outcome": "returned",
+    "value": 11,
+    "trace": [
+      [
+        "_route",
+        16,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "converted",
+    "input": 4,
+    "outcome": "returned",
+    "value": 14,
+    "trace": [
+      [
+        "_route",
+        16,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "converted",
+    "input": 5,
+    "outcome": "returned",
+    "value": 17,
+    "trace": [
+      [
+        "_route",
+        16,
+        true
+      ],
+      [
+        "_route",
+        17,
+        true
+      ],
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "converted",
+    "input": 6,
+    "outcome": "returned",
+    "value": 20,
+    "trace": [
+      [
+        "_route",
+        16,
+        true
+      ],
+      [
+        "_route",
+        17,
+        true
+      ],
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "converted",
+    "input": 7,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "_route",
+        16,
+        true
+      ],
+      [
+        "_route",
+        17,
+        true
+      ],
+      [
+        "_hidden",
+        6,
+        true
+      ]
+    ]
+  },
+  {
+    "entry": "converted",
+    "input": 8,
+    "outcome": "returned",
+    "value": 26,
+    "trace": [
+      [
+        "_route",
+        16,
+        true
+      ],
+      [
+        "_route",
+        17,
+        true
+      ],
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "converted",
+    "input": 9,
+    "outcome": "returned",
+    "value": 29,
+    "trace": [
+      [
+        "_route",
+        16,
+        true
+      ],
+      [
+        "_route",
+        17,
+        true
+      ],
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "converted",
+    "input": 10,
+    "outcome": "returned",
+    "value": 32,
+    "trace": [
+      [
+        "_route",
+        16,
+        true
+      ],
+      [
+        "_route",
+        17,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "converted",
+    "input": 11,
+    "outcome": "returned",
+    "value": 35,
+    "trace": [
+      [
+        "_route",
+        16,
+        true
+      ],
+      [
+        "_route",
+        17,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "converted",
+    "input": 12,
+    "outcome": "returned",
+    "value": 38,
+    "trace": [
+      [
+        "_route",
+        16,
+        true
+      ],
+      [
+        "_route",
+        17,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "converted",
+    "input": 13,
+    "outcome": "returned",
+    "value": 41,
+    "trace": [
+      [
+        "_route",
+        16,
+        true
+      ],
+      [
+        "_route",
+        17,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "converted",
+    "input": 14,
+    "outcome": "returned",
+    "value": 44,
+    "trace": [
+      [
+        "_route",
+        16,
+        true
+      ],
+      [
+        "_route",
+        17,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "converted",
+    "input": 15,
+    "outcome": "returned",
+    "value": 47,
+    "trace": [
+      [
+        "_route",
+        16,
+        true
+      ],
+      [
+        "_route",
+        17,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "multiple",
+    "input": 0,
+    "outcome": "returned",
+    "value": 0,
+    "trace": [
+      [
+        "multiple",
+        33,
+        true
+      ],
+      [
+        "_sink",
+        27,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "multiple",
+    "input": 1,
+    "outcome": "returned",
+    "value": 1,
+    "trace": [
+      [
+        "multiple",
+        33,
+        true
+      ],
+      [
+        "_sink",
+        27,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "multiple",
+    "input": 2,
+    "outcome": "returned",
+    "value": 2,
+    "trace": [
+      [
+        "multiple",
+        33,
+        true
+      ],
+      [
+        "_sink",
+        27,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "multiple",
+    "input": 3,
+    "outcome": "returned",
+    "value": 3,
+    "trace": [
+      [
+        "multiple",
+        33,
+        true
+      ],
+      [
+        "_sink",
+        27,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "multiple",
+    "input": 4,
+    "outcome": "returned",
+    "value": 4,
+    "trace": [
+      [
+        "multiple",
+        33,
+        true
+      ],
+      [
+        "_sink",
+        27,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "multiple",
+    "input": 5,
+    "outcome": "returned",
+    "value": 10,
+    "trace": [
+      [
+        "multiple",
+        33,
+        false
+      ],
+      [
+        "_sink",
+        27,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "multiple",
+    "input": 6,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "multiple",
+        33,
+        false
+      ],
+      [
+        "_sink",
+        27,
+        true
+      ]
+    ]
+  },
+  {
+    "entry": "multiple",
+    "input": 7,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "multiple",
+        33,
+        false
+      ],
+      [
+        "_sink",
+        27,
+        true
+      ]
+    ]
+  },
+  {
+    "entry": "multiple",
+    "input": 8,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "multiple",
+        33,
+        false
+      ],
+      [
+        "_sink",
+        27,
+        true
+      ]
+    ]
+  },
+  {
+    "entry": "multiple",
+    "input": 9,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "multiple",
+        33,
+        false
+      ],
+      [
+        "_sink",
+        27,
+        true
+      ]
+    ]
+  },
+  {
+    "entry": "multiple",
+    "input": 10,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "multiple",
+        33,
+        false
+      ],
+      [
+        "_sink",
+        27,
+        true
+      ]
+    ]
+  },
+  {
+    "entry": "multiple",
+    "input": 11,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "multiple",
+        33,
+        false
+      ],
+      [
+        "_sink",
+        27,
+        true
+      ]
+    ]
+  },
+  {
+    "entry": "multiple",
+    "input": 12,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "multiple",
+        33,
+        false
+      ],
+      [
+        "_sink",
+        27,
+        true
+      ]
+    ]
+  },
+  {
+    "entry": "multiple",
+    "input": 13,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "multiple",
+        33,
+        false
+      ],
+      [
+        "_sink",
+        27,
+        true
+      ]
+    ]
+  },
+  {
+    "entry": "multiple",
+    "input": 14,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "multiple",
+        33,
+        false
+      ],
+      [
+        "_sink",
+        27,
+        true
+      ]
+    ]
+  },
+  {
+    "entry": "multiple",
+    "input": 15,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "multiple",
+        33,
+        false
+      ],
+      [
+        "_sink",
+        27,
+        true
+      ]
+    ]
+  },
+  {
+    "entry": "alternate",
+    "input": 0,
+    "outcome": "returned",
+    "value": 0,
+    "trace": [
+      [
+        "alternate",
+        39,
+        false
+      ],
+      [
+        "_sink",
+        27,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "alternate",
+    "input": 1,
+    "outcome": "returned",
+    "value": 1,
+    "trace": [
+      [
+        "alternate",
+        39,
+        false
+      ],
+      [
+        "_sink",
+        27,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "alternate",
+    "input": 2,
+    "outcome": "returned",
+    "value": 2,
+    "trace": [
+      [
+        "alternate",
+        39,
+        false
+      ],
+      [
+        "_sink",
+        27,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "alternate",
+    "input": 3,
+    "outcome": "returned",
+    "value": 3,
+    "trace": [
+      [
+        "alternate",
+        39,
+        false
+      ],
+      [
+        "_sink",
+        27,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "alternate",
+    "input": 4,
+    "outcome": "returned",
+    "value": 4,
+    "trace": [
+      [
+        "alternate",
+        39,
+        false
+      ],
+      [
+        "_sink",
+        27,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "alternate",
+    "input": 5,
+    "outcome": "returned",
+    "value": 5,
+    "trace": [
+      [
+        "alternate",
+        39,
+        false
+      ],
+      [
+        "_sink",
+        27,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "alternate",
+    "input": 6,
+    "outcome": "returned",
+    "value": 6,
+    "trace": [
+      [
+        "alternate",
+        39,
+        true
+      ]
+    ]
+  },
+  {
+    "entry": "alternate",
+    "input": 7,
+    "outcome": "returned",
+    "value": 7,
+    "trace": [
+      [
+        "alternate",
+        39,
+        true
+      ]
+    ]
+  },
+  {
+    "entry": "alternate",
+    "input": 8,
+    "outcome": "returned",
+    "value": 8,
+    "trace": [
+      [
+        "alternate",
+        39,
+        true
+      ]
+    ]
+  },
+  {
+    "entry": "alternate",
+    "input": 9,
+    "outcome": "returned",
+    "value": 9,
+    "trace": [
+      [
+        "alternate",
+        39,
+        true
+      ]
+    ]
+  },
+  {
+    "entry": "alternate",
+    "input": 10,
+    "outcome": "returned",
+    "value": 10,
+    "trace": [
+      [
+        "alternate",
+        39,
+        true
+      ]
+    ]
+  },
+  {
+    "entry": "alternate",
+    "input": 11,
+    "outcome": "returned",
+    "value": 11,
+    "trace": [
+      [
+        "alternate",
+        39,
+        true
+      ]
+    ]
+  },
+  {
+    "entry": "alternate",
+    "input": 12,
+    "outcome": "returned",
+    "value": 12,
+    "trace": [
+      [
+        "alternate",
+        39,
+        true
+      ]
+    ]
+  },
+  {
+    "entry": "alternate",
+    "input": 13,
+    "outcome": "returned",
+    "value": 13,
+    "trace": [
+      [
+        "alternate",
+        39,
+        true
+      ]
+    ]
+  },
+  {
+    "entry": "alternate",
+    "input": 14,
+    "outcome": "returned",
+    "value": 14,
+    "trace": [
+      [
+        "alternate",
+        39,
+        true
+      ]
+    ]
+  },
+  {
+    "entry": "alternate",
+    "input": 15,
+    "outcome": "returned",
+    "value": 15,
+    "trace": [
+      [
+        "alternate",
+        39,
+        true
+      ]
+    ]
+  },
+  {
+    "entry": "permitted",
+    "input": 0,
+    "outcome": "returned",
+    "value": 0,
+    "trace": [
+      [
+        "_sink",
+        27,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "permitted",
+    "input": 1,
+    "outcome": "returned",
+    "value": 2,
+    "trace": [
+      [
+        "_sink",
+        27,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "permitted",
+    "input": 2,
+    "outcome": "returned",
+    "value": 4,
+    "trace": [
+      [
+        "_sink",
+        27,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "permitted",
+    "input": 3,
+    "outcome": "returned",
+    "value": 6,
+    "trace": [
+      [
+        "_sink",
+        27,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "permitted",
+    "input": 4,
+    "outcome": "returned",
+    "value": 8,
+    "trace": [
+      [
+        "_sink",
+        27,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "permitted",
+    "input": 5,
+    "outcome": "returned",
+    "value": 10,
+    "trace": [
+      [
+        "_sink",
+        27,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "permitted",
+    "input": 6,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "_sink",
+        27,
+        true
+      ]
+    ]
+  },
+  {
+    "entry": "permitted",
+    "input": 7,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "_sink",
+        27,
+        true
+      ]
+    ]
+  },
+  {
+    "entry": "permitted",
+    "input": 8,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "_sink",
+        27,
+        true
+      ]
+    ]
+  },
+  {
+    "entry": "permitted",
+    "input": 9,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "_sink",
+        27,
+        true
+      ]
+    ]
+  },
+  {
+    "entry": "permitted",
+    "input": 10,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "_sink",
+        27,
+        true
+      ]
+    ]
+  },
+  {
+    "entry": "permitted",
+    "input": 11,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "_sink",
+        27,
+        true
+      ]
+    ]
+  },
+  {
+    "entry": "permitted",
+    "input": 12,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "_sink",
+        27,
+        true
+      ]
+    ]
+  },
+  {
+    "entry": "permitted",
+    "input": 13,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "_sink",
+        27,
+        true
+      ]
+    ]
+  },
+  {
+    "entry": "permitted",
+    "input": 14,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "_sink",
+        27,
+        true
+      ]
+    ]
+  },
+  {
+    "entry": "permitted",
+    "input": 15,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "_sink",
+        27,
+        true
+      ]
+    ]
+  },
+  {
+    "entry": "conflicting",
+    "input": 0,
+    "outcome": "returned",
+    "value": 0,
+    "trace": []
+  },
+  {
+    "entry": "conflicting",
+    "input": 1,
+    "outcome": "returned",
+    "value": 1,
+    "trace": []
+  },
+  {
+    "entry": "conflicting",
+    "input": 2,
+    "outcome": "returned",
+    "value": 2,
+    "trace": []
+  },
+  {
+    "entry": "conflicting",
+    "input": 3,
+    "outcome": "returned",
+    "value": 3,
+    "trace": []
+  },
+  {
+    "entry": "conflicting",
+    "input": 4,
+    "outcome": "returned",
+    "value": 4,
+    "trace": []
+  },
+  {
+    "entry": "conflicting",
+    "input": 5,
+    "outcome": "returned",
+    "value": 5,
+    "trace": []
+  },
+  {
+    "entry": "conflicting",
+    "input": 6,
+    "outcome": "returned",
+    "value": 6,
+    "trace": []
+  },
+  {
+    "entry": "conflicting",
+    "input": 7,
+    "outcome": "returned",
+    "value": 7,
+    "trace": []
+  },
+  {
+    "entry": "conflicting",
+    "input": 8,
+    "outcome": "returned",
+    "value": 8,
+    "trace": []
+  },
+  {
+    "entry": "conflicting",
+    "input": 9,
+    "outcome": "returned",
+    "value": 9,
+    "trace": []
+  },
+  {
+    "entry": "conflicting",
+    "input": 10,
+    "outcome": "returned",
+    "value": 10,
+    "trace": []
+  },
+  {
+    "entry": "conflicting",
+    "input": 11,
+    "outcome": "returned",
+    "value": 11,
+    "trace": []
+  },
+  {
+    "entry": "conflicting",
+    "input": 12,
+    "outcome": "returned",
+    "value": 12,
+    "trace": []
+  },
+  {
+    "entry": "conflicting",
+    "input": 13,
+    "outcome": "returned",
+    "value": 13,
+    "trace": []
+  },
+  {
+    "entry": "conflicting",
+    "input": 14,
+    "outcome": "returned",
+    "value": 14,
+    "trace": []
+  },
+  {
+    "entry": "conflicting",
+    "input": 15,
+    "outcome": "returned",
+    "value": 15,
+    "trace": []
+  },
+  {
+    "entry": "impossible",
+    "input": 0,
+    "outcome": "returned",
+    "value": 0,
+    "trace": [
+      [
+        "impossible",
+        53,
+        true
+      ],
+      [
+        "impossible",
+        54,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "impossible",
+    "input": 1,
+    "outcome": "returned",
+    "value": 1,
+    "trace": [
+      [
+        "impossible",
+        53,
+        true
+      ],
+      [
+        "impossible",
+        54,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "impossible",
+    "input": 2,
+    "outcome": "returned",
+    "value": 2,
+    "trace": [
+      [
+        "impossible",
+        53,
+        true
+      ],
+      [
+        "impossible",
+        54,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "impossible",
+    "input": 3,
+    "outcome": "returned",
+    "value": 3,
+    "trace": [
+      [
+        "impossible",
+        53,
+        true
+      ],
+      [
+        "impossible",
+        54,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "impossible",
+    "input": 4,
+    "outcome": "returned",
+    "value": 4,
+    "trace": [
+      [
+        "impossible",
+        53,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "impossible",
+    "input": 5,
+    "outcome": "returned",
+    "value": 5,
+    "trace": [
+      [
+        "impossible",
+        53,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "impossible",
+    "input": 6,
+    "outcome": "returned",
+    "value": 6,
+    "trace": [
+      [
+        "impossible",
+        53,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "impossible",
+    "input": 7,
+    "outcome": "returned",
+    "value": 7,
+    "trace": [
+      [
+        "impossible",
+        53,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "impossible",
+    "input": 8,
+    "outcome": "returned",
+    "value": 8,
+    "trace": [
+      [
+        "impossible",
+        53,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "impossible",
+    "input": 9,
+    "outcome": "returned",
+    "value": 9,
+    "trace": [
+      [
+        "impossible",
+        53,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "impossible",
+    "input": 10,
+    "outcome": "returned",
+    "value": 10,
+    "trace": [
+      [
+        "impossible",
+        53,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "impossible",
+    "input": 11,
+    "outcome": "returned",
+    "value": 11,
+    "trace": [
+      [
+        "impossible",
+        53,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "impossible",
+    "input": 12,
+    "outcome": "returned",
+    "value": 12,
+    "trace": [
+      [
+        "impossible",
+        53,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "impossible",
+    "input": 13,
+    "outcome": "returned",
+    "value": 13,
+    "trace": [
+      [
+        "impossible",
+        53,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "impossible",
+    "input": 14,
+    "outcome": "returned",
+    "value": 14,
+    "trace": [
+      [
+        "impossible",
+        53,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "impossible",
+    "input": 15,
+    "outcome": "returned",
+    "value": 15,
+    "trace": [
+      [
+        "impossible",
+        53,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "dynamic",
+    "input": 0,
+    "outcome": "returned",
+    "value": 2,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "dynamic",
+    "input": 1,
+    "outcome": "returned",
+    "value": 5,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "dynamic",
+    "input": 2,
+    "outcome": "returned",
+    "value": 8,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "dynamic",
+    "input": 3,
+    "outcome": "returned",
+    "value": 11,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "dynamic",
+    "input": 4,
+    "outcome": "returned",
+    "value": 14,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "dynamic",
+    "input": 5,
+    "outcome": "returned",
+    "value": 17,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "dynamic",
+    "input": 6,
+    "outcome": "returned",
+    "value": 20,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "dynamic",
+    "input": 7,
+    "outcome": "value_error",
+    "value": null,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        true
+      ]
+    ]
+  },
+  {
+    "entry": "dynamic",
+    "input": 8,
+    "outcome": "returned",
+    "value": 26,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "dynamic",
+    "input": 9,
+    "outcome": "returned",
+    "value": 29,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "dynamic",
+    "input": 10,
+    "outcome": "returned",
+    "value": 32,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "dynamic",
+    "input": 11,
+    "outcome": "returned",
+    "value": 35,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "dynamic",
+    "input": 12,
+    "outcome": "returned",
+    "value": 38,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "dynamic",
+    "input": 13,
+    "outcome": "returned",
+    "value": 41,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "dynamic",
+    "input": 14,
+    "outcome": "returned",
+    "value": 44,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ]
+  },
+  {
+    "entry": "dynamic",
+    "input": 15,
+    "outcome": "returned",
+    "value": 47,
+    "trace": [
+      [
+        "_hidden",
+        6,
+        false
+      ]
+    ]
+  }
+]

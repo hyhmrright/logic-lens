@@ -1,0 +1,197 @@
+{
+  "schema_version": 1,
+  "evidence": [
+    {
+      "test_module": "test_subject",
+      "records": [
+        {
+          "source": {
+            "module": "test_subject",
+            "line": 3,
+            "end": 3
+          },
+          "context": "test_a",
+          "call": "attach(b'A')",
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "attach",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 1,
+              "end": 2
+            },
+            "chain": [
+              "test_subject:attach",
+              "subject:attach"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "subject",
+                "line": 1,
+                "end": 2
+              }
+            ]
+          },
+          "expectation": {
+            "outcome": "returned",
+            "has_value": true,
+            "value": {
+              "type": "bytes",
+              "hex": "4121",
+              "length": 2
+            }
+          },
+          "status": "conflict",
+          "reason": "contradictory exact expectations for same bound call",
+          "arguments": {
+            "args": [
+              {
+                "type": "bytes",
+                "hex": "41",
+                "length": 1
+              }
+            ],
+            "keywords": []
+          },
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "41",
+                "length": 1
+              },
+              "suffix": {
+                "type": "bytes",
+                "hex": "21",
+                "length": 1
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "suffix": "default"
+            }
+          }
+        },
+        {
+          "source": {
+            "module": "test_subject",
+            "line": 5,
+            "end": 5
+          },
+          "context": "test_b",
+          "call": "attach(b'A', suffix=b'!')",
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "attach",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 1,
+              "end": 2
+            },
+            "chain": [
+              "test_subject:attach",
+              "subject:attach"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "subject",
+                "line": 1,
+                "end": 2
+              }
+            ]
+          },
+          "expectation": {
+            "outcome": "returned",
+            "has_value": true,
+            "value": {
+              "type": "bytes",
+              "hex": "77726f6e67",
+              "length": 5
+            }
+          },
+          "status": "conflict",
+          "reason": "contradictory exact expectations for same bound call",
+          "arguments": {
+            "args": [
+              {
+                "type": "bytes",
+                "hex": "41",
+                "length": 1
+              }
+            ],
+            "keywords": [
+              {
+                "name": "suffix",
+                "value": {
+                  "type": "bytes",
+                  "hex": "21",
+                  "length": 1
+                }
+              }
+            ]
+          },
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "41",
+                "length": 1
+              },
+              "suffix": {
+                "type": "bytes",
+                "hex": "21",
+                "length": 1
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "suffix": "keyword"
+            }
+          }
+        }
+      ],
+      "unknown": [],
+      "scope": "conditional exact calls only; no valid-domain inference"
+    }
+  ],
+  "dispatch": [],
+  "entries": [],
+  "deferred": [],
+  "source_sha256": {
+    "subject": "d2fa5444cbdf23ee0d2b5467c335adbe9269bbd589010a18aef0edb849069d04",
+    "test_subject": "3f04cc2ef991fe1d01ed38dcf52a4f40f1222dbbb07f86ba07aad64cc5217119"
+  },
+  "limits": {
+    "static_dispatch": 8,
+    "entries": 8,
+    "points_per_entry": 8,
+    "lengths": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ]
+  },
+  "execution_enabled": false,
+  "scope": "isolated source semantics; module initialization/import availability unknown; exact test evidence conditional; generated-input validity unknown",
+  "limitations": "finite content templates, one changed parameter, no string solver or inferred public contract; source identity does not establish dependency behavior"
+}

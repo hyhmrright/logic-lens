@@ -1,0 +1,158 @@
+[
+  {
+    "case": {
+      "n": 0
+    },
+    "phase": "control",
+    "result": {
+      "status": "pass",
+      "observation": {
+        "outcome": "returned",
+        "value": 2,
+        "consumers": [
+          {
+            "unit": "byte",
+            "quantity": 2
+          }
+        ],
+        "input": 0
+      },
+      "sources": [
+        "subject.py"
+      ],
+      "source_sha256": {
+        "subject.py": "9de8a89df32f017f4c4ecfee90dfde4556ee3500aceba3ff198f7043d0475edc"
+      }
+    }
+  },
+  {
+    "case": {
+      "n": 10
+    },
+    "phase": "search",
+    "result": {
+      "status": "violation",
+      "observation": {
+        "outcome": "value_error",
+        "value": null,
+        "consumers": [
+          {
+            "unit": "byte",
+            "quantity": 32
+          }
+        ],
+        "input": 10
+      },
+      "sources": [
+        "subject.py"
+      ],
+      "source_sha256": {
+        "subject.py": "9de8a89df32f017f4c4ecfee90dfde4556ee3500aceba3ff198f7043d0475edc"
+      }
+    }
+  },
+  {
+    "case": {
+      "n": 1
+    },
+    "phase": "shrink",
+    "result": {
+      "status": "pass",
+      "observation": {
+        "outcome": "returned",
+        "value": 5,
+        "consumers": [
+          {
+            "unit": "byte",
+            "quantity": 5
+          }
+        ],
+        "input": 1
+      },
+      "sources": [
+        "subject.py"
+      ],
+      "source_sha256": {
+        "subject.py": "9de8a89df32f017f4c4ecfee90dfde4556ee3500aceba3ff198f7043d0475edc"
+      }
+    }
+  },
+  {
+    "case": {
+      "n": 4
+    },
+    "phase": "shrink",
+    "result": {
+      "status": "pass",
+      "observation": {
+        "outcome": "returned",
+        "value": 14,
+        "consumers": [
+          {
+            "unit": "byte",
+            "quantity": 14
+          }
+        ],
+        "input": 4
+      },
+      "sources": [
+        "subject.py"
+      ],
+      "source_sha256": {
+        "subject.py": "9de8a89df32f017f4c4ecfee90dfde4556ee3500aceba3ff198f7043d0475edc"
+      }
+    }
+  },
+  {
+    "case": {
+      "n": 5
+    },
+    "phase": "shrink",
+    "result": {
+      "status": "pass",
+      "observation": {
+        "outcome": "returned",
+        "value": 17,
+        "consumers": [
+          {
+            "unit": "byte",
+            "quantity": 17
+          }
+        ],
+        "input": 5
+      },
+      "sources": [
+        "subject.py"
+      ],
+      "source_sha256": {
+        "subject.py": "9de8a89df32f017f4c4ecfee90dfde4556ee3500aceba3ff198f7043d0475edc"
+      }
+    }
+  },
+  {
+    "case": {
+      "n": 6
+    },
+    "phase": "shrink",
+    "result": {
+      "status": "violation",
+      "observation": {
+        "outcome": "value_error",
+        "value": null,
+        "consumers": [
+          {
+            "unit": "byte",
+            "quantity": 20
+          }
+        ],
+        "input": 6
+      },
+      "sources": [
+        "subject.py"
+      ],
+      "source_sha256": {
+        "subject.py": "9de8a89df32f017f4c4ecfee90dfde4556ee3500aceba3ff198f7043d0475edc"
+      }
+    }
+  }
+]

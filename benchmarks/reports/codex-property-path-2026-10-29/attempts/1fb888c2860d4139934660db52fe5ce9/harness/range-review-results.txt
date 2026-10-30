@@ -1,0 +1,8 @@
+REPRODUCED: Comparator constructor loses options
+REPRODUCED: Wildcard OR drops explicit prerelease
+REPRODUCED: Zero lower-bound removal admits excluded prerelease
+REPRODUCED: Loose caret tests textual zero
+REPRODUCED: Strict range repairs repeated build separator
+REPRODUCED: Hyphen lower-bound build swallows prerelease suffix
+REPRODUCED: Pairwise intersection assumes a dense version order
+{"runtime":"v26.13.0","reproducedGroups":7,"sourceModified":false}

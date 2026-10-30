@@ -1,0 +1,99 @@
+{
+  "2a3c46313b06483f85b7824a39898d1f": {
+    "target_detected": false,
+    "false_positive_count": 0,
+    "confirmed_additional": [
+      "semver-or-prerelease",
+      "semver-intersection-witness",
+      "semver-comparator-options"
+    ],
+    "unsupported_claims": [],
+    "refuted_claims": [],
+    "unresolved_leads": [
+      "Intersection without exact comparator",
+      "Numeric expansion boundaries",
+      "Loose parsing",
+      "Cache mutation"
+    ],
+    "report_sha256": "b71a9eeee6998c6029c50f69920a930a1d9006a1813475476b0dada367704afa",
+    "adjudicator": "Implementing assistant, unblinded",
+    "rationale": "All three final findings reproduce on actual unchanged source with established contracts. Neither property addresses long-metadata transformation/consumer boundary; both choose previously investigated OR and intersection behavior. Valid contract-backed search mechanism does not qualify key path-selection endpoint. Remedies are reasoned only, not independently qualified general fixes.",
+    "process": {
+      "tool_calls": 9,
+      "engine_searches": 2,
+      "total_internal_evaluations": 8,
+      "valid_properties": 2,
+      "declared_combinations_per_property": 24,
+      "source_integrity_verified": true,
+      "effective_constraint_definitions_read": false,
+      "key_relationship_resolved": false,
+      "key_distinguishing_family_checked": false,
+      "original_defect_verified": false,
+      "selection_evidence": "item_5 commentary after README/test/code reads selects OR union and exact-version intersection; item_7 writes those domains before any local search",
+      "execution_evidence": "items_8 and _9 invoke engine independently, four calls each including stable controls; union final witness is reduced, intersection witness direct; item_11 reconfirms and tests Comparator constructor",
+      "property_replays_match": true,
+      "premature_executable_repair": false
+    },
+    "properties": [
+      {
+        "id": "range-union-membership",
+        "supported": true,
+        "faithful_real_source": true,
+        "valid_control": true,
+        "oracle": "Disjunction of same-options branch membership equals union membership; README174\u2013176/187\u2013190/312\u2013314",
+        "bounded_result": "4 evaluations; pass2/violation2; reduced witness; no invalid/blocked",
+        "key_relationship_checked": false
+      },
+      {
+        "id": "range-singleton-intersection",
+        "supported": true,
+        "faithful_real_source": true,
+        "valid_control": true,
+        "oracle": "Singleton membership matches full range intersection; exact version admitted by itself; README161\u2013176/187\u2013190/456\u2013457",
+        "bounded_result": "4 evaluations; pass3/violation1; no invalid/blocked",
+        "key_relationship_checked": false
+      }
+    ]
+  },
+  "1fb888c2860d4139934660db52fe5ce9": {
+    "target_detected": false,
+    "false_positive_count": 0,
+    "confirmed_additional": [
+      "semver-comparator-options",
+      "semver-or-prerelease",
+      "semver-zero-lower-bound",
+      "semver-padded-caret",
+      "semver-invalid-build",
+      "semver-hyphen-build",
+      "semver-intersection-gap"
+    ],
+    "unsupported_claims": [],
+    "refuted_claims": [],
+    "unresolved_leads": [
+      "General prerelease-aware intersections and complete remedy",
+      "Exhaustive grammar",
+      "Maximum component arithmetic",
+      "Mutable cache ownership"
+    ],
+    "report_sha256": "8b8f50ec3b36e9dc338b51d2fcbf50d7a46d4c8d6c41bad7ebc96dcd0b3c3963",
+    "adjudicator": "Implementing assistant, unblinded",
+    "rationale": "Seven accepted behavioral classes have existing contract-backed probes on actual source. Malformed repeated build separators are a neighboring grammar issue, not original residual-digit long-build target. Neither establishes or tests effective safe-regex repetition versus downstream parsing. Eight command_execution events plus one file_change in result (nine total), despite self-report of ten; score and self-reported call counts are not evaluator evidence. Remedies unexecuted, no claim that proposed fixes are generally qualified.",
+    "process": {
+      "tool_calls": 9,
+      "self_reported_tool_calls": 10,
+      "engine_searches": 0,
+      "total_internal_evaluations": 0,
+      "valid_properties": 0,
+      "source_integrity_verified": true,
+      "effective_constraint_definitions_read": true,
+      "key_relationship_resolved": false,
+      "key_distinguishing_family_checked": false,
+      "original_defect_verified": false,
+      "selection_evidence": "After initial source/README/fixture reads, item_5 selects wildcard, Comparator construction, intersection membership and loose caret. Later checks zero bound and malformed build/hyphen; no length-domain search.",
+      "premature_executable_repair": false,
+      "command_executions": 8,
+      "file_change_events": 1,
+      "self_report_accounting": "Self-report10; events record8 shell commands +1 apply_patch/file_change =9 tools"
+    }
+  }
+}

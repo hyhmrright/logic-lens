@@ -1,0 +1,1018 @@
+{
+  "schema_version": 1,
+  "entries": [
+    {
+      "target": {
+        "status": "local",
+        "module": "subject",
+        "name": "f",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "subject",
+          "line": 2,
+          "end": 5
+        },
+        "chain": [
+          "subject:f"
+        ],
+        "provenance": [
+          {
+            "module": "subject",
+            "line": 2,
+            "end": 5
+          }
+        ]
+      },
+      "status": "conditional",
+      "relations": [
+        {
+          "entry": {
+            "status": "local",
+            "module": "subject",
+            "name": "f",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 2,
+              "end": 5
+            },
+            "chain": [
+              "subject:f"
+            ],
+            "provenance": [
+              {
+                "module": "subject",
+                "line": 2,
+                "end": 5
+              }
+            ]
+          },
+          "source": {
+            "module": "subject",
+            "line": 3,
+            "end": 3
+          },
+          "producer": "moved(len(renamed))",
+          "consumer_predicate": "moved(len(renamed)) > 59",
+          "call_chain": [
+            {
+              "target": {
+                "status": "local",
+                "module": "subject",
+                "name": "f",
+                "kind": "FunctionDef",
+                "location": {
+                  "module": "subject",
+                  "line": 2,
+                  "end": 5
+                },
+                "chain": [
+                  "subject:f"
+                ],
+                "provenance": [
+                  {
+                    "module": "subject",
+                    "line": 2,
+                    "end": 5
+                  }
+                ]
+              },
+              "site": null
+            }
+          ],
+          "path_conditions": [],
+          "predicate": {
+            "quantity": {
+              "terms": {
+                "renamed": 4
+              },
+              "offset": -52,
+              "kind": "length:bytes"
+            },
+            "operator": "Gt"
+          },
+          "quantity_kind": "length:bytes",
+          "evidence_scope": "conditional isolated source semantics",
+          "oracle_status": "none",
+          "normative_property": null,
+          "searchability": "searchable",
+          "points": [
+            14,
+            13,
+            15
+          ],
+          "reason": null,
+          "reachable_outcomes": [
+            false,
+            true
+          ],
+          "parameter": "renamed",
+          "input_validity": "unknown",
+          "route_scope": "isolated source conditions; other parameters fixed to seed",
+          "search_interval": [
+            0,
+            64
+          ],
+          "excluded": [],
+          "cut": 14,
+          "id": "944ce808a4bfee353e22145aa7754df7ca55cb812b2ca2f8b3fdc4ddce918a80",
+          "example_decisions": [
+            false
+          ]
+        }
+      ],
+      "seed": {
+        "renamed": {
+          "type": "bytes",
+          "hex": "41",
+          "length": 1
+        }
+      },
+      "examples": [
+        {
+          "source": {
+            "module": "test_subject",
+            "line": 3,
+            "end": 3
+          },
+          "context": "test_f",
+          "call": "f(b'A')",
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "f",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 2,
+              "end": 5
+            },
+            "chain": [
+              "test_subject:f",
+              "subject:f"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "subject",
+                "line": 2,
+                "end": 5
+              }
+            ]
+          },
+          "expectation": {
+            "outcome": "returned",
+            "has_value": true,
+            "value": {
+              "type": "int",
+              "value": 0
+            }
+          },
+          "status": "exact_conditional",
+          "reason": "exact example; test environment applicability not proven",
+          "arguments": {
+            "args": [
+              {
+                "type": "bytes",
+                "hex": "41",
+                "length": 1
+              }
+            ],
+            "keywords": []
+          },
+          "binding": {
+            "values": {
+              "renamed": {
+                "type": "bytes",
+                "hex": "41",
+                "length": 1
+              }
+            },
+            "origins": {
+              "renamed": "positional"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "target": {
+        "status": "local",
+        "module": "worker",
+        "name": "shifted",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "worker",
+          "line": 1,
+          "end": 2
+        },
+        "chain": [
+          "worker:shifted"
+        ],
+        "provenance": [
+          {
+            "module": "worker",
+            "line": 1,
+            "end": 2
+          }
+        ]
+      },
+      "status": "missing_binding",
+      "relations": [],
+      "unbound_predicates": []
+    }
+  ],
+  "relations": [
+    {
+      "entry": {
+        "status": "local",
+        "module": "subject",
+        "name": "f",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "subject",
+          "line": 2,
+          "end": 5
+        },
+        "chain": [
+          "subject:f"
+        ],
+        "provenance": [
+          {
+            "module": "subject",
+            "line": 2,
+            "end": 5
+          }
+        ]
+      },
+      "source": {
+        "module": "subject",
+        "line": 3,
+        "end": 3
+      },
+      "producer": "moved(len(renamed))",
+      "consumer_predicate": "moved(len(renamed)) > 59",
+      "call_chain": [
+        {
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "f",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 2,
+              "end": 5
+            },
+            "chain": [
+              "subject:f"
+            ],
+            "provenance": [
+              {
+                "module": "subject",
+                "line": 2,
+                "end": 5
+              }
+            ]
+          },
+          "site": null
+        }
+      ],
+      "path_conditions": [],
+      "predicate": {
+        "quantity": {
+          "terms": {
+            "renamed": 4
+          },
+          "offset": -52,
+          "kind": "length:bytes"
+        },
+        "operator": "Gt"
+      },
+      "quantity_kind": "length:bytes",
+      "evidence_scope": "conditional isolated source semantics",
+      "oracle_status": "none",
+      "normative_property": null,
+      "searchability": "searchable",
+      "points": [
+        14,
+        13,
+        15
+      ],
+      "reason": null,
+      "reachable_outcomes": [
+        false,
+        true
+      ],
+      "parameter": "renamed",
+      "input_validity": "unknown",
+      "route_scope": "isolated source conditions; other parameters fixed to seed",
+      "search_interval": [
+        0,
+        64
+      ],
+      "excluded": [],
+      "cut": 14,
+      "id": "944ce808a4bfee353e22145aa7754df7ca55cb812b2ca2f8b3fdc4ddce918a80",
+      "example_decisions": [
+        false
+      ]
+    }
+  ],
+  "issues": [],
+  "evidence": [
+    {
+      "test_module": "test_subject",
+      "records": [
+        {
+          "source": {
+            "module": "test_subject",
+            "line": 3,
+            "end": 3
+          },
+          "context": "test_f",
+          "call": "f(b'A')",
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "f",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 2,
+              "end": 5
+            },
+            "chain": [
+              "test_subject:f",
+              "subject:f"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "subject",
+                "line": 2,
+                "end": 5
+              }
+            ]
+          },
+          "expectation": {
+            "outcome": "returned",
+            "has_value": true,
+            "value": {
+              "type": "int",
+              "value": 0
+            }
+          },
+          "status": "exact_conditional",
+          "reason": "exact example; test environment applicability not proven",
+          "arguments": {
+            "args": [
+              {
+                "type": "bytes",
+                "hex": "41",
+                "length": 1
+              }
+            ],
+            "keywords": []
+          },
+          "binding": {
+            "values": {
+              "renamed": {
+                "type": "bytes",
+                "hex": "41",
+                "length": 1
+              }
+            },
+            "origins": {
+              "renamed": "positional"
+            }
+          }
+        }
+      ],
+      "unknown": [],
+      "scope": "conditional exact calls only; no valid-domain inference"
+    }
+  ],
+  "dispatch": [
+    {
+      "task": {
+        "target": {
+          "status": "local",
+          "module": "subject",
+          "name": "f",
+          "kind": "FunctionDef",
+          "location": {
+            "module": "subject",
+            "line": 2,
+            "end": 5
+          },
+          "chain": [
+            "subject:f"
+          ],
+          "provenance": [
+            {
+              "module": "subject",
+              "line": 2,
+              "end": 5
+            }
+          ]
+        },
+        "values": {
+          "renamed": {
+            "type": "bytes",
+            "hex": "41",
+            "length": 1
+          }
+        },
+        "reason": "exact conditional example",
+        "relations": []
+      },
+      "observation": {
+        "outcome": "returned",
+        "value": {
+          "type": "int",
+          "value": 0
+        },
+        "error": null,
+        "calls": [
+          {
+            "target": {
+              "status": "local",
+              "module": "subject",
+              "name": "f",
+              "kind": "FunctionDef",
+              "location": {
+                "module": "subject",
+                "line": 2,
+                "end": 5
+              },
+              "chain": [
+                "subject:f"
+              ],
+              "provenance": [
+                {
+                  "module": "subject",
+                  "line": 2,
+                  "end": 5
+                }
+              ]
+            },
+            "site": null,
+            "binding": {
+              "values": {
+                "renamed": {
+                  "type": "bytes",
+                  "hex": "41",
+                  "length": 1
+                }
+              },
+              "origins": {
+                "renamed": "positional"
+              }
+            }
+          },
+          {
+            "target": {
+              "status": "local",
+              "module": "worker",
+              "name": "shifted",
+              "kind": "FunctionDef",
+              "location": {
+                "module": "worker",
+                "line": 1,
+                "end": 2
+              },
+              "chain": [
+                "subject:moved",
+                "worker:shifted"
+              ],
+              "provenance": [
+                {
+                  "module": "subject",
+                  "line": 1,
+                  "end": 1
+                },
+                {
+                  "module": "worker",
+                  "line": 1,
+                  "end": 2
+                }
+              ]
+            },
+            "site": {
+              "module": "subject",
+              "line": 3,
+              "end": 3
+            },
+            "binding": {
+              "values": {
+                "q": {
+                  "type": "int",
+                  "value": 1
+                }
+              },
+              "origins": {
+                "q": "positional"
+              }
+            }
+          }
+        ],
+        "trace": [
+          {
+            "module": "subject",
+            "line": 3,
+            "end": 3,
+            "operator": "Gt",
+            "left": {
+              "type": "int",
+              "value": 11
+            },
+            "right": {
+              "type": "int",
+              "value": 59
+            },
+            "decision": false
+          }
+        ]
+      },
+      "checks": [
+        {
+          "source": {
+            "module": "test_subject",
+            "line": 3,
+            "end": 3
+          },
+          "status": "matches_example",
+          "claim": "conditional example, not confirmed bug"
+        }
+      ],
+      "claim": "boundary observation only; no new normative oracle"
+    },
+    {
+      "task": {
+        "target": {
+          "status": "local",
+          "module": "subject",
+          "name": "f",
+          "kind": "FunctionDef",
+          "location": {
+            "module": "subject",
+            "line": 2,
+            "end": 5
+          },
+          "chain": [
+            "subject:f"
+          ],
+          "provenance": [
+            {
+              "module": "subject",
+              "line": 2,
+              "end": 5
+            }
+          ]
+        },
+        "values": {
+          "renamed": {
+            "type": "bytes",
+            "hex": "4141414141414141414141414141",
+            "length": 14
+          }
+        },
+        "reason": "relation boundary; validity unknown",
+        "relations": [
+          "944ce808a4bfee353e22145aa7754df7ca55cb812b2ca2f8b3fdc4ddce918a80"
+        ]
+      },
+      "observation": {
+        "outcome": "returned",
+        "value": {
+          "type": "int",
+          "value": 0
+        },
+        "error": null,
+        "calls": [
+          {
+            "target": {
+              "status": "local",
+              "module": "subject",
+              "name": "f",
+              "kind": "FunctionDef",
+              "location": {
+                "module": "subject",
+                "line": 2,
+                "end": 5
+              },
+              "chain": [
+                "subject:f"
+              ],
+              "provenance": [
+                {
+                  "module": "subject",
+                  "line": 2,
+                  "end": 5
+                }
+              ]
+            },
+            "site": null,
+            "binding": {
+              "values": {
+                "renamed": {
+                  "type": "bytes",
+                  "hex": "4141414141414141414141414141",
+                  "length": 14
+                }
+              },
+              "origins": {
+                "renamed": "positional"
+              }
+            }
+          },
+          {
+            "target": {
+              "status": "local",
+              "module": "worker",
+              "name": "shifted",
+              "kind": "FunctionDef",
+              "location": {
+                "module": "worker",
+                "line": 1,
+                "end": 2
+              },
+              "chain": [
+                "subject:moved",
+                "worker:shifted"
+              ],
+              "provenance": [
+                {
+                  "module": "subject",
+                  "line": 1,
+                  "end": 1
+                },
+                {
+                  "module": "worker",
+                  "line": 1,
+                  "end": 2
+                }
+              ]
+            },
+            "site": {
+              "module": "subject",
+              "line": 3,
+              "end": 3
+            },
+            "binding": {
+              "values": {
+                "q": {
+                  "type": "int",
+                  "value": 14
+                }
+              },
+              "origins": {
+                "q": "positional"
+              }
+            }
+          }
+        ],
+        "trace": [
+          {
+            "module": "subject",
+            "line": 3,
+            "end": 3,
+            "operator": "Gt",
+            "left": {
+              "type": "int",
+              "value": 63
+            },
+            "right": {
+              "type": "int",
+              "value": 59
+            },
+            "decision": true
+          }
+        ]
+      },
+      "checks": [],
+      "claim": "boundary observation only; no new normative oracle"
+    },
+    {
+      "task": {
+        "target": {
+          "status": "local",
+          "module": "subject",
+          "name": "f",
+          "kind": "FunctionDef",
+          "location": {
+            "module": "subject",
+            "line": 2,
+            "end": 5
+          },
+          "chain": [
+            "subject:f"
+          ],
+          "provenance": [
+            {
+              "module": "subject",
+              "line": 2,
+              "end": 5
+            }
+          ]
+        },
+        "values": {
+          "renamed": {
+            "type": "bytes",
+            "hex": "41414141414141414141414141",
+            "length": 13
+          }
+        },
+        "reason": "relation boundary; validity unknown",
+        "relations": [
+          "944ce808a4bfee353e22145aa7754df7ca55cb812b2ca2f8b3fdc4ddce918a80"
+        ]
+      },
+      "observation": {
+        "outcome": "returned",
+        "value": {
+          "type": "int",
+          "value": 0
+        },
+        "error": null,
+        "calls": [
+          {
+            "target": {
+              "status": "local",
+              "module": "subject",
+              "name": "f",
+              "kind": "FunctionDef",
+              "location": {
+                "module": "subject",
+                "line": 2,
+                "end": 5
+              },
+              "chain": [
+                "subject:f"
+              ],
+              "provenance": [
+                {
+                  "module": "subject",
+                  "line": 2,
+                  "end": 5
+                }
+              ]
+            },
+            "site": null,
+            "binding": {
+              "values": {
+                "renamed": {
+                  "type": "bytes",
+                  "hex": "41414141414141414141414141",
+                  "length": 13
+                }
+              },
+              "origins": {
+                "renamed": "positional"
+              }
+            }
+          },
+          {
+            "target": {
+              "status": "local",
+              "module": "worker",
+              "name": "shifted",
+              "kind": "FunctionDef",
+              "location": {
+                "module": "worker",
+                "line": 1,
+                "end": 2
+              },
+              "chain": [
+                "subject:moved",
+                "worker:shifted"
+              ],
+              "provenance": [
+                {
+                  "module": "subject",
+                  "line": 1,
+                  "end": 1
+                },
+                {
+                  "module": "worker",
+                  "line": 1,
+                  "end": 2
+                }
+              ]
+            },
+            "site": {
+              "module": "subject",
+              "line": 3,
+              "end": 3
+            },
+            "binding": {
+              "values": {
+                "q": {
+                  "type": "int",
+                  "value": 13
+                }
+              },
+              "origins": {
+                "q": "positional"
+              }
+            }
+          }
+        ],
+        "trace": [
+          {
+            "module": "subject",
+            "line": 3,
+            "end": 3,
+            "operator": "Gt",
+            "left": {
+              "type": "int",
+              "value": 59
+            },
+            "right": {
+              "type": "int",
+              "value": 59
+            },
+            "decision": false
+          }
+        ]
+      },
+      "checks": [],
+      "claim": "boundary observation only; no new normative oracle"
+    },
+    {
+      "task": {
+        "target": {
+          "status": "local",
+          "module": "subject",
+          "name": "f",
+          "kind": "FunctionDef",
+          "location": {
+            "module": "subject",
+            "line": 2,
+            "end": 5
+          },
+          "chain": [
+            "subject:f"
+          ],
+          "provenance": [
+            {
+              "module": "subject",
+              "line": 2,
+              "end": 5
+            }
+          ]
+        },
+        "values": {
+          "renamed": {
+            "type": "bytes",
+            "hex": "414141414141414141414141414141",
+            "length": 15
+          }
+        },
+        "reason": "relation boundary; validity unknown",
+        "relations": [
+          "944ce808a4bfee353e22145aa7754df7ca55cb812b2ca2f8b3fdc4ddce918a80"
+        ]
+      },
+      "observation": {
+        "outcome": "returned",
+        "value": {
+          "type": "int",
+          "value": 0
+        },
+        "error": null,
+        "calls": [
+          {
+            "target": {
+              "status": "local",
+              "module": "subject",
+              "name": "f",
+              "kind": "FunctionDef",
+              "location": {
+                "module": "subject",
+                "line": 2,
+                "end": 5
+              },
+              "chain": [
+                "subject:f"
+              ],
+              "provenance": [
+                {
+                  "module": "subject",
+                  "line": 2,
+                  "end": 5
+                }
+              ]
+            },
+            "site": null,
+            "binding": {
+              "values": {
+                "renamed": {
+                  "type": "bytes",
+                  "hex": "414141414141414141414141414141",
+                  "length": 15
+                }
+              },
+              "origins": {
+                "renamed": "positional"
+              }
+            }
+          },
+          {
+            "target": {
+              "status": "local",
+              "module": "worker",
+              "name": "shifted",
+              "kind": "FunctionDef",
+              "location": {
+                "module": "worker",
+                "line": 1,
+                "end": 2
+              },
+              "chain": [
+                "subject:moved",
+                "worker:shifted"
+              ],
+              "provenance": [
+                {
+                  "module": "subject",
+                  "line": 1,
+                  "end": 1
+                },
+                {
+                  "module": "worker",
+                  "line": 1,
+                  "end": 2
+                }
+              ]
+            },
+            "site": {
+              "module": "subject",
+              "line": 3,
+              "end": 3
+            },
+            "binding": {
+              "values": {
+                "q": {
+                  "type": "int",
+                  "value": 15
+                }
+              },
+              "origins": {
+                "q": "positional"
+              }
+            }
+          }
+        ],
+        "trace": [
+          {
+            "module": "subject",
+            "line": 3,
+            "end": 3,
+            "operator": "Gt",
+            "left": {
+              "type": "int",
+              "value": 67
+            },
+            "right": {
+              "type": "int",
+              "value": 59
+            },
+            "decision": true
+          }
+        ]
+      },
+      "checks": [],
+      "claim": "boundary observation only; no new normative oracle"
+    }
+  ],
+  "deferred": [],
+  "execution_enabled": false,
+  "source_sha256": {
+    "subject": "1838c257a2b120af66dd5d908036b8fa247926f8c333ca39c7d0e152488953de",
+    "test_subject": "6717b258f38e040a31878e78a991232e1d9032a847eaf5fcae87a2e82160d036",
+    "worker": "925f61d7e0c664e05e408c2afd6e116594e26b9adbbb36adb80520b6275e1206"
+  },
+  "limits": {
+    "static_dispatch": 4,
+    "points_per_entry": 32,
+    "entries": 8,
+    "relations_per_entry": 32,
+    "steps_per_entry": 2000,
+    "call_depth": 4,
+    "integer_window": [
+      -10000,
+      10000
+    ]
+  },
+  "scope": "conditional isolated source semantics; no public contract inference; no actual target execution"
+}

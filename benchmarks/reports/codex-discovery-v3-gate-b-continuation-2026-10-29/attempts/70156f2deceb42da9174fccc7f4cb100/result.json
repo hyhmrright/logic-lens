@@ -1,0 +1,51 @@
+{
+  "usage": {
+    "input_tokens": 266025,
+    "cached_input_tokens": 226688,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 5354,
+    "reasoning_output_tokens": 1692
+  },
+  "tools_used": [
+    {
+      "type": "command_execution",
+      "command": "/bin/zsh -lc \"pwd; rg --files -g '\"'!node_modules'\"' -g '\"'!vendor'\"' -g '\"'!package-lock.json'\"' -g '\"'!yarn.lock'\"'\"",
+      "status": "completed"
+    },
+    {
+      "type": "command_execution",
+      "command": "/bin/zsh -lc \"nl -ba functions/diff.js; nl -ba test/functions/diff.js; nl -ba functions/parse.js; rg -n 'diff\\\\(|diff:|\\\\.diff|premajor|preminor|prepatch' README.md functions classes/semver.js benchmarks/bench-diff.js index.js; cat package.json; rg --files --hidden -g '.logic-lens.yaml' -g '\"'!node_modules'\"' -g '\"'!*git*'\"'\"",
+      "status": "failed"
+    },
+    {
+      "type": "command_execution",
+      "command": "/bin/zsh -lc \"sed -n '1,80p' README.md; sed -n '410,485p' README.md; nl -ba classes/semver.js | sed -n '1,310p'; nl -ba internal/identifiers.js; nl -ba internal/parse-options.js; nl -ba internal/constants.js; nl -ba internal/re.js | sed -n '1,70p'; nl -ba functions/inc.js; nl -ba index.js | sed -n '1,100p'; nl -ba benchmarks/bench-diff.js\"",
+      "status": "completed"
+    },
+    {
+      "type": "command_execution",
+      "command": "/bin/zsh -lc \"node <<'NODE'\nconst diff = require('./functions/diff')\nconst parse = require('./functions/parse')\nconst inc = require('./functions/inc')\nconsole.log('runtime', process.version)\nconst cases = [\n ['1.2.3-alpha', '2.0.0'], ['1.2.3-alpha', '2.0.1'],\n ['1.2.3-alpha', '2.1.0'], ['1.2.3-alpha', '1.3.0'],\n ['1.2.3-alpha', '1.3.1'], ['1.2.3-alpha', '1.2.3'],\n ['1.0.0-alpha', '1.1.1'], ['1.0.0-alpha', '2.1.1'],\n ['1.2.3', '2.0.1'], ['1.2.3', '1.3.1'],\n ['1.2.3-alpha', '2.0.1-alpha'],\n ['1.0.0-9007199254740992', '1.0.0-9007199254740993'],\n ['1.0.0-9007199254740991', '1.0.0-9007199254740992'],\n ['1.0.0+a', '1.0.0+b'], ['1.0.0-alpha', '1.0.0-beta']\n]\nfor (const [a,b] of cases) console.log(JSON.stringify({a,b,diff:diff(a,b),reverse:diff(b,a),compare:parse(a).compare(parse(b))}))\nfor (const release of ['major', 'minor', 'patch']) console.log('increment', release, inc('1.2.3-alpha',release))\nfor (const [a,b] of [['bad','1.2.3'], ['1.2.3','bad'], [null,'1.2.3'], ['1.2.3',undefined]]) {\n try { console.log('invalid',a,b,diff(a,b)) } catch(e) { console.log('invalid throws',JSON.stringify([a,b]),e.name,e.message) }\n}\nNODE\nrg -n 'numeric|identifier|precedence|safe|900719|diff' README.md test/internal/identifiers.js test/classes/semver.js test/fixtures/comparisons.js test/fixtures/equality.js test/functions/parse.js internal/re.js CHANGELOG.md\"",
+      "status": "completed"
+    },
+    {
+      "type": "command_execution",
+      "command": "/bin/zsh -lc \"node -e '\nconst diff = require(\\\"./functions/diff\\\")\nconst parse = require(\\\"./functions/parse\\\")\nconst inc = require(\\\"./functions/inc\\\")\nconsole.log(\\\"runtime\\\", process.version)\nconst cases = [\n [\\\"1.2.3-alpha\\\", \\\"2.0.0\\\"], [\\\"1.2.3-alpha\\\", \\\"2.0.1\\\"],\n [\\\"1.2.3-alpha\\\", \\\"2.1.0\\\"], [\\\"1.2.3-alpha\\\", \\\"1.3.0\\\"],\n [\\\"1.2.3-alpha\\\", \\\"1.3.1\\\"], [\\\"1.2.3-alpha\\\", \\\"1.2.3\\\"],\n [\\\"1.0.0-alpha\\\", \\\"1.1.1\\\"], [\\\"1.0.0-alpha\\\", \\\"2.1.1\\\"],\n [\\\"1.2.3\\\", \\\"2.0.1\\\"], [\\\"1.2.3\\\", \\\"1.3.1\\\"],\n [\\\"1.2.3-alpha\\\", \\\"2.0.1-alpha\\\"],\n [\\\"1.0.0-9007199254740992\\\", \\\"1.0.0-9007199254740993\\\"],\n [\\\"1.0.0-9007199254740991\\\", \\\"1.0.0-9007199254740992\\\"],\n [\\\"1.0.0+a\\\", \\\"1.0.0+b\\\"], [\\\"1.0.0-alpha\\\", \\\"1.0.0-beta\\\"]\n]\nfor (const [a,b] of cases) console.log(JSON.stringify({a,b,diff:diff(a,b),reverse:diff(b,a),compare:parse(a).compare(parse(b))}))\nfor (const release of [\\\"major\\\", \\\"minor\\\", \\\"patch\\\"]) console.log(\\\"increment\\\", release, inc(\\\"1.2.3-alpha\\\",release))\nfor (const [a,b] of [[\\\"bad\\\",\\\"1.2.3\\\"], [\\\"1.2.3\\\",\\\"bad\\\"], [null,\\\"1.2.3\\\"], [\\\"1.2.3\\\",undefined]]) {\n try { console.log(\\\"invalid\\\",a,b,diff(a,b)) } catch(e) { console.log(\\\"invalid throws\\\",JSON.stringify([a,b]),e.name,e.message) }\n}\n'; nl -ba test/internal/identifiers.js; nl -ba test/classes/semver.js | sed -n '1,78p'; nl -ba test/fixtures/comparisons.js | sed -n '1,130p'; nl -ba internal/re.js | sed -n '71,125p'; nl -ba internal/debug.js; nl -ba test/functions/parse.js | sed -n '1,110p'\"",
+      "status": "completed"
+    },
+    {
+      "type": "command_execution",
+      "command": "/bin/zsh -lc \"rg -n 'compareIdentifiers|rcompareIdentifiers' functions classes internal test/internal README.md index.js; nl -ba README.md | sed -n '180,222p'; nl -ba test/fixtures/equality.js | sed -n '1,95p'; node -e '\nconst assert = require(\\\"node:assert/strict\\\")\nconst fs = require(\\\"node:fs\\\")\nconst vm = require(\\\"node:vm\\\")\nconst diff = require(\\\"./functions/diff\\\")\nconst SemVer = require(\\\"./classes/semver\\\")\nconst text = fs.readFileSync(\\\"test/functions/diff.js\\\", \\\"utf8\\\")\nconst fixture = text.slice(text.indexOf(\\\"  [\\\\n\\\"), text.indexOf(\\\"].forEach\\\") + 1)\nconst cases = vm.runInNewContext(fixture, Object.create(null), {timeout:1000})\nfor (const [a,b,wanted] of cases) { assert.equal(diff(a,b),wanted); assert.equal(diff(b,a),wanted) }\nconsole.log(\\\"existing diff fixtures:\\\",cases.length,\\\"passed in both orders; fixture only evaluated; no tap/service execution\\\")\nfor (const [a,b,wanted] of [\n [\\\"1.2.3-alpha\\\",\\\"2.0.1\\\",\\\"major\\\"],\n [\\\"1.2.3-alpha\\\",\\\"2.1.0\\\",\\\"major\\\"],\n [\\\"1.2.3-alpha\\\",\\\"1.3.1\\\",\\\"minor\\\"],\n [\\\"1.0.0-9007199254740992\\\",\\\"1.0.0-9007199254740993\\\",\\\"prerelease\\\"]\n]) { const actual = diff(a,b); assert.notEqual(actual,wanted); console.log(\\\"confirmed discrepancy\\\",JSON.stringify({a,b,expected:wanted,actual})); }\nconst a = new SemVer(\\\"1.0.0-9007199254740992\\\")\nconst b = new SemVer(\\\"1.0.0-9007199254740993\\\")\nconsole.log(\\\"large identifiers preserved by constructor\\\",JSON.stringify([a.prerelease,b.prerelease]),\\\"coerced values\\\",Number(a.prerelease[0]),Number(b.prerelease[0]))\nconst s = new SemVer(\\\"1.2.3-alpha\\\")\nconst snapshot = JSON.stringify(s)\nassert.equal(diff(s,new SemVer(\\\"1.3.0-alpha\\\")),\\\"preminor\\\")\nassert.equal(JSON.stringify(s),snapshot)\nconsole.log(\\\"SemVer object input control: correct preminor; input unchanged\\\")\n'\"",
+      "status": "completed"
+    }
+  ],
+  "evidence_source": "codex-jsonl",
+  "provider": "codex",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "elapsed_seconds": 171.1194239579927,
+  "instruction_delivery": "explicit_stdin_snapshot",
+  "capability": "read-only-shell",
+  "instruction_sha256": "9dd5e4c50d47cd71fca3d04abc006690759e8510cdbce705a9853c4a61685e0a",
+  "workspace_sha256": "1e92fb7c97532917cc09621f6b3e88a159d21fc6653619e6cc1aa41b26c95d2a",
+  "total_cost_usd": null
+}

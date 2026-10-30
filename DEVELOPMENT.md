@@ -18,6 +18,20 @@ Claude is not required for development, testing, installation or evaluation.
 - `evals/trigger/v2/`: description-routing inputs; host-native activation is a separate question.
 - `evals/discovery/`: pinned historical source pairs, independent oracles, comparison protocol.
 - `benchmarks/`: frozen historical summaries/reports. Preserve model/provider provenance.
+- `scripts/property_search.py`: optional experimental finite property search; see
+  `docs/PROPERTY_SEARCH.md`. No model calls; not a default review step.
+- `scripts/constraint_plan.py`: optional offline relation/property/domain planner;
+  see `docs/CONSTRAINT_PLAN.md`. Manual declarations, no model calls.
+- `scripts/python_facts.py`: restricted offline Python source/declaration audit;
+  see `docs/PYTHON_FACTS.md`. No model calls or subject execution.
+- `scripts/investigation.py`: experimental offline relation discovery/selection loop;
+  `docs/INVESTIGATION.md`. Execution opt-in for trusted synthetic fixtures only.
+- `scripts/path_exploration.py`: opt-in static entry/evidence and cross-call path
+  exploration; `docs/PATH_EXPLORATION.md`. No subject execution or model calls.
+- `scripts/typed_calls.py`, `scripts/typed_investigation.py`: opt-in typed test
+  evidence, AST binding, static provenance and shared queue; `docs/TYPED_INVESTIGATION.md`.
+- `scripts/relation_selection.py`: opt-in static affine relation inventory and
+  boundary selection; `docs/RELATION_SELECTION.md`. No new-input oracle or target execution.
 - `tests/`: offline unit/integration tests for grading and runner integrity.
 - `skills-workspace/`: ignored source clones, isolated environments and paid-run artifacts.
 - `.codex-plugin/`, `gemini-extension.json`: optional native distribution metadata.
@@ -76,7 +90,8 @@ tracing methodology, examples in two languages, severity rationale and eval case
 
 ## Current experiment authorization
 
-The completed v2 comparison is immutable. Revision 3 remains in draft PR #16 as a development candidate,
+The completed v2 comparison and later frozen diagnostics are immutable. Experimental
+skill revisions and the optional property-search prototype remain in draft PR #16,
 not a qualified release or the main branch default. The user has limited tokens and explicitly requires approval
 before **any new model-backed experiment**, including development-set diagnostics,
 smoke/content/trigger evals, retries and fresh-case comparisons. Offline validation,
@@ -84,3 +99,11 @@ bundling and existing-evidence analysis are authorized. Present the frozen revis
 run count, provider/model, budgets and known/unknown cost estimate before requesting
 approval. A passing development gate does not authorize the next stage. Do not create
 a model-running heartbeat or CI experiment. The proposed revision-3 stages remain on the experiment branch in PR #16.
+
+The authorized two-session property-search diagnostic is complete (2026-10-29):
+both deliver, neither checks the key relationship or detects the original target.
+Two autonomous properties execute correctly on familiar paths; this is not demonstrated
+path-selection improvement. Actual evaluation input+output is1,044,376 tokens,
+including cached input. See
+`benchmarks/reports/codex-property-path-2026-10-29/REPORT.md`.
+No retries, fresh cases, further model evaluations or main merge are authorized.

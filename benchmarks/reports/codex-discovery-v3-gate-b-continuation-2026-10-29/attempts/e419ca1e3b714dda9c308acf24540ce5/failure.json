@@ -1,0 +1,4 @@
+{
+  "error": "Command '['codex', '--no-daemon', '-a', 'never', 'exec', '--ephemeral', '--ignore-user-config', '--ignore-rules', '--skip-git-repo-check', '--sandbox', 'read-only', '--json', '-c', 'web_search=\"disabled\"', '-c', 'mcp_servers={}', '-c', 'model_reasoning_effort=\"high\"', '--model', 'gpt-6.1-sol', '-']' timed out after 360 seconds",
+  "elapsed_seconds": 360.19422879199556
+}

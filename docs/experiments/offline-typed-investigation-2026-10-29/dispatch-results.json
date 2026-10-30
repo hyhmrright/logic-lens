@@ -1,0 +1,1914 @@
+[
+  {
+    "project": "01-bytes-default",
+    "index": 0,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "4121",
+        "length": 2
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41",
+              "length": 1
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "01-bytes-default",
+    "index": 1,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "21",
+        "length": 1
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "",
+              "length": 0
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "01-bytes-default",
+    "index": 2,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "414121",
+        "length": 3
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141",
+              "length": 2
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "01-bytes-default",
+    "index": 3,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "41414121",
+        "length": 4
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "414141",
+              "length": 3
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "01-bytes-default",
+    "index": 4,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "4141414121",
+        "length": 5
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41414141",
+              "length": 4
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "01-bytes-default",
+    "index": 5,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "414141414121",
+        "length": 6
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141414141",
+              "length": 5
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "01-bytes-default",
+    "index": 6,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "41414141414121",
+        "length": 7
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "414141414141",
+              "length": 6
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "01-bytes-default",
+    "index": 7,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "4141414141414121",
+        "length": 8
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41414141414141",
+              "length": 7
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "02-unittest-binding",
+    "index": 0,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "4121",
+        "length": 2
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41",
+              "length": 1
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            },
+            "enabled": {
+              "type": "bool",
+              "value": true
+            },
+            "marker": {
+              "type": "none"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "02-unittest-binding",
+    "index": 1,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "21",
+        "length": 1
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "",
+              "length": 0
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            },
+            "enabled": {
+              "type": "bool",
+              "value": true
+            },
+            "marker": {
+              "type": "none"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "02-unittest-binding",
+    "index": 2,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41",
+              "length": 1
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            },
+            "enabled": {
+              "type": "bool",
+              "value": false
+            },
+            "marker": {
+              "type": "none"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "02-unittest-binding",
+    "index": 3,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "414121",
+        "length": 3
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141",
+              "length": 2
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            },
+            "enabled": {
+              "type": "bool",
+              "value": true
+            },
+            "marker": {
+              "type": "none"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "02-unittest-binding",
+    "index": 4,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "41414121",
+        "length": 4
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "414141",
+              "length": 3
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            },
+            "enabled": {
+              "type": "bool",
+              "value": true
+            },
+            "marker": {
+              "type": "none"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "02-unittest-binding",
+    "index": 5,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "4141414121",
+        "length": 5
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41414141",
+              "length": 4
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            },
+            "enabled": {
+              "type": "bool",
+              "value": true
+            },
+            "marker": {
+              "type": "none"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "02-unittest-binding",
+    "index": 6,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "414141414121",
+        "length": 6
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141414141",
+              "length": 5
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            },
+            "enabled": {
+              "type": "bool",
+              "value": true
+            },
+            "marker": {
+              "type": "none"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "02-unittest-binding",
+    "index": 7,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "41414141414121",
+        "length": 7
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "414141414141",
+              "length": 6
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            },
+            "enabled": {
+              "type": "bool",
+              "value": true
+            },
+            "marker": {
+              "type": "none"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "03-allowed-refusal",
+    "index": 0,
+    "status": "agrees",
+    "result": {
+      "outcome": "value_error",
+      "value": {
+        "type": "none"
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "check",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41414141",
+              "length": 4
+            },
+            "limit": {
+              "type": "int",
+              "value": 3
+            }
+          }
+        },
+        {
+          "module": "subject",
+          "name": "helper",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41414141",
+              "length": 4
+            },
+            "limit": {
+              "type": "int",
+              "value": 3
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "03-allowed-refusal",
+    "index": 1,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "",
+        "length": 0
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "check",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "",
+              "length": 0
+            },
+            "limit": {
+              "type": "int",
+              "value": 3
+            }
+          }
+        },
+        {
+          "module": "subject",
+          "name": "helper",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "",
+              "length": 0
+            },
+            "limit": {
+              "type": "int",
+              "value": 3
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "03-allowed-refusal",
+    "index": 2,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "41",
+        "length": 1
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "check",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41",
+              "length": 1
+            },
+            "limit": {
+              "type": "int",
+              "value": 3
+            }
+          }
+        },
+        {
+          "module": "subject",
+          "name": "helper",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41",
+              "length": 1
+            },
+            "limit": {
+              "type": "int",
+              "value": 3
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "03-allowed-refusal",
+    "index": 3,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "4141",
+        "length": 2
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "check",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141",
+              "length": 2
+            },
+            "limit": {
+              "type": "int",
+              "value": 3
+            }
+          }
+        },
+        {
+          "module": "subject",
+          "name": "helper",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141",
+              "length": 2
+            },
+            "limit": {
+              "type": "int",
+              "value": 3
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "03-allowed-refusal",
+    "index": 4,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "414141",
+        "length": 3
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "check",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "414141",
+              "length": 3
+            },
+            "limit": {
+              "type": "int",
+              "value": 3
+            }
+          }
+        },
+        {
+          "module": "subject",
+          "name": "helper",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "414141",
+              "length": 3
+            },
+            "limit": {
+              "type": "int",
+              "value": 3
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "03-allowed-refusal",
+    "index": 5,
+    "status": "agrees",
+    "result": {
+      "outcome": "value_error",
+      "value": {
+        "type": "none"
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "check",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141414141",
+              "length": 5
+            },
+            "limit": {
+              "type": "int",
+              "value": 3
+            }
+          }
+        },
+        {
+          "module": "subject",
+          "name": "helper",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141414141",
+              "length": 5
+            },
+            "limit": {
+              "type": "int",
+              "value": 3
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "03-allowed-refusal",
+    "index": 6,
+    "status": "agrees",
+    "result": {
+      "outcome": "value_error",
+      "value": {
+        "type": "none"
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "check",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "414141414141",
+              "length": 6
+            },
+            "limit": {
+              "type": "int",
+              "value": 3
+            }
+          }
+        },
+        {
+          "module": "subject",
+          "name": "helper",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "414141414141",
+              "length": 6
+            },
+            "limit": {
+              "type": "int",
+              "value": 3
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "03-allowed-refusal",
+    "index": 7,
+    "status": "agrees",
+    "result": {
+      "outcome": "value_error",
+      "value": {
+        "type": "none"
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "check",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41414141414141",
+              "length": 7
+            },
+            "limit": {
+              "type": "int",
+              "value": 3
+            }
+          }
+        },
+        {
+          "module": "subject",
+          "name": "helper",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41414141414141",
+              "length": 7
+            },
+            "limit": {
+              "type": "int",
+              "value": 3
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "04-relative-source",
+    "index": 0,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "4121",
+        "length": 2
+      },
+      "calls": [
+        {
+          "module": "pkg.api",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41",
+              "length": 1
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        },
+        {
+          "module": "pkg.worker",
+          "name": "add",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41",
+              "length": 1
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "04-relative-source",
+    "index": 1,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "21",
+        "length": 1
+      },
+      "calls": [
+        {
+          "module": "pkg.api",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "",
+              "length": 0
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        },
+        {
+          "module": "pkg.worker",
+          "name": "add",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "",
+              "length": 0
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "04-relative-source",
+    "index": 2,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "414121",
+        "length": 3
+      },
+      "calls": [
+        {
+          "module": "pkg.api",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141",
+              "length": 2
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        },
+        {
+          "module": "pkg.worker",
+          "name": "add",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141",
+              "length": 2
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "04-relative-source",
+    "index": 3,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "41414121",
+        "length": 4
+      },
+      "calls": [
+        {
+          "module": "pkg.api",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "414141",
+              "length": 3
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        },
+        {
+          "module": "pkg.worker",
+          "name": "add",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "414141",
+              "length": 3
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "04-relative-source",
+    "index": 4,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "4141414121",
+        "length": 5
+      },
+      "calls": [
+        {
+          "module": "pkg.api",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41414141",
+              "length": 4
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        },
+        {
+          "module": "pkg.worker",
+          "name": "add",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41414141",
+              "length": 4
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "04-relative-source",
+    "index": 5,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "414141414121",
+        "length": 6
+      },
+      "calls": [
+        {
+          "module": "pkg.api",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141414141",
+              "length": 5
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        },
+        {
+          "module": "pkg.worker",
+          "name": "add",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141414141",
+              "length": 5
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "04-relative-source",
+    "index": 6,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "41414141414121",
+        "length": 7
+      },
+      "calls": [
+        {
+          "module": "pkg.api",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "414141414141",
+              "length": 6
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        },
+        {
+          "module": "pkg.worker",
+          "name": "add",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "414141414141",
+              "length": 6
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "04-relative-source",
+    "index": 7,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "4141414141414121",
+        "length": 8
+      },
+      "calls": [
+        {
+          "module": "pkg.api",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41414141414141",
+              "length": 7
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        },
+        {
+          "module": "pkg.worker",
+          "name": "add",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41414141414141",
+              "length": 7
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "21",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "05-reexport-source",
+    "index": 0,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "413f",
+        "length": 2
+      },
+      "calls": [
+        {
+          "module": "backend",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41",
+              "length": 1
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "3f",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "05-reexport-source",
+    "index": 1,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "3f",
+        "length": 1
+      },
+      "calls": [
+        {
+          "module": "backend",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "",
+              "length": 0
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "3f",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "05-reexport-source",
+    "index": 2,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "41413f",
+        "length": 3
+      },
+      "calls": [
+        {
+          "module": "backend",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141",
+              "length": 2
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "3f",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "05-reexport-source",
+    "index": 3,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "4141413f",
+        "length": 4
+      },
+      "calls": [
+        {
+          "module": "backend",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "414141",
+              "length": 3
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "3f",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "05-reexport-source",
+    "index": 4,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "414141413f",
+        "length": 5
+      },
+      "calls": [
+        {
+          "module": "backend",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41414141",
+              "length": 4
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "3f",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "05-reexport-source",
+    "index": 5,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "41414141413f",
+        "length": 6
+      },
+      "calls": [
+        {
+          "module": "backend",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141414141",
+              "length": 5
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "3f",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "05-reexport-source",
+    "index": 6,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "4141414141413f",
+        "length": 7
+      },
+      "calls": [
+        {
+          "module": "backend",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "414141414141",
+              "length": 6
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "3f",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "05-reexport-source",
+    "index": 7,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "bytes",
+        "hex": "414141414141413f",
+        "length": 8
+      },
+      "calls": [
+        {
+          "module": "backend",
+          "name": "attach",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41414141414141",
+              "length": 7
+            },
+            "suffix": {
+              "type": "bytes",
+              "hex": "3f",
+              "length": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "10-external-boundary",
+    "index": 0,
+    "status": "unsupported_not_executed"
+  },
+  {
+    "project": "10-external-boundary",
+    "index": 1,
+    "status": "unsupported_not_executed"
+  },
+  {
+    "project": "10-external-boundary",
+    "index": 2,
+    "status": "unsupported_not_executed"
+  },
+  {
+    "project": "10-external-boundary",
+    "index": 3,
+    "status": "unsupported_not_executed"
+  },
+  {
+    "project": "10-external-boundary",
+    "index": 4,
+    "status": "unsupported_not_executed"
+  },
+  {
+    "project": "10-external-boundary",
+    "index": 5,
+    "status": "unsupported_not_executed"
+  },
+  {
+    "project": "10-external-boundary",
+    "index": 6,
+    "status": "unsupported_not_executed"
+  },
+  {
+    "project": "10-external-boundary",
+    "index": 7,
+    "status": "unsupported_not_executed"
+  },
+  {
+    "project": "11-unsupported-content",
+    "index": 0,
+    "status": "unsupported_not_executed"
+  },
+  {
+    "project": "11-unsupported-content",
+    "index": 1,
+    "status": "unsupported_not_executed"
+  },
+  {
+    "project": "11-unsupported-content",
+    "index": 2,
+    "status": "unsupported_not_executed"
+  },
+  {
+    "project": "11-unsupported-content",
+    "index": 3,
+    "status": "unsupported_not_executed"
+  },
+  {
+    "project": "11-unsupported-content",
+    "index": 4,
+    "status": "unsupported_not_executed"
+  },
+  {
+    "project": "11-unsupported-content",
+    "index": 5,
+    "status": "unsupported_not_executed"
+  },
+  {
+    "project": "11-unsupported-content",
+    "index": 6,
+    "status": "unsupported_not_executed"
+  },
+  {
+    "project": "11-unsupported-content",
+    "index": 7,
+    "status": "unsupported_not_executed"
+  },
+  {
+    "project": "12-equal-length-content",
+    "index": 0,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "int",
+        "value": 1
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "classify",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41",
+              "length": 1
+            },
+            "labels": {
+              "type": "tuple",
+              "items": [
+                {
+                  "type": "int",
+                  "value": 1
+                },
+                {
+                  "type": "int",
+                  "value": 2
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "12-equal-length-content",
+    "index": 1,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "int",
+        "value": 2
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "classify",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "",
+              "length": 0
+            },
+            "labels": {
+              "type": "tuple",
+              "items": [
+                {
+                  "type": "int",
+                  "value": 1
+                },
+                {
+                  "type": "int",
+                  "value": 2
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "12-equal-length-content",
+    "index": 2,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "int",
+        "value": 2
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "classify",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "42",
+              "length": 1
+            },
+            "labels": {
+              "type": "tuple",
+              "items": [
+                {
+                  "type": "int",
+                  "value": 1
+                },
+                {
+                  "type": "int",
+                  "value": 2
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "12-equal-length-content",
+    "index": 3,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "int",
+        "value": 2
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "classify",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141",
+              "length": 2
+            },
+            "labels": {
+              "type": "tuple",
+              "items": [
+                {
+                  "type": "int",
+                  "value": 1
+                },
+                {
+                  "type": "int",
+                  "value": 2
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "12-equal-length-content",
+    "index": 4,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "int",
+        "value": 2
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "classify",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "414141",
+              "length": 3
+            },
+            "labels": {
+              "type": "tuple",
+              "items": [
+                {
+                  "type": "int",
+                  "value": 1
+                },
+                {
+                  "type": "int",
+                  "value": 2
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "12-equal-length-content",
+    "index": 5,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "int",
+        "value": 2
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "classify",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41414141",
+              "length": 4
+            },
+            "labels": {
+              "type": "tuple",
+              "items": [
+                {
+                  "type": "int",
+                  "value": 1
+                },
+                {
+                  "type": "int",
+                  "value": 2
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "12-equal-length-content",
+    "index": 6,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "int",
+        "value": 2
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "classify",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141414141",
+              "length": 5
+            },
+            "labels": {
+              "type": "tuple",
+              "items": [
+                {
+                  "type": "int",
+                  "value": 1
+                },
+                {
+                  "type": "int",
+                  "value": 2
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "project": "12-equal-length-content",
+    "index": 7,
+    "status": "agrees",
+    "result": {
+      "outcome": "returned",
+      "value": {
+        "type": "int",
+        "value": 2
+      },
+      "calls": [
+        {
+          "module": "subject",
+          "name": "classify",
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "414141414141",
+              "length": 6
+            },
+            "labels": {
+              "type": "tuple",
+              "items": [
+                {
+                  "type": "int",
+                  "value": 1
+                },
+                {
+                  "type": "int",
+                  "value": 2
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+]

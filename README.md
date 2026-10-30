@@ -66,6 +66,19 @@ repository-context discovery and compact review candidates remain in draft PR #1
 they are not installed by this branch. Frozen benchmark instructions describe the
 versions actually evaluated, independently of the current default skill files.
 
+The opt-in [offline path explorer](docs/PATH_EXPLORATION.md) inventories Python
+entries and exact test evidence, then plans bounded cross-call branch exploration.
+It remains an experimental static tool in draft #16; it does not execute real targets
+or establish public contracts automatically.
+
+The experimental [typed-call layer](docs/TYPED_INVESTIGATION.md) adds supported
+test classes, exact byte values, immutable default binding and static import provenance
+to bounded investigation queues. It remains static for real source.
+
+The opt-in [relation selector](docs/RELATION_SELECTION.md) follows supported affine
+constraints to choose boundary points before expanding fixed input families. Its
+synthetic checks demonstrate bounded selection behavior, not improved real bug recall.
+
 Every confirmed finding follows the Iron Law:
 
 **Premises → Trace → Divergence → Trigger → Remedy**

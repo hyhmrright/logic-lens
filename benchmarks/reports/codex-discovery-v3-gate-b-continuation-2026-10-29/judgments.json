@@ -1,0 +1,54 @@
+{
+  "d0112f51477c4b968b720e9a866b750d": {
+    "target_detected": false,
+    "false_positive_count": 0,
+    "confirmed_additional": [
+      "semver-comparator-options",
+      "semver-or-prerelease",
+      "semver-intersection-witness",
+      "semver-intersection-empty",
+      "semver-intersection-gap"
+    ],
+    "unsupported_claims": [],
+    "refuted_claims": [],
+    "unresolved_leads": [
+      "Remaining parser boundaries and comprehensive intersection behavior explicitly unverified"
+    ],
+    "rationale": "Four report findings cover five established additional behavior classes; independent real-source probes reproduce each. No long metadata bound check or target detection. No executed repair. Existing fixture regression executed instead of remaining transformation boundary.",
+    "report_sha256": "57cf6bb10196f9d8c35daab3dc1e53e8b77be750dee8f00804569275769511a3",
+    "adjudicator": "Implementing assistant, unblinded",
+    "process": {
+      "first_sourced_obligation": "item_3/item_4 read README union and prerelease contracts plus Comparator fixture",
+      "first_distinguishing_check": "item_6 actual Comparator vs string, OR branches and intersection witness/control probes",
+      "transformation_limit_exercised": false,
+      "original_defect_verified": false,
+      "premature_executable_repair": false,
+      "repair_note": "Remedies only in final report; item_9 runs existing fixture regression (325 assertions), not a modified implementation",
+      "tool_calls": 8,
+      "soft_call_budget_exceeded": false
+    }
+  },
+  "70156f2deceb42da9174fccc7f4cb100": {
+    "target_detected": true,
+    "false_positive_count": 0,
+    "confirmed_additional": [
+      "semver-numeric-precision"
+    ],
+    "unsupported_claims": [],
+    "refuted_claims": [],
+    "unresolved_leads": [],
+    "rationale": "Identifies prerelease early return skipping actual major/minor changes; stable controls and reverse order distinguish selected target. Additional exact numeric identifier collision supported by constructor fixtures and independently reproduced. No assertion of unestablished minor-graduation contract.",
+    "report_sha256": "f345305b754f00d2b5e1360c9438e5e776efc934b96d9d79a267500b3dfb63ea",
+    "adjudicator": "Implementing assistant, unblinded",
+    "process": {
+      "first_sourced_obligation": "item_2/item_3 read diff README and existing graduation fixtures plus SemVer identifier preservation",
+      "first_distinguishing_check": "item_6 release-component matrix with stable/reverse-order controls and safe integer boundary/control",
+      "transformation_limit_exercised": true,
+      "original_defect_verified": true,
+      "premature_executable_repair": false,
+      "repair_note": "No modified implementation executed; item_8 runs 29 existing diff fixtures in both directions",
+      "tool_calls": 6,
+      "soft_call_budget_exceeded": false
+    }
+  }
+}

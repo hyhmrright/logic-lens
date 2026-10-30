@@ -1,0 +1,154 @@
+{
+  "family": "positive",
+  "variants": [
+    {
+      "variant": "canonical",
+      "baseline_dispatch": 4,
+      "relation_dispatch": 4,
+      "issues": [],
+      "normalized": {
+        "coefficient": 3,
+        "offset": -30,
+        "operator": "Gt",
+        "cut": 11,
+        "status": "searchable",
+        "reachable": [
+          false,
+          true
+        ],
+        "points": [
+          11,
+          10,
+          12
+        ]
+      },
+      "selected_quantities": [
+        1,
+        11,
+        10,
+        12
+      ],
+      "selected_cut": true,
+      "baseline_selected_quantities": [
+        1,
+        0,
+        2,
+        3
+      ],
+      "call_chain": [
+        {
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "f",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 1,
+              "end": 5
+            },
+            "chain": [
+              "subject:f"
+            ],
+            "provenance": [
+              {
+                "module": "subject",
+                "line": 1,
+                "end": 5
+              }
+            ]
+          },
+          "site": null
+        }
+      ],
+      "status": "invariant/pass"
+    },
+    {
+      "variant": "transformed",
+      "baseline_dispatch": 4,
+      "relation_dispatch": 4,
+      "issues": [],
+      "normalized": {
+        "coefficient": 3,
+        "offset": -30,
+        "operator": "Gt",
+        "cut": 11,
+        "status": "searchable",
+        "reachable": [
+          false,
+          true
+        ],
+        "points": [
+          11,
+          10,
+          12
+        ]
+      },
+      "selected_quantities": [
+        1,
+        11,
+        10,
+        12
+      ],
+      "selected_cut": true,
+      "baseline_selected_quantities": [
+        1,
+        0,
+        2,
+        3
+      ],
+      "call_chain": [
+        {
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "entry",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 1,
+              "end": 5
+            },
+            "chain": [
+              "subject:entry"
+            ],
+            "provenance": [
+              {
+                "module": "subject",
+                "line": 1,
+                "end": 5
+              }
+            ]
+          },
+          "site": null
+        }
+      ],
+      "status": "invariant/pass"
+    }
+  ],
+  "domain": [
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+  ],
+  "independent_truth": [
+    false,
+    false,
+    false,
+    false,
+    true,
+    true,
+    true,
+    true
+  ],
+  "independent_transitions": [
+    11
+  ],
+  "normalized_invariant": true,
+  "status": "invariant/pass"
+}

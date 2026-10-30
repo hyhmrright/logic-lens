@@ -171,6 +171,46 @@
       "cases_graded": 36,
       "overall_pass_rate": 0.7833333333333333,
       "notes": "v0.6.9 四组 L-code 消歧规则 + no-bug 五字段模板。78.3%（+2.4pp vs v0.6.8 avg）。L9 +18.3pp, L6 100%, no-bug +8.5pp。13 满分 case。L4/L5 退步疑为单次方差。"
+    },
+    {
+      "id": "codex-discovery-v3-gate-b-capacity-2026-10-29",
+      "kind": "development-diagnostic-incomplete",
+      "path": "runs/codex-discovery-v3-gate-b-capacity-2026-10-29.json",
+      "report": "reports/codex-discovery-v3-gate-b-capacity-2026-10-29/REPORT.md",
+      "model": "gpt-6.1-sol",
+      "planned_runs": 8,
+      "completed_runs": 0,
+      "notes": "One explicit capacity rejection, seven unattempted; no retry, no capability conclusion; actual token usage unknown."
+    },
+    {
+      "id": "codex-discovery-v3-gate-b-continuation-2026-10-29",
+      "kind": "development-diagnostic-incomplete",
+      "path": "runs/codex-discovery-v3-gate-b-continuation-2026-10-29.json",
+      "report": "reports/codex-discovery-v3-gate-b-continuation-2026-10-29/REPORT.md",
+      "model": "gpt-6.1-sol",
+      "planned_runs": 8,
+      "completed_runs": 2,
+      "notes": "Explicit continuation: two reports, one timeout, one capacity rejection, four unattempted; Gate B fails transformation-boundary criterion; unknown failure token overhead."
+    },
+    {
+      "id": "codex-discovery-v4-path-selection-2026-10-29",
+      "kind": "development-diagnostic",
+      "path": "runs/codex-discovery-v4-path-selection-2026-10-29.json",
+      "report": "reports/codex-discovery-v4-path-selection-2026-10-29/REPORT.md",
+      "model": "gpt-6.1-sol",
+      "planned_runs": 2,
+      "completed_runs": 2,
+      "notes": "Both arms deliver and miss target; neither checks key boundary; known total 881931 input+output tokens, no failure or retry; no discovery improvement."
+    },
+    {
+      "id": "codex-property-path-2026-10-29",
+      "kind": "development-diagnostic",
+      "path": "runs/codex-property-path-2026-10-29.json",
+      "report": "reports/codex-property-path-2026-10-29/REPORT.md",
+      "model": "gpt-6.1-sol",
+      "planned_runs": 2,
+      "completed_runs": 2,
+      "notes": "Common local harness; property-driven candidate vs v4, existing case only; no automatic retry, new cases or main merge. See report for semantic judgment and exact usage."
     }
   ],
   "discovery_experiments": [

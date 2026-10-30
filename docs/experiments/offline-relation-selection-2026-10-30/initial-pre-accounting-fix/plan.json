@@ -1,0 +1,14 @@
+{
+  "portfolio_sha256": "31c51c9638ef917893d272039a50eb447cf6660f485ccdbec3b34069f2017055",
+  "execution_enabled": false,
+  "static_cap_per_arm": 64,
+  "independent_arithmetic_cap": 128,
+  "actual_scheduler_calls": 0,
+  "actual_independent_subject_calls": 0,
+  "implementation_sha256": {
+    "scripts/relation_selection.py": "bf27f135429b7175d5997c51fa48952cececd26aa3f4752c7ec18ded3e44bb1b",
+    "scripts/typed_calls.py": "f048f7be99eed9aad2addf64f95b2e35ef1edcb28f7160ab8515ed1495753282",
+    "scripts/typed_investigation.py": "6d5fc94504bb1d8948d2025f70569c9989172e820c2bac9225d820c0e5f63649",
+    "tests/qualify_relation_selection.py": "e9b6e6071ceabbf0130fd145e2df2962c6587af45c211dc5b2f1d219db03b910"
+  }
+}

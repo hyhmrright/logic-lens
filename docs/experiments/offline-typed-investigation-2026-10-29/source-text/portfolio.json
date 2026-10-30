@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "projects": [
+    "01-bytes-default",
+    "02-unittest-binding",
+    "03-allowed-refusal",
+    "04-relative-source",
+    "05-reexport-source",
+    "06-shadowed-name",
+    "07-fixture-context",
+    "08-contract-conflict",
+    "09-mutable-default",
+    "10-external-boundary",
+    "11-unsupported-content",
+    "12-equal-length-content"
+  ],
+  "scope": "trusted synthetic only; never select real modules",
+  "dispatch_limit": 64,
+  "evaluator_limit": 128
+}

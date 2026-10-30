@@ -1,0 +1,3538 @@
+{
+  "schema_version": 1,
+  "source_sha256": "f0120d0e486c41cca0a5ad3cfefd093de9940b633f0da54aacd85893557cadec",
+  "tests_sha256": "3aa0475b95d9e921de54ad495dfd7852bc645818f170e77f0a56ed04e8c239c1",
+  "inventory": {
+    "entries": [
+      {
+        "name": "hidden",
+        "line": 11,
+        "end": 12,
+        "sources": [
+          "public_definition",
+          "literal_export",
+          "test_call"
+        ],
+        "evidence": [
+          {
+            "input": 0,
+            "outcome": "returned",
+            "expected": 2,
+            "line": 6,
+            "end": 6,
+            "context": "test_hidden",
+            "scope": "exact example only; conditional on test environment"
+          }
+        ],
+        "calls": [
+          {
+            "line": 12,
+            "end": 12,
+            "expression": "_hidden",
+            "target": "_hidden",
+            "resolution": "local"
+          }
+        ],
+        "conflicts": []
+      },
+      {
+        "name": "converted",
+        "line": 22,
+        "end": 23,
+        "sources": [
+          "public_definition",
+          "literal_export",
+          "test_call"
+        ],
+        "evidence": [
+          {
+            "input": 0,
+            "outcome": "returned",
+            "expected": 2,
+            "line": 10,
+            "end": 10,
+            "context": "test_converted",
+            "scope": "exact example only; conditional on test environment"
+          }
+        ],
+        "calls": [
+          {
+            "line": 23,
+            "end": 23,
+            "expression": "_route",
+            "target": "_route",
+            "resolution": "local"
+          }
+        ],
+        "conflicts": []
+      },
+      {
+        "name": "multiple",
+        "line": 32,
+        "end": 35,
+        "sources": [
+          "public_definition",
+          "literal_export",
+          "test_call"
+        ],
+        "evidence": [
+          {
+            "input": 1,
+            "outcome": "returned",
+            "expected": 1,
+            "line": 14,
+            "end": 14,
+            "context": "test_multiple",
+            "scope": "exact example only; conditional on test environment"
+          }
+        ],
+        "calls": [
+          {
+            "line": 35,
+            "end": 35,
+            "expression": "_sink",
+            "target": "_sink",
+            "resolution": "local"
+          },
+          {
+            "line": 34,
+            "end": 34,
+            "expression": "_sink",
+            "target": "_sink",
+            "resolution": "local"
+          }
+        ],
+        "conflicts": []
+      },
+      {
+        "name": "alternate",
+        "line": 38,
+        "end": 41,
+        "sources": [
+          "public_definition",
+          "literal_export",
+          "test_call"
+        ],
+        "evidence": [
+          {
+            "input": 8,
+            "outcome": "returned",
+            "expected": 8,
+            "line": 18,
+            "end": 18,
+            "context": "test_alternate",
+            "scope": "exact example only; conditional on test environment"
+          }
+        ],
+        "calls": [
+          {
+            "line": 41,
+            "end": 41,
+            "expression": "_sink",
+            "target": "_sink",
+            "resolution": "local"
+          }
+        ],
+        "conflicts": []
+      },
+      {
+        "name": "permitted",
+        "line": 44,
+        "end": 45,
+        "sources": [
+          "public_definition",
+          "literal_export",
+          "test_call"
+        ],
+        "evidence": [
+          {
+            "input": 8,
+            "outcome": "value_error",
+            "expected": null,
+            "line": 23,
+            "end": 23,
+            "context": "test_permitted",
+            "scope": "exact example only; conditional on test environment"
+          }
+        ],
+        "calls": [
+          {
+            "line": 45,
+            "end": 45,
+            "expression": "_sink",
+            "target": "_sink",
+            "resolution": "local"
+          }
+        ],
+        "conflicts": []
+      },
+      {
+        "name": "conflicting",
+        "line": 48,
+        "end": 49,
+        "sources": [
+          "public_definition",
+          "literal_export",
+          "test_call"
+        ],
+        "evidence": [
+          {
+            "input": 2,
+            "outcome": "returned",
+            "expected": 2,
+            "line": 27,
+            "end": 27,
+            "context": "test_conflict_a",
+            "scope": "exact example only; conditional on test environment"
+          },
+          {
+            "input": 2,
+            "outcome": "returned",
+            "expected": 3,
+            "line": 31,
+            "end": 31,
+            "context": "test_conflict_b",
+            "scope": "exact example only; conditional on test environment"
+          }
+        ],
+        "calls": [],
+        "conflicts": [
+          2
+        ]
+      },
+      {
+        "name": "impossible",
+        "line": 52,
+        "end": 56,
+        "sources": [
+          "public_definition",
+          "literal_export",
+          "test_call"
+        ],
+        "evidence": [
+          {
+            "input": 0,
+            "outcome": "returned",
+            "expected": 0,
+            "line": 35,
+            "end": 35,
+            "context": "test_impossible",
+            "scope": "exact example only; conditional on test environment"
+          }
+        ],
+        "calls": [
+          {
+            "line": 55,
+            "end": 55,
+            "expression": "_hidden",
+            "target": "_hidden",
+            "resolution": "local"
+          }
+        ],
+        "conflicts": []
+      },
+      {
+        "name": "dynamic",
+        "line": 59,
+        "end": 60,
+        "sources": [
+          "public_definition",
+          "literal_export"
+        ],
+        "evidence": [],
+        "calls": [
+          {
+            "line": 60,
+            "end": 60,
+            "expression": "globals()['hidden']",
+            "target": null,
+            "resolution": "unresolved"
+          },
+          {
+            "line": 60,
+            "end": 60,
+            "expression": "globals",
+            "target": "globals",
+            "resolution": "unresolved"
+          }
+        ],
+        "conflicts": []
+      }
+    ],
+    "internal_functions": [
+      "_hidden",
+      "_route",
+      "_sink"
+    ],
+    "unknown": [],
+    "duplicate_definitions": false,
+    "unmodeled_initialization": [
+      {
+        "line": 2,
+        "end": 2,
+        "kind": "Assign"
+      }
+    ]
+  },
+  "entries": [
+    {
+      "entry": "alternate",
+      "status": "bounded_complete",
+      "observations": [
+        {
+          "input": 8,
+          "outcome": "returned",
+          "value": {
+            "type": "integer",
+            "value": 8,
+            "affine": [
+              1,
+              0
+            ]
+          },
+          "trace": [
+            {
+              "function": "alternate",
+              "line": 39,
+              "op": "Gt",
+              "left": [
+                1,
+                0
+              ],
+              "right": [
+                0,
+                5
+              ],
+              "decision": true
+            }
+          ],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "alternate",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 8,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": null,
+          "task": {
+            "input": 8,
+            "queue": "verify",
+            "reason": "exact test example; no interval extrapolation"
+          }
+        },
+        {
+          "input": 0,
+          "outcome": "returned",
+          "value": {
+            "type": "integer",
+            "value": 0,
+            "affine": [
+              1,
+              0
+            ]
+          },
+          "trace": [
+            {
+              "function": "alternate",
+              "line": 39,
+              "op": "Gt",
+              "left": [
+                1,
+                0
+              ],
+              "right": [
+                0,
+                5
+              ],
+              "decision": false
+            },
+            {
+              "function": "alternate",
+              "line": 41,
+              "op": "GtE",
+              "left": [
+                1,
+                0
+              ],
+              "right": [
+                0,
+                0
+              ],
+              "decision": true,
+              "implicit": "sequence repetition clamps negative counts"
+            },
+            {
+              "function": "_sink",
+              "line": 27,
+              "op": "Gt",
+              "left": [
+                1,
+                0
+              ],
+              "right": [
+                0,
+                10
+              ],
+              "decision": false
+            }
+          ],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "alternate",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 0,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            },
+            {
+              "function": "_sink",
+              "caller": "alternate",
+              "line": 41,
+              "arguments": [
+                {
+                  "type": "byte",
+                  "length": 0,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": null,
+          "task": {
+            "input": 0,
+            "queue": "explore",
+            "reason": "window seed; validity unknown"
+          }
+        },
+        {
+          "input": 1,
+          "outcome": "returned",
+          "value": {
+            "type": "integer",
+            "value": 1,
+            "affine": [
+              1,
+              0
+            ]
+          },
+          "trace": [
+            {
+              "function": "alternate",
+              "line": 39,
+              "op": "Gt",
+              "left": [
+                1,
+                0
+              ],
+              "right": [
+                0,
+                5
+              ],
+              "decision": false
+            },
+            {
+              "function": "alternate",
+              "line": 41,
+              "op": "GtE",
+              "left": [
+                1,
+                0
+              ],
+              "right": [
+                0,
+                0
+              ],
+              "decision": true,
+              "implicit": "sequence repetition clamps negative counts"
+            },
+            {
+              "function": "_sink",
+              "line": 27,
+              "op": "Gt",
+              "left": [
+                1,
+                0
+              ],
+              "right": [
+                0,
+                10
+              ],
+              "decision": false
+            }
+          ],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "alternate",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 1,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            },
+            {
+              "function": "_sink",
+              "caller": "alternate",
+              "line": 41,
+              "arguments": [
+                {
+                  "type": "byte",
+                  "length": 1,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": null,
+          "task": {
+            "input": 1,
+            "queue": "explore",
+            "reason": "window seed; validity unknown"
+          }
+        },
+        {
+          "input": 15,
+          "outcome": "returned",
+          "value": {
+            "type": "integer",
+            "value": 15,
+            "affine": [
+              1,
+              0
+            ]
+          },
+          "trace": [
+            {
+              "function": "alternate",
+              "line": 39,
+              "op": "Gt",
+              "left": [
+                1,
+                0
+              ],
+              "right": [
+                0,
+                5
+              ],
+              "decision": true
+            }
+          ],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "alternate",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 15,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": null,
+          "task": {
+            "input": 15,
+            "queue": "explore",
+            "reason": "window seed; validity unknown"
+          }
+        },
+        {
+          "input": 5,
+          "outcome": "returned",
+          "value": {
+            "type": "integer",
+            "value": 5,
+            "affine": [
+              1,
+              0
+            ]
+          },
+          "trace": [
+            {
+              "function": "alternate",
+              "line": 39,
+              "op": "Gt",
+              "left": [
+                1,
+                0
+              ],
+              "right": [
+                0,
+                5
+              ],
+              "decision": false
+            },
+            {
+              "function": "alternate",
+              "line": 41,
+              "op": "GtE",
+              "left": [
+                1,
+                0
+              ],
+              "right": [
+                0,
+                0
+              ],
+              "decision": true,
+              "implicit": "sequence repetition clamps negative counts"
+            },
+            {
+              "function": "_sink",
+              "line": 27,
+              "op": "Gt",
+              "left": [
+                1,
+                0
+              ],
+              "right": [
+                0,
+                10
+              ],
+              "decision": false
+            }
+          ],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "alternate",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 5,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            },
+            {
+              "function": "_sink",
+              "caller": "alternate",
+              "line": 41,
+              "arguments": [
+                {
+                  "type": "byte",
+                  "length": 5,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": null,
+          "task": {
+            "input": 5,
+            "queue": "explore",
+            "reason": {
+              "kind": "branch_alternative",
+              "target": {
+                "function": "alternate",
+                "line": 39,
+                "decision": false,
+                "prefix": []
+              }
+            }
+          }
+        }
+      ],
+      "pending": [],
+      "infeasible": [
+        {
+          "function": "alternate",
+          "line": 41,
+          "decision": false,
+          "prefix": [
+            {
+              "function": "alternate",
+              "line": 39,
+              "op": "Gt",
+              "left": [
+                1,
+                0
+              ],
+              "right": [
+                0,
+                5
+              ],
+              "decision": false
+            }
+          ]
+        },
+        {
+          "function": "_sink",
+          "line": 27,
+          "decision": true,
+          "prefix": [
+            {
+              "function": "alternate",
+              "line": 39,
+              "op": "Gt",
+              "left": [
+                1,
+                0
+              ],
+              "right": [
+                0,
+                5
+              ],
+              "decision": false
+            },
+            {
+              "function": "alternate",
+              "line": 41,
+              "op": "GtE",
+              "left": [
+                1,
+                0
+              ],
+              "right": [
+                0,
+                0
+              ],
+              "decision": true,
+              "implicit": "sequence repetition clamps negative counts"
+            }
+          ]
+        }
+      ],
+      "dropped_tasks": 0,
+      "conflicts": [],
+      "checks": [
+        {
+          "evidence": {
+            "input": 8,
+            "outcome": "returned",
+            "expected": 8,
+            "line": 18,
+            "end": 18,
+            "context": "test_alternate",
+            "scope": "exact example only; conditional on test environment"
+          },
+          "status": "matches_example",
+          "claim": "conditional test evidence; no automatically confirmed bug"
+        }
+      ]
+    },
+    {
+      "entry": "conflicting",
+      "status": "bounded_complete",
+      "observations": [
+        {
+          "input": 0,
+          "outcome": "returned",
+          "value": {
+            "type": "integer",
+            "value": 0,
+            "affine": [
+              1,
+              0
+            ]
+          },
+          "trace": [],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "conflicting",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 0,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": null,
+          "task": {
+            "input": 0,
+            "queue": "explore",
+            "reason": "window seed; validity unknown"
+          }
+        },
+        {
+          "input": 1,
+          "outcome": "returned",
+          "value": {
+            "type": "integer",
+            "value": 1,
+            "affine": [
+              1,
+              0
+            ]
+          },
+          "trace": [],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "conflicting",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 1,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": null,
+          "task": {
+            "input": 1,
+            "queue": "explore",
+            "reason": "window seed; validity unknown"
+          }
+        },
+        {
+          "input": 15,
+          "outcome": "returned",
+          "value": {
+            "type": "integer",
+            "value": 15,
+            "affine": [
+              1,
+              0
+            ]
+          },
+          "trace": [],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "conflicting",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 15,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": null,
+          "task": {
+            "input": 15,
+            "queue": "explore",
+            "reason": "window seed; validity unknown"
+          }
+        }
+      ],
+      "pending": [],
+      "infeasible": [],
+      "dropped_tasks": 0,
+      "conflicts": [
+        2
+      ],
+      "checks": [
+        {
+          "evidence": {
+            "input": 2,
+            "outcome": "returned",
+            "expected": 2,
+            "line": 27,
+            "end": 27,
+            "context": "test_conflict_a",
+            "scope": "exact example only; conditional on test environment"
+          },
+          "status": "conflict",
+          "claim": "conditional test evidence; no automatically confirmed bug"
+        },
+        {
+          "evidence": {
+            "input": 2,
+            "outcome": "returned",
+            "expected": 3,
+            "line": 31,
+            "end": 31,
+            "context": "test_conflict_b",
+            "scope": "exact example only; conditional on test environment"
+          },
+          "status": "conflict",
+          "claim": "conditional test evidence; no automatically confirmed bug"
+        }
+      ]
+    },
+    {
+      "entry": "converted",
+      "status": "bounded_complete",
+      "observations": [
+        {
+          "input": 0,
+          "outcome": "returned",
+          "value": {
+            "type": "integer",
+            "value": 2,
+            "affine": [
+              3,
+              2
+            ]
+          },
+          "trace": [
+            {
+              "function": "_route",
+              "line": 16,
+              "op": "Lt",
+              "left": [
+                0,
+                15
+              ],
+              "right": [
+                3,
+                2
+              ],
+              "decision": false
+            }
+          ],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "converted",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 0,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            },
+            {
+              "function": "_route",
+              "caller": "converted",
+              "line": 23,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 2,
+                  "affine": [
+                    3,
+                    2
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": null,
+          "task": {
+            "input": 0,
+            "queue": "verify",
+            "reason": "exact test example; no interval extrapolation"
+          }
+        },
+        {
+          "input": 1,
+          "outcome": "returned",
+          "value": {
+            "type": "integer",
+            "value": 5,
+            "affine": [
+              3,
+              2
+            ]
+          },
+          "trace": [
+            {
+              "function": "_route",
+              "line": 16,
+              "op": "Lt",
+              "left": [
+                0,
+                15
+              ],
+              "right": [
+                3,
+                2
+              ],
+              "decision": false
+            }
+          ],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "converted",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 1,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            },
+            {
+              "function": "_route",
+              "caller": "converted",
+              "line": 23,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 5,
+                  "affine": [
+                    3,
+                    2
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": null,
+          "task": {
+            "input": 1,
+            "queue": "explore",
+            "reason": "window seed; validity unknown"
+          }
+        },
+        {
+          "input": 15,
+          "outcome": "returned",
+          "value": {
+            "type": "integer",
+            "value": 47,
+            "affine": [
+              3,
+              2
+            ]
+          },
+          "trace": [
+            {
+              "function": "_route",
+              "line": 16,
+              "op": "Lt",
+              "left": [
+                0,
+                15
+              ],
+              "right": [
+                3,
+                2
+              ],
+              "decision": true
+            },
+            {
+              "function": "_route",
+              "line": 17,
+              "op": "Lt",
+              "left": [
+                3,
+                2
+              ],
+              "right": [
+                0,
+                30
+              ],
+              "decision": false
+            }
+          ],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "converted",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 15,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            },
+            {
+              "function": "_route",
+              "caller": "converted",
+              "line": 23,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 47,
+                  "affine": [
+                    3,
+                    2
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": null,
+          "task": {
+            "input": 15,
+            "queue": "explore",
+            "reason": "window seed; validity unknown"
+          }
+        },
+        {
+          "input": 5,
+          "outcome": "returned",
+          "value": {
+            "type": "integer",
+            "value": 17,
+            "affine": [
+              3,
+              2
+            ]
+          },
+          "trace": [
+            {
+              "function": "_route",
+              "line": 16,
+              "op": "Lt",
+              "left": [
+                0,
+                15
+              ],
+              "right": [
+                3,
+                2
+              ],
+              "decision": true
+            },
+            {
+              "function": "_route",
+              "line": 17,
+              "op": "Lt",
+              "left": [
+                3,
+                2
+              ],
+              "right": [
+                0,
+                30
+              ],
+              "decision": true
+            },
+            {
+              "function": "_hidden",
+              "line": 6,
+              "op": "Eq",
+              "left": [
+                3,
+                2
+              ],
+              "right": [
+                0,
+                23
+              ],
+              "decision": false
+            }
+          ],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "converted",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 5,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            },
+            {
+              "function": "_route",
+              "caller": "converted",
+              "line": 23,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 17,
+                  "affine": [
+                    3,
+                    2
+                  ]
+                }
+              ]
+            },
+            {
+              "function": "_hidden",
+              "caller": "_route",
+              "line": 18,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 17,
+                  "affine": [
+                    3,
+                    2
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": null,
+          "task": {
+            "input": 5,
+            "queue": "explore",
+            "reason": {
+              "kind": "branch_alternative",
+              "target": {
+                "function": "_route",
+                "line": 16,
+                "decision": true,
+                "prefix": []
+              }
+            }
+          }
+        },
+        {
+          "input": 9,
+          "outcome": "returned",
+          "value": {
+            "type": "integer",
+            "value": 29,
+            "affine": [
+              3,
+              2
+            ]
+          },
+          "trace": [
+            {
+              "function": "_route",
+              "line": 16,
+              "op": "Lt",
+              "left": [
+                0,
+                15
+              ],
+              "right": [
+                3,
+                2
+              ],
+              "decision": true
+            },
+            {
+              "function": "_route",
+              "line": 17,
+              "op": "Lt",
+              "left": [
+                3,
+                2
+              ],
+              "right": [
+                0,
+                30
+              ],
+              "decision": true
+            },
+            {
+              "function": "_hidden",
+              "line": 6,
+              "op": "Eq",
+              "left": [
+                3,
+                2
+              ],
+              "right": [
+                0,
+                23
+              ],
+              "decision": false
+            }
+          ],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "converted",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 9,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            },
+            {
+              "function": "_route",
+              "caller": "converted",
+              "line": 23,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 29,
+                  "affine": [
+                    3,
+                    2
+                  ]
+                }
+              ]
+            },
+            {
+              "function": "_hidden",
+              "caller": "_route",
+              "line": 18,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 29,
+                  "affine": [
+                    3,
+                    2
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": null,
+          "task": {
+            "input": 9,
+            "queue": "explore",
+            "reason": {
+              "kind": "branch_alternative",
+              "target": {
+                "function": "_route",
+                "line": 17,
+                "decision": true,
+                "prefix": [
+                  {
+                    "function": "_route",
+                    "line": 16,
+                    "op": "Lt",
+                    "left": [
+                      0,
+                      15
+                    ],
+                    "right": [
+                      3,
+                      2
+                    ],
+                    "decision": true
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "input": 7,
+          "outcome": "value_error",
+          "value": {
+            "type": "NoneType",
+            "value": null
+          },
+          "trace": [
+            {
+              "function": "_route",
+              "line": 16,
+              "op": "Lt",
+              "left": [
+                0,
+                15
+              ],
+              "right": [
+                3,
+                2
+              ],
+              "decision": true
+            },
+            {
+              "function": "_route",
+              "line": 17,
+              "op": "Lt",
+              "left": [
+                3,
+                2
+              ],
+              "right": [
+                0,
+                30
+              ],
+              "decision": true
+            },
+            {
+              "function": "_hidden",
+              "line": 6,
+              "op": "Eq",
+              "left": [
+                3,
+                2
+              ],
+              "right": [
+                0,
+                23
+              ],
+              "decision": true
+            }
+          ],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "converted",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 7,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            },
+            {
+              "function": "_route",
+              "caller": "converted",
+              "line": 23,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 23,
+                  "affine": [
+                    3,
+                    2
+                  ]
+                }
+              ]
+            },
+            {
+              "function": "_hidden",
+              "caller": "_route",
+              "line": 18,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 23,
+                  "affine": [
+                    3,
+                    2
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": null,
+          "task": {
+            "input": 7,
+            "queue": "explore",
+            "reason": {
+              "kind": "branch_alternative",
+              "target": {
+                "function": "_hidden",
+                "line": 6,
+                "decision": true,
+                "prefix": [
+                  {
+                    "function": "_route",
+                    "line": 16,
+                    "op": "Lt",
+                    "left": [
+                      0,
+                      15
+                    ],
+                    "right": [
+                      3,
+                      2
+                    ],
+                    "decision": true
+                  },
+                  {
+                    "function": "_route",
+                    "line": 17,
+                    "op": "Lt",
+                    "left": [
+                      3,
+                      2
+                    ],
+                    "right": [
+                      0,
+                      30
+                    ],
+                    "decision": true
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "pending": [],
+      "infeasible": [],
+      "dropped_tasks": 0,
+      "conflicts": [],
+      "checks": [
+        {
+          "evidence": {
+            "input": 0,
+            "outcome": "returned",
+            "expected": 2,
+            "line": 10,
+            "end": 10,
+            "context": "test_converted",
+            "scope": "exact example only; conditional on test environment"
+          },
+          "status": "matches_example",
+          "claim": "conditional test evidence; no automatically confirmed bug"
+        }
+      ]
+    },
+    {
+      "entry": "hidden",
+      "status": "bounded_complete",
+      "observations": [
+        {
+          "input": 0,
+          "outcome": "returned",
+          "value": {
+            "type": "integer",
+            "value": 2,
+            "affine": [
+              3,
+              2
+            ]
+          },
+          "trace": [
+            {
+              "function": "_hidden",
+              "line": 6,
+              "op": "Eq",
+              "left": [
+                3,
+                2
+              ],
+              "right": [
+                0,
+                23
+              ],
+              "decision": false
+            }
+          ],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "hidden",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 0,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            },
+            {
+              "function": "_hidden",
+              "caller": "hidden",
+              "line": 12,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 2,
+                  "affine": [
+                    3,
+                    2
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": null,
+          "task": {
+            "input": 0,
+            "queue": "verify",
+            "reason": "exact test example; no interval extrapolation"
+          }
+        },
+        {
+          "input": 1,
+          "outcome": "returned",
+          "value": {
+            "type": "integer",
+            "value": 5,
+            "affine": [
+              3,
+              2
+            ]
+          },
+          "trace": [
+            {
+              "function": "_hidden",
+              "line": 6,
+              "op": "Eq",
+              "left": [
+                3,
+                2
+              ],
+              "right": [
+                0,
+                23
+              ],
+              "decision": false
+            }
+          ],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "hidden",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 1,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            },
+            {
+              "function": "_hidden",
+              "caller": "hidden",
+              "line": 12,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 5,
+                  "affine": [
+                    3,
+                    2
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": null,
+          "task": {
+            "input": 1,
+            "queue": "explore",
+            "reason": "window seed; validity unknown"
+          }
+        },
+        {
+          "input": 15,
+          "outcome": "returned",
+          "value": {
+            "type": "integer",
+            "value": 47,
+            "affine": [
+              3,
+              2
+            ]
+          },
+          "trace": [
+            {
+              "function": "_hidden",
+              "line": 6,
+              "op": "Eq",
+              "left": [
+                3,
+                2
+              ],
+              "right": [
+                0,
+                23
+              ],
+              "decision": false
+            }
+          ],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "hidden",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 15,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            },
+            {
+              "function": "_hidden",
+              "caller": "hidden",
+              "line": 12,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 47,
+                  "affine": [
+                    3,
+                    2
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": null,
+          "task": {
+            "input": 15,
+            "queue": "explore",
+            "reason": "window seed; validity unknown"
+          }
+        },
+        {
+          "input": 7,
+          "outcome": "value_error",
+          "value": {
+            "type": "NoneType",
+            "value": null
+          },
+          "trace": [
+            {
+              "function": "_hidden",
+              "line": 6,
+              "op": "Eq",
+              "left": [
+                3,
+                2
+              ],
+              "right": [
+                0,
+                23
+              ],
+              "decision": true
+            }
+          ],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "hidden",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 7,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            },
+            {
+              "function": "_hidden",
+              "caller": "hidden",
+              "line": 12,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 23,
+                  "affine": [
+                    3,
+                    2
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": null,
+          "task": {
+            "input": 7,
+            "queue": "explore",
+            "reason": {
+              "kind": "branch_alternative",
+              "target": {
+                "function": "_hidden",
+                "line": 6,
+                "decision": true,
+                "prefix": []
+              }
+            }
+          }
+        }
+      ],
+      "pending": [],
+      "infeasible": [],
+      "dropped_tasks": 0,
+      "conflicts": [],
+      "checks": [
+        {
+          "evidence": {
+            "input": 0,
+            "outcome": "returned",
+            "expected": 2,
+            "line": 6,
+            "end": 6,
+            "context": "test_hidden",
+            "scope": "exact example only; conditional on test environment"
+          },
+          "status": "matches_example",
+          "claim": "conditional test evidence; no automatically confirmed bug"
+        }
+      ]
+    },
+    {
+      "entry": "impossible",
+      "status": "bounded_complete",
+      "observations": [
+        {
+          "input": 0,
+          "outcome": "returned",
+          "value": {
+            "type": "integer",
+            "value": 0,
+            "affine": [
+              1,
+              0
+            ]
+          },
+          "trace": [
+            {
+              "function": "impossible",
+              "line": 53,
+              "op": "Lt",
+              "left": [
+                1,
+                0
+              ],
+              "right": [
+                0,
+                4
+              ],
+              "decision": true
+            },
+            {
+              "function": "impossible",
+              "line": 54,
+              "op": "Gt",
+              "left": [
+                1,
+                0
+              ],
+              "right": [
+                0,
+                12
+              ],
+              "decision": false
+            }
+          ],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "impossible",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 0,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": null,
+          "task": {
+            "input": 0,
+            "queue": "verify",
+            "reason": "exact test example; no interval extrapolation"
+          }
+        },
+        {
+          "input": 1,
+          "outcome": "returned",
+          "value": {
+            "type": "integer",
+            "value": 1,
+            "affine": [
+              1,
+              0
+            ]
+          },
+          "trace": [
+            {
+              "function": "impossible",
+              "line": 53,
+              "op": "Lt",
+              "left": [
+                1,
+                0
+              ],
+              "right": [
+                0,
+                4
+              ],
+              "decision": true
+            },
+            {
+              "function": "impossible",
+              "line": 54,
+              "op": "Gt",
+              "left": [
+                1,
+                0
+              ],
+              "right": [
+                0,
+                12
+              ],
+              "decision": false
+            }
+          ],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "impossible",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 1,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": null,
+          "task": {
+            "input": 1,
+            "queue": "explore",
+            "reason": "window seed; validity unknown"
+          }
+        },
+        {
+          "input": 15,
+          "outcome": "returned",
+          "value": {
+            "type": "integer",
+            "value": 15,
+            "affine": [
+              1,
+              0
+            ]
+          },
+          "trace": [
+            {
+              "function": "impossible",
+              "line": 53,
+              "op": "Lt",
+              "left": [
+                1,
+                0
+              ],
+              "right": [
+                0,
+                4
+              ],
+              "decision": false
+            }
+          ],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "impossible",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 15,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": null,
+          "task": {
+            "input": 15,
+            "queue": "explore",
+            "reason": "window seed; validity unknown"
+          }
+        },
+        {
+          "input": 4,
+          "outcome": "returned",
+          "value": {
+            "type": "integer",
+            "value": 4,
+            "affine": [
+              1,
+              0
+            ]
+          },
+          "trace": [
+            {
+              "function": "impossible",
+              "line": 53,
+              "op": "Lt",
+              "left": [
+                1,
+                0
+              ],
+              "right": [
+                0,
+                4
+              ],
+              "decision": false
+            }
+          ],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "impossible",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 4,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": null,
+          "task": {
+            "input": 4,
+            "queue": "explore",
+            "reason": {
+              "kind": "branch_alternative",
+              "target": {
+                "function": "impossible",
+                "line": 53,
+                "decision": false,
+                "prefix": []
+              }
+            }
+          }
+        }
+      ],
+      "pending": [],
+      "infeasible": [
+        {
+          "function": "impossible",
+          "line": 54,
+          "decision": true,
+          "prefix": [
+            {
+              "function": "impossible",
+              "line": 53,
+              "op": "Lt",
+              "left": [
+                1,
+                0
+              ],
+              "right": [
+                0,
+                4
+              ],
+              "decision": true
+            }
+          ]
+        }
+      ],
+      "dropped_tasks": 0,
+      "conflicts": [],
+      "checks": [
+        {
+          "evidence": {
+            "input": 0,
+            "outcome": "returned",
+            "expected": 0,
+            "line": 35,
+            "end": 35,
+            "context": "test_impossible",
+            "scope": "exact example only; conditional on test environment"
+          },
+          "status": "matches_example",
+          "claim": "conditional test evidence; no automatically confirmed bug"
+        }
+      ]
+    },
+    {
+      "entry": "multiple",
+      "status": "bounded_complete",
+      "observations": [
+        {
+          "input": 1,
+          "outcome": "returned",
+          "value": {
+            "type": "integer",
+            "value": 1,
+            "affine": [
+              1,
+              0
+            ]
+          },
+          "trace": [
+            {
+              "function": "multiple",
+              "line": 33,
+              "op": "Lt",
+              "left": [
+                1,
+                0
+              ],
+              "right": [
+                0,
+                5
+              ],
+              "decision": true
+            },
+            {
+              "function": "multiple",
+              "line": 34,
+              "op": "GtE",
+              "left": [
+                1,
+                0
+              ],
+              "right": [
+                0,
+                0
+              ],
+              "decision": true,
+              "implicit": "sequence repetition clamps negative counts"
+            },
+            {
+              "function": "_sink",
+              "line": 27,
+              "op": "Gt",
+              "left": [
+                1,
+                0
+              ],
+              "right": [
+                0,
+                10
+              ],
+              "decision": false
+            }
+          ],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "multiple",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 1,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            },
+            {
+              "function": "_sink",
+              "caller": "multiple",
+              "line": 34,
+              "arguments": [
+                {
+                  "type": "byte",
+                  "length": 1,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": null,
+          "task": {
+            "input": 1,
+            "queue": "verify",
+            "reason": "exact test example; no interval extrapolation"
+          }
+        },
+        {
+          "input": 0,
+          "outcome": "returned",
+          "value": {
+            "type": "integer",
+            "value": 0,
+            "affine": [
+              1,
+              0
+            ]
+          },
+          "trace": [
+            {
+              "function": "multiple",
+              "line": 33,
+              "op": "Lt",
+              "left": [
+                1,
+                0
+              ],
+              "right": [
+                0,
+                5
+              ],
+              "decision": true
+            },
+            {
+              "function": "multiple",
+              "line": 34,
+              "op": "GtE",
+              "left": [
+                1,
+                0
+              ],
+              "right": [
+                0,
+                0
+              ],
+              "decision": true,
+              "implicit": "sequence repetition clamps negative counts"
+            },
+            {
+              "function": "_sink",
+              "line": 27,
+              "op": "Gt",
+              "left": [
+                1,
+                0
+              ],
+              "right": [
+                0,
+                10
+              ],
+              "decision": false
+            }
+          ],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "multiple",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 0,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            },
+            {
+              "function": "_sink",
+              "caller": "multiple",
+              "line": 34,
+              "arguments": [
+                {
+                  "type": "byte",
+                  "length": 0,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": null,
+          "task": {
+            "input": 0,
+            "queue": "explore",
+            "reason": "window seed; validity unknown"
+          }
+        },
+        {
+          "input": 15,
+          "outcome": "value_error",
+          "value": {
+            "type": "NoneType",
+            "value": null
+          },
+          "trace": [
+            {
+              "function": "multiple",
+              "line": 33,
+              "op": "Lt",
+              "left": [
+                1,
+                0
+              ],
+              "right": [
+                0,
+                5
+              ],
+              "decision": false
+            },
+            {
+              "function": "multiple",
+              "line": 35,
+              "op": "GtE",
+              "left": [
+                2,
+                0
+              ],
+              "right": [
+                0,
+                0
+              ],
+              "decision": true,
+              "implicit": "sequence repetition clamps negative counts"
+            },
+            {
+              "function": "_sink",
+              "line": 27,
+              "op": "Gt",
+              "left": [
+                2,
+                0
+              ],
+              "right": [
+                0,
+                10
+              ],
+              "decision": true
+            }
+          ],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "multiple",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 15,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            },
+            {
+              "function": "_sink",
+              "caller": "multiple",
+              "line": 35,
+              "arguments": [
+                {
+                  "type": "byte",
+                  "length": 30,
+                  "affine": [
+                    2,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": null,
+          "task": {
+            "input": 15,
+            "queue": "explore",
+            "reason": "window seed; validity unknown"
+          }
+        },
+        {
+          "input": 5,
+          "outcome": "returned",
+          "value": {
+            "type": "integer",
+            "value": 10,
+            "affine": [
+              2,
+              0
+            ]
+          },
+          "trace": [
+            {
+              "function": "multiple",
+              "line": 33,
+              "op": "Lt",
+              "left": [
+                1,
+                0
+              ],
+              "right": [
+                0,
+                5
+              ],
+              "decision": false
+            },
+            {
+              "function": "multiple",
+              "line": 35,
+              "op": "GtE",
+              "left": [
+                2,
+                0
+              ],
+              "right": [
+                0,
+                0
+              ],
+              "decision": true,
+              "implicit": "sequence repetition clamps negative counts"
+            },
+            {
+              "function": "_sink",
+              "line": 27,
+              "op": "Gt",
+              "left": [
+                2,
+                0
+              ],
+              "right": [
+                0,
+                10
+              ],
+              "decision": false
+            }
+          ],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "multiple",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 5,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            },
+            {
+              "function": "_sink",
+              "caller": "multiple",
+              "line": 35,
+              "arguments": [
+                {
+                  "type": "byte",
+                  "length": 10,
+                  "affine": [
+                    2,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": null,
+          "task": {
+            "input": 5,
+            "queue": "explore",
+            "reason": {
+              "kind": "branch_alternative",
+              "target": {
+                "function": "multiple",
+                "line": 33,
+                "decision": false,
+                "prefix": []
+              }
+            }
+          }
+        }
+      ],
+      "pending": [],
+      "infeasible": [
+        {
+          "function": "multiple",
+          "line": 34,
+          "decision": false,
+          "prefix": [
+            {
+              "function": "multiple",
+              "line": 33,
+              "op": "Lt",
+              "left": [
+                1,
+                0
+              ],
+              "right": [
+                0,
+                5
+              ],
+              "decision": true
+            }
+          ]
+        },
+        {
+          "function": "_sink",
+          "line": 27,
+          "decision": true,
+          "prefix": [
+            {
+              "function": "multiple",
+              "line": 33,
+              "op": "Lt",
+              "left": [
+                1,
+                0
+              ],
+              "right": [
+                0,
+                5
+              ],
+              "decision": true
+            },
+            {
+              "function": "multiple",
+              "line": 34,
+              "op": "GtE",
+              "left": [
+                1,
+                0
+              ],
+              "right": [
+                0,
+                0
+              ],
+              "decision": true,
+              "implicit": "sequence repetition clamps negative counts"
+            }
+          ]
+        },
+        {
+          "function": "multiple",
+          "line": 35,
+          "decision": false,
+          "prefix": [
+            {
+              "function": "multiple",
+              "line": 33,
+              "op": "Lt",
+              "left": [
+                1,
+                0
+              ],
+              "right": [
+                0,
+                5
+              ],
+              "decision": false
+            }
+          ]
+        }
+      ],
+      "dropped_tasks": 0,
+      "conflicts": [],
+      "checks": [
+        {
+          "evidence": {
+            "input": 1,
+            "outcome": "returned",
+            "expected": 1,
+            "line": 14,
+            "end": 14,
+            "context": "test_multiple",
+            "scope": "exact example only; conditional on test environment"
+          },
+          "status": "matches_example",
+          "claim": "conditional test evidence; no automatically confirmed bug"
+        }
+      ]
+    },
+    {
+      "entry": "permitted",
+      "status": "bounded_complete",
+      "observations": [
+        {
+          "input": 8,
+          "outcome": "value_error",
+          "value": {
+            "type": "NoneType",
+            "value": null
+          },
+          "trace": [
+            {
+              "function": "permitted",
+              "line": 45,
+              "op": "GtE",
+              "left": [
+                2,
+                0
+              ],
+              "right": [
+                0,
+                0
+              ],
+              "decision": true,
+              "implicit": "sequence repetition clamps negative counts"
+            },
+            {
+              "function": "_sink",
+              "line": 27,
+              "op": "Gt",
+              "left": [
+                2,
+                0
+              ],
+              "right": [
+                0,
+                10
+              ],
+              "decision": true
+            }
+          ],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "permitted",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 8,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            },
+            {
+              "function": "_sink",
+              "caller": "permitted",
+              "line": 45,
+              "arguments": [
+                {
+                  "type": "byte",
+                  "length": 16,
+                  "affine": [
+                    2,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": null,
+          "task": {
+            "input": 8,
+            "queue": "verify",
+            "reason": "exact test example; no interval extrapolation"
+          }
+        },
+        {
+          "input": 0,
+          "outcome": "returned",
+          "value": {
+            "type": "integer",
+            "value": 0,
+            "affine": [
+              2,
+              0
+            ]
+          },
+          "trace": [
+            {
+              "function": "permitted",
+              "line": 45,
+              "op": "GtE",
+              "left": [
+                2,
+                0
+              ],
+              "right": [
+                0,
+                0
+              ],
+              "decision": true,
+              "implicit": "sequence repetition clamps negative counts"
+            },
+            {
+              "function": "_sink",
+              "line": 27,
+              "op": "Gt",
+              "left": [
+                2,
+                0
+              ],
+              "right": [
+                0,
+                10
+              ],
+              "decision": false
+            }
+          ],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "permitted",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 0,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            },
+            {
+              "function": "_sink",
+              "caller": "permitted",
+              "line": 45,
+              "arguments": [
+                {
+                  "type": "byte",
+                  "length": 0,
+                  "affine": [
+                    2,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": null,
+          "task": {
+            "input": 0,
+            "queue": "explore",
+            "reason": "window seed; validity unknown"
+          }
+        },
+        {
+          "input": 1,
+          "outcome": "returned",
+          "value": {
+            "type": "integer",
+            "value": 2,
+            "affine": [
+              2,
+              0
+            ]
+          },
+          "trace": [
+            {
+              "function": "permitted",
+              "line": 45,
+              "op": "GtE",
+              "left": [
+                2,
+                0
+              ],
+              "right": [
+                0,
+                0
+              ],
+              "decision": true,
+              "implicit": "sequence repetition clamps negative counts"
+            },
+            {
+              "function": "_sink",
+              "line": 27,
+              "op": "Gt",
+              "left": [
+                2,
+                0
+              ],
+              "right": [
+                0,
+                10
+              ],
+              "decision": false
+            }
+          ],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "permitted",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 1,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            },
+            {
+              "function": "_sink",
+              "caller": "permitted",
+              "line": 45,
+              "arguments": [
+                {
+                  "type": "byte",
+                  "length": 2,
+                  "affine": [
+                    2,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": null,
+          "task": {
+            "input": 1,
+            "queue": "explore",
+            "reason": "window seed; validity unknown"
+          }
+        },
+        {
+          "input": 15,
+          "outcome": "value_error",
+          "value": {
+            "type": "NoneType",
+            "value": null
+          },
+          "trace": [
+            {
+              "function": "permitted",
+              "line": 45,
+              "op": "GtE",
+              "left": [
+                2,
+                0
+              ],
+              "right": [
+                0,
+                0
+              ],
+              "decision": true,
+              "implicit": "sequence repetition clamps negative counts"
+            },
+            {
+              "function": "_sink",
+              "line": 27,
+              "op": "Gt",
+              "left": [
+                2,
+                0
+              ],
+              "right": [
+                0,
+                10
+              ],
+              "decision": true
+            }
+          ],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "permitted",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 15,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            },
+            {
+              "function": "_sink",
+              "caller": "permitted",
+              "line": 45,
+              "arguments": [
+                {
+                  "type": "byte",
+                  "length": 30,
+                  "affine": [
+                    2,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": null,
+          "task": {
+            "input": 15,
+            "queue": "explore",
+            "reason": "window seed; validity unknown"
+          }
+        },
+        {
+          "input": 5,
+          "outcome": "returned",
+          "value": {
+            "type": "integer",
+            "value": 10,
+            "affine": [
+              2,
+              0
+            ]
+          },
+          "trace": [
+            {
+              "function": "permitted",
+              "line": 45,
+              "op": "GtE",
+              "left": [
+                2,
+                0
+              ],
+              "right": [
+                0,
+                0
+              ],
+              "decision": true,
+              "implicit": "sequence repetition clamps negative counts"
+            },
+            {
+              "function": "_sink",
+              "line": 27,
+              "op": "Gt",
+              "left": [
+                2,
+                0
+              ],
+              "right": [
+                0,
+                10
+              ],
+              "decision": false
+            }
+          ],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "permitted",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 5,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            },
+            {
+              "function": "_sink",
+              "caller": "permitted",
+              "line": 45,
+              "arguments": [
+                {
+                  "type": "byte",
+                  "length": 10,
+                  "affine": [
+                    2,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": null,
+          "task": {
+            "input": 5,
+            "queue": "explore",
+            "reason": {
+              "kind": "branch_alternative",
+              "target": {
+                "function": "_sink",
+                "line": 27,
+                "decision": false,
+                "prefix": [
+                  {
+                    "function": "permitted",
+                    "line": 45,
+                    "op": "GtE",
+                    "left": [
+                      2,
+                      0
+                    ],
+                    "right": [
+                      0,
+                      0
+                    ],
+                    "decision": true,
+                    "implicit": "sequence repetition clamps negative counts"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "pending": [],
+      "infeasible": [
+        {
+          "function": "permitted",
+          "line": 45,
+          "decision": false,
+          "prefix": []
+        }
+      ],
+      "dropped_tasks": 0,
+      "conflicts": [],
+      "checks": [
+        {
+          "evidence": {
+            "input": 8,
+            "outcome": "value_error",
+            "expected": null,
+            "line": 23,
+            "end": 23,
+            "context": "test_permitted",
+            "scope": "exact example only; conditional on test environment"
+          },
+          "status": "matches_example",
+          "claim": "conditional test evidence; no automatically confirmed bug"
+        }
+      ]
+    },
+    {
+      "entry": "dynamic",
+      "status": "partial_unsupported",
+      "observations": [
+        {
+          "input": 0,
+          "outcome": "unsupported",
+          "value": {
+            "type": "NoneType",
+            "value": null
+          },
+          "trace": [],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "dynamic",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 0,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": "unsupported expression: Call",
+          "task": {
+            "input": 0,
+            "queue": "explore",
+            "reason": "window seed; validity unknown"
+          }
+        },
+        {
+          "input": 1,
+          "outcome": "unsupported",
+          "value": {
+            "type": "NoneType",
+            "value": null
+          },
+          "trace": [],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "dynamic",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 1,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": "unsupported expression: Call",
+          "task": {
+            "input": 1,
+            "queue": "explore",
+            "reason": "window seed; validity unknown"
+          }
+        },
+        {
+          "input": 15,
+          "outcome": "unsupported",
+          "value": {
+            "type": "NoneType",
+            "value": null
+          },
+          "trace": [],
+          "gaps": [],
+          "quantities": [
+            {
+              "function": "dynamic",
+              "caller": null,
+              "line": null,
+              "arguments": [
+                {
+                  "type": "integer",
+                  "value": 15,
+                  "affine": [
+                    1,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "error": "unsupported expression: Call",
+          "task": {
+            "input": 15,
+            "queue": "explore",
+            "reason": "window seed; validity unknown"
+          }
+        }
+      ],
+      "pending": [],
+      "infeasible": [],
+      "dropped_tasks": 0,
+      "conflicts": [],
+      "checks": []
+    }
+  ],
+  "dispatch": [
+    {
+      "entry": "alternate",
+      "input": 8,
+      "queue": "verify",
+      "reason": "exact test example; no interval extrapolation"
+    },
+    {
+      "entry": "conflicting",
+      "input": 0,
+      "queue": "explore",
+      "reason": "window seed; validity unknown"
+    },
+    {
+      "entry": "converted",
+      "input": 0,
+      "queue": "verify",
+      "reason": "exact test example; no interval extrapolation"
+    },
+    {
+      "entry": "hidden",
+      "input": 0,
+      "queue": "verify",
+      "reason": "exact test example; no interval extrapolation"
+    },
+    {
+      "entry": "impossible",
+      "input": 0,
+      "queue": "verify",
+      "reason": "exact test example; no interval extrapolation"
+    },
+    {
+      "entry": "multiple",
+      "input": 1,
+      "queue": "verify",
+      "reason": "exact test example; no interval extrapolation"
+    },
+    {
+      "entry": "permitted",
+      "input": 8,
+      "queue": "verify",
+      "reason": "exact test example; no interval extrapolation"
+    },
+    {
+      "entry": "dynamic",
+      "input": 0,
+      "queue": "explore",
+      "reason": "window seed; validity unknown"
+    },
+    {
+      "entry": "alternate",
+      "input": 0,
+      "queue": "explore",
+      "reason": "window seed; validity unknown"
+    },
+    {
+      "entry": "conflicting",
+      "input": 1,
+      "queue": "explore",
+      "reason": "window seed; validity unknown"
+    },
+    {
+      "entry": "converted",
+      "input": 1,
+      "queue": "explore",
+      "reason": "window seed; validity unknown"
+    },
+    {
+      "entry": "hidden",
+      "input": 1,
+      "queue": "explore",
+      "reason": "window seed; validity unknown"
+    },
+    {
+      "entry": "impossible",
+      "input": 1,
+      "queue": "explore",
+      "reason": "window seed; validity unknown"
+    },
+    {
+      "entry": "multiple",
+      "input": 0,
+      "queue": "explore",
+      "reason": "window seed; validity unknown"
+    },
+    {
+      "entry": "permitted",
+      "input": 0,
+      "queue": "explore",
+      "reason": "window seed; validity unknown"
+    },
+    {
+      "entry": "dynamic",
+      "input": 1,
+      "queue": "explore",
+      "reason": "window seed; validity unknown"
+    },
+    {
+      "entry": "alternate",
+      "input": 1,
+      "queue": "explore",
+      "reason": "window seed; validity unknown"
+    },
+    {
+      "entry": "conflicting",
+      "input": 15,
+      "queue": "explore",
+      "reason": "window seed; validity unknown"
+    },
+    {
+      "entry": "converted",
+      "input": 15,
+      "queue": "explore",
+      "reason": "window seed; validity unknown"
+    },
+    {
+      "entry": "hidden",
+      "input": 15,
+      "queue": "explore",
+      "reason": "window seed; validity unknown"
+    },
+    {
+      "entry": "impossible",
+      "input": 15,
+      "queue": "explore",
+      "reason": "window seed; validity unknown"
+    },
+    {
+      "entry": "multiple",
+      "input": 15,
+      "queue": "explore",
+      "reason": "window seed; validity unknown"
+    },
+    {
+      "entry": "permitted",
+      "input": 1,
+      "queue": "explore",
+      "reason": "window seed; validity unknown"
+    },
+    {
+      "entry": "dynamic",
+      "input": 15,
+      "queue": "explore",
+      "reason": "window seed; validity unknown"
+    },
+    {
+      "entry": "alternate",
+      "input": 15,
+      "queue": "explore",
+      "reason": "window seed; validity unknown"
+    },
+    {
+      "entry": "converted",
+      "input": 5,
+      "queue": "explore",
+      "reason": {
+        "kind": "branch_alternative",
+        "target": {
+          "function": "_route",
+          "line": 16,
+          "decision": true,
+          "prefix": []
+        }
+      }
+    },
+    {
+      "entry": "hidden",
+      "input": 7,
+      "queue": "explore",
+      "reason": {
+        "kind": "branch_alternative",
+        "target": {
+          "function": "_hidden",
+          "line": 6,
+          "decision": true,
+          "prefix": []
+        }
+      }
+    },
+    {
+      "entry": "impossible",
+      "input": 4,
+      "queue": "explore",
+      "reason": {
+        "kind": "branch_alternative",
+        "target": {
+          "function": "impossible",
+          "line": 53,
+          "decision": false,
+          "prefix": []
+        }
+      }
+    },
+    {
+      "entry": "multiple",
+      "input": 5,
+      "queue": "explore",
+      "reason": {
+        "kind": "branch_alternative",
+        "target": {
+          "function": "multiple",
+          "line": 33,
+          "decision": false,
+          "prefix": []
+        }
+      }
+    },
+    {
+      "entry": "permitted",
+      "input": 15,
+      "queue": "explore",
+      "reason": "window seed; validity unknown"
+    },
+    {
+      "entry": "alternate",
+      "input": 5,
+      "queue": "explore",
+      "reason": {
+        "kind": "branch_alternative",
+        "target": {
+          "function": "alternate",
+          "line": 39,
+          "decision": false,
+          "prefix": []
+        }
+      }
+    },
+    {
+      "entry": "converted",
+      "input": 9,
+      "queue": "explore",
+      "reason": {
+        "kind": "branch_alternative",
+        "target": {
+          "function": "_route",
+          "line": 17,
+          "decision": true,
+          "prefix": [
+            {
+              "function": "_route",
+              "line": 16,
+              "op": "Lt",
+              "left": [
+                0,
+                15
+              ],
+              "right": [
+                3,
+                2
+              ],
+              "decision": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "entry": "permitted",
+      "input": 5,
+      "queue": "explore",
+      "reason": {
+        "kind": "branch_alternative",
+        "target": {
+          "function": "_sink",
+          "line": 27,
+          "decision": false,
+          "prefix": [
+            {
+              "function": "permitted",
+              "line": 45,
+              "op": "GtE",
+              "left": [
+                2,
+                0
+              ],
+              "right": [
+                0,
+                0
+              ],
+              "decision": true,
+              "implicit": "sequence repetition clamps negative counts"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "entry": "converted",
+      "input": 7,
+      "queue": "explore",
+      "reason": {
+        "kind": "branch_alternative",
+        "target": {
+          "function": "_hidden",
+          "line": 6,
+          "decision": true,
+          "prefix": [
+            {
+              "function": "_route",
+              "line": 16,
+              "op": "Lt",
+              "left": [
+                0,
+                15
+              ],
+              "right": [
+                3,
+                2
+              ],
+              "decision": true
+            },
+            {
+              "function": "_route",
+              "line": 17,
+              "op": "Lt",
+              "left": [
+                3,
+                2
+              ],
+              "right": [
+                0,
+                30
+              ],
+              "decision": true
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "mode": "paths",
+  "window": [
+    0,
+    15
+  ],
+  "execution_enabled": false,
+  "scope": "isolated function slices; module initialization/import effects unmodeled; finite investigation window, not valid-input domain; never imports/executes subject",
+  "limits": {
+    "entries": 8,
+    "points_per_entry": 32,
+    "tasks_per_entry": 32
+  },
+  "unresolved": "unseen or unsupported paths remain unknown; test applicability requires review"
+}

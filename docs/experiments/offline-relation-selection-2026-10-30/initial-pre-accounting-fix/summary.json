@@ -1,0 +1,324 @@
+{
+  "status": "pass",
+  "failures": [],
+  "cases": [
+    {
+      "family": "scale",
+      "baseline_dispatch": 4,
+      "relation_dispatch": 4,
+      "relations": 1,
+      "normative_properties": 0,
+      "independent_truth": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "independent_cuts": [
+        11
+      ],
+      "selected_points": [
+        1,
+        11,
+        10,
+        12
+      ],
+      "baseline_points": [
+        1,
+        0,
+        2,
+        3
+      ],
+      "cut_agrees": true,
+      "cut_selected": true,
+      "baseline_cut_selected": false
+    },
+    {
+      "family": "shift",
+      "baseline_dispatch": 4,
+      "relation_dispatch": 4,
+      "relations": 1,
+      "normative_properties": 0,
+      "independent_truth": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "independent_cuts": [
+        13
+      ],
+      "selected_points": [
+        1,
+        13,
+        12,
+        14
+      ],
+      "baseline_points": [
+        1,
+        0,
+        2,
+        3
+      ],
+      "cut_agrees": true,
+      "cut_selected": true,
+      "baseline_cut_selected": false
+    },
+    {
+      "family": "negative",
+      "baseline_dispatch": 4,
+      "relation_dispatch": 4,
+      "relations": 1,
+      "normative_properties": 0,
+      "independent_truth": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "independent_cuts": [
+        16
+      ],
+      "selected_points": [
+        1,
+        16,
+        15,
+        17
+      ],
+      "baseline_points": [
+        1,
+        0,
+        2,
+        3
+      ],
+      "cut_agrees": true,
+      "cut_selected": true,
+      "baseline_cut_selected": false
+    },
+    {
+      "family": "nested",
+      "baseline_dispatch": 4,
+      "relation_dispatch": 4,
+      "relations": 1,
+      "normative_properties": 0,
+      "independent_truth": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "independent_cuts": [
+        14
+      ],
+      "selected_points": [
+        1,
+        14,
+        13,
+        15
+      ],
+      "baseline_points": [
+        1,
+        0,
+        2,
+        3
+      ],
+      "cut_agrees": true,
+      "cut_selected": true,
+      "baseline_cut_selected": false
+    },
+    {
+      "family": "impossible",
+      "baseline_dispatch": 4,
+      "relation_dispatch": 4,
+      "relations": 2,
+      "normative_properties": 0
+    },
+    {
+      "family": "competition",
+      "baseline_dispatch": 6,
+      "relation_dispatch": 6,
+      "relations": 5,
+      "normative_properties": 0,
+      "served_parameters": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e"
+      ]
+    },
+    {
+      "family": "units",
+      "baseline_dispatch": 2,
+      "relation_dispatch": 1,
+      "relations": 1,
+      "normative_properties": 0
+    },
+    {
+      "family": "nonlinear",
+      "baseline_dispatch": 2,
+      "relation_dispatch": 1,
+      "relations": 1,
+      "normative_properties": 0
+    },
+    {
+      "family": "outside",
+      "baseline_dispatch": 2,
+      "relation_dispatch": 1,
+      "relations": 1,
+      "normative_properties": 0
+    },
+    {
+      "family": "oracle",
+      "baseline_dispatch": 4,
+      "relation_dispatch": 4,
+      "relations": 1,
+      "normative_properties": 0
+    },
+    {
+      "family": "held_out",
+      "baseline_dispatch": 4,
+      "relation_dispatch": 4,
+      "relations": 1,
+      "normative_properties": 0,
+      "independent_truth": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "independent_cuts": [
+        14
+      ],
+      "selected_points": [
+        1,
+        14,
+        13,
+        15
+      ],
+      "baseline_points": [
+        1,
+        0,
+        2,
+        3
+      ],
+      "cut_agrees": true,
+      "cut_selected": true,
+      "baseline_cut_selected": false
+    }
+  ],
+  "baseline_static_dispatch": 40,
+  "relation_static_dispatch": 37,
+  "static_cap_per_arm": 64,
+  "independent_arithmetic_evaluations": 125,
+  "actual_scheduler_calls": 0,
+  "actual_independent_subject_calls": 0,
+  "model_calls": 0,
+  "held_out_valid": true,
+  "scope": "synthetic selection mechanism only; no real bug-recall result"
+}

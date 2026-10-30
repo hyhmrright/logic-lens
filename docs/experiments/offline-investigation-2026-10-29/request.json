@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "source": "subject.py",
+  "trusted_source_sha256": "9de8a89df32f017f4c4ecfee90dfde4556ee3500aceba3ff198f7043d0475edc",
+  "slots": 2,
+  "point_budget": 32,
+  "entries": [
+    {
+      "name": "first",
+      "valid": [
+        [
+          0,
+          10
+        ]
+      ],
+      "expectation": "returns",
+      "evidence": {
+        "path": "CONTRACTS.txt",
+        "start": 1,
+        "end": 1,
+        "quote": "first and second must return normally for each integer input from 0 through 10."
+      }
+    },
+    {
+      "name": "second",
+      "valid": [
+        [
+          0,
+          10
+        ]
+      ],
+      "expectation": "returns",
+      "evidence": {
+        "path": "CONTRACTS.txt",
+        "start": 1,
+        "end": 1,
+        "quote": "first and second must return normally for each integer input from 0 through 10."
+      }
+    },
+    {
+      "name": "guarded",
+      "valid": [
+        [
+          0,
+          10
+        ]
+      ],
+      "expectation": "returns",
+      "evidence": {
+        "path": "CONTRACTS.txt",
+        "start": 2,
+        "end": 2,
+        "quote": "guarded and unreachable must return normally for each integer input from 0 through 10."
+      }
+    },
+    {
+      "name": "unreachable",
+      "valid": [
+        [
+          0,
+          10
+        ]
+      ],
+      "expectation": "returns",
+      "evidence": {
+        "path": "CONTRACTS.txt",
+        "start": 2,
+        "end": 2,
+        "quote": "guarded and unreachable must return normally for each integer input from 0 through 10."
+      }
+    },
+    {
+      "name": "tolerated",
+      "valid": [
+        [
+          0,
+          10
+        ]
+      ],
+      "expectation": "return_or_value_error",
+      "evidence": {
+        "path": "CONTRACTS.txt",
+        "start": 3,
+        "end": 3,
+        "quote": "tolerated may return normally or raise ValueError for each integer input from 0 through 10."
+      }
+    }
+  ]
+}

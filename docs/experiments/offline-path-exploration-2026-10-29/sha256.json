@@ -1,0 +1,18 @@
+{
+  "evaluator.json": "8338df91889ca2f77ca5f3d17dfe3f4555cf74970dd39c6b530e83766edd6afb",
+  "evidence.json": "1f7ac33c27e87a20b392de620fad0a2eb994e2a1e26f9139ec9e3a6702f62b34",
+  "implementation-sha256.json": "34b3509d9497ef4fb6a7221423537764aec628514d0a535139ef9360ecf4d109",
+  "paths.json": "796f6794970069c4430f725bcfcbcf0e6d7666d1080e00b962abfece9103315a",
+  "real/PSF-LICENSE.txt": "b0e25a78cffb43f4d92de8b61ccfa1f1f98ecbc22330b54b5251e7b6ba010231",
+  "real/annotationlib-audit-sample.json": "f4d8ab0ea6c955aad20b998e4afe538109f838bf24a5ab33d42f7b74171adefb",
+  "real/annotationlib.json": "d43a285b3c12b4dd121ab85f2acb256b7f476c694aef73ec62a9fc9ca7266561",
+  "real/base64-audit-sample.json": "250cf8a9b1658a90f922740b10d547336774b41ea94d9ba0ba66e3b16f79f850",
+  "real/base64.json": "f411a5abc416be1e1d77e66903fbd323265af3631843d0e9402a6d2c6b020aa1",
+  "real/source-text/annotationlib.py": "6d56359e05c4995b23ee5a4c105702bad67925eae076f9950dd9522fe2fcfe76",
+  "real/source-text/base64.py": "93319e370390777e2b0a14dcb02b53d61e1bc83719c088e760eb5ab74eafa978",
+  "real/source-text/test_annotationlib.py": "141b6602adc6684350e0709dc58a1788b34d83c6dc05c6983ca3806d4bd942d0",
+  "real/source-text/test_base64.py": "b112b3c06d757cb77ad9e74c20050a0c6619781b849166616fcc3108c75b2c3e",
+  "replay.json": "918b2342ccd6a800d5ed2748b3d47c22af6ccf51ba7a02a2a83d975ed1a825e0",
+  "seeds.json": "bf3136e4a0e18359d9eb82b26c2e96b325aaa652cef3c398c4367d56ff42fa89",
+  "summary.json": "848070eca4f0a14350755e64399926cc1967774977c2614b7420293ba2ff2403"
+}

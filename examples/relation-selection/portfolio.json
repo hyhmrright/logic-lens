@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "frozen_before_implementation": true,
+  "execution": "AST only; no subject imports or eval/exec",
+  "dispatch_cap_per_arm": 64,
+  "finite_evaluator_domain": [0, 24],
+  "development": [
+    {"family":"scale", "expression":"3*x", "operator":">", "bound":30, "cut":11},
+    {"family":"shift", "expression":"2*x+5", "operator":">=", "bound":31, "cut":13},
+    {"family":"negative", "expression":"40-2*x", "operator":"<", "bound":10, "cut":16},
+    {"family":"nested", "expression":"2*(x+3)", "operator":">", "bound":32, "cut":14},
+    {"family":"impossible", "expression":"3*x", "operator":">", "bound":30, "route":"x < 5", "consumer_true_reachable":false},
+    {"family":"competition", "parameters":5, "boundaries":[11,12,13,14,15]},
+    {"family":"untested", "expected":"visible, missing_binding, no oracle"},
+    {"family":"units", "expected":"integer plus byte length unsupported"},
+    {"family":"nonlinear", "expected":"x*x unsupported"},
+    {"family":"oracle", "expected":"new boundary has no normative oracle"},
+    {"family":"outside", "bound":100000, "expected":"out_of_budget, no clamping"}
+  ],
+  "held_out_transformations": {
+    "policy":"qualification-only; do not import while implementing selector; no tuning after inspection without invalidating holdout",
+    "rename":"entry/data/helper renamed",
+    "move":"helper moved to local module via aliased import",
+    "arithmetic":"commuted multiplication and reassociated addition",
+    "constants":{"scale":4,"offset":7,"bound":59,"cut":14}
+  }
+}

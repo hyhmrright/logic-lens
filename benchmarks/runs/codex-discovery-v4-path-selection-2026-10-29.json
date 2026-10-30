@@ -1,0 +1,333 @@
+{
+  "schema_version": 1,
+  "status": "complete_diagnostic_failed",
+  "protocol": {
+    "schema_version": 2,
+    "provider": "codex",
+    "adapter": null,
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "timeout_seconds": 360,
+    "protocol": {
+      "local_probes": true,
+      "runtime_note": "Node.js is available. Python for these historical sources: /Users/hyh/code/logic-lens/skills-workspace/discovery-venv311/bin/python (six 1.17.0 installed); use PYTHONDONTWRITEBYTECODE=1 and local src/ or repository root on PYTHONPATH as appropriate. This external interpreter/dependency path may be used only to execute local source; do not inspect other external files."
+    },
+    "catalog_sha256": "dbb1bcd50eb310f19b8a133eaf0deb90b52985e846ec771f59e52f4f861ef6e0",
+    "tools": [
+      "read-only-shell"
+    ],
+    "seed": 31,
+    "baseline_skill_commit": "f948b796afbbc7aac010906742ec7f88a8e64950",
+    "candidate_skill_commit": "9f3b0cd72c67aaf000da3e8e88332efb2f3556b6",
+    "instruction_sha256": {
+      "baseline": "9dd5e4c50d47cd71fca3d04abc006690759e8510cdbce705a9853c4a61685e0a",
+      "candidate": "d429f5d89726d00cf166644a238849b0fce2e9f1a75197f0d106d5ac5fe6de37"
+    },
+    "runs": [
+      {
+        "run_id": "135ac75f92cc40b880c091c410ad025e",
+        "case_id": "semver-build",
+        "variant": "buggy",
+        "arm": "candidate",
+        "repeat": 0,
+        "workspace_sha256": "e4b0a736dd370fd4079c00c50164a2b87aefbd1ff5bb4b03c44d0acebe90eb7b",
+        "target_paths": [
+          "classes/range.js"
+        ],
+        "source_v3_run_id": "d0112f51477c4b968b720e9a866b750d"
+      },
+      {
+        "run_id": "6739ba7ad215404a8ec4dc8f44450c3b",
+        "case_id": "semver-build",
+        "variant": "buggy",
+        "arm": "baseline",
+        "repeat": 0,
+        "workspace_sha256": "e4b0a736dd370fd4079c00c50164a2b87aefbd1ff5bb4b03c44d0acebe90eb7b",
+        "target_paths": [
+          "classes/range.js"
+        ],
+        "source_v3_run_id": "d0112f51477c4b968b720e9a866b750d"
+      }
+    ],
+    "authorization": {
+      "max_dispatches": 2,
+      "automatic_retries": false,
+      "fresh_cases": false,
+      "user_approved": "2026-10-29",
+      "estimated_total_tokens": 840000,
+      "planning_allowance_tokens": 1200000,
+      "hard_token_cap": false
+    }
+  },
+  "plan_sha256": "63ebf5ed617552b4c5e4fab758c25bcbd1916c31dfd8de53aba545d9a73ce408",
+  "planned": 2,
+  "dispatched": 2,
+  "delivered": 2,
+  "failed": 0,
+  "retries": 0,
+  "unattempted": 0,
+  "runs": [
+    {
+      "run_id": "135ac75f92cc40b880c091c410ad025e",
+      "case_id": "semver-build",
+      "variant": "buggy",
+      "arm": "candidate",
+      "repeat": 0,
+      "workspace_sha256": "e4b0a736dd370fd4079c00c50164a2b87aefbd1ff5bb4b03c44d0acebe90eb7b",
+      "target_paths": [
+        "classes/range.js"
+      ],
+      "source_v3_run_id": "d0112f51477c4b968b720e9a866b750d",
+      "status": "delivered",
+      "attempts": 1,
+      "source_integrity_verified": true,
+      "result": {
+        "usage": {
+          "input_tokens": 380819,
+          "cached_input_tokens": 331008,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 11494,
+          "reasoning_output_tokens": 6551
+        },
+        "tools_used": [
+          {
+            "type": "command_execution",
+            "command": "/bin/zsh -lc \"pwd; rg --files -g 'range.js' -g '*range*' -g 'package.json' -g '.logic-lens.yaml' -g 'README*' -g 'semver.js' -g 'comparator.js' -g 'parse-options.js' -g 're.js' -g 'constants.js' -g 'cmp.js' -g 'satisfies.js' -g 'subset.js' -g 'min-version.js' -g 'valid.js' -g 'inc.js' -g 'coerce.js' -g 'intersects.js'\"",
+            "status": "completed"
+          },
+          {
+            "type": "command_execution",
+            "command": "/bin/zsh -lc \"nl -ba classes/range.js; cat package.json; rg -n 'Range|includePrerelease|intersect|hyphen|caret|tilde|prerelease|loose' README.md; rg --files --hidden -g '.logic-lens.yaml' -g '\"'!node_modules'\"' -g '\"'!'\"\\\\.git'\"",
+            "status": "failed"
+          },
+          {
+            "type": "command_execution",
+            "command": "/bin/zsh -lc \"nl -ba classes/comparator.js; sed -n '1,165p' classes/semver.js; cat internal/parse-options.js internal/constants.js internal/lrucache.js internal/debug.js; nl -ba internal/re.js | sed -n '1,255p'; sed -n '149,218p' README.md; sed -n '280,385p' README.md; sed -n '490,524p' README.md; nl -ba test/classes/range.js | sed -n '1,270p'; cat ranges/intersects.js functions/satisfies.js ranges/min-version.js\"",
+            "status": "completed"
+          },
+          {
+            "type": "command_execution",
+            "command": "/bin/zsh -lc \"cat test/fixtures/range-intersection.js; rg -n 'includePrerelease|\\\\+|\\\\*.*\\\\|\\\\||\\\\|\\\\|.*\\\\*|~1|\\\\\"'^1|hyphen'\"' test/fixtures/range-parse.js test/fixtures/range-include.js test/fixtures/range-exclude.js test/ranges/intersects.js test/classes/comparator.js; nl -ba README.md | sed -n '383,437p'; cat functions/cmp.js functions/compare.js; rg -n '\\\\.set\\\\b|\\\\.options\\\\b|new Range\\\\(' ranges/subset.js ranges/to-comparators.js ranges/outside.js test/ranges/intersects.js index.js\"",
+            "status": "completed"
+          },
+          {
+            "type": "command_execution",
+            "command": "/bin/zsh -lc \"node -e '\n\\\"use strict\\\"\nconst Range = require(\\\"./classes/range\\\")\nconst Comparator = require(\\\"./classes/comparator\\\")\nconst intersects = require(\\\"./ranges/intersects\\\")\nconst satisfies = require(\\\"./functions/satisfies\\\")\nconsole.log(\\\"runtime\\\", process.version)\nconst check = (name, fn) => { try { console.log(name, JSON.stringify(fn())) } catch (e) { console.log(name, e.name + \\\": \\\" + e.message, e.stack.split(\\\"\\\\n\\\").slice(1,4).join(\\\" | \\\")) } }\ncheck(\\\"OR prerelease\\\", () => {\n const v = \\\"1.2.3-alpha\\\"\n const a = new Range(\\\"*\\\"), b = new Range(v), combined = new Range(\\\"* || \\\" + v)\n return {a:a.test(v), b:b.test(v), expected:true, observed:combined.test(v), normalized:combined.range, includePrerelease:new Range(\\\"* || \\\"+v,{includePrerelease:true}).test(v), releaseControl:combined.test(\\\"1.2.3\\\")}\n})\ncheck(\\\"Comparator input prerelease\\\", () => new Range(new Comparator(\\\">=1.2.3-alpha\\\")).test(\\\"1.2.3-beta\\\"))\ncheck(\\\"Comparator string control\\\", () => new Range(\\\">=1.2.3-alpha\\\").test(\\\"1.2.3-beta\\\"))\ncheck(\\\"Comparator includePrerelease\\\", () => new Range(new Comparator(\\\"\\\"), {includePrerelease:true}).test(\\\"1.2.3-alpha\\\"))\ncheck(\\\"Comparator input stable control\\\", () => new Range(new Comparator(\\\">=1.2.3\\\")).test(\\\"1.2.4\\\"))\ncheck(\\\"intersection shared witness\\\", () => {\n const a = \\\">=1.0.0-alpha <2.0.0\\\", b = \\\"1.0.0-beta\\\", v=b\n return {a:satisfies(v,a), b:satisfies(v,b), expected:true, observed:intersects(a,b), reversed:intersects(b,a), includePrerelease:intersects(a,b,{includePrerelease:true})}\n})\ncheck(\\\"intersection empty discrete gap\\\", () => {\n const a=\\\">1.0.0\\\", b=\\\"<1.0.1\\\"\n return {expected:false, observed:intersects(a,b), reversed:intersects(b,a), controlNonempty:intersects(a,\\\"<=1.0.1\\\"), prereleaseRejected:satisfies(\\\"1.0.1-alpha\\\",a)&&satisfies(\\\"1.0.1-alpha\\\",b)}\n})\ncheck(\\\"hyphen metadata includePrerelease\\\", () => {\n const options={includePrerelease:true}, v=\\\"1.2.3-alpha\\\"\n const bare=new Range(\\\"1.2.3 - 2.0.0\\\",options), built=new Range(\\\"1.2.3+build - 2.0.0\\\",options)\n return {bare:bare.range, built:built.range, expected:bare.test(v), observed:built.test(v), releaseControl:built.test(\\\"1.2.3\\\")}\n})\ncheck(\\\"tilde documented equivalence\\\", () => {\n const options={includePrerelease:true}, v=\\\"1.2.0-alpha\\\"\n return [\\\"~1.2\\\",\\\"1.2.x\\\",\\\">=1.2.0 <1.3.0-0\\\"].map(r=>({r, normalized:new Range(r,options).range, accepts:satisfies(v,r,options)}))\n})\n'\"",
+            "status": "completed"
+          },
+          {
+            "type": "command_execution",
+            "command": "/bin/zsh -lc \"node -e '\nconst Range = require(\\\"./classes/range\\\")\nconst Comparator = require(\\\"./classes/comparator\\\")\nconst intersects = require(\\\"./ranges/intersects\\\")\nfor (const r of [\\\"\"'^00.2.3\", \"''^0.00.3\", \"''^00.0.3\", \"''^00.2\", \"''^0.00.3-alpha\"]) {\n const canonical=r.replace(/'\"\\\\d+/g,n=>String(Number(n)))\n const a=new Range(r,{loose:true}), b=new Range(canonical,{loose:true})\n const witnesses=[\\\"0.0.4\\\", \\\"0.1.0\\\", \\\"0.3.0\\\", \\\"0.9.0\\\"]\n console.log(\\\"loose caret\\\",JSON.stringify({r,canonical,actual:a.range,expected:b.range,differences:witnesses.filter(v=>a.test(v)\"'!==b.test(v))}))\n}\nfor (const [a,b] of [[\"<0.0.0-0\",\"*\"],[\">1.0.0 <1.0.1\",\"*\"],[\">=1.0.0-alpha <2.0.0\",\"1.0.0-beta\"],[\"1.0.0-alpha <2.0.0\",\"*\"]]) {\n console.log(\"intersection defense\",JSON.stringify({a,b,observed:intersects(a,b)}))\n}\nfor (const r of [\"1.2.3+build - 2.0.0\",\"1.2.3+build.42 - 2.0.0\",\"1.2.3-alpha+build - 2.0.0\",\"1.2.3 - 2.0.0+build\"]) {\n const options={includePrerelease:true}, a=new Range(r,options)\n console.log(\"hyphen controls\",JSON.stringify({r,parsed:a.range,alpha:a.test(\"1.2.3-alpha\"),stable:a.test(\"1.2.3\")}))\n}\nconsole.log(\"loose comparator input\",JSON.stringify({object:new Range(new Comparator(\">=1.2.3\"),{loose:true}).test(\"01.02.04\"),string:new Range(\">=1.2.3\",{loose:true}).test(\"01.02.04\")}))\n'\"'\"",
+            "status": "completed"
+          }
+        ],
+        "evidence_source": "codex-jsonl",
+        "provider": "codex",
+        "model": "gpt-6.1-sol",
+        "effort": "high",
+        "elapsed_seconds": 323.39725262499996,
+        "instruction_delivery": "explicit_stdin_snapshot",
+        "capability": "read-only-shell",
+        "instruction_sha256": "d429f5d89726d00cf166644a238849b0fce2e9f1a75197f0d106d5ac5fe6de37",
+        "workspace_sha256": "e4b0a736dd370fd4079c00c50164a2b87aefbd1ff5bb4b03c44d0acebe90eb7b",
+        "total_cost_usd": null
+      }
+    },
+    {
+      "run_id": "6739ba7ad215404a8ec4dc8f44450c3b",
+      "case_id": "semver-build",
+      "variant": "buggy",
+      "arm": "baseline",
+      "repeat": 0,
+      "workspace_sha256": "e4b0a736dd370fd4079c00c50164a2b87aefbd1ff5bb4b03c44d0acebe90eb7b",
+      "target_paths": [
+        "classes/range.js"
+      ],
+      "source_v3_run_id": "d0112f51477c4b968b720e9a866b750d",
+      "status": "delivered",
+      "attempts": 1,
+      "source_integrity_verified": true,
+      "result": {
+        "usage": {
+          "input_tokens": 480809,
+          "cached_input_tokens": 398592,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 8809,
+          "reasoning_output_tokens": 3701
+        },
+        "tools_used": [
+          {
+            "type": "command_execution",
+            "command": "/bin/zsh -lc \"pwd; rg --files -g '\"'!node_modules'\"' -g '\"'!package-lock.json'\"' -g '\"'!yarn.lock'\"' -g '\"'!'\"\\\\.git'\"",
+            "status": "completed"
+          },
+          {
+            "type": "command_execution",
+            "command": "/bin/zsh -lc 'nl -ba classes/range.js'",
+            "status": "completed"
+          },
+          {
+            "type": "command_execution",
+            "command": "/bin/zsh -lc \"rg -n 'Comparator|includePrerelease|intersect|prerelease|Range\\\\(' README.md test/classes/range.js test/ranges/intersects.js test/fixtures/range-intersection.js test/fixtures/range-parse.js package.json .logic-lens.yaml; nl -ba classes/comparator.js; cat internal/parse-options.js functions/satisfies.js ranges/intersects.js\"",
+            "status": "completed"
+          },
+          {
+            "type": "command_execution",
+            "command": "/bin/zsh -lc \"sed -n '140,218p' README.md; sed -n '285,388p' README.md; sed -n '413,435p' README.md; cat test/classes/range.js test/fixtures/range-intersection.js; rg -n 'includePrerelease|\\\\|\\\\||build|\\\\+' test/fixtures/range-include.js test/fixtures/range-exclude.js test/fixtures/range-parse.js; cat internal/lrucache.js; sed -n '1,140p' internal/re.js; sed -n '1,140p' classes/semver.js; cat package.json\"",
+            "status": "completed"
+          },
+          {
+            "type": "command_execution",
+            "command": "/bin/zsh -lc \"node -e '\nconst Range = require(\\\"./classes/range\\\")\nconst Comparator = require(\\\"./classes/comparator\\\")\nconst satisfies = require(\\\"./functions/satisfies\\\")\nconst intersects = require(\\\"./ranges/intersects\\\")\nconsole.log(\\\"runtime\\\", process.version)\nfunction probe(label, f) {\n  try { console.log(label, JSON.stringify(f())) } catch (e) { console.log(label, e.name + \\\": \\\" + e.message) }\n}\nfor (const r of [\\\"1.2.3-alpha\\\", \\\"*\\\", \\\"* || 1.2.3-alpha\\\", \\\"1.2.3-alpha || *\\\"]) {\n  probe(\\\"OR \\\" + r, () => { const a = new Range(r); return { parsed: a.range, pre: a.test(\\\"1.2.3-alpha\\\"), stable: a.test(\\\"1.2.3\\\") } })\n}\nfor (const input of [\\\">=1.2.3-alpha\\\", \\\">=1.2.3\\\"]) {\n  for (const v of [\\\"1.2.3\\\", \\\"1.2.3-beta\\\"]) {\n    probe(\\\"comparator \\\" + input + \\\" / \\\" + v, () => new Range(new Comparator(input)).test(v))\n    probe(\\\"string \\\" + input + \\\" / \\\" + v, () => new Range(input).test(v))\n  }\n}\nprobe(\\\"comparator includePrerelease\\\", () => new Range(new Comparator(\\\">=1.2.3\\\"), { includePrerelease: true }).test(\\\"1.2.4-beta\\\"))\nprobe(\\\"satisfies comparator\\\", () => satisfies(\\\"1.2.3-beta\\\", new Comparator(\\\">=1.2.3-alpha\\\")))\nfor (const [a,b,opts] of [\n  [\\\">1.0.0 <1.0.1\\\", \\\"*\\\", undefined],\n  [\\\">1.0.0 <1.0.1\\\", \\\"*\\\", {includePrerelease:true}],\n  [\\\">=1.0.0-alpha <1.0.0\\\", \\\">=1.0.0-beta <1.0.0\\\", undefined],\n  [\\\"1.0.0-alpha\\\", \\\">=1.0.0-alpha <1.0.0\\\", undefined],\n]) probe(\\\"intersection \\\"+a+\\\" / \\\"+b+\\\" / \\\"+JSON.stringify(opts), () => intersects(a,b,opts))\n'\"",
+            "status": "completed"
+          },
+          {
+            "type": "command_execution",
+            "command": "/bin/zsh -lc \"cat ranges/min-version.js; sed -n '1,225p' ranges/subset.js; cat test/fixtures/comparator-intersection.js; sed -n '140,235p' internal/re.js; sed -n '395,416p' README.md; nl -ba functions/satisfies.js; nl -ba ranges/intersects.js; rg -n 'intersects|prerelease|build' test/ranges/min-version.js test/ranges/subset.js\"",
+            "status": "completed"
+          },
+          {
+            "type": "command_execution",
+            "command": "/bin/zsh -lc \"node -e '\nconst Range = require(\\\"./classes/range\\\")\nconst intersects = require(\\\"./ranges/intersects\\\")\nconst o = {includePrerelease:true}\nconsole.log(\\\"hyphen build lower-bound controls\\\")\nfor (const r of [\\\"1.2.3 - 2.0.0\\\", \\\"1.2.3+build - 2.0.0\\\", \\\"1.2.3 - 2.0.0+build\\\", \\\"1.2.3-alpha+build - 2.0.0\\\"]) {\n const a = new Range(r,o)\n console.log(JSON.stringify({input:r,parsed:a.range,pre:a.test(\\\"1.2.3-alpha\\\"),stable:a.test(\\\"1.2.3\\\")}))\n}\nconsole.log(\\\"intersection witnesses and controls\\\")\nconst a = new Range(\\\"1.0.0-alpha\\\")\nconst b = new Range(\\\">=1.0.0-alpha <1.0.0\\\")\nconsole.log({a:a.range,b:b.range,aWitness:a.test(\\\"1.0.0-alpha\\\"),bWitness:b.test(\\\"1.0.0-alpha\\\"),ab:a.intersects(b),ba:b.intersects(a),explicit:intersects(a,b,{includePrerelease:true})})\nconst empty = new Range(\\\">1.0.0 <1.0.1\\\")\nconsole.log({range:empty.range,intersectsStar:empty.intersects(new Range(\\\"*\\\")),self:empty.intersects(empty),tests:[\\\"1.0.0\\\",\\\"1.0.1-alpha\\\",\\\"1.0.1\\\",\\\"1.0.2\\\"].map(v=>[v,empty.test(v)]),withPrereleases:intersects(\\\">1.0.0 <1.0.1\\\",\\\"*\\\",o)})\nlet checks=0\nconst fails=[]\nfor (const [file,expect] of [[\\\"range-include\\\",true],[\\\"range-exclude\\\",false]]) {\n for (const [range,v,opts] of require(\\\"./test/fixtures/\\\"+file)) {\n  checks++\n  try { const actual=new Range(range,opts).test(v); if(actual\"'!==expect) fails.push({range,v,opts,expect,actual}) } catch(e) {fails.push({range,v,error:String(e)})}\n }\n}\nfor (const [a,b,expect] of require(\"./test/fixtures/range-intersection\")) {checks++; if(intersects(a,b)!==expect) fails.push({a,b,expect})}\nconsole.log(\"existing local fixture cases\",JSON.stringify({checks,fails}))\n'\"'\"",
+            "status": "completed"
+          },
+          {
+            "type": "command_execution",
+            "command": "/bin/zsh -lc \"node -e '\nconst assert = require(\\\"node:assert/strict\\\")\nconst Range = require(\\\"./classes/range\\\")\nconst Comparator = require(\\\"./classes/comparator\\\")\nconst intersects = require(\\\"./ranges/intersects\\\")\nconst opts = {includePrerelease:true}\nassert.equal(new Range(\\\"1.2.3-alpha\\\").test(\\\"1.2.3-alpha\\\"), true)\nassert.equal(new Range(\\\"* || 1.2.3-alpha\\\").test(\\\"1.2.3-alpha\\\"), false)\nassert.equal(new Range(\\\"1.2.3-alpha || *\\\").test(\\\"1.2.3-alpha\\\"), false)\nassert.throws(() => new Range(new Comparator(\\\">=1.2.3-alpha\\\")).test(\\\"1.2.3-beta\\\"), TypeError)\nassert.equal(new Range(\\\">=1.2.3-alpha\\\").test(\\\"1.2.3-beta\\\"), true)\nassert.equal(new Range(new Comparator(\\\">=1.2.3-alpha\\\")).test(\\\"1.2.3\\\"), true)\nassert.equal(new Range(\\\"1.2.3 - 2.0.0\\\", opts).test(\\\"1.2.3-alpha\\\"), true)\nassert.equal(new Range(\\\"1.2.3+build - 2.0.0\\\", opts).test(\\\"1.2.3-alpha\\\"), false)\nconst a = new Range(\\\"1.0.0-alpha\\\"), b = new Range(\\\">=1.0.0-alpha <1.0.0\\\")\nassert.equal(a.test(\\\"1.0.0-alpha\\\") && b.test(\\\"1.0.0-alpha\\\"), true)\nassert.equal(a.intersects(b), false)\nassert.equal(b.intersects(a), false)\nassert.equal(intersects(\\\">1.0.0 <1.0.1\\\", \\\"*\\\"), true)\nassert.equal(new Range(\\\">1.0.0 <1.0.1\\\").test(\\\"1.0.1-alpha\\\"), false)\nassert.equal(new Range(\\\">1.0.0 <1.0.1\\\", opts).test(\\\"1.0.1-alpha\\\"), true)\nconsole.log(\\\"14 assertions confirmed original defects and paired controls; no files written\\\")\n'\"",
+            "status": "completed"
+          }
+        ],
+        "evidence_source": "codex-jsonl",
+        "provider": "codex",
+        "model": "gpt-6.1-sol",
+        "effort": "high",
+        "elapsed_seconds": 265.1275769579952,
+        "instruction_delivery": "explicit_stdin_snapshot",
+        "capability": "read-only-shell",
+        "instruction_sha256": "9dd5e4c50d47cd71fca3d04abc006690759e8510cdbce705a9853c4a61685e0a",
+        "workspace_sha256": "e4b0a736dd370fd4079c00c50164a2b87aefbd1ff5bb4b03c44d0acebe90eb7b",
+        "total_cost_usd": null
+      }
+    }
+  ],
+  "judgments": {
+    "135ac75f92cc40b880c091c410ad025e": {
+      "target_detected": false,
+      "false_positive_count": 0,
+      "confirmed_additional": [
+        "semver-comparator-options",
+        "semver-or-prerelease",
+        "semver-padded-caret",
+        "semver-hyphen-build",
+        "semver-intersection-empty",
+        "semver-intersection-gap",
+        "semver-intersection-witness"
+      ],
+      "unsupported_claims": [],
+      "refuted_claims": [],
+      "unresolved_leads": [
+        "Option-specific equivalence of tilde and x-range under includePrerelease; explicitly unresolved, not counted"
+      ],
+      "rationale": "Five report findings cover seven established additional classes, independently reproduced on real source. Ordinary hyphen metadata loss is not the long-tail target. Full helper/constant read is not a resolved boundary hypothesis or execution check. No executed repair or broad fixture sweep.",
+      "report_sha256": "a1a049d206fbafa447c849e073496edc0c7728c5221c61e38a8004f76dd0343c",
+      "adjudicator": "Implementing assistant, unblinded",
+      "process": {
+        "effective_constraint_definitions_read": true,
+        "key_relationship_resolved": false,
+        "key_distinguishing_family_checked": false,
+        "original_defect_verified": false,
+        "first_contract_and_dependency_read": "item_2 target/public contracts; item_3 constants, regex generation, comparator/version and matching consumers",
+        "selection_evidence": "After item_3 reviewer selects OR simplification, intersection and Comparator construction",
+        "distinguishing_checks": "item_6 construction/OR/intersection witnesses and controls; item_7 padded caret/canonical and ordinary hyphen metadata endpoint controls",
+        "premature_executable_repair": false,
+        "remaining_relation_revisit": "Final investigation expands to caret and ordinary hyphen metadata; no long-identifier bound check",
+        "tool_calls": 6
+      }
+    },
+    "6739ba7ad215404a8ec4dc8f44450c3b": {
+      "target_detected": false,
+      "false_positive_count": 0,
+      "confirmed_additional": [
+        "semver-comparator-options",
+        "semver-or-prerelease",
+        "semver-hyphen-build",
+        "semver-intersection-witness",
+        "semver-intersection-gap"
+      ],
+      "unsupported_claims": [],
+      "refuted_claims": [],
+      "unresolved_leads": [
+        "General prerelease interval intersections without exact comparators explicitly unresolved"
+      ],
+      "rationale": "Four final findings cover five established additional classes independently reproduced. Hyphen marker removal is not the long-build residual-digit target. Does not resolve effective length constraint or test its boundary. Reported remedies reasoned only, no repair executed.",
+      "report_sha256": "0a061ec501b159e22f2327a4fbdcc6f4efcc1b0dc2aa16da2e09cb4dcbc323a5",
+      "adjudicator": "Implementing assistant, unblinded",
+      "process": {
+        "effective_constraint_definitions_read": false,
+        "key_relationship_resolved": false,
+        "key_distinguishing_family_checked": false,
+        "original_defect_verified": false,
+        "first_contract_and_dependency_read": "item_2 target; item_3 comparator/public contracts; item_4 regex generation and semantic fixtures (symbolic bound but no constant definition)",
+        "selection_evidence": "After item_4 reviewer selects OR simplification and Comparator initialization then intersection",
+        "distinguishing_checks": "item_6 OR/construction/intersection controls; item_8 ordinary hyphen metadata endpoints and witness/empty gap; item_10 repeats confirmed assertions",
+        "premature_executable_repair": false,
+        "remaining_relation_revisit": "Additional ordinary hyphen path checked, but item_8 also sweeps 271 fixtures and item_10 reconfirms prior findings",
+        "tool_calls": 8
+      }
+    }
+  },
+  "usage": {
+    "input_tokens": 861628,
+    "cached_input_tokens": 729600,
+    "output_tokens": 20303,
+    "reasoning_output_tokens": 10252,
+    "cache_write_input_tokens": 0,
+    "actual_total_tokens": 881931,
+    "unknown_usage_attempts": 0,
+    "total_cost_usd": null,
+    "note": "Cumulative evaluation input+output; cached input is included in input, reasoning included in output. Chat/adjudication token use is outside this telemetry. Dollar cost and subscription quota share unknown."
+  },
+  "artifact_sha256": {
+    "attempts/135ac75f92cc40b880c091c410ad025e/events.jsonl": "81cf532795902f83e21bedade9428d05b3c9f62a94baa3c6910a66df2ad740dd",
+    "attempts/135ac75f92cc40b880c091c410ad025e/integrity.json": "efc468fd97123fcb4541f61c28e0051c3165067840589d3ce75b993a7a054f31",
+    "attempts/135ac75f92cc40b880c091c410ad025e/report.md": "a1a049d206fbafa447c849e073496edc0c7728c5221c61e38a8004f76dd0343c",
+    "attempts/135ac75f92cc40b880c091c410ad025e/request.txt": "c149bbd6fce957ddeb1f317d887560da0c5f8fdbd1a50d309624c5178a3dc757",
+    "attempts/135ac75f92cc40b880c091c410ad025e/result.json": "6adaf601e3a58de41d60d235556ca837002dcd9f8a4147e209916c7652e3b29f",
+    "attempts/135ac75f92cc40b880c091c410ad025e/stderr.txt": "26556f48ddf634502ea7025a9c88871f7d837323c8751ff9c516d244d6fab664",
+    "attempts/6739ba7ad215404a8ec4dc8f44450c3b/events.jsonl": "5d9004f3516eb2e465a6398c5d6e382e12239c25f0da56df3e1f87e4e7b150f2",
+    "attempts/6739ba7ad215404a8ec4dc8f44450c3b/integrity.json": "efc468fd97123fcb4541f61c28e0051c3165067840589d3ce75b993a7a054f31",
+    "attempts/6739ba7ad215404a8ec4dc8f44450c3b/report.md": "0a061ec501b159e22f2327a4fbdcc6f4efcc1b0dc2aa16da2e09cb4dcbc323a5",
+    "attempts/6739ba7ad215404a8ec4dc8f44450c3b/request.txt": "dfbc3f482b0d73859936dd6ad5f9abe5ce60cc44e93fbe581372368ddd86b5c9",
+    "attempts/6739ba7ad215404a8ec4dc8f44450c3b/result.json": "e030d3c2b150921e9cf04c08841851976e3c4762d1f147c3e169e8ccc1ef4f25",
+    "attempts/6739ba7ad215404a8ec4dc8f44450c3b/stderr.txt": "58a8f49bdb46db6e1622482c3c94f690eb6a5ff39b1a1fb546ab09ca2766f9f6",
+    "evaluator/additional_probes_v2.py": "5f516450f156cf3ac22f57f3d7688d10c11e0df72f2924333e5acc08a547d2e7",
+    "evaluator/catalog-v2.json": "dbb1bcd50eb310f19b8a133eaf0deb90b52985e846ec771f59e52f4f861ef6e0",
+    "evaluator/probes_v2.py": "428d753b1bf54a1322569bd5c0f4d4b4c5afe88ad1971c00051a00a1b613547d",
+    "evaluator-probes.json": "2ae4fcc50aa76848eb5ab2ac50317c29d453e4f2346389eafdbfe351e6f0978d",
+    "execution-freeze.md": "877dd17d08f2d1335c8094c59ffcf49b3b3ffaf8b18b474cc88e13dc8f0baa2e",
+    "instructions/baseline.md": "9dd5e4c50d47cd71fca3d04abc006690759e8510cdbce705a9853c4a61685e0a",
+    "instructions/candidate.md": "d429f5d89726d00cf166644a238849b0fce2e9f1a75197f0d106d5ac5fe6de37",
+    "judgments.json": "5c9c8eadbb1b7f2f485fab8b90495cb441323acd02c93a050ffe16ed9edee306",
+    "plan.json": "63ebf5ed617552b4c5e4fab758c25bcbd1916c31dfd8de53aba545d9a73ce408",
+    "REPORT.md": "89c5c449b79f3f1f6027c8932f81c97cbc768eb146b85eec8b5e42accdf042ab"
+  },
+  "comparison": {
+    "candidate_target_hits": 0,
+    "baseline_target_hits": 0,
+    "candidate_key_relationship_checked": false,
+    "baseline_key_relationship_checked": false,
+    "candidate_additional_behavior_classes": 7,
+    "baseline_additional_behavior_classes": 5,
+    "unsupported_claims": {
+      "candidate": 0,
+      "baseline": 0
+    },
+    "refuted_claims": {
+      "candidate": 0,
+      "baseline": 0
+    }
+  },
+  "conclusion": "No demonstrated improvement in key investigation-path selection. Candidate reads bound definitions and avoids fixture sweep but neither arm tests the selected boundary or detects the target. No superiority, no new-case authorization.",
+  "adjudicator": "Implementing assistant, unblinded",
+  "next_stage_authorized": false
+}

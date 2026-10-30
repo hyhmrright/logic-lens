@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "evidence": [
+    {
+      "test_module": "test_subject",
+      "records": [
+        {
+          "source": {
+            "module": "test_subject",
+            "line": 7,
+            "end": 7
+          },
+          "context": "TestState.test_state",
+          "call": "attach(b'A')",
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "attach",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 1,
+              "end": 2
+            },
+            "chain": [
+              "test_subject:attach",
+              "subject:attach"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 2,
+                "end": 2
+              },
+              {
+                "module": "subject",
+                "line": 1,
+                "end": 2
+              }
+            ]
+          },
+          "expectation": {
+            "outcome": "returned",
+            "has_value": true,
+            "value": {
+              "type": "bytes",
+              "hex": "41",
+              "length": 1
+            }
+          },
+          "status": "context_unknown",
+          "reason": "test lifecycle/helper/override unresolved",
+          "arguments": {
+            "args": [
+              {
+                "type": "bytes",
+                "hex": "41",
+                "length": 1
+              }
+            ],
+            "keywords": []
+          },
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "41",
+                "length": 1
+              }
+            },
+            "origins": {
+              "data": "positional"
+            }
+          }
+        }
+      ],
+      "unknown": [],
+      "scope": "conditional exact calls only; no valid-domain inference"
+    }
+  ],
+  "dispatch": [],
+  "entries": [],
+  "deferred": [],
+  "source_sha256": {
+    "subject": "b08f78d307c4d4b377b635570a4522a2cc278408ab90abb2f028dbf1f1589854",
+    "test_subject": "b4da643aac050e11bed832f8b786706e36c4ead18b573761fe6d0a81de2fc646"
+  },
+  "limits": {
+    "static_dispatch": 8,
+    "entries": 8,
+    "points_per_entry": 8,
+    "lengths": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ]
+  },
+  "execution_enabled": false,
+  "scope": "isolated source semantics; module initialization/import availability unknown; exact test evidence conditional; generated-input validity unknown",
+  "limitations": "finite content templates, one changed parameter, no string solver or inferred public contract; source identity does not establish dependency behavior"
+}

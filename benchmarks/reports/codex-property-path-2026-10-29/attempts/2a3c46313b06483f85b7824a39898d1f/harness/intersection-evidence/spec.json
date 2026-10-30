@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "seed": 0,
+  "limits": {
+    "max_cases": 32,
+    "seconds": 10,
+    "case_seconds": 1,
+    "shrink_cases": 8
+  },
+  "id": "range-singleton-intersection",
+  "claim": "A range intersects an exact-version singleton iff that version matches the range under identical options.",
+  "domain": "Four valid strict ranges, three valid versions and two boolean options: 24 combinations. Singleton must match its own version.",
+  "observation": "Compare Range.intersects(singleton) to Range.test(version).",
+  "violation": "Intersection differs from membership.",
+  "contract": [
+    {
+      "path": "README.md",
+      "start": 161,
+      "end": 163,
+      "quote": "* `=` Equal.  If no operator is specified, then equality is assumed,\n  so this operator is optional but MAY be included.\n"
+    },
+    {
+      "path": "README.md",
+      "start": 171,
+      "end": 176,
+      "quote": "which is satisfied by the **intersection** of all of the comparators\nit includes.\n\nA range is composed of one or more comparator sets, joined by `||`.  A\nversion matches a range if and only if every comparator in at least\none of the `||`-separated comparator sets is satisfied by the version."
+    },
+    {
+      "path": "README.md",
+      "start": 187,
+      "end": 190,
+      "quote": "If a version has a prerelease tag (for example, `1.2.3-alpha.3`) then\nit will only be allowed to satisfy comparator sets if at least one\ncomparator with the same `[major, minor, patch]` tuple also has a\nprerelease tag."
+    },
+    {
+      "path": "README.md",
+      "start": 456,
+      "end": 457,
+      "quote": "* `intersects(r1, r2, loose)`: Return true if the two supplied ranges\n  or comparators intersect."
+    }
+  ],
+  "adapter": {
+    "files": [
+      "range-adapter.cjs"
+    ],
+    "argv": [
+      "node",
+      "{adapter_dir}/range-adapter.cjs",
+      "intersection"
+    ]
+  },
+  "domains": {
+    "range": [
+      ">=1.2.3-alpha <2.0.0",
+      ">=1.2.3-alpha",
+      "<2.0.0",
+      "*"
+    ],
+    "version": [
+      "1.2.3",
+      "1.2.3-alpha",
+      "1.2.3-beta"
+    ],
+    "includePrerelease": [
+      false,
+      true
+    ]
+  },
+  "control": {
+    "range": ">=1.2.3-alpha <2.0.0",
+    "version": "1.2.3",
+    "includePrerelease": false
+  }
+}

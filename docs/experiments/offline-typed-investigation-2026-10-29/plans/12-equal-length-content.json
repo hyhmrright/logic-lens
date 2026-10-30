@@ -1,0 +1,1789 @@
+{
+  "schema_version": 1,
+  "evidence": [
+    {
+      "test_module": "test_subject",
+      "records": [
+        {
+          "source": {
+            "module": "test_subject",
+            "line": 4,
+            "end": 4
+          },
+          "context": "TestContent.test_a",
+          "call": "classify(b'A')",
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "classify",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 1,
+              "end": 4
+            },
+            "chain": [
+              "test_subject:classify",
+              "subject:classify"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "subject",
+                "line": 1,
+                "end": 4
+              }
+            ]
+          },
+          "expectation": {
+            "outcome": "returned",
+            "has_value": true,
+            "value": {
+              "type": "int",
+              "value": 1
+            }
+          },
+          "status": "exact_conditional",
+          "reason": "exact example; test environment applicability not proven",
+          "arguments": {
+            "args": [
+              {
+                "type": "bytes",
+                "hex": "41",
+                "length": 1
+              }
+            ],
+            "keywords": []
+          },
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "41",
+                "length": 1
+              },
+              "labels": {
+                "type": "tuple",
+                "items": [
+                  {
+                    "type": "int",
+                    "value": 1
+                  },
+                  {
+                    "type": "int",
+                    "value": 2
+                  }
+                ]
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "labels": "default"
+            }
+          }
+        },
+        {
+          "source": {
+            "module": "test_subject",
+            "line": 6,
+            "end": 6
+          },
+          "context": "TestContent.test_b",
+          "call": "classify(b'B')",
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "classify",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 1,
+              "end": 4
+            },
+            "chain": [
+              "test_subject:classify",
+              "subject:classify"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "subject",
+                "line": 1,
+                "end": 4
+              }
+            ]
+          },
+          "expectation": {
+            "outcome": "returned",
+            "has_value": true,
+            "value": {
+              "type": "int",
+              "value": 2
+            }
+          },
+          "status": "exact_conditional",
+          "reason": "exact example; test environment applicability not proven",
+          "arguments": {
+            "args": [
+              {
+                "type": "bytes",
+                "hex": "42",
+                "length": 1
+              }
+            ],
+            "keywords": []
+          },
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "42",
+                "length": 1
+              },
+              "labels": {
+                "type": "tuple",
+                "items": [
+                  {
+                    "type": "int",
+                    "value": 1
+                  },
+                  {
+                    "type": "int",
+                    "value": 2
+                  }
+                ]
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "labels": "default"
+            }
+          }
+        }
+      ],
+      "unknown": [],
+      "scope": "conditional exact calls only; no valid-domain inference"
+    }
+  ],
+  "dispatch": [
+    {
+      "outcome": "returned",
+      "value": {
+        "type": "int",
+        "value": 1
+      },
+      "error": null,
+      "calls": [
+        {
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "classify",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 1,
+              "end": 4
+            },
+            "chain": [
+              "test_subject:classify",
+              "subject:classify"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "subject",
+                "line": 1,
+                "end": 4
+              }
+            ]
+          },
+          "site": null,
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "41",
+                "length": 1
+              },
+              "labels": {
+                "type": "tuple",
+                "items": [
+                  {
+                    "type": "int",
+                    "value": 1
+                  },
+                  {
+                    "type": "int",
+                    "value": 2
+                  }
+                ]
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "labels": "positional"
+            }
+          }
+        }
+      ],
+      "trace": [
+        {
+          "module": "subject",
+          "line": 2,
+          "end": 2,
+          "operator": "Eq",
+          "left": {
+            "type": "bytes",
+            "hex": "41",
+            "length": 1
+          },
+          "right": {
+            "type": "bytes",
+            "hex": "41",
+            "length": 1
+          },
+          "decision": true
+        }
+      ],
+      "target": {
+        "status": "local",
+        "module": "subject",
+        "name": "classify",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "subject",
+          "line": 1,
+          "end": 4
+        },
+        "chain": [
+          "test_subject:classify",
+          "subject:classify"
+        ],
+        "provenance": [
+          {
+            "module": "test_subject",
+            "line": 1,
+            "end": 1
+          },
+          {
+            "module": "subject",
+            "line": 1,
+            "end": 4
+          }
+        ]
+      },
+      "task": {
+        "values": {
+          "data": {
+            "type": "bytes",
+            "hex": "41",
+            "length": 1
+          },
+          "labels": {
+            "type": "tuple",
+            "items": [
+              {
+                "type": "int",
+                "value": 1
+              },
+              {
+                "type": "int",
+                "value": 2
+              }
+            ]
+          }
+        },
+        "queue": "verify",
+        "reason": "exact conditional test call",
+        "evidence_source": {
+          "module": "test_subject",
+          "line": 4,
+          "end": 4
+        }
+      },
+      "checks": [
+        {
+          "source": {
+            "module": "test_subject",
+            "line": 4,
+            "end": 4
+          },
+          "status": "matches_example",
+          "claim": "conditional exact example only; not a confirmed bug"
+        }
+      ]
+    },
+    {
+      "outcome": "returned",
+      "value": {
+        "type": "int",
+        "value": 2
+      },
+      "error": null,
+      "calls": [
+        {
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "classify",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 1,
+              "end": 4
+            },
+            "chain": [
+              "test_subject:classify",
+              "subject:classify"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "subject",
+                "line": 1,
+                "end": 4
+              }
+            ]
+          },
+          "site": null,
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "",
+                "length": 0
+              },
+              "labels": {
+                "type": "tuple",
+                "items": [
+                  {
+                    "type": "int",
+                    "value": 1
+                  },
+                  {
+                    "type": "int",
+                    "value": 2
+                  }
+                ]
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "labels": "positional"
+            }
+          }
+        }
+      ],
+      "trace": [
+        {
+          "module": "subject",
+          "line": 2,
+          "end": 2,
+          "operator": "Eq",
+          "left": {
+            "type": "bytes",
+            "hex": "",
+            "length": 0
+          },
+          "right": {
+            "type": "bytes",
+            "hex": "41",
+            "length": 1
+          },
+          "decision": false
+        }
+      ],
+      "target": {
+        "status": "local",
+        "module": "subject",
+        "name": "classify",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "subject",
+          "line": 1,
+          "end": 4
+        },
+        "chain": [
+          "test_subject:classify",
+          "subject:classify"
+        ],
+        "provenance": [
+          {
+            "module": "test_subject",
+            "line": 1,
+            "end": 1
+          },
+          {
+            "module": "subject",
+            "line": 1,
+            "end": 4
+          }
+        ]
+      },
+      "task": {
+        "values": {
+          "data": {
+            "type": "bytes",
+            "hex": "",
+            "length": 0
+          },
+          "labels": {
+            "type": "tuple",
+            "items": [
+              {
+                "type": "int",
+                "value": 1
+              },
+              {
+                "type": "int",
+                "value": 2
+              }
+            ]
+          }
+        },
+        "queue": "explore",
+        "reason": {
+          "vary": "data",
+          "kind": "finite single-argument family",
+          "validity": "unknown",
+          "template": {
+            "type": "bytes",
+            "hex": "41",
+            "length": 1
+          }
+        },
+        "evidence_source": {
+          "module": "test_subject",
+          "line": 4,
+          "end": 4
+        }
+      },
+      "checks": []
+    },
+    {
+      "outcome": "returned",
+      "value": {
+        "type": "int",
+        "value": 2
+      },
+      "error": null,
+      "calls": [
+        {
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "classify",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 1,
+              "end": 4
+            },
+            "chain": [
+              "test_subject:classify",
+              "subject:classify"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "subject",
+                "line": 1,
+                "end": 4
+              }
+            ]
+          },
+          "site": null,
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "42",
+                "length": 1
+              },
+              "labels": {
+                "type": "tuple",
+                "items": [
+                  {
+                    "type": "int",
+                    "value": 1
+                  },
+                  {
+                    "type": "int",
+                    "value": 2
+                  }
+                ]
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "labels": "positional"
+            }
+          }
+        }
+      ],
+      "trace": [
+        {
+          "module": "subject",
+          "line": 2,
+          "end": 2,
+          "operator": "Eq",
+          "left": {
+            "type": "bytes",
+            "hex": "42",
+            "length": 1
+          },
+          "right": {
+            "type": "bytes",
+            "hex": "41",
+            "length": 1
+          },
+          "decision": false
+        }
+      ],
+      "target": {
+        "status": "local",
+        "module": "subject",
+        "name": "classify",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "subject",
+          "line": 1,
+          "end": 4
+        },
+        "chain": [
+          "test_subject:classify",
+          "subject:classify"
+        ],
+        "provenance": [
+          {
+            "module": "test_subject",
+            "line": 1,
+            "end": 1
+          },
+          {
+            "module": "subject",
+            "line": 1,
+            "end": 4
+          }
+        ]
+      },
+      "task": {
+        "values": {
+          "data": {
+            "type": "bytes",
+            "hex": "42",
+            "length": 1
+          },
+          "labels": {
+            "type": "tuple",
+            "items": [
+              {
+                "type": "int",
+                "value": 1
+              },
+              {
+                "type": "int",
+                "value": 2
+              }
+            ]
+          }
+        },
+        "queue": "verify",
+        "reason": "exact conditional test call",
+        "evidence_source": {
+          "module": "test_subject",
+          "line": 6,
+          "end": 6
+        }
+      },
+      "checks": [
+        {
+          "source": {
+            "module": "test_subject",
+            "line": 6,
+            "end": 6
+          },
+          "status": "matches_example",
+          "claim": "conditional exact example only; not a confirmed bug"
+        }
+      ]
+    },
+    {
+      "outcome": "returned",
+      "value": {
+        "type": "int",
+        "value": 2
+      },
+      "error": null,
+      "calls": [
+        {
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "classify",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 1,
+              "end": 4
+            },
+            "chain": [
+              "test_subject:classify",
+              "subject:classify"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "subject",
+                "line": 1,
+                "end": 4
+              }
+            ]
+          },
+          "site": null,
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "4141",
+                "length": 2
+              },
+              "labels": {
+                "type": "tuple",
+                "items": [
+                  {
+                    "type": "int",
+                    "value": 1
+                  },
+                  {
+                    "type": "int",
+                    "value": 2
+                  }
+                ]
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "labels": "positional"
+            }
+          }
+        }
+      ],
+      "trace": [
+        {
+          "module": "subject",
+          "line": 2,
+          "end": 2,
+          "operator": "Eq",
+          "left": {
+            "type": "bytes",
+            "hex": "4141",
+            "length": 2
+          },
+          "right": {
+            "type": "bytes",
+            "hex": "41",
+            "length": 1
+          },
+          "decision": false
+        }
+      ],
+      "target": {
+        "status": "local",
+        "module": "subject",
+        "name": "classify",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "subject",
+          "line": 1,
+          "end": 4
+        },
+        "chain": [
+          "test_subject:classify",
+          "subject:classify"
+        ],
+        "provenance": [
+          {
+            "module": "test_subject",
+            "line": 1,
+            "end": 1
+          },
+          {
+            "module": "subject",
+            "line": 1,
+            "end": 4
+          }
+        ]
+      },
+      "task": {
+        "values": {
+          "data": {
+            "type": "bytes",
+            "hex": "4141",
+            "length": 2
+          },
+          "labels": {
+            "type": "tuple",
+            "items": [
+              {
+                "type": "int",
+                "value": 1
+              },
+              {
+                "type": "int",
+                "value": 2
+              }
+            ]
+          }
+        },
+        "queue": "explore",
+        "reason": {
+          "vary": "data",
+          "kind": "finite single-argument family",
+          "validity": "unknown",
+          "template": {
+            "type": "bytes",
+            "hex": "41",
+            "length": 1
+          }
+        },
+        "evidence_source": {
+          "module": "test_subject",
+          "line": 4,
+          "end": 4
+        }
+      },
+      "checks": []
+    },
+    {
+      "outcome": "returned",
+      "value": {
+        "type": "int",
+        "value": 2
+      },
+      "error": null,
+      "calls": [
+        {
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "classify",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 1,
+              "end": 4
+            },
+            "chain": [
+              "test_subject:classify",
+              "subject:classify"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "subject",
+                "line": 1,
+                "end": 4
+              }
+            ]
+          },
+          "site": null,
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "414141",
+                "length": 3
+              },
+              "labels": {
+                "type": "tuple",
+                "items": [
+                  {
+                    "type": "int",
+                    "value": 1
+                  },
+                  {
+                    "type": "int",
+                    "value": 2
+                  }
+                ]
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "labels": "positional"
+            }
+          }
+        }
+      ],
+      "trace": [
+        {
+          "module": "subject",
+          "line": 2,
+          "end": 2,
+          "operator": "Eq",
+          "left": {
+            "type": "bytes",
+            "hex": "414141",
+            "length": 3
+          },
+          "right": {
+            "type": "bytes",
+            "hex": "41",
+            "length": 1
+          },
+          "decision": false
+        }
+      ],
+      "target": {
+        "status": "local",
+        "module": "subject",
+        "name": "classify",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "subject",
+          "line": 1,
+          "end": 4
+        },
+        "chain": [
+          "test_subject:classify",
+          "subject:classify"
+        ],
+        "provenance": [
+          {
+            "module": "test_subject",
+            "line": 1,
+            "end": 1
+          },
+          {
+            "module": "subject",
+            "line": 1,
+            "end": 4
+          }
+        ]
+      },
+      "task": {
+        "values": {
+          "data": {
+            "type": "bytes",
+            "hex": "414141",
+            "length": 3
+          },
+          "labels": {
+            "type": "tuple",
+            "items": [
+              {
+                "type": "int",
+                "value": 1
+              },
+              {
+                "type": "int",
+                "value": 2
+              }
+            ]
+          }
+        },
+        "queue": "explore",
+        "reason": {
+          "vary": "data",
+          "kind": "finite single-argument family",
+          "validity": "unknown",
+          "template": {
+            "type": "bytes",
+            "hex": "41",
+            "length": 1
+          }
+        },
+        "evidence_source": {
+          "module": "test_subject",
+          "line": 4,
+          "end": 4
+        }
+      },
+      "checks": []
+    },
+    {
+      "outcome": "returned",
+      "value": {
+        "type": "int",
+        "value": 2
+      },
+      "error": null,
+      "calls": [
+        {
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "classify",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 1,
+              "end": 4
+            },
+            "chain": [
+              "test_subject:classify",
+              "subject:classify"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "subject",
+                "line": 1,
+                "end": 4
+              }
+            ]
+          },
+          "site": null,
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "41414141",
+                "length": 4
+              },
+              "labels": {
+                "type": "tuple",
+                "items": [
+                  {
+                    "type": "int",
+                    "value": 1
+                  },
+                  {
+                    "type": "int",
+                    "value": 2
+                  }
+                ]
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "labels": "positional"
+            }
+          }
+        }
+      ],
+      "trace": [
+        {
+          "module": "subject",
+          "line": 2,
+          "end": 2,
+          "operator": "Eq",
+          "left": {
+            "type": "bytes",
+            "hex": "41414141",
+            "length": 4
+          },
+          "right": {
+            "type": "bytes",
+            "hex": "41",
+            "length": 1
+          },
+          "decision": false
+        }
+      ],
+      "target": {
+        "status": "local",
+        "module": "subject",
+        "name": "classify",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "subject",
+          "line": 1,
+          "end": 4
+        },
+        "chain": [
+          "test_subject:classify",
+          "subject:classify"
+        ],
+        "provenance": [
+          {
+            "module": "test_subject",
+            "line": 1,
+            "end": 1
+          },
+          {
+            "module": "subject",
+            "line": 1,
+            "end": 4
+          }
+        ]
+      },
+      "task": {
+        "values": {
+          "data": {
+            "type": "bytes",
+            "hex": "41414141",
+            "length": 4
+          },
+          "labels": {
+            "type": "tuple",
+            "items": [
+              {
+                "type": "int",
+                "value": 1
+              },
+              {
+                "type": "int",
+                "value": 2
+              }
+            ]
+          }
+        },
+        "queue": "explore",
+        "reason": {
+          "vary": "data",
+          "kind": "finite single-argument family",
+          "validity": "unknown",
+          "template": {
+            "type": "bytes",
+            "hex": "41",
+            "length": 1
+          }
+        },
+        "evidence_source": {
+          "module": "test_subject",
+          "line": 4,
+          "end": 4
+        }
+      },
+      "checks": []
+    },
+    {
+      "outcome": "returned",
+      "value": {
+        "type": "int",
+        "value": 2
+      },
+      "error": null,
+      "calls": [
+        {
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "classify",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 1,
+              "end": 4
+            },
+            "chain": [
+              "test_subject:classify",
+              "subject:classify"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "subject",
+                "line": 1,
+                "end": 4
+              }
+            ]
+          },
+          "site": null,
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "4141414141",
+                "length": 5
+              },
+              "labels": {
+                "type": "tuple",
+                "items": [
+                  {
+                    "type": "int",
+                    "value": 1
+                  },
+                  {
+                    "type": "int",
+                    "value": 2
+                  }
+                ]
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "labels": "positional"
+            }
+          }
+        }
+      ],
+      "trace": [
+        {
+          "module": "subject",
+          "line": 2,
+          "end": 2,
+          "operator": "Eq",
+          "left": {
+            "type": "bytes",
+            "hex": "4141414141",
+            "length": 5
+          },
+          "right": {
+            "type": "bytes",
+            "hex": "41",
+            "length": 1
+          },
+          "decision": false
+        }
+      ],
+      "target": {
+        "status": "local",
+        "module": "subject",
+        "name": "classify",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "subject",
+          "line": 1,
+          "end": 4
+        },
+        "chain": [
+          "test_subject:classify",
+          "subject:classify"
+        ],
+        "provenance": [
+          {
+            "module": "test_subject",
+            "line": 1,
+            "end": 1
+          },
+          {
+            "module": "subject",
+            "line": 1,
+            "end": 4
+          }
+        ]
+      },
+      "task": {
+        "values": {
+          "data": {
+            "type": "bytes",
+            "hex": "4141414141",
+            "length": 5
+          },
+          "labels": {
+            "type": "tuple",
+            "items": [
+              {
+                "type": "int",
+                "value": 1
+              },
+              {
+                "type": "int",
+                "value": 2
+              }
+            ]
+          }
+        },
+        "queue": "explore",
+        "reason": {
+          "vary": "data",
+          "kind": "finite single-argument family",
+          "validity": "unknown",
+          "template": {
+            "type": "bytes",
+            "hex": "41",
+            "length": 1
+          }
+        },
+        "evidence_source": {
+          "module": "test_subject",
+          "line": 4,
+          "end": 4
+        }
+      },
+      "checks": []
+    },
+    {
+      "outcome": "returned",
+      "value": {
+        "type": "int",
+        "value": 2
+      },
+      "error": null,
+      "calls": [
+        {
+          "target": {
+            "status": "local",
+            "module": "subject",
+            "name": "classify",
+            "kind": "FunctionDef",
+            "location": {
+              "module": "subject",
+              "line": 1,
+              "end": 4
+            },
+            "chain": [
+              "test_subject:classify",
+              "subject:classify"
+            ],
+            "provenance": [
+              {
+                "module": "test_subject",
+                "line": 1,
+                "end": 1
+              },
+              {
+                "module": "subject",
+                "line": 1,
+                "end": 4
+              }
+            ]
+          },
+          "site": null,
+          "binding": {
+            "values": {
+              "data": {
+                "type": "bytes",
+                "hex": "414141414141",
+                "length": 6
+              },
+              "labels": {
+                "type": "tuple",
+                "items": [
+                  {
+                    "type": "int",
+                    "value": 1
+                  },
+                  {
+                    "type": "int",
+                    "value": 2
+                  }
+                ]
+              }
+            },
+            "origins": {
+              "data": "positional",
+              "labels": "positional"
+            }
+          }
+        }
+      ],
+      "trace": [
+        {
+          "module": "subject",
+          "line": 2,
+          "end": 2,
+          "operator": "Eq",
+          "left": {
+            "type": "bytes",
+            "hex": "414141414141",
+            "length": 6
+          },
+          "right": {
+            "type": "bytes",
+            "hex": "41",
+            "length": 1
+          },
+          "decision": false
+        }
+      ],
+      "target": {
+        "status": "local",
+        "module": "subject",
+        "name": "classify",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "subject",
+          "line": 1,
+          "end": 4
+        },
+        "chain": [
+          "test_subject:classify",
+          "subject:classify"
+        ],
+        "provenance": [
+          {
+            "module": "test_subject",
+            "line": 1,
+            "end": 1
+          },
+          {
+            "module": "subject",
+            "line": 1,
+            "end": 4
+          }
+        ]
+      },
+      "task": {
+        "values": {
+          "data": {
+            "type": "bytes",
+            "hex": "414141414141",
+            "length": 6
+          },
+          "labels": {
+            "type": "tuple",
+            "items": [
+              {
+                "type": "int",
+                "value": 1
+              },
+              {
+                "type": "int",
+                "value": 2
+              }
+            ]
+          }
+        },
+        "queue": "explore",
+        "reason": {
+          "vary": "data",
+          "kind": "finite single-argument family",
+          "validity": "unknown",
+          "template": {
+            "type": "bytes",
+            "hex": "41",
+            "length": 1
+          }
+        },
+        "evidence_source": {
+          "module": "test_subject",
+          "line": 4,
+          "end": 4
+        }
+      },
+      "checks": []
+    }
+  ],
+  "entries": [
+    {
+      "target": {
+        "status": "local",
+        "module": "subject",
+        "name": "classify",
+        "kind": "FunctionDef",
+        "location": {
+          "module": "subject",
+          "line": 1,
+          "end": 4
+        },
+        "chain": [
+          "test_subject:classify",
+          "subject:classify"
+        ],
+        "provenance": [
+          {
+            "module": "test_subject",
+            "line": 1,
+            "end": 1
+          },
+          {
+            "module": "subject",
+            "line": 1,
+            "end": 4
+          }
+        ]
+      },
+      "pending": [
+        {
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "41414141414141",
+              "length": 7
+            },
+            "labels": {
+              "type": "tuple",
+              "items": [
+                {
+                  "type": "int",
+                  "value": 1
+                },
+                {
+                  "type": "int",
+                  "value": 2
+                }
+              ]
+            }
+          },
+          "queue": "explore",
+          "reason": {
+            "vary": "data",
+            "kind": "finite single-argument family",
+            "validity": "unknown",
+            "template": {
+              "type": "bytes",
+              "hex": "41",
+              "length": 1
+            }
+          },
+          "evidence_source": {
+            "module": "test_subject",
+            "line": 4,
+            "end": 4
+          }
+        },
+        {
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4141414141414141",
+              "length": 8
+            },
+            "labels": {
+              "type": "tuple",
+              "items": [
+                {
+                  "type": "int",
+                  "value": 1
+                },
+                {
+                  "type": "int",
+                  "value": 2
+                }
+              ]
+            }
+          },
+          "queue": "explore",
+          "reason": {
+            "vary": "data",
+            "kind": "finite single-argument family",
+            "validity": "unknown",
+            "template": {
+              "type": "bytes",
+              "hex": "41",
+              "length": 1
+            }
+          },
+          "evidence_source": {
+            "module": "test_subject",
+            "line": 4,
+            "end": 4
+          }
+        },
+        {
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4242",
+              "length": 2
+            },
+            "labels": {
+              "type": "tuple",
+              "items": [
+                {
+                  "type": "int",
+                  "value": 1
+                },
+                {
+                  "type": "int",
+                  "value": 2
+                }
+              ]
+            }
+          },
+          "queue": "explore",
+          "reason": {
+            "vary": "data",
+            "kind": "finite single-argument family",
+            "validity": "unknown",
+            "template": {
+              "type": "bytes",
+              "hex": "42",
+              "length": 1
+            }
+          },
+          "evidence_source": {
+            "module": "test_subject",
+            "line": 6,
+            "end": 6
+          }
+        },
+        {
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "424242",
+              "length": 3
+            },
+            "labels": {
+              "type": "tuple",
+              "items": [
+                {
+                  "type": "int",
+                  "value": 1
+                },
+                {
+                  "type": "int",
+                  "value": 2
+                }
+              ]
+            }
+          },
+          "queue": "explore",
+          "reason": {
+            "vary": "data",
+            "kind": "finite single-argument family",
+            "validity": "unknown",
+            "template": {
+              "type": "bytes",
+              "hex": "42",
+              "length": 1
+            }
+          },
+          "evidence_source": {
+            "module": "test_subject",
+            "line": 6,
+            "end": 6
+          }
+        },
+        {
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "42424242",
+              "length": 4
+            },
+            "labels": {
+              "type": "tuple",
+              "items": [
+                {
+                  "type": "int",
+                  "value": 1
+                },
+                {
+                  "type": "int",
+                  "value": 2
+                }
+              ]
+            }
+          },
+          "queue": "explore",
+          "reason": {
+            "vary": "data",
+            "kind": "finite single-argument family",
+            "validity": "unknown",
+            "template": {
+              "type": "bytes",
+              "hex": "42",
+              "length": 1
+            }
+          },
+          "evidence_source": {
+            "module": "test_subject",
+            "line": 6,
+            "end": 6
+          }
+        },
+        {
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4242424242",
+              "length": 5
+            },
+            "labels": {
+              "type": "tuple",
+              "items": [
+                {
+                  "type": "int",
+                  "value": 1
+                },
+                {
+                  "type": "int",
+                  "value": 2
+                }
+              ]
+            }
+          },
+          "queue": "explore",
+          "reason": {
+            "vary": "data",
+            "kind": "finite single-argument family",
+            "validity": "unknown",
+            "template": {
+              "type": "bytes",
+              "hex": "42",
+              "length": 1
+            }
+          },
+          "evidence_source": {
+            "module": "test_subject",
+            "line": 6,
+            "end": 6
+          }
+        },
+        {
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "424242424242",
+              "length": 6
+            },
+            "labels": {
+              "type": "tuple",
+              "items": [
+                {
+                  "type": "int",
+                  "value": 1
+                },
+                {
+                  "type": "int",
+                  "value": 2
+                }
+              ]
+            }
+          },
+          "queue": "explore",
+          "reason": {
+            "vary": "data",
+            "kind": "finite single-argument family",
+            "validity": "unknown",
+            "template": {
+              "type": "bytes",
+              "hex": "42",
+              "length": 1
+            }
+          },
+          "evidence_source": {
+            "module": "test_subject",
+            "line": 6,
+            "end": 6
+          }
+        },
+        {
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "42424242424242",
+              "length": 7
+            },
+            "labels": {
+              "type": "tuple",
+              "items": [
+                {
+                  "type": "int",
+                  "value": 1
+                },
+                {
+                  "type": "int",
+                  "value": 2
+                }
+              ]
+            }
+          },
+          "queue": "explore",
+          "reason": {
+            "vary": "data",
+            "kind": "finite single-argument family",
+            "validity": "unknown",
+            "template": {
+              "type": "bytes",
+              "hex": "42",
+              "length": 1
+            }
+          },
+          "evidence_source": {
+            "module": "test_subject",
+            "line": 6,
+            "end": 6
+          }
+        },
+        {
+          "values": {
+            "data": {
+              "type": "bytes",
+              "hex": "4242424242424242",
+              "length": 8
+            },
+            "labels": {
+              "type": "tuple",
+              "items": [
+                {
+                  "type": "int",
+                  "value": 1
+                },
+                {
+                  "type": "int",
+                  "value": 2
+                }
+              ]
+            }
+          },
+          "queue": "explore",
+          "reason": {
+            "vary": "data",
+            "kind": "finite single-argument family",
+            "validity": "unknown",
+            "template": {
+              "type": "bytes",
+              "hex": "42",
+              "length": 1
+            }
+          },
+          "evidence_source": {
+            "module": "test_subject",
+            "line": 6,
+            "end": 6
+          }
+        }
+      ],
+      "overflow_attempts": 0,
+      "observations": 8
+    }
+  ],
+  "deferred": [],
+  "source_sha256": {
+    "subject": "6b11f8590ea65d3bc4df2cf84d5b18148e2153825c82f541da3a0992c50f9a03",
+    "test_subject": "d958789b130373e191e347ca6f13fabe9b64b90bec32ea33fc7ffb0cbf648b74"
+  },
+  "limits": {
+    "static_dispatch": 8,
+    "entries": 8,
+    "points_per_entry": 8,
+    "lengths": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ]
+  },
+  "execution_enabled": false,
+  "scope": "isolated source semantics; module initialization/import availability unknown; exact test evidence conditional; generated-input validity unknown",
+  "limitations": "finite content templates, one changed parameter, no string solver or inferred public contract; source identity does not establish dependency behavior"
+}

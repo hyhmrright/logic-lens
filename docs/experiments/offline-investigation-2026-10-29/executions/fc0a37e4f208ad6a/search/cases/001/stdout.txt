@@ -1,0 +1,1 @@
+{"status": "violation", "observation": {"outcome": "value_error", "value": null, "consumers": [{"unit": "byte", "quantity": 32}], "input": 10}, "sources": ["subject.py"]}

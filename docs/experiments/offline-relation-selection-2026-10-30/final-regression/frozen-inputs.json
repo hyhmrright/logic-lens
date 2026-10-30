@@ -1,0 +1,96 @@
+{
+  "cases": [
+    {
+      "name": "scale",
+      "sources": {
+        "subject": "def f(data):\n    x=len(data)\n    if 3*x > 30:\n        return 0\n    return 0\n",
+        "test_subject": "from subject import f\ndef test_f():\n    assert f(b'A') == 0\n"
+      },
+      "cap": 4
+    },
+    {
+      "name": "shift",
+      "sources": {
+        "subject": "def f(data):\n    x=len(data)\n    if 2*x+5 >= 31:\n        return 0\n    return 0\n",
+        "test_subject": "from subject import f\ndef test_f():\n    assert f(b'A') == 0\n"
+      },
+      "cap": 4
+    },
+    {
+      "name": "negative",
+      "sources": {
+        "subject": "def f(data):\n    x=len(data)\n    if 40-2*x < 10:\n        return 0\n    return 0\n",
+        "test_subject": "from subject import f\ndef test_f():\n    assert f(b'A') == 0\n"
+      },
+      "cap": 4
+    },
+    {
+      "name": "nested",
+      "sources": {
+        "subject": "def helper(n):\n    return 2*(n+3)\ndef f(data):\n    if helper(len(data))>32:\n        return 0\n    return 0\n",
+        "test_subject": "from subject import f\ndef test_f():\n    assert f(b'A') == 0\n"
+      },
+      "cap": 4
+    },
+    {
+      "name": "impossible",
+      "sources": {
+        "subject": "def f(data):\n    x=len(data)\n    if x<5:\n        if 3*x>30:\n            return 0\n    return 0\n",
+        "test_subject": "from subject import f\ndef test_f():\n    assert f(b'A') == 0\n"
+      },
+      "cap": 4
+    },
+    {
+      "name": "competition",
+      "sources": {
+        "subject": "def f(a,b,c,d,e):\n    if len(a) > 10:\n        return 0\n    if len(b) > 11:\n        return 0\n    if len(c) > 12:\n        return 0\n    if len(d) > 13:\n        return 0\n    if len(e) > 14:\n        return 0\n    return 0\n",
+        "test_subject": "from subject import f\ndef test_f():\n    assert f(b'A',b'A',b'A',b'A',b'A') == 0\n"
+      },
+      "cap": 6
+    },
+    {
+      "name": "units",
+      "sources": {
+        "subject": "def f(data,n=2):\n    if len(data)+n>30:\n        return 0\n    return 0\n",
+        "test_subject": "from subject import f\ndef test_f():\n    assert f(b'A') == 0\n"
+      },
+      "cap": 2
+    },
+    {
+      "name": "nonlinear",
+      "sources": {
+        "subject": "def f(data):\n    x=len(data)\n    if x*x>30:\n        return 0\n    return 0\n",
+        "test_subject": "from subject import f\ndef test_f():\n    assert f(b'A') == 0\n"
+      },
+      "cap": 2
+    },
+    {
+      "name": "outside",
+      "sources": {
+        "subject": "def f(data):\n    if len(data)>100000:\n        return 0\n    return 0\n",
+        "test_subject": "from subject import f\ndef test_f():\n    assert f(b'A') == 0\n"
+      },
+      "cap": 2
+    },
+    {
+      "name": "oracle",
+      "sources": {
+        "subject": "def f(data):\n    if len(data)>18:\n        return 0\n    return 0\n",
+        "test_subject": "from subject import f\ndef test_f():\n    assert f(b'A') == 0\n"
+      },
+      "cap": 4
+    },
+    {
+      "name": "held_out",
+      "sources": {
+        "subject": "from worker import shifted as moved\ndef f(renamed):\n    if moved(len(renamed))>59:\n        return 0\n    return 0\n",
+        "test_subject": "from subject import f\ndef test_f():\n    assert f(b'A') == 0\n",
+        "worker": "def shifted(q):\n    return 7+q*4\n"
+      },
+      "cap": 4
+    }
+  ],
+  "untested": {
+    "subject": "def public(data):\n    if len(data)>12:\n        return 0\n    return 0\n"
+  }
+}

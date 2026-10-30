@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "baseline_skill_commit": "83652aa84d1eafdf5bd6e2a91d0e3b34421f9ab9",
+  "candidate_skill_commit": "32151b0f9c10a557d1da81dad0dd1b221522333d",
+  "protocol": {
+    "local_probes": true,
+    "runtime_note": "Node.js is available. Python for these historical sources: /Users/hyh/code/logic-lens/skills-workspace/discovery-venv311/bin/python (six 1.17.0 installed); use PYTHONDONTWRITEBYTECODE=1 and local src/ or repository root on PYTHONPATH as appropriate. This external interpreter/dependency path may be used only to execute local source; do not inspect other external files."
+  },
+  "cases": [
+    {
+      "id": "dateutil-inequality",
+      "project": "dateutil",
+      "repository": "https://github.com/dateutil/dateutil.git",
+      "base_commit": "bc90ab44491154ec38b6b5b4d8ec11fb25b434d0",
+      "fix_commit": "68994217fbe253835989e7c1e3eeef5c653088d1",
+      "fix_url": "https://github.com/dateutil/dateutil/commit/68994217fbe253835989e7c1e3eeef5c653088d1",
+      "review_paths": [
+        "src/dateutil/relativedelta.py"
+      ],
+      "source_paths": [
+        "src/dateutil/relativedelta.py"
+      ],
+      "split": "heldout-after-candidate-freeze",
+      "obligation": "Python rich comparison fallback must make relativedelta != unrelated values true, consistent with == false.",
+      "matching_cause": "Returning NotImplemented from equality and applying bool not in __ne__ erases reflected comparison fallback.",
+      "matching_consequence": "relativedelta(days=1) != None; != integer; == both false."
+    },
+    {
+      "id": "dateutil-midnight",
+      "project": "dateutil",
+      "repository": "https://github.com/dateutil/dateutil.git",
+      "base_commit": "86e33512c41a04b989b14966a722608035a87b51",
+      "fix_commit": "424a438b3791962e50590410972fdb0ebfd7b4a2",
+      "fix_url": "https://github.com/dateutil/dateutil/commit/424a438b3791962e50590410972fdb0ebfd7b4a2",
+      "review_paths": [
+        "dateutil/parser/isoparser.py"
+      ],
+      "source_paths": [
+        "dateutil/parser/isoparser.py"
+      ],
+      "split": "heldout-after-candidate-freeze",
+      "obligation": "ISO end-of-day 24:00 denotes the next calendar day, including month/year rollover.",
+      "matching_cause": "Private time parsing discards 24 before date construction can advance the day.",
+      "matching_consequence": "isoparse of a valid date with T24:00 returns the next midnight, unlike T00:00."
+    },
+    {
+      "id": "semver-diff",
+      "project": "node-semver",
+      "repository": "https://github.com/npm/node-semver.git",
+      "base_commit": "753e02b9d0cb3ac23e085dc33efcab3e08d61f2b",
+      "fix_commit": "d588e3782864b1cab2fe9f2452b848e8c7f609d1",
+      "fix_url": "https://github.com/npm/node-semver/commit/d588e3782864b1cab2fe9f2452b848e8c7f609d1",
+      "review_paths": [
+        "functions/diff.js"
+      ],
+      "source_paths": [
+        "functions/diff.js"
+      ],
+      "split": "heldout-after-candidate-freeze",
+      "obligation": "diff reports the changed release component when a prerelease transitions to a later stable minor or major.",
+      "matching_cause": "Special-case prerelease promotion branches on high version nonzero fields instead of comparing release components.",
+      "matching_consequence": "1.7.2-1 to 1.8.1 must be minor; 1.1.1-pre to 2.1.1 must be major."
+    },
+    {
+      "id": "semver-build",
+      "project": "node-semver",
+      "repository": "https://github.com/npm/node-semver.git",
+      "base_commit": "5f3ca133e040210b6ea80c350a1d61d9da02e722",
+      "fix_commit": "17aa702d91166472b197a2ea768f085083bee2e4",
+      "fix_url": "https://github.com/npm/node-semver/commit/17aa702d91166472b197a2ea768f085083bee2e4",
+      "review_paths": [
+        "classes/range.js"
+      ],
+      "source_paths": [
+        "classes/range.js"
+      ],
+      "split": "heldout-after-candidate-freeze",
+      "obligation": "Build metadata does not change version precedence or range matching; valid loose range metadata cannot bleed into release digits.",
+      "matching_cause": "Bounded safe regex leaves long build identifier tails for subsequent comparator normalization.",
+      "matching_consequence": "Loose range 4.17.0 plus long build ending in 3 must normalize to 4.17.0 and accept it."
+    }
+  ],
+  "exclusions": [
+    {
+      "project": "node-semver",
+      "fix": "e583226b165edd6530502cf731eda334527af6fe",
+      "reason": "Parent range.bnf permits numeric xr after wildcard; rejection requirement conflicts with grammar. Excluded before model execution."
+    }
+  ]
+}

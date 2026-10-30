@@ -1,0 +1,40 @@
+{
+  "candidate": "e20f548",
+  "protocol_sha256": "56b477b9c24d068efb85e2ee97ea4bcecb4a27b0a18dbb512abaf3a6b1a0dec6",
+  "driver_sha256": "ad175a8586e9ed79e2474fed53bbfdaaff4b136a24e761003ca971346fa1e7a5",
+  "implementation_sha256": {
+    "scripts/relation_selection.py": "1b4c14aba03f1c33a1d3617ff5bbd2781a8b4fb0b780f1eeaf1423e5789c11c9",
+    "scripts/typed_calls.py": "f048f7be99eed9aad2addf64f95b2e35ef1edcb28f7160ab8515ed1495753282",
+    "scripts/typed_investigation.py": "6d5fc94504bb1d8948d2025f70569c9989172e820c2bac9225d820c0e5f63649",
+    "scripts/python_facts.py": "6b85a79dda1888c927269f50621cc3d950a6fa2fbaf6c993dedd82c5789eab4b"
+  },
+  "python": {
+    "version": "3.15.2 (main, Oct 25 2026, 16:57:51) [Clang 21.0.0 (clang-2100.3.34.2)]",
+    "implementation": "CPython",
+    "stdlib": "/opt/homebrew/opt/python@3.15/Frameworks/Python.framework/Versions/3.15/lib/python3.15"
+  },
+  "selected": [
+    {
+      "name": "ast",
+      "source_file": "sources/ast.py.txt",
+      "source_sha256": "573d22fefb010c4f2b0d848d74f2599a414f3c767d34164876532c4ba0375b1f",
+      "test_file": null,
+      "test_sha256": null,
+      "original_source": "/opt/homebrew/opt/python@3.15/Frameworks/Python.framework/Versions/3.15/lib/python3.15/ast.py",
+      "original_test": "/opt/homebrew/opt/python@3.15/Frameworks/Python.framework/Versions/3.15/lib/python3.15/test/test_ast.py",
+      "upstream_git_revision": "unknown"
+    },
+    {
+      "name": "bdb",
+      "source_file": "sources/bdb.py.txt",
+      "source_sha256": "4424591274df9355ca445c39263eea56dfcc994f02eeb5cb3d11122a9427a8a2",
+      "test_file": "sources/test_bdb.py.txt",
+      "test_sha256": "daf985bfb39d376d0c96f11c6c26deb52e23f730a07789371d1f3120270dc96a",
+      "original_source": "/opt/homebrew/opt/python@3.15/Frameworks/Python.framework/Versions/3.15/lib/python3.15/bdb.py",
+      "original_test": "/opt/homebrew/opt/python@3.15/Frameworks/Python.framework/Versions/3.15/lib/python3.15/test/test_bdb.py",
+      "upstream_git_revision": "unknown"
+    }
+  ],
+  "selection_shortfall": 0,
+  "execution_enabled": false
+}
