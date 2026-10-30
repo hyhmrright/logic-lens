@@ -1,0 +1,208 @@
+[
+  {
+    "name": "__future__",
+    "path": "/opt/homebrew/opt/python@3.15/Frameworks/Python.framework/Versions/3.15/lib/python3.15/__future__.py",
+    "status": "excluded"
+  },
+  {
+    "name": "__hello__",
+    "path": "/opt/homebrew/opt/python@3.15/Frameworks/Python.framework/Versions/3.15/lib/python3.15/__hello__.py",
+    "status": "excluded"
+  },
+  {
+    "name": "_aix_support",
+    "path": "/opt/homebrew/opt/python@3.15/Frameworks/Python.framework/Versions/3.15/lib/python3.15/_aix_support.py",
+    "status": "excluded"
+  },
+  {
+    "name": "_android_support",
+    "path": "/opt/homebrew/opt/python@3.15/Frameworks/Python.framework/Versions/3.15/lib/python3.15/_android_support.py",
+    "status": "excluded"
+  },
+  {
+    "name": "_apple_support",
+    "path": "/opt/homebrew/opt/python@3.15/Frameworks/Python.framework/Versions/3.15/lib/python3.15/_apple_support.py",
+    "status": "excluded"
+  },
+  {
+    "name": "_ast_unparse",
+    "path": "/opt/homebrew/opt/python@3.15/Frameworks/Python.framework/Versions/3.15/lib/python3.15/_ast_unparse.py",
+    "status": "excluded"
+  },
+  {
+    "name": "_collections_abc",
+    "path": "/opt/homebrew/opt/python@3.15/Frameworks/Python.framework/Versions/3.15/lib/python3.15/_collections_abc.py",
+    "status": "excluded"
+  },
+  {
+    "name": "_colorize",
+    "path": "/opt/homebrew/opt/python@3.15/Frameworks/Python.framework/Versions/3.15/lib/python3.15/_colorize.py",
+    "status": "excluded"
+  },
+  {
+    "name": "_compat_pickle",
+    "path": "/opt/homebrew/opt/python@3.15/Frameworks/Python.framework/Versions/3.15/lib/python3.15/_compat_pickle.py",
+    "status": "excluded"
+  },
+  {
+    "name": "_ios_support",
+    "path": "/opt/homebrew/opt/python@3.15/Frameworks/Python.framework/Versions/3.15/lib/python3.15/_ios_support.py",
+    "status": "excluded"
+  },
+  {
+    "name": "_markupbase",
+    "path": "/opt/homebrew/opt/python@3.15/Frameworks/Python.framework/Versions/3.15/lib/python3.15/_markupbase.py",
+    "status": "excluded"
+  },
+  {
+    "name": "_missing_stdlib_info",
+    "path": "/opt/homebrew/opt/python@3.15/Frameworks/Python.framework/Versions/3.15/lib/python3.15/_missing_stdlib_info.py",
+    "status": "excluded"
+  },
+  {
+    "name": "_opcode_metadata",
+    "path": "/opt/homebrew/opt/python@3.15/Frameworks/Python.framework/Versions/3.15/lib/python3.15/_opcode_metadata.py",
+    "status": "excluded"
+  },
+  {
+    "name": "_osx_support",
+    "path": "/opt/homebrew/opt/python@3.15/Frameworks/Python.framework/Versions/3.15/lib/python3.15/_osx_support.py",
+    "status": "excluded"
+  },
+  {
+    "name": "_py_abc",
+    "path": "/opt/homebrew/opt/python@3.15/Frameworks/Python.framework/Versions/3.15/lib/python3.15/_py_abc.py",
+    "status": "excluded"
+  },
+  {
+    "name": "_py_warnings",
+    "path": "/opt/homebrew/opt/python@3.15/Frameworks/Python.framework/Versions/3.15/lib/python3.15/_py_warnings.py",
+    "status": "excluded"
+  },
+  {
+    "name": "_pydatetime",
+    "path": "/opt/homebrew/opt/python@3.15/Frameworks/Python.framework/Versions/3.15/lib/python3.15/_pydatetime.py",
+    "status": "excluded"
+  },
+  {
+    "name": "_pydecimal",
+    "path": "/opt/homebrew/opt/python@3.15/Frameworks/Python.framework/Versions/3.15/lib/python3.15/_pydecimal.py",
+    "status": "excluded"
+  },
+  {
+    "name": "_pyio",
+    "path": "/opt/homebrew/opt/python@3.15/Frameworks/Python.framework/Versions/3.15/lib/python3.15/_pyio.py",
+    "status": "excluded"
+  },
+  {
+    "name": "_pylong",
+    "path": "/opt/homebrew/opt/python@3.15/Frameworks/Python.framework/Versions/3.15/lib/python3.15/_pylong.py",
+    "status": "excluded"
+  },
+  {
+    "name": "_sitebuiltins",
+    "path": "/opt/homebrew/opt/python@3.15/Frameworks/Python.framework/Versions/3.15/lib/python3.15/_sitebuiltins.py",
+    "status": "excluded"
+  },
+  {
+    "name": "_strptime",
+    "path": "/opt/homebrew/opt/python@3.15/Frameworks/Python.framework/Versions/3.15/lib/python3.15/_strptime.py",
+    "status": "excluded"
+  },
+  {
+    "name": "_sysconfigdata__darwin_darwin",
+    "path": "/opt/homebrew/opt/python@3.15/Frameworks/Python.framework/Versions/3.15/lib/python3.15/_sysconfigdata__darwin_darwin.py",
+    "status": "excluded"
+  },
+  {
+    "name": "_threading_local",
+    "path": "/opt/homebrew/opt/python@3.15/Frameworks/Python.framework/Versions/3.15/lib/python3.15/_threading_local.py",
+    "status": "excluded"
+  },
+  {
+    "name": "_weakrefset",
+    "path": "/opt/homebrew/opt/python@3.15/Frameworks/Python.framework/Versions/3.15/lib/python3.15/_weakrefset.py",
+    "status": "excluded"
+  },
+  {
+    "name": "abc",
+    "path": "/opt/homebrew/opt/python@3.15/Frameworks/Python.framework/Versions/3.15/lib/python3.15/abc.py",
+    "size": 6538,
+    "sha256": "e558702a95cdce3febd289da021715d2b92bc43995b8a1bc58dfa1c3d8010287",
+    "ast_nodes": 435,
+    "public_functions": [
+      "abstractmethod",
+      "update_abstractmethods"
+    ],
+    "status": "too_few_public"
+  },
+  {
+    "name": "annotationlib",
+    "path": "/opt/homebrew/opt/python@3.15/Frameworks/Python.framework/Versions/3.15/lib/python3.15/annotationlib.py",
+    "status": "excluded"
+  },
+  {
+    "name": "antigravity",
+    "path": "/opt/homebrew/opt/python@3.15/Frameworks/Python.framework/Versions/3.15/lib/python3.15/antigravity.py",
+    "size": 500,
+    "sha256": "8a5ee63e1b79ba2733e7ff4290b6eefea60e7f3a1ccb6bb519535aaf92b44967",
+    "ast_nodes": 98,
+    "public_functions": [
+      "geohash"
+    ],
+    "status": "too_few_public"
+  },
+  {
+    "name": "argparse",
+    "path": "/opt/homebrew/opt/python@3.15/Frameworks/Python.framework/Versions/3.15/lib/python3.15/argparse.py",
+    "size": 114307,
+    "sha256": "4857acfc44ee2339b2ae856df66fadda22cf7a437395d9c792db7bf66998e154",
+    "ast_nodes": 13656,
+    "status": "source_ast_budget"
+  },
+  {
+    "name": "ast",
+    "path": "/opt/homebrew/opt/python@3.15/Frameworks/Python.framework/Versions/3.15/lib/python3.15/ast.py",
+    "size": 26585,
+    "sha256": "573d22fefb010c4f2b0d848d74f2599a414f3c767d34164876532c4ba0375b1f",
+    "ast_nodes": 3285,
+    "public_functions": [
+      "parse",
+      "literal_eval",
+      "dump",
+      "copy_location",
+      "fix_missing_locations",
+      "increment_lineno",
+      "iter_fields",
+      "iter_child_nodes",
+      "get_docstring",
+      "get_source_segment",
+      "walk",
+      "compare",
+      "unparse",
+      "main"
+    ],
+    "status": "selected"
+  },
+  {
+    "name": "base64",
+    "path": "/opt/homebrew/opt/python@3.15/Frameworks/Python.framework/Versions/3.15/lib/python3.15/base64.py",
+    "status": "excluded"
+  },
+  {
+    "name": "bdb",
+    "path": "/opt/homebrew/opt/python@3.15/Frameworks/Python.framework/Versions/3.15/lib/python3.15/bdb.py",
+    "size": 44727,
+    "sha256": "4424591274df9355ca445c39263eea56dfcc994f02eeb5cb3d11122a9427a8a2",
+    "ast_nodes": 5271,
+    "public_functions": [
+      "set_trace",
+      "checkfuncname",
+      "effective",
+      "foo",
+      "bar",
+      "test"
+    ],
+    "status": "selected"
+  }
+]

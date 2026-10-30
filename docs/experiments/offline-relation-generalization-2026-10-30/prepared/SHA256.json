@@ -1,0 +1,9 @@
+{
+  "PSF-LICENSE.txt": "b0e25a78cffb43f4d92de8b61ccfa1f1f98ecbc22330b54b5251e7b6ba010231",
+  "manifest.json": "34d464730d02949b3ec0d54831ddd128bc56428eabf86d79a2a4f247fed6c6c4",
+  "selection-ledger.json": "d254faf863e34d0717a97955adcbb5407a4a3e7015dbff033e6e6e43824b3473",
+  "sources/ast.py.txt": "573d22fefb010c4f2b0d848d74f2599a414f3c767d34164876532c4ba0375b1f",
+  "sources/bdb.py.txt": "4424591274df9355ca445c39263eea56dfcc994f02eeb5cb3d11122a9427a8a2",
+  "sources/test_bdb.py.txt": "daf985bfb39d376d0c96f11c6c26deb52e23f730a07789371d1f3120270dc96a",
+  "synthetic-inputs.json": "4b5b5271c61d39b52d4eb982fb2293691f7531b922b37f475d8966cf9fac69f3"
+}

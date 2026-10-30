@@ -1,0 +1,109 @@
+[
+  {
+    "family": "positive",
+    "coefficient": 3,
+    "pivot": 10,
+    "offset": 2,
+    "cap": 4,
+    "canonical": {
+      "subject": "def f(data):\n    x=len(data)\n    if 3*x+2 > 32:\n        return 0\n    return 0\n",
+      "test_subject": "from subject import f\ndef test_value():\n    assert f(b\"B\") == 0\n"
+    },
+    "transformed": {
+      "subject": "def entry(payload, /, *, suffix=b''):\n    size=len(payload)\n    if 2+size*3 > 32:\n        return 0\n    return 0\n",
+      "test_subject": "from subject import entry as invoke\nclass TestBoundary:\n    def test_value(self):\n        assert invoke(b\"B\", suffix=b\"\") == 0\n"
+    }
+  },
+  {
+    "family": "negative",
+    "coefficient": 2,
+    "pivot": 12,
+    "offset": 3,
+    "cap": 4,
+    "canonical": {
+      "subject": "def f(data):\n    x=len(data)\n    if 27-(2*x) <= 3:\n        return 0\n    return 0\n",
+      "test_subject": "from subject import f\ndef test_value():\n    assert f(b\"B\") == 0\n"
+    },
+    "transformed": {
+      "subject": "def entry(payload, /, *, suffix=b''):\n    size=len(payload)\n    if -(2*size)+27 <= 3:\n        return 0\n    return 0\n",
+      "test_subject": "import unittest as unit\nfrom subject import entry as invoke\nclass TestBoundary(unit.TestCase):\n    def test_value(self):\n        self.assertEqual(invoke(b\"B\", suffix=b\"\"),0)\n"
+    }
+  },
+  {
+    "family": "reverse",
+    "coefficient": 3,
+    "pivot": 11,
+    "offset": 3,
+    "cap": 4,
+    "canonical": {
+      "subject": "def f(data):\n    x=len(data)\n    if 3*x+3 > 36:\n        return 0\n    return 0\n",
+      "test_subject": "from subject import f\ndef test_value():\n    assert f(b\"B\") == 0\n"
+    },
+    "transformed": {
+      "subject": "def entry(payload, /, *, suffix=b''):\n    size=len(payload)\n    if 36 < 3+size*3:\n        return 0\n    return 0\n",
+      "test_subject": "from subject import entry as invoke\nclass TestBoundary:\n    def test_value(self):\n        assert invoke(b\"B\", suffix=b\"\") == 0\n"
+    }
+  },
+  {
+    "family": "split",
+    "coefficient": 3,
+    "pivot": 13,
+    "offset": 6,
+    "cap": 4,
+    "canonical": {
+      "subject": "def f(data):\n    x=len(data)\n    if 3*x+6 > 45:\n        return 0\n    return 0\n",
+      "test_subject": "from subject import f\ndef test_value():\n    assert f(b\"B\") == 0\n"
+    },
+    "transformed": {
+      "subject": "from worker import shifted as renamed\ndef entry(payload, /, *, suffix=b''):\n    if renamed(len(payload)) > 45:\n        return 0\n    return 0\n",
+      "test_subject": "import unittest as unit\nfrom subject import entry as invoke\nclass TestBoundary(unit.TestCase):\n    def test_value(self):\n        self.assertEqual(invoke(b\"B\", suffix=b\"\"),0)\n",
+      "worker": "def multiply(q):\n    return q*3\ndef shifted(r):\n    return 6+multiply(r)\n"
+    }
+  },
+  {
+    "family": "sequence",
+    "coefficient": 2,
+    "pivot": 14,
+    "offset": 3,
+    "cap": 4,
+    "canonical": {
+      "subject": "def f(data):\n    if len(data*2+b\"xx\") > 30:\n        return 0\n    return 0\n",
+      "test_subject": "from subject import f\ndef test_value():\n    assert f(b\"B\") == 0\n"
+    },
+    "transformed": {
+      "subject": "def entry(payload, /, *, suffix=b''):\n    enlarged=2*payload\n    if 30 < len(b\"xx\"+enlarged):\n        return 0\n    return 0\n",
+      "test_subject": "from subject import entry as invoke\nclass TestBoundary:\n    def test_value(self):\n        assert invoke(b\"B\", suffix=b\"\") == 0\n"
+    }
+  },
+  {
+    "family": "route",
+    "coefficient": 2,
+    "pivot": 14,
+    "offset": 6,
+    "cap": 4,
+    "canonical": {
+      "subject": "def f(data):\n    x=len(data)\n    if x < 12:\n        if 2*x+6 > 34:\n            return 0\n    return 0\n",
+      "test_subject": "from subject import f\ndef test_value():\n    assert f(b\"B\") == 0\n"
+    },
+    "transformed": {
+      "subject": "from worker import guard as moved\ndef entry(payload, /, *, suffix=b''):\n    size=len(payload)\n    if size < 12:\n        return moved(size)\n    return 0\n",
+      "test_subject": "import unittest as unit\nfrom subject import entry as invoke\nclass TestBoundary(unit.TestCase):\n    def test_value(self):\n        self.assertEqual(invoke(b\"B\", suffix=b\"\"),0)\n",
+      "worker": "def guard(q):\n    if 6+q*2 > 34:\n        return 0\n    return 0\n"
+    }
+  },
+  {
+    "family": "nonlinear",
+    "coefficient": 2,
+    "pivot": 12,
+    "offset": 6,
+    "cap": 4,
+    "canonical": {
+      "subject": "def f(data):\n    x=len(data)\n    if x*x > 144:\n        return 0\n    return 0\n",
+      "test_subject": "from subject import f\ndef test_value():\n    assert f(b\"B\") == 0\n"
+    },
+    "transformed": {
+      "subject": "def entry(payload, /, *, suffix=b''):\n    size=len(payload)\n    if size*size > 144:\n        return 0\n    return 0\n",
+      "test_subject": "from subject import entry as invoke\nclass TestBoundary:\n    def test_value(self):\n        assert invoke(b\"B\", suffix=b\"\") == 0\n"
+    }
+  }
+]
